@@ -1,0 +1,44 @@
+# DayZ SA Private Keys
+*.biprivatekey
+
+# DayZ Binarize
+texHeaders.bin
+
+launch.bin
+build.bin
+
+# Local Workspace Settings
+**/Workbench/*.bin
+
+# Text Editor Workspace Configuration
+.vscode/
+.idea/
+
+# Profile excludes
+*.RPT
+*.log
+*.ADM
+*.mdmp
+
+# Your CLient Settings
+Servers/!ClientDiagLogs/
+
+# Missions 
+Missions/Vanilla/dayzOffline.chernarusplus/storage_1/
+Missions/Vanilla/dayzOffline.enoch/storage_1/
+Missions/Experimental/dayzOffline.chernarusplus/storage_1/
+Missions/Experimental/dayzOffline.enoch/storage_1/
+Missions/Custom/dayzOffline.Rio_Map/storage_1/
+Missions/Custom/dayzoffline.valning/storage_1/
+Missions/Custom/empty.deerisle/storage_1/
+Missions/Custom/empty.melkart/storage_1/
+Missions/Custom/empty.fenix_emptiness/storage_1/
+
+# Profile Folders 
+Servers/Cherno/Profiles/
+Servers/Livonia/Profiles/
+Servers/Others/Empty/Profiles/
+Servers/Others/DeerIsle/Profiles/
+Servers/Others/Melkart/Profiles/
+Servers/Others/Rio/Profiles/
+Servers/Others/Valning/Profiles/

@@ -1,0 +1,15 @@
+{
+    "Departments": [{
+        "DepartmentName": "Colorful-UI",
+        "Sections": [
+            {
+                "SectionName": "UX/UI Designer",
+                "SectionLines": ["DayZ n' Chill"]
+            },
+            {
+                "SectionName": "Audio, Testing, and QA",
+                "SectionLines": ["BigDeano"]
+            }
+        ]
+    }]
+}
