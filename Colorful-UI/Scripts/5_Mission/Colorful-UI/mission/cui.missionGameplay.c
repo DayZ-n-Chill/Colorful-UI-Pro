@@ -8,6 +8,13 @@ modded class MissionGameplay
 
         // Initialize the CUIManager
         InitCUIManager();
+
+        // Initialize Logo Overlay: creates the root widget and loads the logo image, 
+        // ensuring it appears consistently across various screens throughout the session.
+        LogoRootWidget = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui_pro/logo.layout");
+        LogoWidget = ImageWidget.Cast(LogoRootWidget.FindAnyWidget("logoWidget"));
+        LogoWidget.LoadImageFile(0, "Colorful-UI/gui/textures/gloabals/Colorful UI Logo.edds");
+
     }
 
     override void OnKeyPress(int key)
@@ -15,8 +22,9 @@ modded class MissionGameplay
         super.OnKeyPress(key);
         if (key == KeyCode.KC_P)
         {
-            // Show dialog with a light blue background and green buttons
-            GetCUIManager().ShowDialog("Test Dialog", "This is a test message.", 1, 1, 1, 1, null, 0xFF3232C8, 0xFF00C800);
+            // Toggle the logo overlay visibility
+            LogoEnabled = !LogoWidget.IsVisible();
+            SaveOverlayData();
         }
     }
 }
