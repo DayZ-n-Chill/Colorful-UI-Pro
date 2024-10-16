@@ -4,7 +4,7 @@ SETLOCAL EnableExtensions DisableDelayedExpansion
 :: Function to check if the P:\ drive is mounted
 :CheckPDrive
 set "PDriveMounted=false"
-for /f %%d in ('wmic logicaldisk where "DeviceID='P:'" get DeviceID ^| find ":"') do set "PDriveMounted=true"
+for /f %%d in ('powershell -Command "Get-PSDrive -Name P -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Name"') do set "PDriveMounted=true"
 if not "%PDriveMounted%"=="true" (
     echo.
     powershell -Command  "Write-Host 'P:\ Drive: Not Mounted' -ForegroundColor DarkRed;"
