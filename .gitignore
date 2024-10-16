@@ -25,6 +25,7 @@ Servers/!ClientDiagLogs/
 
 # Missions 
 Missions/Vanilla/dayzOffline.chernarusplus/storage_1/
+Missions/Vanilla/dayzOffline.sakhal/storage_1/
 Missions/Vanilla/dayzOffline.enoch/storage_1/
 Missions/Experimental/dayzOffline.chernarusplus/storage_1/
 Missions/Experimental/dayzOffline.enoch/storage_1/
@@ -36,6 +37,7 @@ Missions/Custom/empty.fenix_emptiness/storage_1/
 
 # Profile Folders 
 Servers/Cherno/Profiles/
+Servers/Frostline/Profiles/
 Servers/Livonia/Profiles/
 Servers/Others/Empty/Profiles/
 Servers/Others/DeerIsle/Profiles/
