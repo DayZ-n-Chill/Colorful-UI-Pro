@@ -41,14 +41,14 @@ modded class LoginQueueBase extends LoginScreenBase
 // Logging In Screen ------------------------------
 modded class LoginTimeBase extends LoginScreenBase
 {
-    protected ImageWidget         m_LSBackground;
-    protected ImageWidget         m_tShader;
-    protected ImageWidget         m_bShader;
-    protected ImageWidget         m_tipIcon;
-    protected TextWidget          m_loadingMsg;
-    protected ImageWidget         m_exitIcon;
-    protected TextWidget          m_ExitText;
-    protected ProgressBarWidget   m_ProgressLoading;
+    protected ImageWidget m_LSBackground;
+    protected ImageWidget m_tShader;
+    protected ImageWidget m_bShader;
+    protected ImageWidget m_tipIcon;
+    protected TextWidget m_loadingMsg;
+    protected ImageWidget m_exitIcon;
+    protected TextWidget m_ExitText;
+    protected ProgressBarWidget m_ProgressLoading;
 
     override Widget Init()
     {
@@ -62,7 +62,7 @@ modded class LoginTimeBase extends LoginScreenBase
         m_loadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
-        m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));      
+        m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
         // Vanilla Elements
         m_txtLabel = TextWidget.Cast(layoutRoot.FindAnyWidget("txtLabel"));
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
@@ -124,7 +124,6 @@ modded class LoginTimeBase extends LoginScreenBase
         
         if (m_IsRespawn && time <= 1)
             GetGame().SetLoginTimerFinished();
-        
         // Change this text in quotes to whatever you want.
         m_txtLabel.SetText("CONNECTING TO SERVER IN " + time.ToString());
     }   

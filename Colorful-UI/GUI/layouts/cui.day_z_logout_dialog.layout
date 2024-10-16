@@ -1372,15 +1372,14 @@ WindowWidgetClass LogoutDialogRoot {
     ImageWidgetClass Logo {
      visible 1
      inheritalpha 1
-     position 0 0
-     size 500 384
+     size 438 261
      hexactpos 1
      vexactpos 1
      hexactsize 1
      vexactsize 1
      fixaspect outside
-     image0 ""
-     imageTexture "{9C466B38428C7271}Colorful-UI/GUI/textures/globals/Colorful UI Logo.edds"
+     image0 "set:cui image:Logo"
+     imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
