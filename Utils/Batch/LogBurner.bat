@@ -1,5 +1,5 @@
 @echo off
-cd ../../../Servers/
+cd ../../Servers/
 del *.log /s /f
 del *rpt /s /f
 del *mdmp /s /f
