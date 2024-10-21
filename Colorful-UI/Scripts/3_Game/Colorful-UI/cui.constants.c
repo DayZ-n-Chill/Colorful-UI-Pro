@@ -5,7 +5,7 @@ static bool RandomBackgrounds = false;	 // If set to true, a random background w
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
-int m_PreviousRandomIndex = -1; // Declare this globally if it's needed across multiple functions
+int m_RandomIndex = -1; 
 
 string SetRandomBackground()
 {
@@ -24,14 +24,13 @@ string SetRandomBackground()
     };
 
     int bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
-    while (bgIndex == m_PreviousRandomIndex)
+    while (bgIndex == m_RandomIndex)
         bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
 
-    m_PreviousRandomIndex = bgIndex;
+    m_RandomIndex = bgIndex;
 
     return images.Get(bgIndex);
 }
-
 
 string GetRandomGameOverScreen()
 {
