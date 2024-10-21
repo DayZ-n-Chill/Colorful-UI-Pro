@@ -152,7 +152,7 @@ PanelWidgetClass LoadingFrame {
    visible 1
    clipchildren 0
    ignorepointer 1
-   position 0 -0.00131
+   position 0 0
    size 1 1
    halign center_ref
    hexactpos 0

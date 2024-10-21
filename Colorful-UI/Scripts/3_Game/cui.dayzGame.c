@@ -1,4 +1,3 @@
-// dayzgame.c
 modded class LoadingScreen
 {
     protected ImageWidget cui_Background, cui_topShader, cui_bottomShader;
@@ -47,15 +46,13 @@ modded class LoadingScreen
 
     override void Show()
     {
-        // Ensure the random background is selected right before the display
+
         string randomBackground = SetRandomBackground();
         
-        // Now load the image
         cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));        
         cui_Background.LoadImageFile(0, randomBackground);
     }
 }
-
 
 // Logging In Screen ------------------------------
 modded class LoginTimeBase extends LoginScreenBase
@@ -74,11 +71,14 @@ modded class LoginTimeBase extends LoginScreenBase
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.dialog_login_time.layout");
         
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("Background"));
+        m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
+        
         m_exitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+        
         m_tShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_bShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+
         m_loadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
         
