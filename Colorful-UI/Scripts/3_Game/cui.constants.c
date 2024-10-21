@@ -5,14 +5,8 @@ static bool RandomBackgrounds = false;	 // If set to true, a random background w
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
-int m_RandomIndex = -1; 
-
 string SetRandomBackground()
 {
-	int currentTime = GetGame().GetTime();
-    Math.Randomize(currentTime);
-    Math.RandomFloat01(); // throw-away value to ensure proper randomization
-    
     TStringArray images = {
         "Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
         "Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
@@ -23,26 +17,24 @@ string SetRandomBackground()
         "Colorful-UI/gui/textures/loading_screens/CUI2-BG7.edds"
     };
 
-    int bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
-    while (bgIndex == m_RandomIndex)
-        bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
-
-    m_RandomIndex = bgIndex;
-
-    return images.Get(bgIndex);
+    int randomIndex = uiUtils.GetRandomIndex(images.Count());
+    return images.Get(randomIndex);
 }
 
-string GetRandomGameOverScreen()
+string SetRandomDeathScreen()
 {
-	const string images[] = {
-		"Colorful-UI/gui/textures/globals/DeathScreen-BG1.edds", 
-		"Colorful-UI/gui/textures/globals/DeathScreen-BG2.edds",
-		"Colorful-UI/gui/textures/globals/DeathScreen-BG3.edds"
-	};
+    TStringArray images = {
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG3.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG4.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG5.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG6.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG7.edds"
+    };
 
-	const int IMAGES_COUNT = 3;
-	int bgIndex = Math.RandomInt(0, IMAGES_COUNT - 1);
-	return images[bgIndex];
+    int randomIndex = uiUtils.GetRandomIndex(images.Count());
+    return images.Get(randomIndex);
 }
 
 class GameOverScreen
@@ -50,8 +42,6 @@ class GameOverScreen
     static string GameOverScreenImage() { return "Colorful-UI/gui/textures/globals/DeathScreen.edds"; };
 };
 
-// SOCIALS & LINKS ---------------------------------------------------------------
-// Set your links Here
 class MenuURLS {
 	static string urlDiscord   = "#";
 	static string urlFacebook  = "#";
@@ -63,8 +53,6 @@ class MenuURLS {
 	static string urlCustom    = "#";
 }
 
-// DIALOGS ------------------------------------------------------------------------
-// There is No Need to mess with anything below this line. 
 const int COLORFUL_EXIT				= 666;
 const int COLORFUL_CONFIGURE 		= 667;
 const int COLORFUL_DEFAULTS 		= 668;

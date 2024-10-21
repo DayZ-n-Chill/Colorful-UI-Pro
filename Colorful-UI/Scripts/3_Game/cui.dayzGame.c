@@ -1,4 +1,3 @@
-// dayzgame.c
 modded class LoadingScreen
 {
     protected ImageWidget cui_Background, cui_topShader, cui_bottomShader;
@@ -47,15 +46,13 @@ modded class LoadingScreen
 
     override void Show()
     {
-        // Ensure the random background is selected right before the display
+
         string randomBackground = SetRandomBackground();
         
-        // Now load the image
         cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));        
         cui_Background.LoadImageFile(0, randomBackground);
     }
 }
-
 
 // Logging In Screen ------------------------------
 modded class LoginTimeBase extends LoginScreenBase
