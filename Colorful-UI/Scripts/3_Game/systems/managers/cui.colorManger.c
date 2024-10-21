@@ -36,4 +36,3 @@ class UIColor
 	static int CUI2SubtleRed()        { return ARGB(255, 100, 35, 35); };
 	static int CUI2BrightRed()        { return ARGB(255, 152, 0, 0); };
 }
-s

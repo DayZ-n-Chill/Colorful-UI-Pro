@@ -24,9 +24,9 @@ string SetRandomBackground()
 string SetRandomDeathScreen()
 {
     TStringArray images = {
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG3.edds"
+        "Colorful-UI/gui/textures/death_screens/CUI2-BG1.edds", 
+        "Colorful-UI/gui/textures/death_screens/CUI2-BG2.edds",
+        "Colorful-UI/gui/textures/death_screens/CUI2-BG3.edds"
     };
 
     int randomIndex = cuiUtils.GetRandomIndex(images.Count());

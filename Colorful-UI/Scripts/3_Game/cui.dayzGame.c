@@ -71,11 +71,14 @@ modded class LoginTimeBase extends LoginScreenBase
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.dialog_login_time.layout");
         
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("Background"));
+        m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
+        
         m_exitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+        
         m_tShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_bShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+
         m_loadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
         
