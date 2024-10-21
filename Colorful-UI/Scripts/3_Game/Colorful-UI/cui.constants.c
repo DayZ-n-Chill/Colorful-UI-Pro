@@ -1,21 +1,37 @@
-// Constants.c v2.5.0
+// Constants.c v3.0
+static bool noHints			  = true;    // If set to true, the hints will not be shown during load screens.
+static bool SyncHintImages    = false;	 // If set to true, the hints are synced to BG Images, all controlled by the hints.json.	
+static bool RandomBackgrounds = false;	 // If set to true, a random background will be shown during load screens (SyncHintImages must be false. Image is changed in the layout files).
+static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
+static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
-// RANDO IMAGES ----------------------------------------------------------------
-// If you dont want to use the UiHintPanel you can use these instead.
-string GetRandomBackground()
+int m_PreviousRandomIndex = -1; // Declare this globally if it's needed across multiple functions
+
+string SetRandomBackground()
 {
-	const string images[] = {
-		"Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
-		"Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
-		"Colorful-UI/gui/textures/loading_screens/CUI2-BG3.edds"
-	};
-	// If you add more images be sure to change the image count. 
-	const int IMAGES_COUNT = 3;
-	int bgIndex = Math.RandomInt(0, IMAGES_COUNT - 1);
-	return images[bgIndex];
+	int currentTime = GetGame().GetTime();
+    Math.Randomize(currentTime);
+    Math.RandomFloat01(); // throw-away value to ensure proper randomization
+    
+    TStringArray images = {
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG3.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG4.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG5.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG6.edds",
+        "Colorful-UI/gui/textures/loading_screens/CUI2-BG7.edds"
+    };
+
+    int bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
+    while (bgIndex == m_PreviousRandomIndex)
+        bgIndex = Math.RandomIntInclusive(0, images.Count() - 1);
+
+    m_PreviousRandomIndex = bgIndex;
+
+    return images.Get(bgIndex);
 }
 
-static bool ShowDeadScreen = false;
 
 string GetRandomGameOverScreen()
 {
@@ -24,7 +40,7 @@ string GetRandomGameOverScreen()
 		"Colorful-UI/gui/textures/globals/DeathScreen-BG2.edds",
 		"Colorful-UI/gui/textures/globals/DeathScreen-BG3.edds"
 	};
-	// If you add more images be sure to change the image count. 
+
 	const int IMAGES_COUNT = 3;
 	int bgIndex = Math.RandomInt(0, IMAGES_COUNT - 1);
 	return images[bgIndex];

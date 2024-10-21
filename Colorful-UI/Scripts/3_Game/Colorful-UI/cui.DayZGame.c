@@ -1,52 +1,61 @@
-// Loading Screen (UH DUH!) --------------------
+// dayzgame.c
 modded class LoadingScreen
 {
-    protected ImageWidget m_Background;
-    protected ImageWidget m_tShader;
-    protected ImageWidget m_bShader;
-    protected ImageWidget m_tipIcon;
-    protected TextWidget m_loadingMsg;
+    protected ImageWidget cui_Background, cui_topShader, cui_bottomShader;
+    protected TextWidget m_loadingMsg;   
 
     void LoadingScreen(DayZGame game)
     {
         m_DayZGame = game;
-        // Use the CUI 2.0 custom layout 
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.loading.layout");
-        
-        // CUI 2.0 Elements
-        Class.CastTo(m_tShader, m_WidgetRoot.FindAnyWidget("TopShader"));
-        Class.CastTo(m_bShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
-        Class.CastTo(m_loadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
-        
-        // Load BG and Progress Bar
-        m_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));
+
+        cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(m_WidgetRoot.FindAnyWidget("LoadingBar"));
+        
+        Class.CastTo(cui_topShader, m_WidgetRoot.FindAnyWidget("TopShader"));
+        Class.CastTo(cui_bottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
+        Class.CastTo(m_loadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
+
         ProgressAsync.SetProgressData(m_ProgressLoading);
-        ProgressAsync.SetUserData(m_Background);
-        m_Background.Show(true);
-        
-        // Theme the elements. 
-        m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-        m_tShader.SetColor(colorScheme.TopShader());
-        m_bShader.SetColor(colorScheme.BottomShader());
-        m_loadingMsg.SetColor(colorScheme.LoadingMsg());
-        
-        // I plan to make this timed and show some silly loading comments from the community.
+        ProgressAsync.SetUserData(cui_Background);
+   
+        cui_Background.Show(true);
         m_loadingMsg.SetText("GAME IS LOADING!");
+
+        cui_topShader.SetColor(colorScheme.TopShader());
+        cui_bottomShader.SetColor(colorScheme.BottomShader());
+        m_loadingMsg.SetColor(colorScheme.LoadingMsg());
+        m_ProgressLoading.SetColor(colorScheme.Loadingbar());
     }
 
-    override void SetTitle(string title)
+    void noHints()
     {
-        // This function is intentionally left blank because it is no longer used.
+        m_WidgetRoot.FindAnyWidget("hint_frame").Show(false);
+    }
+
+    override void ShowEx(DayZGame game)
+    {
+        if (!noHints)
+        {
+            m_HintPanel = new UiHintPanelLoading(m_WidgetRoot.FindAnyWidget("hint_frame"));
+            m_HintPanel.Init(game);
+        } else {
+            noHints();
+        }
+        Show();
     }
 
     override void Show()
     {
-        // Use Random Background Images
-        m_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));        
-        m_Background.LoadImageFile(0, GetRandomBackground()); 
+        // Ensure the random background is selected right before the display
+        string randomBackground = SetRandomBackground();
+        
+        // Now load the image
+        cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));        
+        cui_Background.LoadImageFile(0, randomBackground);
     }
-};
+}
+
 
 // Logging In Screen ------------------------------
 modded class LoginTimeBase extends LoginScreenBase
@@ -62,9 +71,8 @@ modded class LoginTimeBase extends LoginScreenBase
 
     override Widget Init()
     {
-        // Use CUI Layout
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.dialog_login_time.layout");
-        // CUI 2.0 Elements
+        
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("Background"));
         m_exitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
         m_tShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
@@ -73,13 +81,13 @@ modded class LoginTimeBase extends LoginScreenBase
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
-        // Vanilla Elements
+        
         m_txtLabel = TextWidget.Cast(layoutRoot.FindAnyWidget("txtLabel"));
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
         m_txtDescription.Show(true);
         layoutRoot.FindAnyWidget("notification_root").Show(false);     
         // Theme the elements. 
-        m_LSBackground.LoadImageFile(0, GetRandomBackground()); 
+        m_LSBackground.LoadImageFile(0, SetRandomBackground()); 
         m_ProgressLoading.SetColor(colorScheme.Loadingbar());
         m_tShader.SetColor(colorScheme.TopShader());
         m_bShader.SetColor(colorScheme.BottomShader());
