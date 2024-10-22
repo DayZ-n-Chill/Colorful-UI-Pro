@@ -1,3 +1,4 @@
+// Sets the Music Menu SoundSet which is controlled in the config.cpp file
 modded class DynamicMusicPlayerRegistry
 {
     protected override void RegisterTracksMenu()
