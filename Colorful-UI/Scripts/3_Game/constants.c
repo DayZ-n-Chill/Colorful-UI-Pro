@@ -1,6 +1,6 @@
 // Constants.c v3.0 (These are a WIP and will be updated as the mod progresses)
 static bool noHints			  = false;    // If set to true, the hints will not be shown during load screens.
-static bool SyncHintImages    = false;	 // If set to true, the hints are synced to BG Images, all controlled by the hints.json.	
+static bool SyncHintImages    = true;	 // If set to true, the hints are synced to BG Images, all controlled by the hints.json.	
 static bool RandomBackgrounds = false;	 // If set to true, a random background will be shown during load screens (SyncHintImages must be false. Image is changed in the layout files).
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
@@ -8,13 +8,13 @@ static bool RandomDeadScreens = false;   // If set to true, a random game over s
 string SetRandomBackground()
 {
     TStringArray images = {
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG1.edds", 
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG2.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG3.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG4.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG5.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG6.edds",
-        "Colorful-UI/gui/textures/loading_screens/CUI2-BG7.edds"
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG1.edds", 
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG2.edds",
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG3.edds",
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG4.edds",
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG5.edds",
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG6.edds",
+        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG7.edds"
     };
 
     int randomIndex = cuiUtils.GetRandomIndex(images.Count());
@@ -24,9 +24,9 @@ string SetRandomBackground()
 string SetRandomDeathScreen()
 {
     TStringArray images = {
-        "Colorful-UI/gui/textures/death_screens/CUI2-BG1.edds", 
-        "Colorful-UI/gui/textures/death_screens/CUI2-BG2.edds",
-        "Colorful-UI/gui/textures/death_screens/CUI2-BG3.edds"
+        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS1.edds", 
+        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS2.edds",
+        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS3.edds"
     };
 
     int randomIndex = cuiUtils.GetRandomIndex(images.Count());
