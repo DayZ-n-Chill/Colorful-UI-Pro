@@ -187,7 +187,7 @@ GridSpacerWidgetClass rootFrame {
      hexactsize 1
      vexactsize 1
      fixaspect outside
-     imageTexture "{AD802400401D6BAD}Colorful-UI/GUI/textures/loading_screens/CUI2-BG2.edds"
+     imageTexture ""
      mode blend
      "src alpha" 1
      "clamp mode" clamp
