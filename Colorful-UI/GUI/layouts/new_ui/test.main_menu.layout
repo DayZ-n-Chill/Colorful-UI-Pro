@@ -1,0 +1,123 @@
+FrameWidgetClass MM_Root {
+ visible 1
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ priority 951
+ {
+  ImageWidgetClass ImageWidget0 {
+   ignorepointer 1
+   position 1.37598 0
+   size 0.16 0.09
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   fixaspect outside
+   imageTexture "{F20AAA14565F80CD}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds"
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass "Button Test Frame" {
+   ignorepointer 1
+   color 0 0 0 1
+   size 0.15 0.25
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style DayZDefaultPanel
+   {
+    ButtonWidgetClass VanillaBtn {
+     position 0 -75
+     size 200 48
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     text "Button Text"
+    }
+    ButtonWidgetClass TextwBtn {
+     position 0 0
+     size 200 48
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     {
+      TextWidgetClass TextwBtn_label {
+       ignorepointer 1
+       size 131.08701 48
+       halign center_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       text "Text Button"
+       font "gui/fonts/metronbook"
+       "exact text" 0
+       "size to text h" 1
+       "size to text v" 1
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+    ButtonWidgetClass TwBtnImg {
+     position 0 75
+     size 200 48
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     {
+      TextWidgetClass TwBtnImg_label {
+       ignorepointer 1
+       position 12 0
+       size 131.09 48
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       text "Text Button"
+       font "gui/fonts/metronbook"
+       "exact text" 0
+       "size to text h" 1
+       "size to text v" 1
+       "text halign" center
+       "text valign" center
+      }
+      ImageWidgetClass TwBtnImg_img {
+       ignorepointer 1
+       size 0.2 1
+       halign right_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+      }
+     }
+    }
+   }
+  }
+ }
+}
