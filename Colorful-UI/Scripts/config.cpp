@@ -36,31 +36,10 @@ class CfgMods
 		};
 		class defs
 		{
-			class imageSets
-			{
-				files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};
-			};
-			class gameScriptModule
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/3_Game"
-				};
-			};
-			class worldScriptModule
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/4_World"
-				};
-			};
-			class missionScriptModule 
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/5_Mission"
-				};
-			};
+			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};};
+			class gameScriptModule 	  {files[]= {"Colorful-UI/scripts/3_Game"};};
+			class worldScriptModule	  {files[]= {"Colorful-UI/scripts/4_World"};};
+			class missionScriptModule {files[]= {"Colorful-UI/scripts/5_Mission"};};
 		};
 	};	
 };
