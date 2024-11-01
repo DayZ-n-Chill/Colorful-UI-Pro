@@ -11,10 +11,10 @@ modded class MainMenu extends UIScriptedMenu {
         m_testBtn2 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn2"));
         m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
 
-        // Call the custom button styles method with button type specified as the second parameter
-        CustomButtonUtility.customBtnStyles(m_testBtn, ButtonType.DEFAULT, "Bitch Boi", 0xFFFFFFFF, 0xFFFF0088); // For testBtn
-        CustomButtonUtility.customBtnStyles(m_testBtn2, ButtonType.TEXT_WIDGET, "Bitch Ass", 0xFFFFFFFF, 0xFFFF0000); // For testBtn2
-        CustomButtonUtility.customBtnStyles(m_testBtn3, ButtonType.TEXT_WIDGET, "Another Button", 0xFFFFFFFF, UIColor.discord()); // For testBtn3
+        // Call the new button methods
+        CUIButton.defaultBtn(m_testBtn, "Bitch Boi", 0xFFFFFFFF, 0xFFFF0088); // For default button
+        CUIButton.textBtn(m_testBtn2, "Bitch Ass", 0xFFFFFFFF, 0xFFFF0088); // For text button
+        CUIButton.iconBtn(m_testBtn3, "Bitch Boi", 0xFFFFFFFF, 0xFFFF0088); // For icon button
 
         return layoutRoot;
     }
