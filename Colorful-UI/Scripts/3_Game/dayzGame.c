@@ -1,13 +1,3 @@
-modded class DayZGame
-{
-    override void ConnectLaunch() 
-    {
-        if(cuiUtils.ForceMainMenu) { MainMenuLaunch(); }
-        else { ConnectFromCLI(); };
-    };
-};
-
-
 // modded class LoadingScreen
 // {
 //     protected ImageWidget cui_Background, cui_topShader, cui_bottomShader;
@@ -196,3 +186,12 @@ modded class DayZGame
 //         }
 //     }
 // };
+
+modded class DayZGame
+{
+    override void ConnectLaunch() 
+    {
+        if(cuiUtils.ForceMainMenu) { MainMenuLaunch(); }
+        else { ConnectFromCLI(); };
+    };
+};

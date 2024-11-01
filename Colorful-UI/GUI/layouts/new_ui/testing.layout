@@ -38,7 +38,7 @@ FrameWidgetClass MainMenu_Root {
    vexactsize 0
    style DayZDefaultPanel
    {
-    ButtonWidgetClass TestBtn {
+    ButtonWidgetClass testBtn {
      position 0 -75
      size 200 48
      halign center_ref
@@ -49,7 +49,7 @@ FrameWidgetClass MainMenu_Root {
      vexactsize 1
      text "Button Text"
     }
-    ButtonWidgetClass TextwBtn {
+    ButtonWidgetClass testBtn2 {
      position 0 0
      size 200 48
      halign center_ref
@@ -59,7 +59,7 @@ FrameWidgetClass MainMenu_Root {
      hexactsize 1
      vexactsize 1
      {
-      TextWidgetClass TextwBtn_label {
+      TextWidgetClass testBtn2_label {
        ignorepointer 1
        size 131.08701 48
        halign center_ref
@@ -69,8 +69,9 @@ FrameWidgetClass MainMenu_Root {
        hexactsize 1
        vexactsize 1
        text "Text Button"
-       font "gui/fonts/metronbook"
-       "exact text" 0
+       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       "text sharpness" 1.5
+       "exact text" 1
        "size to text h" 1
        "size to text v" 1
        "text halign" center
@@ -78,7 +79,7 @@ FrameWidgetClass MainMenu_Root {
       }
      }
     }
-    ButtonWidgetClass TwBtnImg {
+    ButtonWidgetClass testBtn3 {
      position 0 75
      size 200 48
      halign center_ref
@@ -88,7 +89,7 @@ FrameWidgetClass MainMenu_Root {
      hexactsize 1
      vexactsize 1
      {
-      TextWidgetClass TwBtnImg_label {
+      TextWidgetClass testBtn3_label {
        ignorepointer 1
        position 12 0
        size 131.09 48
@@ -98,14 +99,15 @@ FrameWidgetClass MainMenu_Root {
        hexactsize 1
        vexactsize 1
        text "Text Button"
-       font "gui/fonts/metronbook"
-       "exact text" 0
+       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       "text sharpness" 1.5
+       "exact text" 1
        "size to text h" 1
        "size to text v" 1
        "text halign" center
        "text valign" center
       }
-      ImageWidgetClass TwBtnImg_img {
+      ImageWidgetClass testBtn3_img {
        ignorepointer 1
        size 0.2 1
        halign right_ref

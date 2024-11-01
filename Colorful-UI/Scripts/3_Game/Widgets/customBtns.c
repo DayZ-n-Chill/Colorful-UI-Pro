@@ -1,27 +1,37 @@
-// class CustomButtonWidget extends ButtonWidget
-// {
-//     // Constructor
-//     void CustomButtonWidget()
-//     {
-//         // Custom initialization can go here
-//     }
+enum LinkType {
+    URL,
+    // Other types can be added here as needed
+};
 
-//     // Example method to handle custom behavior when the button is clicked
-//     bool OnClick(Widget w, int x, int y, int button)
-//     {
-//         // Call the base class method
-//         super.OnClick(w, x, y, button);
+enum ButtonType {
+    DEFAULT,
+    TEXT_WIDGET,
+    // Other types can be added here as needed
+};
 
-//         // Add your custom logic here
-//         Print("Custom button clicked!");
+class CustomButtonUtility {
+    static int ARGB(int alpha, int red, int green, int blue) {
+        return (alpha << 24) | (red << 16) | (green << 8) | blue; // Combine ARGB into a single integer
+    }
 
-//         return true; // Return true to indicate the event was handled
-//     }
+    static void customBtnStyles(ButtonWidget button, ButtonType buttonType, string text, int textColor, int baseColor, string link = "", LinkType linkType = LinkType.URL) {
+        if (!button) return; // Ensure the button exists
 
-//     // Additional custom methods can be defined here
-//     void SetCustomText(string text)
-//     {
-//         // Set the button text with additional custom logic if needed
-//         SetText(text);
-//     }
-// }
+        // Automatically find the text widget based on the button's name
+        string textWidgetName = button.GetName() + "_label"; // Assuming the text widget follows the naming convention
+        TextWidget textWidget = TextWidget.Cast(button.FindAnyWidget(textWidgetName));
+
+        // Logic based on button type
+        if (buttonType == ButtonType.TEXT_WIDGET && textWidget) {
+            textWidget.SetColor(textColor); // Set the text color for the text widget
+            textWidget.SetText(text); // Set the text in the text widget
+            button.SetText(""); // Clear the text from the ButtonWidget if it has a corresponding text widget
+        } else {
+            button.SetText(text); // Set the button text if no text widget is found or if it's a default button
+        }
+
+        button.SetColor(baseColor); // Set the button background color
+
+        // Optional: Logic to handle URL linking can be added here
+    }
+}
