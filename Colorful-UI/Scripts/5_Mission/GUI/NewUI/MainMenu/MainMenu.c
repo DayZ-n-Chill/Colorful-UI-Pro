@@ -1,3 +1,11 @@
+modded class MainMenu extends UIScriptedMenu {
+	override Widget Init()
+	{
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets( "Colorful-UI/gui/layouts/new_ui/testing.layout" );
+		return layoutRoot;
+	}
+};
+
 // modded class MainMenu extends UIScriptedMenu
 // {
 // // Social Buttons

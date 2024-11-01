@@ -1,4 +1,4 @@
-FrameWidgetClass MM_Root {
+FrameWidgetClass MainMenu_Root {
  visible 1
  ignorepointer 1
  position 0 0
@@ -13,7 +13,7 @@ FrameWidgetClass MM_Root {
  {
   ImageWidgetClass ImageWidget0 {
    ignorepointer 1
-   position 1.37598 0
+   position 1.37598 0.952
    size 0.16 0.09
    halign center_ref
    valign center_ref
@@ -38,7 +38,7 @@ FrameWidgetClass MM_Root {
    vexactsize 0
    style DayZDefaultPanel
    {
-    ButtonWidgetClass VanillaBtn {
+    ButtonWidgetClass TestBtn {
      position 0 -75
      size 200 48
      halign center_ref
