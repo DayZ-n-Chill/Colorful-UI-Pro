@@ -12,9 +12,9 @@ modded class MainMenu extends UIScriptedMenu {
         m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
 
         // Call the new button methods
-        CUIButton.baseBtn(m_testBtn, "Bitch Boi", 0xFFFF0088, 0xFFFF0088); // For default button
-        CUIButton.baseBtn(m_testBtn2, "Bitch Ass", 0xFFFF0088, 0xFFFF0088); // For text button
-        CUIButton.baseBtn(m_testBtn3, "Bitch Boi", 0xFFFF0088, 0xFFFF0088); // For icon button
+        CUIButton.baseBtn(m_testBtn,  "Bitch Boi", UIColor.Violet(), UIColor.Yellow());
+        CUIButton.baseBtn(m_testBtn2, "Bitch Ass", UIColor.Orange(), UIColor.Green());
+        CUIButton.baseBtn(m_testBtn3, "Bitch Ass MF", UIColor.Blue(), UIColor.Blue());
 
         return layoutRoot;
     }

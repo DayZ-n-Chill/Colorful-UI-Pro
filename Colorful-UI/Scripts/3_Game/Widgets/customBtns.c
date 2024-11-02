@@ -1,3 +1,4 @@
+
 class CUIButton {
     // Converts ARGB values into a single integer representation
     static int ARGB(int alpha, int red, int green, int blue) {
@@ -10,7 +11,8 @@ class CUIButton {
         
         button.SetText(text);
         button.SetTextColor(textColor); 
-        button.SetColor(hoverColor); // This sets the hover just fine for all butons and you dont need a event handler
+        button.SetColor(hoverColor); 
+        // This sets the hover just fine for all butons and you dont need a event handler to do the backgroung hovr effcect
 
         string textWidgetName = button.GetName() + "_label"; 
         TextWidget textWidget = TextWidget.Cast(button.FindAnyWidget(textWidgetName));
@@ -22,3 +24,5 @@ class CUIButton {
         }
     }
 }
+
+
