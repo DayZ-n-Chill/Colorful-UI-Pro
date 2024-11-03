@@ -7,6 +7,7 @@ class CUIButton {
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
+    // Existing baseBtn method
     static void baseBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
         if (!button) return;
 
@@ -14,7 +15,7 @@ class CUIButton {
         if (text == "") text = "Button";
         if (textColor == -1) textColor = ARGB(255, 255, 255, 255); // Default to white
         if (hoverTextColor == -1) hoverTextColor = ARGB(255, 200, 200, 200); // Default to light gray
-        if (baseColor == -1) baseColor = ARGB(255, 50, 50, 50); // Default to dark gray
+        if (baseColor == -1) baseColor = ARGB(255, 50, 50, 50);   // Default to dark gray
         if (hoverColor == -1) hoverColor = ARGB(255, 70, 70, 70); // Default to slightly lighter gray
 
         button.SetText(text);
@@ -30,7 +31,7 @@ class CUIButton {
         if (textWidget) {
             textWidget.SetColor(textColor);
             textWidget.SetText(text);
-            button.SetText(""); 
+            button.SetText("");
         }
 
         if (imageWidget) {
@@ -38,6 +39,45 @@ class CUIButton {
         }
 
         CUIButtonHandler handler = new CUIButtonHandler(button, textWidget, imageWidget, textColor, hoverTextColor, baseColor, hoverColor);
+
+        WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button, handler, "OnMouseEnter");
+        WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button, handler, "OnMouseLeave");
+        WidgetEventHandler.GetInstance().RegisterOnClick(button, handler, "OnClick");
+        WidgetEventHandler.GetInstance().RegisterOnFocus(button, handler, "OnFocus");
+        WidgetEventHandler.GetInstance().RegisterOnFocusLost(button, handler, "OnFocusLost");
+
+        s_Handlers.Insert(handler);
+    }
+
+    // New textBtn method
+    static void textBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1) {
+        if (!button) return;
+
+        // Assign default values specific to textBtn
+        if (text == "") text = "Text Button";
+        if (textColor == -1) textColor = ARGB(255, 0, 0, 0);       // Default to black text
+        if (hoverTextColor == -1) hoverTextColor = ARGB(255, 100, 100, 100); // Default to gray on hover
+
+        // Use transparent background for text buttons
+        int baseColor = ARGB(0, 0, 0, 0);       // Fully transparent
+        int hoverColor = ARGB(20, 0, 0, 0);     // Slightly visible on hover
+
+        button.SetText(text);
+        button.SetTextColor(textColor);
+        button.SetColor(baseColor);
+
+        string textWidgetName = button.GetName() + "_label";
+        TextWidget textWidget = TextWidget.Cast(button.FindAnyWidget(textWidgetName));
+
+        if (textWidget) {
+            textWidget.SetColor(textColor);
+            textWidget.SetText(text);
+            button.SetText("");
+        }
+
+        // No image widget for textBtn, but if needed, you can handle it similarly
+
+        CUIButtonHandler handler = new CUIButtonHandler(button, textWidget, null, textColor, hoverTextColor, baseColor, hoverColor);
 
         WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button, handler, "OnMouseEnter");
         WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button, handler, "OnMouseLeave");
