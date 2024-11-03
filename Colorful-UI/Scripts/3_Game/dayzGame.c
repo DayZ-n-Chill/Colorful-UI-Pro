@@ -191,7 +191,7 @@ modded class DayZGame
 {
     override void ConnectLaunch() 
     {
-        if(cuiUtils.ForceMainMenu) { MainMenuLaunch(); }
+        if(ForceMainMenu) { MainMenuLaunch(); }
         else { ConnectFromCLI(); };
     };
 };
