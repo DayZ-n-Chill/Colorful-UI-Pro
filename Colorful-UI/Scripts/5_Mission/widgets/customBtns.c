@@ -18,10 +18,17 @@ class CUIButton {
         if (textWidget) {
             textWidget.SetColor(textColor);
             textWidget.SetText(text);
-            button.SetText(""); 
+            button.SetText("");
         }
 
-        CUIButtonHandler handler = new CUIButtonHandler(button, textWidget, textColor, hoverTextColor, baseColor, hoverColor);
+        string imageWidgetName = button.GetName() + "_img";
+        ImageWidget imageWidget = ImageWidget.Cast(button.FindAnyWidget(imageWidgetName));
+
+        if (imageWidget) {
+            imageWidget.SetColor(textColor);
+        }
+
+        CUIButtonHandler handler = new CUIButtonHandler(button, textWidget, imageWidget, textColor, hoverTextColor, baseColor, hoverColor);
 
         WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button, handler, "OnMouseEnter");
         WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button, handler, "OnMouseLeave");
@@ -36,50 +43,62 @@ class CUIButton {
 class CUIButtonHandler {
     private ButtonWidget m_Button;
     private TextWidget m_TextWidget;
+    private ImageWidget m_ImageWidget;
     private int m_BaseColor;
     private int m_HoverColor;
     private int m_TextColor;
     private int m_HoverTextColor;
 
-    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, int textColor, int hoverTextColor, int baseColor, int hoverColor) {
+    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget, int textColor, int hoverTextColor, int baseColor, int hoverColor) {
         m_Button = button;
         m_TextWidget = textWidget;
+        m_ImageWidget = imageWidget;
         m_TextColor = textColor;
         m_HoverTextColor = hoverTextColor;
         m_BaseColor = baseColor;
         m_HoverColor = hoverColor;
 
-        // Set initial button properties
-        if (m_Button) {
-            m_Button.SetColor(m_BaseColor);
-            if (m_TextWidget) {
-                m_TextWidget.SetColor(m_TextColor);
-            } else {
-                m_Button.SetTextColor(m_TextColor);
-            }
+        ApplyBaseStyles();
+    }
+
+    private void ApplyHoverStyles() {
+        m_Button.SetColor(m_HoverColor);
+
+        if (m_TextWidget) {
+            m_TextWidget.SetColor(m_HoverTextColor);
+        } else {
+            m_Button.SetTextColor(m_HoverTextColor);
+        }
+
+        if (m_ImageWidget) {
+            m_ImageWidget.SetColor(m_HoverTextColor);
+        }
+    }
+
+    private void ApplyBaseStyles() {
+        m_Button.SetColor(m_BaseColor);
+
+        if (m_TextWidget) {
+            m_TextWidget.SetColor(m_TextColor);
+        } else {
+            m_Button.SetTextColor(m_TextColor);
+        }
+
+        if (m_ImageWidget) {
+            m_ImageWidget.SetColor(m_TextColor);
         }
     }
 
     bool OnMouseEnter(Widget w, int x, int y) {
         if (w == m_Button) {
-            m_Button.SetColor(m_HoverColor);
-            if (m_TextWidget) {
-                m_TextWidget.SetColor(m_HoverTextColor);
-            } else {
-                m_Button.SetTextColor(m_HoverTextColor);
-            }
+            ApplyHoverStyles();
         }
         return true;
     }
 
     bool OnMouseLeave(Widget w, Widget enterW, int x, int y) {
         if (w == m_Button) {
-            m_Button.SetColor(m_BaseColor);
-            if (m_TextWidget) {
-                m_TextWidget.SetColor(m_TextColor);
-            } else {
-                m_Button.SetTextColor(m_TextColor);
-            }
+            ApplyBaseStyles();
         }
         return true;
     }
@@ -93,24 +112,14 @@ class CUIButtonHandler {
 
     bool OnFocus(Widget w, int x, int y) {
         if (w == m_Button) {
-            m_Button.SetColor(m_HoverColor);
-            if (m_TextWidget) {
-                m_TextWidget.SetColor(m_HoverTextColor);
-            } else {
-                m_Button.SetTextColor(m_HoverTextColor);
-            }
+            ApplyHoverStyles();
         }
         return true;
     }
 
     bool OnFocusLost(Widget w, int x, int y) {
         if (w == m_Button) {
-            m_Button.SetColor(m_BaseColor);
-            if (m_TextWidget) {
-                m_TextWidget.SetColor(m_TextColor);
-            } else {
-                m_Button.SetTextColor(m_TextColor);
-            }
+            ApplyBaseStyles();
         }
         return true;
     }
