@@ -1,3 +1,5 @@
+// custmBtn.c
+
 class CUIButton {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
@@ -5,8 +7,15 @@ class CUIButton {
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
-    static void baseBtn(ButtonWidget button, string text, int textColor, int hoverTextColor, int baseColor, int hoverColor) {
+    static void baseBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
         if (!button) return;
+
+        // Assign default values if parameters are not provided
+        if (text == "") text = "Button";
+        if (textColor == -1) textColor = ARGB(255, 255, 255, 255); // Default to white
+        if (hoverTextColor == -1) hoverTextColor = ARGB(255, 200, 200, 200); // Default to light gray
+        if (baseColor == -1) baseColor = ARGB(255, 50, 50, 50); // Default to dark gray
+        if (hoverColor == -1) hoverColor = ARGB(255, 70, 70, 70); // Default to slightly lighter gray
 
         button.SetText(text);
         button.SetTextColor(textColor);
@@ -15,14 +24,14 @@ class CUIButton {
         string textWidgetName = button.GetName() + "_label";
         TextWidget textWidget = TextWidget.Cast(button.FindAnyWidget(textWidgetName));
 
+        string imageWidgetName = button.GetName() + "_img";
+        ImageWidget imageWidget = ImageWidget.Cast(button.FindAnyWidget(imageWidgetName));
+
         if (textWidget) {
             textWidget.SetColor(textColor);
             textWidget.SetText(text);
-            button.SetText("");
+            button.SetText(""); 
         }
-
-        string imageWidgetName = button.GetName() + "_img";
-        ImageWidget imageWidget = ImageWidget.Cast(button.FindAnyWidget(imageWidgetName));
 
         if (imageWidget) {
             imageWidget.SetColor(textColor);
@@ -58,18 +67,17 @@ class CUIButtonHandler {
         m_BaseColor = baseColor;
         m_HoverColor = hoverColor;
 
+        // Set initial button properties
         ApplyBaseStyles();
     }
 
     private void ApplyHoverStyles() {
         m_Button.SetColor(m_HoverColor);
-
         if (m_TextWidget) {
             m_TextWidget.SetColor(m_HoverTextColor);
         } else {
             m_Button.SetTextColor(m_HoverTextColor);
         }
-
         if (m_ImageWidget) {
             m_ImageWidget.SetColor(m_HoverTextColor);
         }
@@ -77,13 +85,11 @@ class CUIButtonHandler {
 
     private void ApplyBaseStyles() {
         m_Button.SetColor(m_BaseColor);
-
         if (m_TextWidget) {
             m_TextWidget.SetColor(m_TextColor);
         } else {
             m_Button.SetTextColor(m_TextColor);
         }
-
         if (m_ImageWidget) {
             m_ImageWidget.SetColor(m_TextColor);
         }

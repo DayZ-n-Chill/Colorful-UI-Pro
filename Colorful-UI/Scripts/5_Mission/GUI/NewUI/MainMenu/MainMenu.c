@@ -1,4 +1,5 @@
-// MainMenu class
+// MainMenu.c
+
 modded class MainMenu extends UIScriptedMenu {
     private ButtonWidget m_testBtn;
     private ButtonWidget m_testBtn2;
@@ -11,9 +12,15 @@ modded class MainMenu extends UIScriptedMenu {
         m_testBtn2 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn2"));
         m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
 
-        CUIButton.baseBtn(m_testBtn,  "Button 1", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
-        CUIButton.baseBtn(m_testBtn2, "Button 2", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
-        CUIButton.baseBtn(m_testBtn3, "Button 3", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
+        // Now you can call baseBtn with optional parameters
+        // Example 1: Provide all parameters
+        CUIButton.baseBtn(m_testBtn3, "Button 1", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
+
+        // Example 2: Provide only some parameters
+        CUIButton.baseBtn(m_testBtn2, "Button 2", UIColor.Blue());
+
+        // Example 3: Use all default values
+        CUIButton.baseBtn(m_testBtn);
 
         return layoutRoot;
     }
