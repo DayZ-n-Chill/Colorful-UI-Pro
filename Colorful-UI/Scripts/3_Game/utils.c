@@ -1,7 +1,5 @@
 class cuiUtils
 {
-    static bool ForceMainMenu = true;  
-    
     static int m_RandomIndex = -1; 
     static int GetRandomIndex(int count)
     {
@@ -12,5 +10,9 @@ class cuiUtils
         }
         m_RandomIndex = newIndex;
         return newIndex;
+    }
+
+    static int ARGB(int alpha, int red, int green, int blue) {
+        return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 };
