@@ -14,13 +14,13 @@ modded class MainMenu extends UIScriptedMenu {
 
         // Now you can call baseBtn with optional parameters
         // Example 1: Provide all parameters
-        CUIButton.baseBtn(m_testBtn3, "Button 1", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
+        CUIButton.baseBtn(m_testBtn);
 
         // Example 2: Provide only some parameters
-        CUIButton.baseBtn(m_testBtn2, "Button 2", UIColor.Blue());
+        CUIButton.baseBtn(m_testBtn2);
 
         // Example 3: Use all default values
-        CUIButton.baseBtn(m_testBtn);
+        CUIButton.baseBtn(m_testBtn3);
 
         return layoutRoot;
     }
