@@ -1,4 +1,4 @@
-class cuiElement {
+class cuiElmnt {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
     static int ARGB(int alpha, int red, int green, int blue) {

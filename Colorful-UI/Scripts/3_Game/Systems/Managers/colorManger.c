@@ -10,7 +10,7 @@ class UIColor
 	static int White()            { return ARGB(255, 255, 255, 255); };
 	static int Grey()             { return ARGB(255, 130, 130, 130); };
 	static int Black()            { return ARGB(255, 0, 0, 0); };
-	static int Transparent()      { return ARGB(0, 0, 0, 0); };
+	static int Transparent()      { return ARGB(1, 0, 0, 0); };
 	static int SemiTransWhite()   { return ARGB(120, 255, 255, 255); };
 	static int SemiTransBlack()   { return ARGB(120, 0, 0, 0); };
 	

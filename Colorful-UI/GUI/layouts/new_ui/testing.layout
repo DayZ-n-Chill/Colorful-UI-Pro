@@ -47,7 +47,7 @@ FrameWidgetClass MainMenu_Root {
      vexactpos 1
      hexactsize 1
      vexactsize 1
-     style DayZDefaultButton
+     style Default
      text "Button Text"
      text_proportion 0.5
      "text color" 0 0 0 1
