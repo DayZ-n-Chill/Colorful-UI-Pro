@@ -14,9 +14,18 @@ modded class MainMenu extends UIScriptedMenu {
         m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
         m_textBtn  = ButtonWidget.Cast(layoutRoot.FindAnyWidget("textBtn"));
 
-        // Existing baseBtn examples
-        CUIButton.baseBtn(m_testBtn, "Button 1", UIColor.Blue(), UIColor.Violet(), UIColor.Orange(), UIColor.Green());
-        CUIButton.baseBtn(m_testBtn2, "Button 2", UIColor.Blue());
+        // Existing baseBtn examples  Button Text,TextColor,HoverTextColor,Base/Focus Color,HoverColor
+        CUIButton.baseBtn(
+            m_testBtn,       // ButtonWidget
+            "Button 1",      // Button Text
+            -1,              // TextColor
+            -1,              // HoverTextColor
+            UIColor.Green(), // Base/Focus Color
+            UIColor.Red());  // HoverColor
+        
+        
+        
+        CUIButton.baseBtn(m_testBtn2, "Button 2",   UIColor.White(),  UIColor.Violet(),  UIColor.Transparent(),  UIColor.Transparent());
         CUIButton.baseBtn(m_testBtn3);
 
         return layoutRoot;

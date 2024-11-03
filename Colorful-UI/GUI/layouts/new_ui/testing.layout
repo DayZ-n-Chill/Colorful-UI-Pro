@@ -28,7 +28,7 @@ FrameWidgetClass MainMenu_Root {
   }
   PanelWidgetClass "Button Test Frame" {
    ignorepointer 1
-   color 0 0 0 1
+   color 0.3843 0.3843 0.3843 1
    size 0.15 0.25
    halign center_ref
    valign center_ref
@@ -47,7 +47,9 @@ FrameWidgetClass MainMenu_Root {
      vexactpos 1
      hexactsize 1
      vexactsize 1
+     style DayZDefaultButton
      text "Button Text"
+     text_proportion 0.5
     }
     ButtonWidgetClass testBtn2 {
      position 0 0
