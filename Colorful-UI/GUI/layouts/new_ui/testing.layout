@@ -50,6 +50,7 @@ FrameWidgetClass MainMenu_Root {
      style DayZDefaultButton
      text "Button Text"
      text_proportion 0.5
+     "text color" 0 0 0 1
     }
     ButtonWidgetClass testBtn2 {
      position 0 0

@@ -10,7 +10,7 @@ class colorScheme
 	// Base Typography 
 	static int PrimaryText()         { return UIColor.White(); }           // Primary text color for main body content
 	static int SecondaryText()       { return UIColor.Grey(); }            // Color for secondary text, e.g., subtitles or info
-	static int TextHover()           { return BrandColor(); }              // Text color for hover effects, creates interactivity
+	static int TextHover()           { return PrimaryText(); }              // Text color for hover effects, creates interactivity
 
 	// Global UI Elements 
 	static int ButtonHover()         { return BrandColor(); }              // Button color on hover, provides feedback

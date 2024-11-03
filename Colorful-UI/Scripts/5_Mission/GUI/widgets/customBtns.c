@@ -1,21 +1,18 @@
-// custmBtn.c
-
-class CUIButton {
+class cuiElement {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
     static int ARGB(int alpha, int red, int green, int blue) {
         return (alpha << 24) | (red << 16) | (green << 8) | blue;
     }
 
-    static void baseBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
+    static void Btn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
         if (!button) return;
 
-        // Assign default values if parameters are not provided
         if (text == "") text = "Button";
-        if (textColor == -1) textColor = colorScheme.PrimaryText(); // Default to white
-        if (hoverTextColor == -1) hoverTextColor = ARGB(255, 200, 200, 200); // Default to light gray
-        if (baseColor == -1) baseColor = ARGB(255, 50, 50, 50); // Default to dark gray
-        if (hoverColor == -1) hoverColor = ARGB(255, 70, 70, 70); // Default to slightly lighter gray
+        if (textColor == -1) textColor = colorScheme.PrimaryText(); 
+        if (hoverTextColor == -1) hoverTextColor = colorScheme.TextHover(); 
+        if (baseColor == -1) baseColor = UIColor.Grey();     
+        if (hoverColor == -1) hoverColor = colorScheme.ButtonHover(); 
 
         button.SetText(text);
         button.SetTextColor(textColor);
