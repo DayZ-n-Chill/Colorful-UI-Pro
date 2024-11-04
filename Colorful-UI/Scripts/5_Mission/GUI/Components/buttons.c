@@ -1,11 +1,7 @@
-class cuiElmnt {
+class cuiButton {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
-    static int ARGB(int alpha, int red, int green, int blue) {
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
-    }
-
-    static void Btn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
+    static void proBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
         if (!button) return;
 
         if (text == "") text = "Button";

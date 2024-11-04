@@ -10,9 +10,9 @@ modded class MainMenu extends UIScriptedMenu {
         m_testBtn2 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn2"));
         m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
 
-        cuiElmnt.Btn(m_testBtn, "Test Button", UIColor.Yellow(), UIColor.Violet());         
-        cuiElmnt.Btn(m_testBtn2);
-        cuiElmnt.Btn(m_testBtn3);
+        cuiElmnt.proBtn(m_testBtn, "Test Button", UIColor.Yellow(), UIColor.Violet());         
+        cuiElmnt.proBtn(m_testBtn2);
+        cuiElmnt.proBtn(m_testBtn3);
 
         return layoutRoot;
     }
