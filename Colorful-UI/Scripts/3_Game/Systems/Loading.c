@@ -27,19 +27,19 @@ modded class LoadingScreen
         m_ProgressLoading.SetColor(colorScheme.Loadingbar());
     }
 
-    void noHints()
+    void NoHints()
     {
         m_WidgetRoot.FindAnyWidget("hint_frame").Show(false);
     }
 
     override void ShowEx(DayZGame game)
     {
-        if (!noHints)
+        if (!NoHints)
         {
             m_HintPanel = new UiHintPanelLoading(m_WidgetRoot.FindAnyWidget("hint_frame"));
             m_HintPanel.Init(game);
         } else {
-            noHints();
+            NoHints();
         }
         Show();
     }
@@ -187,6 +187,7 @@ modded class LoginQueueBase extends LoginScreenBase
     }
 };
 
+// Start at Main Menu ----------------------------------
 modded class DayZGame
 {
     override void ConnectLaunch() 
