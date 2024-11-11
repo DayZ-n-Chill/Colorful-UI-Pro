@@ -1,0 +1,34 @@
+/MyDayZMod
+│
+├── /Scripts
+│   ├── /3_Game           # Game-specific logic and managers
+│   │   ├── colorMgr.c       # Manages color settings
+│   │   ├── themeMgr.c       # Manages themes and styling
+│   │   ├── notification.c   # Enhanced notification system
+│   │   └── spawnSelect.c    # Customizable spawn selection
+│   │
+│   ├── /4_World          # World and environmental scripts
+│   │   ├── weatherControl.c # Custom weather adjustments
+│   │   └── spawnHandler.c   # Handles custom spawn points
+│   │
+│   └── /5_Mission        # Mission and UI-specific scripts
+│       ├── /UI
+│       │   ├── button.c         # Button widget code
+│       │   ├── videoWidget.c    # Video widget code
+│       │   ├── inventoryScreen.c # Inventory screen updates
+│       │   ├── hud.c            # Colorful HUD integration
+│       │   ├── deathScreen.c    # New death screen system
+│       │   ├── introScene.c     # Intro scene code
+│       │   └── dragWidget.c     # Draggable widget functionality
+│       │
+│       └── main.c               # Main entry script for mission setup
+│
+├── /Data                    # Data files and configurations
+│   ├── serverMessages.json     # JSON for server messages or rules
+│   ├── settings.json           # JSON for user or server settings
+│   └── buttonStyles.json       # JSON for custom button styles
+│
+└── /UIAssets               # UI assets, textures, and fonts
+    ├── textures                # Custom textures for UI elements
+    ├── fonts                   # Custom fonts for the HUD
+    └── sounds                  # Sounds for UI actions or notifications

@@ -1,3 +1,4 @@
+// These are utility functions that are used in the mod that you can use in your own U.
 class cuiUtils
 {
     static int m_RandomIndex = -1; 

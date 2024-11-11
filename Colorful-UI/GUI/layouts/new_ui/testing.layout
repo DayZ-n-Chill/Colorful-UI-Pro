@@ -29,6 +29,7 @@ FrameWidgetClass MainMenu_Root {
   PanelWidgetClass "Button Test Frame" {
    ignorepointer 1
    color 0.3843 0.3843 0.3843 1
+   position -694.33502 -359.85898
    size 0.15 0.25
    halign center_ref
    valign center_ref
