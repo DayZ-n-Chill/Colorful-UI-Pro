@@ -20,6 +20,7 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    fixaspect outside
+   imageTexture "{BBD2BF0B2499F4A7}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds"
    "clamp mode" clamp
    "stretch mode" stretch_w_h
   }
