@@ -10,13 +10,13 @@ static bool RandomDeadScreens = false;   // If set to true, a random game over s
 string SetRandomBackground()
 {
     TStringArray images = {
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG1.edds", 
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG2.edds",
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG3.edds",
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG4.edds",
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG5.edds",
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG6.edds",
-        "Colorful-UI/gui/textures/LoadScreens/Cui3-BG7.edds"
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds", 
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
+        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
     };
 
     int randomIndex = cuiUtils.GetRandomIndex(images.Count());
@@ -27,9 +27,9 @@ string SetRandomBackground()
 string SetRandomDeathScreen()
 {
     TStringArray images = {
-        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS1.edds", 
-        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS2.edds",
-        "Colorful-UI/gui/textures/DeathScreens/Cui3-DS3.edds"
+        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS1.edds", 
+        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS2.edds",
+        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS3.edds"
     };
 
     int randomIndex = cuiUtils.GetRandomIndex(images.Count());

@@ -24,7 +24,7 @@ PanelWidgetClass LoadingFrame {
    scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{F3680D43FF90E5A2}Colorful-UI/GUI/textures/loading_screens/CUI2-BG1.edds"
+   imageTexture "{F3680D43FF90E5A2}Colorful-UI/GUI/textures/loading_screens/Cui3-BG1.edds"
    mode opaque
    "src alpha" 0
    "clamp mode" clamp
