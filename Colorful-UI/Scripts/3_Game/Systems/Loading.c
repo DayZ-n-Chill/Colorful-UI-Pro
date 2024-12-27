@@ -6,7 +6,7 @@ modded class LoadingScreen
     void LoadingScreen(DayZGame game)
     {
         m_DayZGame = game;
-        m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.loading.layout");
+        m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
         cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(m_WidgetRoot.FindAnyWidget("LoadingBar"));
@@ -55,7 +55,7 @@ modded class LoginTimeBase extends LoginScreenBase
 
     override Widget Init()
     {
-        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.dialog_login_time.layout");
+        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
         
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("Background"));
         m_LSBackground = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
@@ -145,7 +145,7 @@ modded class LoginQueueBase extends LoginScreenBase
     override Widget Init()
     {    
         // Use CUI Layout    
-        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.dialog_queue_position.layout");
+        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
         // Vanilla Elements
         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));

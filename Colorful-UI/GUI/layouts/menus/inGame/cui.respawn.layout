@@ -13,18 +13,20 @@ WindowWidgetClass WindowWidget {
  font "gui/fonts/sdf_MetronBook24"
  {
   FrameWidgetClass GameOverScreen {
-   visible 0
+   visible 1
    ignorepointer 1
-   position -0.93995 0
-   size 1 1
+   position 0 0
+   size 0.16 0.09
    halign center_ref
    valign center_ref
    hexactpos 1
    vexactpos 1
    hexactsize 0
    vexactsize 0
+   fixaspect outside
    {
     ImageWidgetClass GameOverScreenImage {
+     visible 1
      ignorepointer 1
      position 0 0
      size 1 1
@@ -34,7 +36,7 @@ WindowWidgetClass WindowWidget {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{F3680D43FF90E5A2}Colorful-UI/GUI/textures/loading_screens/Cui3-BG1.edds"
+     imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -65,7 +67,7 @@ WindowWidgetClass WindowWidget {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -76,13 +78,13 @@ WindowWidgetClass WindowWidget {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.01 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -101,7 +103,7 @@ WindowWidgetClass WindowWidget {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/globals/CUI2-Vingette.edds"
+     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/Shared/Vingette.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
