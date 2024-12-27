@@ -14,7 +14,7 @@ PanelWidgetClass LoadingFrame {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.18 0.09
+   size 0.16 0.09
    halign center_ref
    valign center_ref
    hexactpos 0
