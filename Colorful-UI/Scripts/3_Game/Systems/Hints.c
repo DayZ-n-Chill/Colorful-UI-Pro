@@ -1,7 +1,7 @@
 modded class UiHintPanel extends ScriptedWidgetEventHandler
 {	
 	protected const string m_DataPath = "Colorful-UI/Scripts/data/hints.json";
-	protected string m_RootPath       = "Colorful-UI/Gui/layouts/new_ui/hints/cui.in_game_hints.layout";	
+	protected string m_RootPath       = "Colorful-UI/Gui/layouts/loading/hints/cui.ingamehints.layout";	
 }
 
 
@@ -12,7 +12,7 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	override void Init(DayZGame game)
     {
-        m_RootPath = "Colorful-UI/gui/layouts/new_ui/hints/cui.in_game_hints_load.layout";
+        m_RootPath = "Colorful-UI/gui/layouts/loading/hints/cui.loadinghints.layout";
         
         if (!game)
             return;

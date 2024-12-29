@@ -14,7 +14,7 @@ PanelWidgetClass LoadingFrame {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.18 0.09
+   size 0.16 0.09
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -24,7 +24,7 @@ PanelWidgetClass LoadingFrame {
    scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{4FDAF89329449CD3}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds"
+   imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
    mode opaque
    "src alpha" 0
    "clamp mode" clamp
@@ -99,6 +99,19 @@ PanelWidgetClass LoadingFrame {
     }
    }
   }
+  FrameWidgetClass hint_frame {
+   visible 1
+   clipchildren 0
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   halign center_ref
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 0
+   scaled 1
+  }
   FrameWidgetClass SafeZone {
    ignorepointer 1
    size 0.9 0.9
@@ -147,19 +160,6 @@ PanelWidgetClass LoadingFrame {
      "text valign" center
     }
    }
-  }
-  FrameWidgetClass hint_frame {
-   visible 1
-   clipchildren 0
-   ignorepointer 1
-   position 0 0
-   size 1 1
-   halign center_ref
-   hexactpos 0
-   vexactpos 0
-   hexactsize 0
-   vexactsize 0
-   scaled 1
   }
   ProgressBarWidgetClass LoadingBar {
    visible 1

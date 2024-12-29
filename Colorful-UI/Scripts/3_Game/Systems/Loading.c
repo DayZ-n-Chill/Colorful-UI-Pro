@@ -8,6 +8,8 @@ modded class LoadingScreen
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
+        LogoInjector logo = new LogoInjector(parent, "Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds", 150, 75, "50 50");
+
         cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));
         m_ProgressLoading = ProgressBarWidget.Cast(m_WidgetRoot.FindAnyWidget("LoadingBar"));
         
