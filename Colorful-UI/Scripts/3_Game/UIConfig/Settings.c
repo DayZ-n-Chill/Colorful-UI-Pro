@@ -7,21 +7,15 @@ static bool ShowDeadScreen    = false;   // If set to true, a custom game over s
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
 // Load Screen Hints
-string SetRandomBackground()
-{
-    TStringArray images = {
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds", 
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
-        "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
-    };
-
-    int randomIndex = cuiUtils.GetRandomIndex(images.Count());
-    return images.Get(randomIndex);
-}
+ref TStringArray loadscreens = {
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
+};
 
 // Game Over Screen
 string SetRandomDeathScreen()
