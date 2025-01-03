@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{61F5B55713DD4FC1}Colorful-UI/GUI/textures/Shared/GreyoutPixel.edds"
+ Author "unicron"
+ ChangeDate -1730989533
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "GreyoutPixel.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

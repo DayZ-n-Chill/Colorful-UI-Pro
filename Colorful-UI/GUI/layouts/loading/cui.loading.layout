@@ -21,17 +21,14 @@ PanelWidgetClass LoadingFrame {
    vexactpos 0
    hexactsize 0
    vexactsize 0
-   scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
-   mode opaque
+   imageTexture "{0DBE2630AF5047FD}gui/textures/loading_screens/loading_screen_3_co.edds"
+   mode blend
    "src alpha" 0
-   "clamp mode" clamp
    "stretch mode" stretch_w_h
-   filter 1
-   pivot 0 0
-   "Transition width" 0
+   Mask "{F2CEA7E35B785FB7}gui/textures/loading_screens/loading_screen_3_mask.edds"
+   "Transition width" 1
    Progress 0
   }
   FrameWidgetClass Shaders {
