@@ -29,22 +29,16 @@ modded class LoadingScreen
 
     override void ShowEx(DayZGame game)
     {
-        cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());
         cuiUtils.HandleHints(game, m_WidgetRoot, NoHints); 
         Show();
     }
 
     override void Show()
     {
+        m_loadingMsg.Show(false);
+        cui_topShader.SetColor(UIColor.Black());
+        cui_bottomShader.SetColor(UIColor.Black());
         cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());
         cui_Background.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds");
-    }
-
-    override void SetProgress(float val)
-    {
-        val = Math.Clamp(val, 0.0, 1.0);
-        if (cui_Background) {cui_Background.SetMaskProgress(val);}
-        if (m_ProgressLoading) {m_ProgressLoading.SetCurrent(val * 100);}
-        m_LastProgressUpdate = m_DayZGame.GetTickTime();
     }
 }
