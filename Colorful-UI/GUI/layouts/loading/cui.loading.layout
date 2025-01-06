@@ -23,11 +23,11 @@ PanelWidgetClass LoadingFrame {
    vexactsize 0
    fixaspect outside
    image0 ""
-   imageTexture "{0DBE2630AF5047FD}gui/textures/loading_screens/loading_screen_3_co.edds"
+   imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
    mode blend
    "src alpha" 0
    "stretch mode" stretch_w_h
-   Mask "{F2CEA7E35B785FB7}gui/textures/loading_screens/loading_screen_3_mask.edds"
+   Mask "{BC6148C5F82B8CE1}Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds"
    "Transition width" 1
    Progress 0
   }
@@ -58,6 +58,7 @@ PanelWidgetClass LoadingFrame {
      "src alpha" 1
      "clamp mode" clamp
      "stretch mode" stretch_w_h
+     "Transition width" 1
     }
     ImageWidgetClass BottomShader {
      visible 1
@@ -128,8 +129,8 @@ PanelWidgetClass LoadingFrame {
      hexactsize 1
      vexactsize 1
      fixaspect outside
-     image0 "set:cui image:Logo"
-     imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+     image0 ""
+     imageTexture "{995A4D44D78F2EC6}Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp

@@ -1,6 +1,6 @@
 modded class LoadingScreen
 {
-    protected ImageWidget cui_Background, cui_topShader, cui_bottomShader;
+    protected ImageWidget cui_Background, cui_topShader, cui_bottomShader, cui_FadeOut;
     protected TextWidget m_loadingMsg;   
     protected float m_LastProgressUpdate;
 
@@ -10,6 +10,7 @@ modded class LoadingScreen
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
         cui_Background = ImageWidget.Cast(m_WidgetRoot.FindAnyWidget("ImageBackground"));
+
         m_ProgressLoading = ProgressBarWidget.Cast(m_WidgetRoot.FindAnyWidget("LoadingBar"));
         
         Class.CastTo(cui_topShader, m_WidgetRoot.FindAnyWidget("TopShader"));
@@ -35,10 +36,7 @@ modded class LoadingScreen
 
     override void Show()
     {
-        m_loadingMsg.Show(false);
-        cui_topShader.SetColor(UIColor.Black());
-        cui_bottomShader.SetColor(UIColor.Black());
         cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());
-        cui_Background.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds");
+        cui_FadeOut.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds");
     }
 }
