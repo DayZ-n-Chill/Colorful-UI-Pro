@@ -29,7 +29,6 @@ modded class LoadingScreen
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
     }
 
-
     override void ShowEx(DayZGame game)
     {
         cuiUtils.HandleHints(game, m_WidgetRoot, NoHints); 
@@ -39,13 +38,12 @@ modded class LoadingScreen
     override void Show()
     {
         if (cui_Background && loadscreens)
-        { cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());}
+        { cui_Background.LoadImageFile(0, loadscreens.GetRandomElement()); }
         else
-        { Print("Error: cui_Background or loadscreens is NULL!");}
+        { Print("Error: cui_Background or loadscreens is NULL!"); }
         if (cui_FadeOut)
-        { cui_FadeOut.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds");}
+        { cui_FadeOut.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds"); }
         else
-        {Print("Error: cui_FadeOut is NULL!");}
+        { Print("Error: cui_FadeOut is NULL!"); }
     }
-
 }
