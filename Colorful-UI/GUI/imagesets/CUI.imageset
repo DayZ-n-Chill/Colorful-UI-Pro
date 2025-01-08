@@ -99,73 +99,73 @@ ImageSetClass {
     }
     ImageSetDefClass Ghost {
      Name "Ghost"
-     Pos 279 419
+     Pos 280 419
      Size 22 24
      Flags 0
     }
     ImageSetDefClass Book {
      Name "Book"
-     Pos 316 419
+     Pos 318 419
      Size 21 24
      Flags 0
     }
     ImageSetDefClass EyeClosed {
      Name "EyeClosed"
-     Pos 352 419
+     Pos 354 419
      Size 31 24
      Flags 0
     }
     ImageSetDefClass ThumbsUp {
      Name "ThumbsUp"
-     Pos 400 419
+     Pos 402 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass ThumbsDown {
      Name "ThumbsDown"
-     Pos 441 419
+     Pos 443 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass SettingSliders {
      Name "SettingSliders"
-     Pos 482 419
+     Pos 484 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass CheckBadge {
      Name "CheckBadge"
-     Pos 523 419
+     Pos 525 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass Home {
      Name "Home"
-     Pos 564 419
+     Pos 566 419
      Size 30 24
      Flags 0
     }
     ImageSetDefClass UserAvatar {
      Name "UserAvatar"
-     Pos 610 419
+     Pos 612 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass Bars {
      Name "Bars"
-     Pos 649 419
+     Pos 651 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass Copyright {
      Name "Copyright"
-     Pos 688 419
+     Pos 690 419
      Size 24 24
      Flags 0
     }
     ImageSetDefClass CodeBranch {
      Name "CodeBranch"
-     Pos 725 419
+     Pos 727 419
      Size 24 24
      Flags 0
     }
