@@ -31,6 +31,17 @@ PanelWidgetClass LoadingFrame {
    "Transition width" 1
    Progress 0
   }
+  VideoWidgetClass LoadingVid {
+   ignorepointer 1
+   size 0.16 0.09
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   fixaspect outside
+  }
   FrameWidgetClass Shaders {
    visible 1
    clipchildren 0

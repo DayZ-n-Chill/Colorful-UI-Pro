@@ -4,7 +4,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 	protected string m_RootPath       = "Colorful-UI/Gui/layouts/loading/hints/cui.ingamehints.layout";	
 }
 
-
 modded class UiHintPanelLoading extends UiHintPanel
 {
  	protected ImageWidget cui_TipLineL;
@@ -37,9 +36,22 @@ modded class UiHintPanelLoading extends UiHintPanel
         protected ImageWidget cui_TopShader;
 	    protected ImageWidget cui_BottomShader;
         protected ImageWidget cui_Icon;
+        VideoWidget m_VideoWidget;
 
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets( m_RootPath, parent_widget );
-		
+
+        #ifdef WORKBENCH
+            // Skip the video code entirely.
+            // To allow Workbench to open without shitting iteslef.
+        #else
+            if (LoadVideo) {
+                Class.CastTo(m_VideoWidget, m_RootFrame.FindAnyWidget("LoadingVid"));
+                CopyFile("Colorful-UI/GUI/video/LoadingVid.mp4", "$saves:LoadingVid.mp4");
+                m_VideoWidget.Load("$saves:LoadingVid.mp4", true);
+                m_VideoWidget.Play();
+            }
+        #endif
+
 		if (m_RootFrame)
 		{
             cui_Icon            = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
@@ -64,6 +76,8 @@ modded class UiHintPanelLoading extends UiHintPanel
             m_UiDescLabel.SetColor(colorScheme.TipText());
 			
             m_RootFrame.SetHandler(this);
+
+            if (NoHints) { m_SpacerFrame.Show(false); }
 		}
 	}
 }
