@@ -1,3 +1,4 @@
+// Phase 1: Loading  -------------------------------------------------------------
 modded class LoadingScreen
 {
     protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_Mask;
@@ -40,6 +41,7 @@ modded class LoadingScreen
     }
 }
 
+// Phase 2: Logging In ------------------------------------------------------------
 modded class LoginTimeBase extends LoginScreenBase
 {
     protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_ExitIcon;
@@ -107,6 +109,7 @@ modded class LoginTimeBase extends LoginScreenBase
     }   
 };
 
+// Phase 3: Prio Queue  -------------------------------------------------------------
 modded class LoginQueueBase extends LoginScreenBase
 {
     protected ImageWidget cui_TopShader, cui_BottomShader, cui_ExitIcon, cui_ShopIcon;
@@ -139,6 +142,11 @@ modded class LoginQueueBase extends LoginScreenBase
         if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+
+        if (MenuURLS.urlPriorityQ == "#" || MenuURLS.urlPriorityQ == "")
+        {
+            if (cui_PrioQBtn) cui_PrioQBtn.Show(false);
+        }
 
         return layoutRoot;
     }
@@ -205,6 +213,7 @@ modded class LoginQueueBase extends LoginScreenBase
 	};
 };
 
+// Start at Main Menu  ----------------------------------------------------------
 modded class DayZGame
 {
     override void ConnectLaunch() 
