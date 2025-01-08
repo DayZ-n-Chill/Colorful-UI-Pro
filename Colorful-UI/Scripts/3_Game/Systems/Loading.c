@@ -58,11 +58,16 @@ modded class LoginTimeBase extends LoginScreenBase
         cui_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));      
         
+        m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
+        cui_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
+        cui_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+
         if (cui_Background) cui_Background.LoadImageFile(0, loadscreens.GetRandomElement()); 
         if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.TipIcon());
         
         return layoutRoot;
     }   
@@ -80,6 +85,29 @@ modded class LoginTimeBase extends LoginScreenBase
 			m_HintPanel	= new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
 		}
 	}
+    
+    // Bohemias Legacy button method,
+    // My new method will not work in loadscreen due to the mission not being loaded yet.
+    override bool OnMouseEnter(Widget w, int x, int y)
+    {
+        if (w == m_btnLeave)
+        {
+            cui_ExitText.SetColor(colorScheme.TipIcon());
+            m_btnLeave.SetColor(UIColor.Transparent());
+            return true;
+        }
+        return false;
+    }
+
+    override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
+    {
+        if (w == m_btnLeave)
+        {
+            cui_ExitText.SetColor(colorScheme.PrimaryText());
+            return true;
+        }
+        return false;
+    }   
 };
 
 // Priority Queue ----------------------------------
