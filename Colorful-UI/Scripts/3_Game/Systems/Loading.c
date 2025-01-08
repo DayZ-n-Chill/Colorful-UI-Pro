@@ -193,6 +193,16 @@ modded class LoginQueueBase extends LoginScreenBase
         }
         return false;
     }   
+
+	override bool OnClick(Widget w, int x, int y, int button)
+	{
+        if (button == MouseState.LEFT && w == cui_PrioQBtn)
+		{
+			GetGame().OpenURL(MenuURLS.urlPriorityQ);
+			return false;
+		}	
+		return super.OnClick(w, x, y, button);
+	};
 };
 
 modded class DayZGame
