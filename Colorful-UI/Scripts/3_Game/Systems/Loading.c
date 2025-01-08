@@ -10,19 +10,6 @@ modded class LoadingScreen
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
-
-        // #ifdef WORKBENCH
-        //     // Skip the video code entirely.
-        //     // To allow Workbench to open without shitting iteslef.
-        // #else
-        //     if (LoadVideo) {
-        //         Class.CastTo(cui_Video, m_WidgetRoot.FindAnyWidget("LoadingVid"));
-        //         CopyFile("Colorful-UI/GUI/video/LoadingVid.mp4", "$saves:LoadingVid.mp4");
-        //         cui_Video.Load("$saves:LoadingVid.mp4", true);
-        //         cui_Video.Play();
-        //     }
-        // #endif
-
         Class.CastTo(cui_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
         Class.CastTo(cui_TopShader, m_WidgetRoot.FindAnyWidget("TopShader"));
         Class.CastTo(cui_BottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
@@ -38,16 +25,6 @@ modded class LoadingScreen
         ProgressAsync.SetProgressData(m_ProgressLoading);
         ProgressAsync.SetUserData(cui_Background);
     }
-
-	// override void ShowEx(DayZGame game)
-	// {
-	// 	if (!NoHints)
-	// 	{
-	// 		m_HintPanel	= new UiHintPanelLoading(m_WidgetRoot.FindAnyWidget("hint_frame"));
-	// 		m_HintPanel.Init(game);
-	// 	}
-	// 	Show();
-	// }
 
     override void Show()
     {
@@ -92,15 +69,6 @@ modded class LoginTimeBase extends LoginScreenBase
         cui_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
     }
  
- 	// override void Show()
-	// {
-	// 	if (!NoHints)
-	// 	{
-	// 		layoutRoot.Show(true);
-	// 		m_HintPanel	= new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
-	// 	}
-	// }
-    
     override bool OnMouseEnter(Widget w, int x, int y)
     {
         if (w == m_btnLeave)
