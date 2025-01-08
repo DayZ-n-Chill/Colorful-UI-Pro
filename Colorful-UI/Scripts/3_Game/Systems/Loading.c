@@ -138,6 +138,15 @@ modded class LoginQueueBase extends LoginScreenBase
         return layoutRoot;
     }
 
+	void Show()
+	{
+		if (!NoHints)
+		{
+			layoutRoot.Show(true);
+			m_HintPanel	= new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+		}
+	}
+
     override void SetPosition(int position)
     {
         if (position != m_iPosition)
@@ -147,6 +156,26 @@ modded class LoginQueueBase extends LoginScreenBase
             m_txtPosition.SetColor(colorScheme.LoadingMsg());
         }
     }
+
+    override bool OnMouseEnter(Widget w, int x, int y)
+    {
+        if (w == m_btnLeave)
+        {
+            m_btnLeave.SetColor(UIColor.Transparent());
+            return true;
+        }
+        return false;
+    }
+
+    override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
+    {
+        if (w == m_btnLeave)
+        {
+            m_btnLeave.SetColor(colorScheme.PrimaryText());
+            return true;
+        }
+        return false;
+    }  
 };
 
 // Start at Main Menu ----------------------------------

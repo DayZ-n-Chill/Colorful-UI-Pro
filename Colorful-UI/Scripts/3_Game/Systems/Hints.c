@@ -7,8 +7,8 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 modded class UiHintPanelLoading extends UiHintPanel
 {
- 	protected ImageWidget m_tipLineL;
-	protected ImageWidget m_tipLineR;
+ 	protected ImageWidget cui_TipLineL;
+	protected ImageWidget cui_TipLineR;
 
 	override void Init(DayZGame game)
     {
@@ -34,20 +34,20 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	override protected void BuildLayout(Widget parent_widget)
 	{
-        protected ImageWidget m_tShader;
-	    protected ImageWidget m_bShader;
-        protected ImageWidget m_tipIcon;
+        protected ImageWidget cui_TopShader;
+	    protected ImageWidget cui_BottomShader;
+        protected ImageWidget cui_Icon;
 
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets( m_RootPath, parent_widget );
 		
 		if (m_RootFrame)
 		{
-		    m_tipLineL          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
-            m_tipLineR          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
+            cui_Icon            = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
+		    cui_TipLineL        = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
+            cui_TipLineR        = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
+            cui_TopShader       = ImageWidget.Cast(m_RootFrame.FindAnyWidget("TopShader"));
+		    cui_BottomShader    = ImageWidget.Cast(m_RootFrame.FindAnyWidget("BottomShader"));
             m_SpacerFrame		= m_RootFrame.FindAnyWidget("Hints");	
-            m_tipIcon           = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
-            m_tShader           = ImageWidget.Cast(m_RootFrame.FindAnyWidget("TopShader"));
-		    m_bShader           = ImageWidget.Cast(m_RootFrame.FindAnyWidget("BottomShader"));
 			m_UiLeftButton		= ButtonWidget.Cast(m_RootFrame.FindAnyWidget("LeftButton"));		
 			m_UiRightButton		= ButtonWidget.Cast(m_RootFrame.FindAnyWidget("RightButton"));
 			m_UiHeadlineLabel	= TextWidget.Cast(m_RootFrame.FindAnyWidget("HeadlineLabel"));	
@@ -55,13 +55,13 @@ modded class UiHintPanelLoading extends UiHintPanel
 			m_UiHintImage		= ImageWidget.Cast(m_RootFrame.FindAnyWidget("HintImage"));
 			m_UiPageingLabel	= TextWidget.Cast(m_RootFrame.FindAnyWidget("PageInfoLabel"));
             
-            m_tipIcon.SetColor(colorScheme.TipIcon());
-            m_tipLineL.SetColor(colorScheme.TipLine());
-            m_tipLineR.SetColor(colorScheme.TipLine());
+		    cui_BottomShader.SetColor(colorScheme.BottomShader());
+            cui_TopShader.SetColor(colorScheme.TopShader());
+            cui_Icon.SetColor(colorScheme.Icons());
+            cui_TipLineL.SetColor(colorScheme.TipLine());
+            cui_TipLineR.SetColor(colorScheme.TipLine());
             m_UiHeadlineLabel.SetColor(colorScheme.TipHeader());
             m_UiDescLabel.SetColor(colorScheme.TipText());
-            m_tShader.SetColor(colorScheme.TopShader());
-		    m_bShader.SetColor(colorScheme.BottomShader());
 			
             m_RootFrame.SetHandler(this);
 		}

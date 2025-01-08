@@ -1,6 +1,6 @@
 // Constants.c v3.0 (These are a WIP and will be updated as the mod progresses)
 static bool StartMainMenu     = false;   // If set to true, the main menu will be forced to show on startup.
-static bool NoHints			  = false;   // If set to true, the hints will not be shown during load screens.
+static bool NoHints			  = true   // If set to true, the hints will not be shown during load screens.
 static bool SyncHintImages    = true;	 // If set to true, the hints are synced to BG Images, all controlled by the hints.json.	
 static bool RandomBackgrounds = false;	 // If set to true, a random background will be shown during load screens (SyncHintImages must be false. Image is changed in the layout files).
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
