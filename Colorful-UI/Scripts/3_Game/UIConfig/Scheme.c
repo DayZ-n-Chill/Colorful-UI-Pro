@@ -14,6 +14,7 @@ class colorScheme
 
 	// Global UI Elements 
 	static int ButtonHover()         { return BrandColor(); }              // Button color on hover, provides feedback
+	static int Icons()         		 { return BrandColor(); }              // Primary Color for all icons, aligns with brand
 	static int LogOutTimer()         { return BrandColor(); }              // Timer color for logout warnings or countdowns
 	static int Separator()           { return BrandColor(); }              // Divider color to segment UI sections
 	static int TabHover()            { return BrandColor(); }              // Tab color on hover, indicates active navigation

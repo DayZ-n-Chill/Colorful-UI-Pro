@@ -67,7 +67,7 @@ modded class LoginTimeBase extends LoginScreenBase
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.TipIcon());
+        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.Icons());
         
         return layoutRoot;
     }   
@@ -92,7 +92,7 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            cui_ExitText.SetColor(colorScheme.TipIcon());
+            cui_ExitText.SetColor(colorScheme.ButtonHover());
             m_btnLeave.SetColor(UIColor.Transparent());
             return true;
         }
@@ -133,7 +133,7 @@ modded class LoginQueueBase extends LoginScreenBase
         cui_TopShader.SetColor(colorScheme.TopShader());
         cui_BottomShader.SetColor(colorScheme.BottomShader());
         m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-        m_btnLeave.SetColor(colorScheme.TipIcon());
+        m_btnLeave.SetColor(colorScheme.ButtonHover());
 
         return layoutRoot;
     }
