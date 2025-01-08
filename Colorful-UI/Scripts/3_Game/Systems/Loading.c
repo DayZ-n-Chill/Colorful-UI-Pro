@@ -46,7 +46,6 @@ modded class LoginTimeBase extends LoginScreenBase
     protected TextWidget cui_LoadingMsg, cui_ExitText;
     protected ProgressBarWidget m_ProgressLoading;
     
-
     override Widget Init()
     {
 
@@ -86,8 +85,6 @@ modded class LoginTimeBase extends LoginScreenBase
 		}
 	}
     
-    // Bohemias Legacy button method,
-    // My new method will not work in loadscreen due to the mission not being loaded yet.
     override bool OnMouseEnter(Widget w, int x, int y)
     {
         if (w == m_btnLeave)
@@ -110,35 +107,43 @@ modded class LoginTimeBase extends LoginScreenBase
     }   
 };
 
-// Priority Queue ----------------------------------
 modded class LoginQueueBase extends LoginScreenBase
 {
-    protected ImageWidget cui_TopShader, cui_BottomShader;
+    protected ImageWidget cui_TopShader, cui_BottomShader, cui_ExitIcon, cui_ShopIcon;
+    protected TextWidget cui_ExitText, cui_PrioText;
     protected ProgressBarWidget m_ProgressLoading;
+    protected ButtonWidget m_btnLeave, cui_PrioQBtn;
 
     override Widget Init()
     {    
-        // Use CUI Layout    
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
 
         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
-        m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
         
         cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         
-        cui_TopShader.SetColor(colorScheme.TopShader());
-        cui_BottomShader.SetColor(colorScheme.BottomShader());
-        m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-        m_btnLeave.SetColor(colorScheme.ButtonHover());
+        m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
+        cui_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
+        cui_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+
+        cui_PrioQBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
+        cui_PrioText = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
+        cui_ShopIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
+
+        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.Icons());
+        if (cui_ShopIcon) cui_ShopIcon.SetColor(colorScheme.Icons());
+        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
+        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
         return layoutRoot;
     }
 
-	void Show()
+	override void Show()
 	{
 		if (!NoHints)
 		{
@@ -161,7 +166,14 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
+            cui_ExitText.SetColor(colorScheme.ButtonHover());
             m_btnLeave.SetColor(UIColor.Transparent());
+            return true;
+        }
+        if (w == cui_PrioQBtn)
+        {
+            cui_PrioText.SetColor(colorScheme.ButtonHover());
+            cui_PrioQBtn.SetColor(UIColor.Transparent());
             return true;
         }
         return false;
@@ -171,14 +183,18 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            m_btnLeave.SetColor(colorScheme.PrimaryText());
+            cui_ExitText.SetColor(colorScheme.PrimaryText());
+            return true;
+        }
+        if (w == cui_PrioQBtn)
+        {
+            cui_PrioText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         return false;
-    }  
+    }   
 };
 
-// Start at Main Menu ----------------------------------
 modded class DayZGame
 {
     override void ConnectLaunch() 
@@ -187,4 +203,3 @@ modded class DayZGame
         else { ConnectFromCLI(); };
     };
 };
-
