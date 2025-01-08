@@ -3,7 +3,6 @@ modded class LoadingScreen
 {
     protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_Mask;
     protected TextWidget cui_LoadingMsg;
-    VideoWidget cui_Video;   
 
     void LoadingScreen(DayZGame game)
     {

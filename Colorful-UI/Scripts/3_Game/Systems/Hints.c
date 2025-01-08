@@ -36,19 +36,19 @@ modded class UiHintPanelLoading extends UiHintPanel
         protected ImageWidget cui_TopShader;
 	    protected ImageWidget cui_BottomShader;
         protected ImageWidget cui_Icon;
-        VideoWidget m_VideoWidget;
+        VideoWidget cui_Video;
 
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets( m_RootPath, parent_widget );
 
         #ifdef WORKBENCH
             // Skip the video code entirely.
-            // To allow Workbench to open without shitting iteslef.
+            // This allows Workbench to open without shitting iteslef.
         #else
             if (LoadVideo) {
-                Class.CastTo(m_VideoWidget, m_RootFrame.FindAnyWidget("LoadingVid"));
+                Class.CastTo(cui_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
                 CopyFile("Colorful-UI/GUI/video/LoadingVid.mp4", "$saves:LoadingVid.mp4");
-                m_VideoWidget.Load("$saves:LoadingVid.mp4", true);
-                m_VideoWidget.Play();
+                cui_Video.Load("$saves:LoadingVid.mp4", true);
+                cui_Video.Play();
             }
         #endif
 
