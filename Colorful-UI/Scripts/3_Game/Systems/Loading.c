@@ -1,49 +1,132 @@
 modded class LoadingScreen
 {
-    protected ImageWidget cui_Background, cui_topShader, cui_bottomShader, cui_FadeOut;
-    protected TextWidget m_loadingMsg;   
-    protected float m_LastProgressUpdate;
+    protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_Mask;
+    protected TextWidget cui_LoadingMsg;   
 
     void LoadingScreen(DayZGame game)
     {
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
-        // Initialize widgets
         Class.CastTo(cui_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
-        Class.CastTo(cui_FadeOut, m_WidgetRoot.FindAnyWidget("FadeOutWidgetName")); // Replace with actual name
-        Class.CastTo(cui_topShader, m_WidgetRoot.FindAnyWidget("TopShader"));
-        Class.CastTo(cui_bottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
-        Class.CastTo(m_loadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
+        Class.CastTo(cui_TopShader, m_WidgetRoot.FindAnyWidget("TopShader"));
+        Class.CastTo(cui_BottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
+        Class.CastTo(cui_LoadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
         Class.CastTo(m_ProgressLoading, m_WidgetRoot.FindAnyWidget("LoadingBar"));
 
-        // Set ProgressAsync
+        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
+        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
+        if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
+        if (cui_LoadingMsg) cui_LoadingMsg.SetText("GAME IS LOADING!");
+        if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+
         ProgressAsync.SetProgressData(m_ProgressLoading);
         ProgressAsync.SetUserData(cui_Background);
-
-        // Set text and colors
-        if (m_loadingMsg) m_loadingMsg.SetText("GAME IS LOADING!");
-        if (cui_topShader) cui_topShader.SetColor(colorScheme.TopShader());
-        if (cui_bottomShader) cui_bottomShader.SetColor(colorScheme.BottomShader());
-        if (m_loadingMsg) m_loadingMsg.SetColor(colorScheme.LoadingMsg());
-        if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
     }
 
-    override void ShowEx(DayZGame game)
-    {
-        cuiUtils.HandleHints(game, m_WidgetRoot, NoHints); 
-        Show();
-    }
+	override void ShowEx(DayZGame game)
+	{
+		if (!NoHints)
+		{
+			m_HintPanel	= new UiHintPanelLoading(m_WidgetRoot.FindAnyWidget("hint_frame"));
+			m_HintPanel.Init(game);
+		}
+		Show();
+	}
 
     override void Show()
     {
-        if (cui_Background && loadscreens)
-        { cui_Background.LoadImageFile(0, loadscreens.GetRandomElement()); }
-        else
-        { Print("Error: cui_Background or loadscreens is NULL!"); }
-        if (cui_FadeOut)
-        { cui_FadeOut.LoadMaskTexture("Colorful-UI/GUI/textures/Shared/PixelMask_Grey.edds"); }
-        else
-        { Print("Error: cui_FadeOut is NULL!"); }
+        if (cui_Background) cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());
     }
 }
+
+modded class LoginTimeBase extends LoginScreenBase
+{
+    protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_ExitIcon;
+    protected TextWidget cui_LoadingMsg, cui_ExitText;
+    protected ProgressBarWidget m_ProgressLoading;
+
+    override Widget Init()
+    {
+
+        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
+        
+        cui_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
+        cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        cui_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));      
+        
+        if (cui_Background) cui_Background.LoadImageFile(0, loadscreens.GetRandomElement()); 
+        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
+        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
+        if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
+        if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+               
+        return layoutRoot;
+    }   
+    
+    override void SetTime(int time) {
+        super.SetTime(time);
+        cui_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+    }
+ 
+ 	override void Show()
+	{
+		if (!NoHints)
+		{
+			layoutRoot.Show(true);
+			m_HintPanel	= new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+		}
+	}
+};
+
+// Priority Queue ----------------------------------
+// modded class LoginQueueBase extends LoginScreenBase
+// {
+//     protected ImageWidget cui_TopShader, cui_BottomShader;
+//     protected ProgressBarWidget m_ProgressLoading;
+
+//     override Widget Init()
+//     {    
+//         // Use CUI Layout    
+//         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
+
+//         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+//         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+//         m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
+//         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
+        
+//         cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+//         cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+//         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+        
+//         cui_TopShader.SetColor(colorScheme.TopShader());
+//         cui_BottomShader.SetColor(colorScheme.BottomShader());
+//         m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+//         m_btnLeave.SetColor(colorScheme.TipIcon());
+
+//         return layoutRoot;
+//     }
+
+//     override void SetPosition(int position)
+//     {
+//         if (position != m_iPosition)
+//         {
+//             m_iPosition = position;
+//             m_txtPosition.SetText("Position in Queue " + position.ToString());
+//             m_txtPosition.SetColor(colorScheme.LoadingMsg());
+//         }
+//     }
+// };
+
+// Start at Main Menu ----------------------------------
+modded class DayZGame
+{
+    override void ConnectLaunch() 
+    {
+        if(StartMainMenu) { MainMenuLaunch(); }
+        else { ConnectFromCLI(); };
+    };
+};
+

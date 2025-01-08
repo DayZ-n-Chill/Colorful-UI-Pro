@@ -14,7 +14,7 @@ PanelWidgetClass LoadingFrame {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.18 0.09
+   size 0.16 0.09
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -103,7 +103,7 @@ PanelWidgetClass LoadingFrame {
    visible 1
    clipchildren 0
    ignorepointer 1
-   position 0 0
+   position 0.00114 0
    size 1 1
    halign center_ref
    hexactpos 0
@@ -123,7 +123,7 @@ PanelWidgetClass LoadingFrame {
    hexactsize 0
    vexactsize 0
    {
-    TextWidgetClass txtLabel {
+    TextWidgetClass LoadingMsg {
      ignorepointer 1
      position 0 0
      size 0 0
