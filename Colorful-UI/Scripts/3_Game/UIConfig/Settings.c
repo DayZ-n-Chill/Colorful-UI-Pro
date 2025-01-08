@@ -3,8 +3,6 @@ static bool StartMainMenu     = false;   // If set to true, the main menu will b
 static bool NoHints			  = false;   // If set to true, the hints will not be shown during load screens.
 static bool LoadVideo         = false;   // If set to true, a video will be shown during load screens along with tips.
 static bool MainMenuVideo     = false;   // If set to true, a video will be shown during Main Menu Screens along with tips.
-
-static bool RandomBackgrounds = false;	 // If set to true, a random background will be shown during load screens (SyncHintImages must be false. Image is changed in the layout files).
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
