@@ -63,8 +63,6 @@ modded class LoginTimeBase extends LoginScreenBase
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-
-        cuiButton.proBtn(myButton, "Click Me", -1, -1, -1, -1);           
         
         return layoutRoot;
     }   
