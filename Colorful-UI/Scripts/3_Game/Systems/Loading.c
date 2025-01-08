@@ -45,6 +45,7 @@ modded class LoginTimeBase extends LoginScreenBase
     protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_ExitIcon;
     protected TextWidget cui_LoadingMsg, cui_ExitText;
     protected ProgressBarWidget m_ProgressLoading;
+    
 
     override Widget Init()
     {
@@ -62,7 +63,9 @@ modded class LoginTimeBase extends LoginScreenBase
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-               
+
+        cuiButton.proBtn(myButton, "Click Me", -1, -1, -1, -1);           
+        
         return layoutRoot;
     }   
     
@@ -82,43 +85,43 @@ modded class LoginTimeBase extends LoginScreenBase
 };
 
 // Priority Queue ----------------------------------
-// modded class LoginQueueBase extends LoginScreenBase
-// {
-//     protected ImageWidget cui_TopShader, cui_BottomShader;
-//     protected ProgressBarWidget m_ProgressLoading;
+modded class LoginQueueBase extends LoginScreenBase
+{
+    protected ImageWidget cui_TopShader, cui_BottomShader;
+    protected ProgressBarWidget m_ProgressLoading;
 
-//     override Widget Init()
-//     {    
-//         // Use CUI Layout    
-//         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
+    override Widget Init()
+    {    
+        // Use CUI Layout    
+        layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
 
-//         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
-//         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-//         m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
-//         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
+        m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+        m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
+        m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
         
-//         cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-//         cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-//         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+        cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         
-//         cui_TopShader.SetColor(colorScheme.TopShader());
-//         cui_BottomShader.SetColor(colorScheme.BottomShader());
-//         m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-//         m_btnLeave.SetColor(colorScheme.TipIcon());
+        cui_TopShader.SetColor(colorScheme.TopShader());
+        cui_BottomShader.SetColor(colorScheme.BottomShader());
+        m_ProgressLoading.SetColor(colorScheme.Loadingbar());
+        m_btnLeave.SetColor(colorScheme.TipIcon());
 
-//         return layoutRoot;
-//     }
+        return layoutRoot;
+    }
 
-//     override void SetPosition(int position)
-//     {
-//         if (position != m_iPosition)
-//         {
-//             m_iPosition = position;
-//             m_txtPosition.SetText("Position in Queue " + position.ToString());
-//             m_txtPosition.SetColor(colorScheme.LoadingMsg());
-//         }
-//     }
-// };
+    override void SetPosition(int position)
+    {
+        if (position != m_iPosition)
+        {
+            m_iPosition = position;
+            m_txtPosition.SetText("Position in Queue " + position.ToString());
+            m_txtPosition.SetColor(colorScheme.LoadingMsg());
+        }
+    }
+};
 
 // Start at Main Menu ----------------------------------
 modded class DayZGame
