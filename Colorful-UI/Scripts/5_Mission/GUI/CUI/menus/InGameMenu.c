@@ -69,12 +69,12 @@ modded class InGameMenu extends UIScriptedMenu
 		m_testBtn3 = ButtonWidget.Cast(layoutRoot.FindAnyWidget("testBtn3"));
 		
 		// Social Icons
-		m_DiscordImg.SetColor(UIColor.discord());
-		m_TwitterImg.SetColor(UIColor.twitter());
-		m_YoutubeImg.SetColor(UIColor.youtube());
-		m_RedditImg.SetColor(UIColor.reddit());
-		m_FacebookImg.SetColor(UIColor.meta());
-		m_MetaImg.SetColor(UIColor.meta());
+		// m_DiscordImg.SetColor(UIColor.Discord());
+		// m_TwitterImg.SetColor(UIColor.twitter());
+		// m_YoutubeImg.SetColor(UIColor.youtube());
+		// m_RedditImg.SetColor(UIColor.reddit());
+		// m_FacebookImg.SetColor(UIColor.meta());
+		// m_MetaImg.SetColor(UIColor.meta());
    		m_MenuDivider.SetColor(colorScheme.Separator());
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());
@@ -92,7 +92,7 @@ modded class InGameMenu extends UIScriptedMenu
 		cuiElmnt.proBtn(m_testBtn, "BaseTest", ARGB(255,255,255,255), ARGB(255,255,0,0));
 		// cuiElmnt.proBtn(m_testBtn,  "Button Text", colorScheme.PrimaryText(), colorScheme.ButtonHover());
 		cuiElmnt.proBtn(m_testBtn2, "Button Text", UIColor.Red(), colorScheme.ButtonHover());
-		cuiElmnt.proBtn(m_testBtn3, "Button Text", colorScheme.PrimaryText(), UIColor.Red());
+		cuiElmnt.proBtn(m_testBtn3, "Button Text", colorScheme.PrimaryText(), UIColor.Discord());
 
 		return layoutRoot;
 	}
@@ -224,8 +224,8 @@ modded class InGameMenu extends UIScriptedMenu
 			return;	
 			
 		int color_pnl = UIColor.Transparent();
-		int color_lbl = UIColor.discord();
-		int color_img = UIColor.discord();	
+		int color_lbl = UIColor.Discord();
+		int color_img = UIColor.Discord();	
 
 		ButtonSetColor(w, color_pnl);
 		ButtonSetTextColor(w, color_lbl);

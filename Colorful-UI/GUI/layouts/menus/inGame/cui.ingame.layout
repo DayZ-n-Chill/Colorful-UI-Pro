@@ -85,6 +85,7 @@ FrameWidgetClass InGameMenuRoot {
      visible 1
      clipchildren 0
      ignorepointer 1
+     position 0 0
      size 1 1
      halign center_ref
      valign center_ref
@@ -689,47 +690,6 @@ FrameWidgetClass InGameMenuRoot {
        Columns 1
        Rows 5
        {
-        ButtonWidgetClass testBtn {
-         size 293 48
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         text "Text Button"
-         text_halign right
-        }
-        ButtonWidgetClass testBtn2 {
-         position 0 75
-         size 293 48
-         halign center_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         {
-          TextWidgetClass testBtn2_label {
-           ignorepointer 1
-           size 130 50
-           halign right_ref
-           valign center_ref
-           hexactpos 1
-           vexactpos 1
-           hexactsize 1
-           vexactsize 1
-           text "Text Button"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-           "text sharpness" 1.5
-           "exact text" 1
-           "size to text h" 1
-           "size to text v" 1
-           "text halign" center
-           "text valign" center
-          }
-         }
-        }
         ButtonWidgetClass testBtn3 {
          position 0 75
          size 293 48
@@ -750,7 +710,7 @@ FrameWidgetClass InGameMenuRoot {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "Text Button"
+           text "Discord"
            font "Colorful-UI/gui/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -761,18 +721,26 @@ FrameWidgetClass InGameMenuRoot {
            "text valign" center
           }
           ImageWidgetClass testBtn3_img {
+           clipchildren 0
            ignorepointer 1
-           size 0.1 0.6
+           size 30 24
            halign right_ref
            valign center_ref
            hexactpos 1
            vexactpos 1
-           hexactsize 0
-           vexactsize 0
+           hexactsize 1
+           vexactsize 1
+           image0 "set:cui image:Discord"
+           imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+           mode blend
+           "src alpha" 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
+           filter 0
           }
          }
         }
-        ButtonWidgetClass DiscordBtn {
+        ButtonWidgetClass "DiscordBtn.old" {
          color 0 0 0 0
          size 293 38
          halign right_ref
@@ -788,7 +756,7 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass DiscordBtn_panel {
+          PanelWidgetClass "DiscordBtn_panel.old" {
            ignorepointer 1
            color 0 0 0 0
            position 0 0
@@ -801,7 +769,7 @@ FrameWidgetClass InGameMenuRoot {
            vexactsize 1
            style DayZDefaultPanel
            {
-            ImageWidgetClass DiscordBtn_img {
+            ImageWidgetClass "DiscordBtn_img.old" {
              clipchildren 0
              ignorepointer 1
              size 30 24
@@ -818,7 +786,7 @@ FrameWidgetClass InGameMenuRoot {
              "stretch mode" stretch_w_h
              filter 0
             }
-            TextWidgetClass DiscordBtn_label {
+            TextWidgetClass "DiscordBtn_label.old" {
              clipchildren 0
              ignorepointer 1
              position 50 0

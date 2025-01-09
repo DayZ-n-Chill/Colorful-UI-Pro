@@ -1,13 +1,8 @@
-// ------------------------------------------------------
-// buttons.c
-// ------------------------------------------------------
-
-// Handler that changes text color and button background color on hover.
 class CUIButtonHandler
 {
     private ButtonWidget m_Button;
-    private TextWidget   m_TextWidget;
-    private ImageWidget  m_ImageWidget;
+    private TextWidget m_TextWidget;
+    private ImageWidget m_ImageWidget;
 
     private int m_TextColor;
     private int m_HoverColor;
@@ -20,10 +15,10 @@ class CUIButtonHandler
         int hoverColor
     )
     {
-        m_Button         = button;
-        m_TextWidget     = textWidget;
-        m_ImageWidget    = imageWidget;
-        m_TextColor  = textColor;
+        m_Button = button;
+        m_TextWidget = textWidget;
+        m_ImageWidget = imageWidget;
+        m_TextColor = textColor;
         m_HoverColor = hoverColor;
 
         ApplyBaseStyles();
@@ -36,7 +31,7 @@ class CUIButtonHandler
             m_Button.SetTextColor(m_TextColor);
             return;
         }
-        
+
         if (m_TextWidget)
         {
             m_TextWidget.SetColor(m_TextColor);
@@ -45,11 +40,12 @@ class CUIButtonHandler
         {
             m_Button.SetTextColor(m_TextColor);
         }
-        
+
         if (m_ImageWidget)
         {
             m_ImageWidget.SetColor(m_HoverColor);
-        }        
+            m_ImageWidget.SetImage(1);
+        }
     }
 
     private void ApplyHoverStyles()
@@ -69,8 +65,8 @@ class CUIButtonHandler
         {
             m_ImageWidget.SetColor(m_HoverColor);
         }
-        m_Button.SetColor(UIColor.Transparent());
 
+        m_Button.SetColor(UIColor.Transparent());
     }
 
     bool OnMouseEnter(Widget w, int x, int y)
