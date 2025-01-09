@@ -27,7 +27,10 @@ class UIColor
 	static int discord()          { return ARGB(255, 88, 101, 242); };
 	static int twitter()          { return ARGB(255, 88, 101, 242); };
 	static int facebook()         { return ARGB(255, 59, 89, 152); };
+	static int youtube()          { return ARGB(255, 205, 32, 31); };
 	static int instagram()        { return ARGB(255, 193, 42, 163); };
+	static int meta()        	  { return ARGB(255, 193, 42, 163); };
+	static int reddit()           { return ARGB(255, 102, 51, 204); };
 	static int linkedin()         { return ARGB(255, 0, 119, 181); };
 	static int pinterest()        { return ARGB(255, 189, 8, 28); };
 	static int snapchat()         { return ARGB(255, 255, 252, 0); };

@@ -57,7 +57,7 @@ FrameWidgetClass InGameMenuRoot {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -74,7 +74,7 @@ FrameWidgetClass InGameMenuRoot {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -92,7 +92,7 @@ FrameWidgetClass InGameMenuRoot {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/globals/CUI2-Vingette.edds"
+     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/Shared/Vingette.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -102,7 +102,7 @@ FrameWidgetClass InGameMenuRoot {
   }
   FrameWidgetClass SafeZone {
    ignorepointer 1
-   position 0 0
+   position 0 -0.00005
    size 0.9 0.9
    halign center_ref
    valign center_ref
@@ -111,24 +111,6 @@ FrameWidgetClass InGameMenuRoot {
    hexactsize 0
    vexactsize 0
    {
-    ImageWidgetClass Logo {
-     visible 1
-     inheritalpha 1
-     size 438 261
-     hexactpos 1
-     vexactpos 1
-     hexactsize 1
-     vexactsize 1
-     fixaspect outside
-     image0 "set:cui image:Logo"
-     imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
-     mode blend
-     "src alpha" 1
-     "clamp mode" clamp
-     "stretch mode" stretch_w_h
-     filter 1
-     nocache 0
-    }
     FrameWidgetClass hint_frame {
      visible 1
      clipchildren 0
@@ -707,6 +689,89 @@ FrameWidgetClass InGameMenuRoot {
        Columns 1
        Rows 5
        {
+        ButtonWidgetClass testBtn {
+         size 293 48
+         halign right_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         text "Text Button"
+         text_halign right
+        }
+        ButtonWidgetClass testBtn2 {
+         position 0 75
+         size 293 48
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         {
+          TextWidgetClass testBtn2_label {
+           ignorepointer 1
+           size 130 50
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "Text Button"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "size to text h" 1
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        ButtonWidgetClass testBtn3 {
+         position 0 75
+         size 293 48
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         {
+          TextWidgetClass testBtn3_label {
+           ignorepointer 1
+           position 50 0
+           size 100 48
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "Text Button"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 25
+           "size to text h" 1
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+          ImageWidgetClass testBtn3_img {
+           ignorepointer 1
+           size 0.1 0.6
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+          }
+         }
+        }
         ButtonWidgetClass DiscordBtn {
          color 0 0 0 0
          size 293 38
@@ -1127,9 +1192,38 @@ FrameWidgetClass InGameMenuRoot {
           }
          }
         }
+        ButtonWidgetClass testBtn0 {
+         size 293 48
+         halign right_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         text "Text Button"
+         text_halign right
+        }
        }
       }
      }
+    }
+    ImageWidgetClass Logo {
+     visible 1
+     inheritalpha 1
+     size 438 261
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     fixaspect outside
+     image0 ""
+     imageTexture "{995A4D44D78F2EC6}Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+     filter 1
+     nocache 0
     }
    }
   }

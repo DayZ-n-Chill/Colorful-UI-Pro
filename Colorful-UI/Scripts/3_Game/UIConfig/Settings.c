@@ -6,7 +6,7 @@ static bool MainMenuVideo     = false;   // If set to true, a video will be show
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
-// Load Screen Hints
+// Loading Screens
 ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
@@ -17,18 +17,16 @@ ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
 };
 
-// Game Over Screen
-string SetRandomDeathScreen()
-{
-    TStringArray images = {
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS1.edds", 
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS2.edds",
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS3.edds"
-    };
-
-    int randomIndex = cuiUtils.GetRandomIndex(images.Count());
-    return images.Get(randomIndex);
-}
+// Gameover Screens
+ref TStringArray GameOverScreens = {
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
+};
 
 // Link URLs add more if you want.
 class MenuURLS {
@@ -38,7 +36,7 @@ class MenuURLS {
 	static string urlReddit     = "#";
 	static string urlYoutube    = "#";
 	static string urlWebsite    = "#"; 
-	static string urlPriorityQ  = "http://feedback.dayz.com";
+	static string urlPriorityQ  = "#";
 	static string urlCustom     = "#";
 }
 
