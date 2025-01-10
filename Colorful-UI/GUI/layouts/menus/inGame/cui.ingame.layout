@@ -174,39 +174,25 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass ExitBtn_panel {
+          TextWidgetClass ExitBtn_label {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
            size 1 1
            halign right_ref
            valign center_ref
-           hexactpos 0
+           hexactpos 1
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass ExitBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_exit"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "#main_menu_exit"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" right
+           "text valign" center
           }
          }
         }
@@ -227,39 +213,25 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass RestartBtn_panel {
+          TextWidgetClass RestartBtn_label {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
            size 1 1
            halign right_ref
            valign center_ref
-           hexactpos 0
+           hexactpos 1
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass RestartBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_restart"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "#main_menu_restart"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" right
+           "text valign" center
           }
          }
         }
@@ -280,39 +252,26 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass OptionsBtn_panel {
+          TextWidgetClass OptionsBtn_label {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
+           position 0 -0.01948
            size 1 1
            halign right_ref
            valign center_ref
-           hexactpos 0
+           hexactpos 1
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass OptionsBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#layout_xbox_ingame_menu_options"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "#layout_xbox_ingame_menu_options"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" right
+           "text valign" center
           }
          }
         }
@@ -333,312 +292,160 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass ContinueBtn_panel {
+          TextWidgetClass ContinueBtn_label {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
            size 1 1
            halign right_ref
            valign center_ref
-           hexactpos 0
+           hexactpos 1
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass ContinueBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_continue"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "#main_menu_continue"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" right
+           "text valign" center
           }
          }
         }
         ButtonWidgetClass respawn_button_custom {
          visible 0
-         color 0 0 0 0
-         position 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass respawn_button_custom_panel {
+          TextWidgetClass respawn_button_custom_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 1 1
+           position 0 0.7401
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
-           hexactsize 0
-           vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass respawn_button_custom_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_respawn_custom"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "#main_menu_respawn_custom"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
          }
         }
         ButtonWidgetClass respawn_button_random {
          visible 0
-         color 0 0 0 0
-         position 0 0
-         size 293 38
-         halign right_ref
+         position 0 75
+         size 292 38
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass respawn_button_random_panel {
+          TextWidgetClass respawn_button_random_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 1 1
+           position 0 0.7401
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
-           hexactsize 0
-           vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass respawn_button_random_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_respawn_random"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "#main_menu_respawn_random"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
          }
         }
         ButtonWidgetClass respawn_button {
-         color 0 0 0 0
-         position 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass respawn_button_panel {
+          TextWidgetClass respawn_button_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 1 1
+           position 0 0.7401
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
-           hexactsize 0
-           vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass respawn_button_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "#main_menu_respawn"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "#main_menu_respawn"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
          }
         }
         ButtonWidgetClass QueueBtn {
-         color 0 0 0 0
-         position 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass QueueBtn_panel {
+          TextWidgetClass QueueBtn_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 1 1
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
-           hexactsize 0
-           vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass QueueBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "Priority Queue"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
-          }
-         }
-        }
-        ButtonWidgetClass "WebsiteBtn.old" {
-         color 0 0 0 0
-         position 0 0
-         size 293 38
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
-         {
-          PanelWidgetClass "WebsiteBtn_panel.old" {
-           ignorepointer 1
-           color 0 0 0 0
-           size 1 1
-           halign right_ref
-           valign center_ref
-           hexactpos 0
-           vexactpos 0
-           hexactsize 0
-           vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass "WebsiteBtn_label.old" {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             text "Website"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "Priority Queue"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
          }
         }
         ButtonWidgetClass WebsiteBtn {
          position 0 75
-         size 293 48
+         size 293 38
          halign center_ref
          valign center_ref
          hexactpos 1
@@ -648,7 +455,7 @@ FrameWidgetClass InGameMenuRoot {
          {
           TextWidgetClass WebsiteBtn_label {
            ignorepointer 1
-           size 100 48
+           size 100 38
            halign right_ref
            valign center_ref
            hexactpos 1
@@ -661,7 +468,7 @@ FrameWidgetClass InGameMenuRoot {
            "exact text" 1
            "exact text size" 26
            "size to text h" 1
-           "size to text v" 1
+           "size to text v" 0
            "text halign" center
            "text valign" center
           }
