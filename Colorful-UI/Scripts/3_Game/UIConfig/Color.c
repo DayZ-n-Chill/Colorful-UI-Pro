@@ -46,9 +46,9 @@ class UIColor
 	static int Mastodon()         { return ARGB(255, 99, 100, 255); };
  	
 	//Custom Colors 
-	static int CuiTeal()          { return ARGB(255, 102, 153, 153); };
-	static int CuiBlue()          { return ARGB(255, 1, 5, 74); };
-	static int CuiDarkBlue()      { return ARGB(155, 0, 0, 32); };
-	static int CuiSubtleRed()     { return ARGB(255, 100, 35, 35); };
-	static int CuiBrightRed()     { return ARGB(255, 152, 0, 0); };
+	static int cuiTeal()          { return ARGB(255, 102, 153, 153); };
+	static int cuiBlue()          { return ARGB(255, 1, 5, 74); };
+	static int cuiDarkBlue()      { return ARGB(155, 0, 0, 32); };
+	static int cuiSubtleRed()     { return ARGB(255, 100, 35, 35); };
+	static int cuiBrightRed()     { return ARGB(255, 152, 0, 0); };
 }

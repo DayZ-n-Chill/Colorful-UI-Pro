@@ -583,7 +583,7 @@ FrameWidgetClass InGameMenuRoot {
           }
          }
         }
-        ButtonWidgetClass WebsiteBtn {
+        ButtonWidgetClass "WebsiteBtn.old" {
          color 0 0 0 0
          position 0 0
          size 293 38
@@ -600,7 +600,7 @@ FrameWidgetClass InGameMenuRoot {
          "next up" "choose_server"
          "next down" "play_video"
          {
-          PanelWidgetClass WebsiteBtn_panel {
+          PanelWidgetClass "WebsiteBtn_panel.old" {
            ignorepointer 1
            color 0 0 0 0
            size 1 1
@@ -612,7 +612,7 @@ FrameWidgetClass InGameMenuRoot {
            vexactsize 0
            style DayZDefaultPanel
            {
-            TextWidgetClass WebsiteBtn_label {
+            TextWidgetClass "WebsiteBtn_label.old" {
              clipchildren 0
              ignorepointer 1
              size 1 1
@@ -633,6 +633,37 @@ FrameWidgetClass InGameMenuRoot {
              "text valign" center
             }
            }
+          }
+         }
+        }
+        ButtonWidgetClass WebsiteBtn {
+         position 0 75
+         size 293 48
+         halign center_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         {
+          TextWidgetClass WebsiteBtn_label {
+           ignorepointer 1
+           size 100 48
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "Website"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
           }
          }
         }
@@ -690,9 +721,9 @@ FrameWidgetClass InGameMenuRoot {
        Columns 1
        Rows 5
        {
-        ButtonWidgetClass testBtn3 {
+        ButtonWidgetClass DiscordBtn {
          position 0 75
-         size 293 48
+         size 293 38
          halign center_ref
          valign center_ref
          hexactpos 1
@@ -700,10 +731,10 @@ FrameWidgetClass InGameMenuRoot {
          hexactsize 1
          vexactsize 1
          {
-          TextWidgetClass testBtn3_label {
+          TextWidgetClass DiscordBtn_label {
            ignorepointer 1
-           position 50 0
-           size 100 48
+           position 40 0
+           size 100 38
            halign right_ref
            valign center_ref
            hexactpos 1
@@ -714,16 +745,17 @@ FrameWidgetClass InGameMenuRoot {
            font "Colorful-UI/gui/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
-           "exact text size" 25
+           "exact text size" 26
            "size to text h" 1
-           "size to text v" 1
+           "size to text v" 0
            "text halign" center
            "text valign" center
           }
-          ImageWidgetClass testBtn3_img {
+          ImageWidgetClass DiscordBtn_img {
            clipchildren 0
            ignorepointer 1
-           size 30 24
+           position 0 0
+           size 28 24
            halign right_ref
            valign center_ref
            hexactpos 1
@@ -740,436 +772,205 @@ FrameWidgetClass InGameMenuRoot {
           }
          }
         }
-        ButtonWidgetClass "DiscordBtn.old" {
-         color 0 0 0 0
+        ButtonWidgetClass TwitterBtn {
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass "DiscordBtn_panel.old" {
+          TextWidgetClass TwitterBtn_label {
            ignorepointer 1
-           color 0 0 0 0
-           position 0 0
-           size 293 40
+           position 40 0
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass "DiscordBtn_img.old" {
-             clipchildren 0
-             ignorepointer 1
-             size 30 24
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Discord"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 0
-            }
-            TextWidgetClass "DiscordBtn_label.old" {
-             clipchildren 0
-             ignorepointer 1
-             position 50 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "Discord"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "Twitter"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
+          }
+          ImageWidgetClass TwitterBtn_img {
+           clipchildren 0
+           ignorepointer 1
+           size 28 24
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           image0 "set:cui image:Twitter"
+           imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+           mode blend
+           "src alpha" 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
+           filter 0
           }
          }
         }
         ButtonWidgetClass YoutubeBtn {
-         visible 1
-         color 0 0 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass YoutubeBtn_panel {
+          TextWidgetClass YoutubeBtn_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 293 40
+           position 40 0
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass YoutubeBtn_img {
-             clipchildren 0
-             ignorepointer 1
-             position 0 0
-             size 30 24
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Youtube"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 1
-            }
-            TextWidgetClass YoutubeBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             position 50 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "YouTube"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "YouTube"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
-         }
-        }
-        ButtonWidgetClass TwitterBtn {
-         color 0 0 0 0
-         size 293 38
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
-         {
-          PanelWidgetClass TwitterBtn_panel {
+          ImageWidgetClass YoutubeBtn_img {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
-           size 293 40
+           size 28 24
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass TwitterBtn_img {
-             clipchildren 0
-             ignorepointer 1
-             position 0 0
-             size 27 24
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Twitter"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 1
-            }
-            TextWidgetClass TwitterBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             position 50 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "Twitter"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           image0 "set:cui image:Youtube"
+           imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+           mode blend
+           "src alpha" 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
+           filter 0
           }
          }
         }
         ButtonWidgetClass RedditBtn {
-         visible 1
-         color 0 0 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass RedditBtn_panel {
+          TextWidgetClass RedditBtn_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 293 40
+           position 40 0
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass RedditBtn_img {
-             clipchildren 0
-             ignorepointer 1
-             position 0 0
-             size 27 24
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Reddit"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 1
-            }
-            TextWidgetClass RedditBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             position 50 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "Reddit"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "Reddit"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
+          }
+          ImageWidgetClass RedditBtn_img {
+           clipchildren 0
+           ignorepointer 1
+           size 28 24
+           halign right_ref
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           image0 "set:cui image:Reddit"
+           imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+           mode blend
+           "src alpha" 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
+           filter 0
           }
          }
         }
         ButtonWidgetClass FacebookBtn {
-         visible 1
-         color 0 0 0 0
+         position 0 75
          size 293 38
-         halign right_ref
+         halign center_ref
          valign center_ref
          hexactpos 1
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
          {
-          PanelWidgetClass FacebookBtn_panel {
+          TextWidgetClass FacebookBtn_label {
            ignorepointer 1
-           color 0 0 0 0
-           size 293 40
+           position 40 0
+           size 100 38
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass FacebookBtn_img {
-             clipchildren 0
-             ignorepointer 1
-             position 0 0
-             size 24 24
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Facebook"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 1
-            }
-            TextWidgetClass FacebookBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             position 50 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "Facebook"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "text halign" right
-             "text valign" center
-            }
-           }
+           text "Facebook"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 26
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" center
+           "text valign" center
           }
-         }
-        }
-        ButtonWidgetClass MetaBtn {
-         visible 0
-         color 0 0 0 0
-         size 293 38
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         style Empty
-         "no focus" 0
-         "next left" "news_main"
-         "next right" "news_main"
-         "next up" "choose_server"
-         "next down" "play_video"
-         {
-          PanelWidgetClass MetaBtn_panel {
+          ImageWidgetClass FacebookBtn_img {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
-           size 293 39
+           size 28 24
            halign right_ref
            valign center_ref
-           hexactpos 0
-           vexactpos 0
+           hexactpos 1
+           vexactpos 1
            hexactsize 1
            vexactsize 1
-           style DayZDefaultPanel
-           {
-            ImageWidgetClass MetaBtn_img {
-             clipchildren 0
-             ignorepointer 1
-             size 39 32
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 1
-             vexactsize 1
-             image0 "set:cui image:Meta"
-             mode blend
-             "src alpha" 1
-             "clamp mode" clamp
-             "stretch mode" stretch_w_h
-             filter 1
-            }
-            TextWidgetClass MetaBtn_label {
-             clipchildren 0
-             ignorepointer 1
-             position 60 0
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 1
-             hexactsize 0
-             vexactsize 0
-             text "Meta"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "exact text" 1
-             "exact text size" 30
-             "size to text h" 1
-             "text halign" right
-             "text valign" center
-            }
-           }
+           image0 "set:cui image:Meta"
+           imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
+           mode blend
+           "src alpha" 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
+           filter 0
           }
          }
-        }
-        ButtonWidgetClass testBtn0 {
-         size 293 48
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         text "Text Button"
-         text_halign right
         }
        }
       }
