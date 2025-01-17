@@ -2,9 +2,6 @@ modded class InGameMenu extends UIScriptedMenu
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider;
     protected ButtonWidget m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
-    float m_TimerSlice;
-    private Widget m_GameOverScreen;
-    private ImageWidget m_GameOverScreenImage;
 
     override Widget Init()
     {
