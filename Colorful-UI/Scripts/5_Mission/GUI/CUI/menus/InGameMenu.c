@@ -93,7 +93,7 @@ modded class InGameMenu extends UIScriptedMenu
             m_Website,
             "Visit Website",
             colorScheme.PrimaryText(),
-            UIColor.Facebook(),
+            colorScheme.ButtonHover(),
             MenuURLS.urlFacebook,
         );
 
