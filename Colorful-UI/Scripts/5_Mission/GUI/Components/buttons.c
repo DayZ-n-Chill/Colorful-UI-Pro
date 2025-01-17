@@ -23,7 +23,7 @@ class CUIButtonHandler
         int hoverColor,
         string clickAction     = "",
         Class  targetClass     = null,
-        string callbackMethod  = ""
+        string callbackMethod  = "",
     ) {
         m_Button         = button;
         m_TextWidget     = textWidget;
@@ -156,7 +156,7 @@ class cuiElmnt
         int hoverColor,
         string clickAction    = "",
         Class  targetClass    = null,
-        string callbackMethod = ""
+        string callbackMethod = "",
     ) {
         if (!button) return;
 
@@ -183,7 +183,7 @@ class cuiElmnt
             hoverColor, 
             clickAction, 
             targetClass, 
-            callbackMethod
+            callbackMethod,
         );
 
         // Register event callbacks
