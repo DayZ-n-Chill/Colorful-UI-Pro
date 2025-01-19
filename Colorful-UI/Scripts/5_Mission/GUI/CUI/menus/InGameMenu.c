@@ -9,27 +9,27 @@ modded class InGameMenu extends UIScriptedMenu
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/inGame/cui.ingame.layout");
         m_HintPanel = new UiHintPanel(layoutRoot.FindAnyWidget("hint_frame"));
 
-        m_ExitButton             	= layoutRoot.FindAnyWidget("ExitBtn");
-        m_ContinueButton         	= layoutRoot.FindAnyWidget("ContinueBtn");
-        m_OptionsButton          	= layoutRoot.FindAnyWidget("OptionsBtn");
-        m_RestartButton          	= layoutRoot.FindAnyWidget("RestartBtn");
-        m_RespawnButton          	= layoutRoot.FindAnyWidget("respawn_button");
+        m_ExitButton        = layoutRoot.FindAnyWidget("ExitBtn");
+        m_ContinueButton    = layoutRoot.FindAnyWidget("ContinueBtn");
+        m_OptionsButton     = layoutRoot.FindAnyWidget("OptionsBtn");
+        m_RestartButton     = layoutRoot.FindAnyWidget("RestartBtn");
+        m_RespawnButton     = layoutRoot.FindAnyWidget("respawn_button");
                 
-		m_PrioQ                  	= layoutRoot.FindAnyWidget("QueueBtn");
-        m_Website                	= layoutRoot.FindAnyWidget("WebsiteBtn");
-        m_Discord                	= layoutRoot.FindAnyWidget("DiscordBtn");
-        m_Twitter                	= layoutRoot.FindAnyWidget("TwitterBtn");
-        m_Youtube                	= layoutRoot.FindAnyWidget("YoutubeBtn");
-        m_Reddit                 	= layoutRoot.FindAnyWidget("RedditBtn");
-        m_Facebook               	= layoutRoot.FindAnyWidget("FacebookBtn");
+		m_PrioQ             = layoutRoot.FindAnyWidget("QueueBtn");
+        m_Website           = layoutRoot.FindAnyWidget("WebsiteBtn");
+        m_Discord           = layoutRoot.FindAnyWidget("DiscordBtn");
+        m_Twitter           = layoutRoot.FindAnyWidget("TwitterBtn");
+        m_Youtube           = layoutRoot.FindAnyWidget("YoutubeBtn");
+        m_Reddit            = layoutRoot.FindAnyWidget("RedditBtn");
+        m_Facebook          = layoutRoot.FindAnyWidget("FacebookBtn");
 
-        m_TopShader              	= ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-        m_BottomShader           	= ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-		m_MenuDivider            	= ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
+        m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+		m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
 
-        m_MenuDivider.SetColor(colorScheme.Separator());
-        m_TopShader.SetColor(colorScheme.TopShader());
-        m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_TopShader)    m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_MenuDivider)  m_MenuDivider.SetColor(colorScheme.Separator());
    
         cuiElmnt.proBtn(
             m_ExitButton,
@@ -40,7 +40,7 @@ modded class InGameMenu extends UIScriptedMenu
             this,        
             "OnClick_Exit",
         );
-
+        
         cuiElmnt.proBtn(
             m_ContinueButton,
             "#main_menu_continue",
@@ -88,14 +88,24 @@ modded class InGameMenu extends UIScriptedMenu
             colorScheme.ButtonHover(),
             MenuURLS.urlPriorityQ,
         );
-
+                 
+        if (MenuURLS.urlPriorityQ == "#" || MenuURLS.urlPriorityQ == "")
+        {
+            if (m_PrioQ) m_PrioQ.Show(false);
+        }
+        
         cuiElmnt.proBtn(
             m_Website,
             "Visit Website",
             colorScheme.PrimaryText(),
             colorScheme.ButtonHover(),
-            MenuURLS.urlFacebook,
+            MenuURLS.urlWebsite,
         );
+
+        if (MenuURLS.urlWebsite == "#" || MenuURLS.urlWebsite == "")
+        {
+            if (m_Website) m_Website.Show(false);
+        }
 
         cuiElmnt.proBtn(
             m_Discord,
@@ -105,6 +115,11 @@ modded class InGameMenu extends UIScriptedMenu
             MenuURLS.urlDiscord,
         );
 
+        if (MenuURLS.urlDiscord == "#" || MenuURLS.urlDiscord == "")
+        {
+            if (m_Discord) m_Discord.Show(false);
+        }
+
         cuiElmnt.proBtn(
             m_Twitter,
             "Twitter",
@@ -112,6 +127,11 @@ modded class InGameMenu extends UIScriptedMenu
             UIColor.Twitter(),
             MenuURLS.urlTwitter,
         );  
+        
+        if (MenuURLS.urlTwitter == "#" || MenuURLS.urlTwitter == "")
+        {
+            if (m_Twitter) m_Twitter.Show(false);
+        }
 
         cuiElmnt.proBtn(
             m_Youtube,
@@ -121,6 +141,11 @@ modded class InGameMenu extends UIScriptedMenu
             MenuURLS.urlYoutube,
         );
 
+        if (MenuURLS.urlYoutube == "#" || MenuURLS.urlYoutube == "")
+        {
+            if (m_Youtube) m_Youtube.Show(false);
+        }
+
         cuiElmnt.proBtn(
             m_Reddit,
             "Reddit",
@@ -129,6 +154,11 @@ modded class InGameMenu extends UIScriptedMenu
             MenuURLS.urlReddit,
         );
 
+        if (MenuURLS.urlReddit == "#" || MenuURLS.urlReddit == "")
+        {
+            if (m_Reddit) m_Reddit.Show(false);
+        }
+
         cuiElmnt.proBtn(
             m_Facebook,
             "Facebook",
@@ -136,7 +166,12 @@ modded class InGameMenu extends UIScriptedMenu
             UIColor.Facebook(),
             MenuURLS.urlFacebook,
         );
-		
+
+		if (MenuURLS.urlFacebook == "#" || MenuURLS.urlFacebook == "")
+        {
+            if (m_Facebook) m_Facebook.Show(false);
+        }     
+
 		HudShow(false);       
 		return layoutRoot;
     }

@@ -3,7 +3,6 @@ WindowWidgetClass LogoutDialogRoot {
  clipchildren 1
  inheritalpha 0
  color 0.1176 0.1176 0.1176 0.9804
- position 0 0
  size 1 1
  halign center_ref
  valign center_ref
@@ -30,7 +29,6 @@ WindowWidgetClass LogoutDialogRoot {
      visible 1
      clipchildren 0
      ignorepointer 1
-     position 0 0
      size 1 1
      halign center_ref
      hexactpos 1
@@ -47,9 +45,9 @@ WindowWidgetClass LogoutDialogRoot {
      visible 1
      clipchildren 0
      ignorepointer 1
-     position 0 0
      size 1 1
      halign center_ref
+     valign bottom_ref
      hexactpos 1
      vexactpos 1
      hexactsize 0
