@@ -2,7 +2,7 @@ modded class MainMenu extends UIScriptedMenu
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider;
     protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
-	protected Widget m_TopSpacer, m_BottomSpacer, m_mainmenu_root;
+	protected Widget m_TopSpacer, m_BottomSpacer;
 
 	override Widget Init()
 	{
@@ -27,8 +27,6 @@ modded class MainMenu extends UIScriptedMenu
         m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
-
-        m_mainmenu_root      = layoutRoot.FindAnyWidget("mainmenu_root");
 
         if (m_TopShader)    m_TopShader.SetColor(colorScheme.TopShader());
         if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
