@@ -1,21 +1,16 @@
-class cuiUtils
+bool allInvalid = true;
+
+void CheckURL(Widget w, string url)
 {
-    static int m_RandomIndex = -1;
-
-    // Returns a random index while avoiding consecutive duplicates
-    static int GetRandomIndex(int count)
+    if (!w) return;
+    
+    if (url == "#" || url == "")
     {
-        int newIndex = Math.RandomIntInclusive(0, count - 1);
-        while (newIndex == m_RandomIndex)
-        {
-            newIndex = Math.RandomIntInclusive(0, count - 1);
-        }
-        m_RandomIndex = newIndex;
-        return newIndex;
+        w.Show(false);
     }
-
-    // Combines ARGB color values into a single integer
-    static int ARGB(int alpha, int red, int green, int blue) {
-        return (alpha << 24) | (red << 16) | (green << 8) | blue;
+    else
+    {
+        w.Show(true);
+        allInvalid = false;
     }
-};
+}
