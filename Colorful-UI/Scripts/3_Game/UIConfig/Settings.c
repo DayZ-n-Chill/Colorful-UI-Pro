@@ -6,6 +6,10 @@ static bool MainMenuVideo     = false;   // If set to true, a video will be show
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
+// Server Information
+static const string SERVER_IP = "195.60.166.82";
+static const int SERVER_PORT = 2302;
+
 // Loading Screens
 ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
