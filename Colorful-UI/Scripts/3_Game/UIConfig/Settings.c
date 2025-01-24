@@ -33,15 +33,18 @@ ref TStringArray GameOverScreens = {
 };
 
 // Link URLs add more if you want.
-class MenuURLS {
-	static string urlDiscord    = "#";
-	static string urlFacebook   = "#";
-	static string urlTwitter    = "#";
-	static string urlReddit     = "#";
-	static string urlYoutube    = "#";
-	static string urlWebsite    = "#"; 
-	static string urlPriorityQ  = "#";
-	static string urlCustom     = "#";
+class CustomURL {
+	static string Website    = "http://www.dayznchill.com"; 
+	static string PriorityQ  = "http://www.dayznchill.com";
+	static string Custom     = "#";
+}
+
+class SocialURL {
+	static string Discord    = "#";
+	static string Facebook   = "#";
+	static string Twitter    = "#";
+	static string Reddit     = "#";
+	static string Youtube    = "#";
 }
 
 // Menu IDs

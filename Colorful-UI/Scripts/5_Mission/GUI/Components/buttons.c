@@ -11,6 +11,9 @@ class CUIButtonHandler
     private Class  m_TargetClass;
     private string m_CallbackMethod;
 
+    private string m_ServerIP;
+    private int    m_ServerPort;
+
     void CUIButtonHandler(
         ButtonWidget button,
         TextWidget textWidget,
@@ -20,6 +23,8 @@ class CUIButtonHandler
         string clickAction     = "",
         Class  targetClass     = null,
         string callbackMethod  = "",
+        string serverIP        = "",
+        int    serverPort      = 0,
     ) {
         m_Button         = button;
         m_TextWidget     = textWidget;
@@ -29,6 +34,8 @@ class CUIButtonHandler
         m_ClickAction    = clickAction;
         m_TargetClass    = targetClass;
         m_CallbackMethod = callbackMethod;
+        m_ServerIP       = serverIP;
+        m_ServerPort     = serverPort;
 
         ApplyBaseStyles();
     }
@@ -40,7 +47,6 @@ class CUIButtonHandler
             m_Button.SetTextColor(m_TextColor);
             return;
         }
-
         if (m_TextWidget)
         {
             m_TextWidget.SetColor(m_TextColor);
@@ -49,7 +55,6 @@ class CUIButtonHandler
         {
             m_Button.SetTextColor(m_TextColor);
         }
-
         if (m_ImageWidget)
         {
             m_ImageWidget.SetColor(m_HoverColor);
@@ -64,17 +69,14 @@ class CUIButtonHandler
             m_Button.SetColor(m_HoverColor);
             return;
         }
-
         if (m_TextWidget)
         {
             m_TextWidget.SetColor(m_HoverColor);
         }
-
         if (m_ImageWidget)
         {
             m_ImageWidget.SetColor(m_HoverColor);
         }
-
         m_Button.SetColor(UIColor.Transparent());
     }
 
@@ -126,6 +128,11 @@ class CUIButtonHandler
             {
                 GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
             }
+            else if (m_ServerIP != "" && m_ServerPort > 0)
+            {
+                GetGame().GetUIManager().CloseAll();
+                g_Game.ConnectFromServerBrowser(m_ServerIP, m_ServerPort, "");
+            }
             return true;
         }
         return false;
@@ -144,6 +151,8 @@ class cuiElmnt
         string clickAction    = "",
         Class  targetClass    = null,
         string callbackMethod = "",
+        string serverIP       = "",
+        int    serverPort     = 0,
     ) {
         if (!button) return;
 
@@ -155,26 +164,42 @@ class cuiElmnt
             textWidget.SetText(text);
             button.SetText("");
         }
-
         ImageWidget imageWidget = ImageWidget.Cast(button.FindAnyWidget(button.GetName() + "_img"));
 
         CUIButtonHandler handler = new CUIButtonHandler(
-            button, 
-            textWidget, 
-            imageWidget, 
-            textColor, 
-            hoverColor, 
-            clickAction, 
-            targetClass, 
+            button,
+            textWidget,
+            imageWidget,
+            textColor,
+            hoverColor,
+            clickAction,
+            targetClass,
             callbackMethod,
+            serverIP,
+            serverPort,
         );
 
-        WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button,    handler, "OnMouseEnter");
-        WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button,    handler, "OnMouseLeave");
-        WidgetEventHandler.GetInstance().RegisterOnFocus(button,         handler, "OnFocus");
-        WidgetEventHandler.GetInstance().RegisterOnFocusLost(button,     handler, "OnFocusLost");
-        WidgetEventHandler.GetInstance().RegisterOnClick(button,         handler, "OnClick");
+        WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button, handler, "OnMouseEnter");
+        WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button, handler, "OnMouseLeave");
+        WidgetEventHandler.GetInstance().RegisterOnFocus(button,      handler, "OnFocus");
+        WidgetEventHandler.GetInstance().RegisterOnFocusLost(button,  handler, "OnFocusLost");
+        WidgetEventHandler.GetInstance().RegisterOnClick(button,      handler, "OnClick");
 
         s_Handlers.Insert(handler);
+    }
+
+    static void proBtnDC(ButtonWidget button, string text, int textColor, int hoverColor, string serverIP, int serverPort)
+    {
+        proBtn(button, text, textColor, hoverColor, "", null, "", serverIP, serverPort);
+    }
+
+    static void proBtnURL(ButtonWidget button, string text, int textColor, int hoverColor, string clickAction)
+    {
+        proBtn(button, text, textColor, hoverColor, clickAction, null, "", "", 0);
+    }
+
+    static void proBtnCB(ButtonWidget button, string text, int textColor, int hoverColor, Class targetClass, string callbackMethod)
+    {
+        proBtn(button, text, textColor, hoverColor, "", targetClass, callbackMethod, "", 0);
     }
 }
