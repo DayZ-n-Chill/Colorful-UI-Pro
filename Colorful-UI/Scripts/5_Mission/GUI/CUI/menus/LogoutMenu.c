@@ -13,6 +13,7 @@ modded class LogoutMenu extends UIScriptedMenu
 
 		m_LogoutNow			= layoutRoot.FindAnyWidget("ExitBtn");
 		m_Cancel			= layoutRoot.FindAnyWidget("CancelBtn");
+
 		m_PrioQ				= layoutRoot.FindAnyWidget("QueueBtn");
 		m_Website			= layoutRoot.FindAnyWidget("WebsiteBtn");
 		m_Discord 			= layoutRoot.FindAnyWidget("DiscordBtn");
@@ -20,8 +21,10 @@ modded class LogoutMenu extends UIScriptedMenu
 		m_Youtube 			= layoutRoot.FindAnyWidget("YoutubeBtn");
 		m_Reddit 			= layoutRoot.FindAnyWidget("RedditBtn");
 		m_Facebook 			= layoutRoot.FindAnyWidget("FacebookBtn");
+
 		m_TopShader 		= layoutRoot.FindAnyWidget("TopShader");
 		m_BottomShader 		= layoutRoot.FindAnyWidget("BottomShader");
+		
 		m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
