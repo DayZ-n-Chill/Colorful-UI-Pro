@@ -2,6 +2,7 @@ modded class LogoutMenu extends UIScriptedMenu
 {	
 	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider;
 	protected ButtonWidget m_LogoutNow, m_Cancel, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
+	protected Widget m_TopSpacer, m_BottomSpacer;
 	private	Widget m_timerText
 
 	override Widget Init()
@@ -21,7 +22,9 @@ modded class LogoutMenu extends UIScriptedMenu
 		m_Facebook 			= layoutRoot.FindAnyWidget("FacebookBtn");
 		m_TopShader 		= layoutRoot.FindAnyWidget("TopShader");
 		m_BottomShader 		= layoutRoot.FindAnyWidget("BottomShader");
-		m_MenuDivider		= layoutRoot.FindAnyWidget("MenuDivider");
+		m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
+        m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
+        m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 		
 		// Set the colors of Shader, Divider, and Logout Timer
         m_TopShader.SetColor(colorScheme.TopShader());
@@ -30,8 +33,9 @@ modded class LogoutMenu extends UIScriptedMenu
 		m_LogoutTimeText.SetColor(colorScheme.LogOutTimer());
 
 		// Set Button color, and type. 
-		// Global Controls:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Scheme.c
-		// Or you can be specific and set the color directly.
+		// COLOR  CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Color.c
+		// GLOBAL CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Scheme.c
+		// You can even be specific and set the color directly. ie. argb(255, 255, 255, 255);
 		
 		// Example of a button with a callback
         cuiElmnt.proBtn(m_LogoutNow,"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"abortMission");
