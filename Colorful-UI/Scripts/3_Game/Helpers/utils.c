@@ -1,6 +1,6 @@
 bool allInvalid = true;
 
-void CheckURL(Widget w, string url)
+void CheckSocials(Widget w, string url)
 {
     if (!w) return;
     
@@ -12,5 +12,19 @@ void CheckURL(Widget w, string url)
     {
         w.Show(true);
         allInvalid = false;
+    }
+}
+
+void CheckURL(Widget w, string url)
+{
+    if (!w) return;
+    
+    if (url == "#" || url == "")
+    {
+        w.Show(false);
+    }
+    else
+    {
+        w.Show(true);
     }
 }

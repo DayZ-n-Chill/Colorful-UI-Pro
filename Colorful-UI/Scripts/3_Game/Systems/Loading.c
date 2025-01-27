@@ -126,7 +126,9 @@ modded class LoginQueueBase extends LoginScreenBase
 
         if (CustomURL.PriorityQ == "#" || CustomURL.PriorityQ == "")
         {
-            if (cui_PrioQBtn) cui_PrioQBtn.Show(false);
+            cui_PrioQBtn.Show(false);
+        } else {
+            cui_PrioQBtn.Show(true);
         }
 
         return layoutRoot;

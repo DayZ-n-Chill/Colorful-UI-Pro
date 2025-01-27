@@ -24,36 +24,44 @@ modded class MainMenu extends UIScriptedMenu
 
         m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        
         m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 
-        if (m_TopShader)    m_TopShader.SetColor(colorScheme.TopShader());
-        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
-        if (m_MenuDivider)  m_MenuDivider.SetColor(colorScheme.Separator());
+        // Set the colors of Shader, Divider
+        m_TopShader.SetColor(colorScheme.TopShader());
+        m_BottomShader.SetColor(colorScheme.BottomShader());
+        m_MenuDivider.SetColor(colorScheme.Separator());
 
-        cuiElmnt.proBtnDC(m_Play,"#main_menu_play",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"1.1.1.1",2302);
+        // Example of a button that connects to a server
+        cuiElmnt.proBtnDC(m_Play,"#main_menu_play",colorScheme.PrimaryText(),colorScheme.ButtonHover(),SERVER_IP,SERVER_PORT);
 
+        // Example of a button with a callbacks
         cuiElmnt.proBtnCB(m_Exit,"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"Exit");
         cuiElmnt.proBtnCB(m_SettingsBtn,"Settings",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenSettings");
         cuiElmnt.proBtnCB(m_TutorialBtn,"Tutorial",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenTutorials");
         cuiElmnt.proBtnCB(m_MessageBtn,"Credits",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenCredits");
 
-        cuiElmnt.proBtnURL(m_PrioQ,"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);
-        cuiElmnt.proBtnURL(m_Website,"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
-        cuiElmnt.proBtnURL(m_Discord,"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
-        cuiElmnt.proBtnURL(m_Twitter,"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
-        cuiElmnt.proBtnURL(m_Youtube,"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
-        cuiElmnt.proBtnURL(m_Reddit,"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
-        cuiElmnt.proBtnURL(m_Facebook,"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
+		// Custom Links
+        cuiElmnt.proBtn(m_PrioQ,"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
+        cuiElmnt.proBtn(m_Website,"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
 
-        CheckURL(m_PrioQ,    CustomURL.PriorityQ);
-        CheckURL(m_Website,  CustomURL.Website);
-        CheckURL(m_Discord,  SocialURL.Discord);
-        CheckURL(m_Twitter,  SocialURL.Twitter);
-        CheckURL(m_Youtube,  SocialURL.Youtube);
-        CheckURL(m_Reddit,   SocialURL.Reddit);
-        CheckURL(m_Facebook, SocialURL.Facebook);
+		// Social Links
+        cuiElmnt.proBtn(m_Discord,"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
+        cuiElmnt.proBtn(m_Twitter,"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
+        cuiElmnt.proBtn(m_Youtube,"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
+        cuiElmnt.proBtn(m_Reddit,"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
+        cuiElmnt.proBtn(m_Facebook,"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
+
+		// These checks show/hide what buttons that are invalid or null
+        CheckURL(m_PrioQ,    	 CustomURL.PriorityQ);
+        CheckURL(m_Website,  	 CustomURL.Website);
+        CheckSocials(m_Discord,  SocialURL.Discord);
+        CheckSocials(m_Twitter,  SocialURL.Twitter);
+        CheckSocials(m_Youtube,  SocialURL.Youtube);
+        CheckSocials(m_Reddit,   SocialURL.Reddit);
+        CheckSocials(m_Facebook, SocialURL.Facebook);
 
         if (allInvalid && m_MenuDivider)
         {
@@ -64,7 +72,7 @@ modded class MainMenu extends UIScriptedMenu
        
 		return layoutRoot;
 	}	    
-    
+
 	override void Exit() {super.Exit();}
     override void OpenSettings(){super.OpenSettings();}
     override void OpenTutorials(){super.OpenTutorials();}
