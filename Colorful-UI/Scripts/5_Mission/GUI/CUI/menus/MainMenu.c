@@ -34,7 +34,7 @@ modded class MainMenu extends UIScriptedMenu
         m_BottomShader.SetColor(colorScheme.BottomShader());
         m_MenuDivider.SetColor(colorScheme.Separator());
 
-        // Example of a button that connects to a server
+        // Example of a button that directly connects to a server
         cuiElmnt.proBtnDC(m_Play,"#main_menu_play",colorScheme.PrimaryText(),colorScheme.ButtonHover(),SERVER_IP,SERVER_PORT);
 
         // Example of a button with a callbacks
