@@ -74,10 +74,9 @@ modded class InGameMenu extends UIScriptedMenu
 
 		HudShow(false);       
 
-		// m_GameOverScreen.Show(false);
 		m_GameOverScreen.SetAlpha(0);
-		m_GameOverScreenImage.LoadImageFile(0, GameOverScreen.GameOverScreenImage());
 		m_GameOverScreenImage.SetAlpha(0);
+		m_GameOverScreenImage.LoadImageFile(0, GameOverScreen.GameOverScreenImage());
 
 		return layoutRoot;
     }
