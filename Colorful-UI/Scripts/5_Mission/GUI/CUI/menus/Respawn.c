@@ -72,11 +72,27 @@ modded class RespawnDialogue extends UIScriptedMenu
         }
 
 		m_GameOverScreen.SetAlpha(0);
-		m_GameOverScreen.Show(false);
+		// m_GameOverScreen.Show(false);
 		m_GameOverScreenImage.LoadImageFile(0, GameOverScreen.GameOverScreenImage());
 		m_GameOverScreenImage.SetAlpha(0);
 
 		return layoutRoot;
+	}
+
+	void Update(float timeslice)
+	{
+		if (ShowDeadScreen)
+		{
+			ShowGameOverScreen();
+		}
+		super.Update(timeslice);
+	};
+
+	void ShowGameOverScreen()
+	{
+		m_GameOverScreen.SetAlpha(1);
+		m_GameOverScreenImage.SetAlpha(1);
+		m_GameOverScreen.Show(true);
 	}
 
 	void CancelBtn()
@@ -94,33 +110,4 @@ modded class RespawnDialogue extends UIScriptedMenu
 	    RequestRespawn(true);
 	}
 
-	override void Update(float timeslice)
-	{
-		if (ShowDeadScreen)
-		{
-			m_TimerSlice += timeslice;
-			if (m_TimerSlice >= 0.01)
-			{
-				GameOverMan(timeslice);
-				m_TimerSlice = 0;
-			}
-		}
-		super.Update(timeslice);
-	};
-
-	void GameOverMan(float timeslice)
-	{
-		if (m_GameOverScreenImage.GetAlpha() < 1)
-		{
-			m_GameOverScreen.Show(true);
-
-			float newAlpha = Math.Min(m_GameOverScreen.GetAlpha() + (1.5 * timeslice), 1);
-			m_GameOverScreen.SetAlpha(newAlpha);
-
-			if (newAlpha > 0.5)
-			{
-				m_GameOverScreenImage.SetAlpha(Math.Min(m_GameOverScreenImage.GetAlpha() + (1.25 * timeslice), 1));
-			}
-		}
-	}
 }

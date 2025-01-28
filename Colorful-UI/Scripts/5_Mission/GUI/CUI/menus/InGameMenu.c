@@ -8,6 +8,8 @@ modded class InGameMenu extends UIScriptedMenu
     override Widget Init()
     {
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/inGame/cui.ingame.layout");
+        m_GameOverScreen = Widget.Cast(layoutRoot.FindAnyWidget("GameOverScreen"));
+        m_GameOverScreenImage = ImageWidget.Cast(m_GameOverScreen.FindAnyWidget("GameOverScreenImage"));
         m_HintPanel = new UiHintPanel(layoutRoot.FindAnyWidget("hint_frame"));
 
         m_ExitButton        = layoutRoot.FindAnyWidget("ExitBtn");
@@ -72,13 +74,10 @@ modded class InGameMenu extends UIScriptedMenu
 
 		HudShow(false);       
 
-		m_GameOverScreen = Widget.Cast(layoutRoot.FindAnyWidget("GameOverScreen"));
+		// m_GameOverScreen.Show(false);
 		m_GameOverScreen.SetAlpha(0);
-		m_GameOverScreen.Show(false);
-		m_GameOverScreenImage = ImageWidget.Cast(m_GameOverScreen.FindAnyWidget("GameOverScreenImage"));
 		m_GameOverScreenImage.LoadImageFile(0, GameOverScreen.GameOverScreenImage());
 		m_GameOverScreenImage.SetAlpha(0);
-
 
 		return layoutRoot;
     }
