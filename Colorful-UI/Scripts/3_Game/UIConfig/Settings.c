@@ -32,6 +32,11 @@ ref TStringArray GameOverScreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
 };
 
+class GameOverScreen
+{
+    static string GameOverScreenImage() { return "Colorful-UI/GUI/textures/DeathScreens/DeathScreen.edds"; };
+};
+
 // Link URLs add more if you want.
 class CustomURL {
 	static string Website    = "http://www.dayznchill.com"; 
