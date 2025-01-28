@@ -2,7 +2,7 @@ modded class InGameMenu extends UIScriptedMenu
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider;
     protected ButtonWidget m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
-	protected Widget m_TopSpacer, m_BottomSpacer;
+    protected Widget m_TopSpacer, m_BottomSpacer;
 
     override Widget Init()
     {
@@ -25,17 +25,22 @@ modded class InGameMenu extends UIScriptedMenu
 
         m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-		
+        
         m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
-   
-        // Buttons with a callbacks
-        cuiElmnt.proBtnCB(m_ExitButton,"#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(),"", this,"OnClick_Exit");
-        cuiElmnt.proBtnCB(m_ContinueButton,"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Continue");
-        cuiElmnt.proBtnCB(m_OptionsButton,"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Options");
-        cuiElmnt.proBtnCB(m_RestartButton,"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Restart");
-        cuiElmnt.proBtnCB(m_RespawnButton,"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Respawn");
+
+        // Set the colors of Shader, Divider
+        m_TopShader.SetColor(colorScheme.TopShader());
+        m_BottomShader.SetColor(colorScheme.BottomShader());
+        m_MenuDivider.SetColor(colorScheme.Separator());
+
+        // Example of a button with a callbacks
+        cuiElmnt.proBtn(m_ExitButton,"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"", this,"OnClick_Exit");
+        cuiElmnt.proBtn(m_ContinueButton,"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Continue");
+        cuiElmnt.proBtn(m_OptionsButton,"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Options");
+        cuiElmnt.proBtn(m_RestartButton,"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Restart");
+        cuiElmnt.proBtn(m_RespawnButton,"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),"",this,"OnClick_Respawn");
 
 		// Custom Links
         cuiElmnt.proBtn(m_PrioQ,"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
