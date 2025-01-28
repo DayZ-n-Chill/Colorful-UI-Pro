@@ -1,4 +1,4 @@
-FrameWidgetClass main_menu_root {
+FrameWidgetClass mainmenu_root {
  visible 1
  ignorepointer 1
  position 0 0
@@ -14,7 +14,7 @@ FrameWidgetClass main_menu_root {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.18 0.09
+   size 0.16 0.09
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -24,7 +24,7 @@ FrameWidgetClass main_menu_root {
    scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{105076873F0677B3}Colorful-UI/GUI/textures/loading_screens/CUI2-BG4.edds"
+   imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
    mode opaque
    "src alpha" 1
    "clamp mode" clamp
@@ -56,7 +56,7 @@ FrameWidgetClass main_menu_root {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -66,14 +66,14 @@ FrameWidgetClass main_menu_root {
      visible 1
      clipchildren 0
      ignorepointer 1
-     position 0 0
-     size 1.01 1
+     size 1 1
      halign center_ref
+     valign bottom_ref
      hexactpos 1
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/globals/shader.edds"
+     imageTexture "{73620301808D311B}Colorful-UI/GUI/textures/Shared/shader.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -92,7 +92,7 @@ FrameWidgetClass main_menu_root {
      vexactpos 1
      hexactsize 0
      vexactsize 0
-     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/globals/CUI2-Vingette.edds"
+     imageTexture "{D8F330A5E09774AE}Colorful-UI/GUI/textures/Shared/Vingette.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
@@ -111,25 +111,6 @@ FrameWidgetClass main_menu_root {
    hexactsize 0
    vexactsize 0
    {
-    ImageWidgetClass Logo {
-     visible 1
-     inheritalpha 1
-     position 0 0
-     size 438 261
-     hexactpos 1
-     vexactpos 1
-     hexactsize 1
-     vexactsize 1
-     fixaspect outside
-     image0 "set:cui image:Logo"
-     imageTexture "{7CD806F5385DC838}Colorful-UI/GUI/imagesets/CUI-Imageset.edds"
-     mode blend
-     "src alpha" 1
-     "clamp mode" clamp
-     "stretch mode" stretch_w_h
-     filter 1
-     nocache 0
-    }
     GridSpacerWidgetClass TopNavigation {
      ignorepointer 1
      size 699 40
@@ -428,265 +409,6 @@ FrameWidgetClass main_menu_root {
       }
      }
     }
-    FrameWidgetClass settings_panel_root {
-     visible 0
-     ignorepointer 1
-     position 0 0
-     size 600 40
-     halign right_ref
-     hexactpos 0
-     vexactpos 0
-     hexactsize 1
-     vexactsize 1
-     priority 3
-     {
-      ButtonWidgetClass tutorial_button {
-       visible 1
-       color 1 1 1 0
-       position 0.1 0
-       size 37 36
-       valign center_ref
-       hexactpos 0
-       vexactpos 1
-       hexactsize 1
-       vexactsize 1
-       style Empty
-       "no focus" 1
-       "next up" "play"
-       "next down" "customize_character"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-       switch normal
-       {
-        ImageWidgetClass tutorial_button_image {
-         ignorepointer 1
-         size 1 1
-         halign center_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 0
-         vexactsize 0
-         image0 "set:dayz_gui image:tutorials"
-         mode blend
-         "src alpha" 1
-        }
-       }
-      }
-      ButtonWidgetClass message_button {
-       visible 1
-       color 1 1 1 0
-       size 45 36
-       valign center_ref
-       hexactpos 0
-       vexactpos 1
-       hexactsize 1
-       vexactsize 1
-       fixaspect inside
-       style Empty
-       "no focus" 1
-       "next up" "play"
-       "next down" "customize_character"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-       switch normal
-       {
-        ImageWidgetClass message_button_image {
-         ignorepointer 1
-         size 1 1
-         halign center_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 0
-         vexactsize 0
-         image0 "set:dayz_gui image:credits"
-         mode blend
-         "src alpha" 1
-        }
-       }
-      }
-      ButtonWidgetClass exit_button {
-       size 100 40
-       halign right_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 1
-       vexactsize 1
-       {
-        TextWidgetClass exit_buton_text {
-         ignorepointer 1
-         size 1 1
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 0
-         vexactsize 0
-         text "EXIT"
-         font "colorful-ui/gui/fonts/GB-Regular.fnt"
-         "exact text" 1
-         "exact text size" 28
-         "size to text h" 1
-         "size to text v" 0
-         "text valign" center
-        }
-        FrameWidgetClass exit_button_icon {
-         color 1 1 1 0
-         size 28 28
-         halign right_ref
-         valign center_ref
-         hexactpos 0
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         fixaspect inside
-         {
-          ImageWidgetClass exit_button_image {
-           ignorepointer 1
-           position 0 0
-           size 1 1
-           halign center_ref
-           valign center_ref
-           hexactpos 1
-           vexactpos 1
-           hexactsize 0
-           vexactsize 0
-           image0 "set:cui image:Exit"
-           mode blend
-           "src alpha" 1
-          }
-         }
-        }
-       }
-      }
-      ButtonWidgetClass settings_button {
-       position 120 0
-       size 160 40
-       halign right_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 1
-       vexactsize 1
-       {
-        TextWidgetClass settings_buton_text {
-         ignorepointer 1
-         size 1 1
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 0
-         vexactsize 0
-         text "SETTINGS"
-         font "colorful-ui/gui/fonts/GB-Regular.fnt"
-         "exact text" 1
-         "exact text size" 28
-         "size to text h" 1
-         "size to text v" 0
-         "text valign" center
-        }
-        FrameWidgetClass settings_button_icon {
-         visible 1
-         keepsafezone 1
-         color 1 1 1 0
-         size 28 28
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         fixaspect inside
-         {
-          ImageWidgetClass settings_button_image {
-           ignorepointer 1
-           position -1.19249 1.19251
-           size 1 1
-           halign center_ref
-           valign center_ref
-           hexactpos 1
-           vexactpos 1
-           hexactsize 0
-           vexactsize 0
-           image0 "set:cui image:Cog"
-           mode blend
-           "src alpha" 1
-          }
-         }
-        }
-       }
-      }
-      ButtonWidgetClass character_button {
-       visible 1
-       color 0 0 0 0
-       position 300 0
-       size 185 40
-       halign right_ref
-       valign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 1
-       vexactsize 1
-       style Empty
-       "no focus" 0
-       "next left" "news_main"
-       "next right" "news_main"
-       "next up" "choose_server"
-       "next down" "play_video"
-       {
-        TextWidgetClass character_buton_text {
-         visible 1
-         clipchildren 0
-         ignorepointer 1
-         position 0 0
-         size 1 1
-         valign center_ref
-         hexactpos 1
-         vexactpos 0
-         hexactsize 0
-         vexactsize 0
-         text "Character"
-         font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-         "text sharpness" 1.5
-         "exact text" 1
-         "exact text size" 28
-         "size to text h" 1
-         "size to text v" 0
-         "text halign" right
-         "text valign" center
-        }
-        FrameWidgetClass character_button_icon {
-         visible 1
-         keepsafezone 1
-         color 1 1 1 0
-         position 0 0
-         size 28 28
-         halign right_ref
-         valign center_ref
-         hexactpos 1
-         vexactpos 1
-         hexactsize 1
-         vexactsize 1
-         fixaspect inside
-         {
-          ImageWidgetClass character_button_image {
-           ignorepointer 1
-           size 1 1
-           halign center_ref
-           valign center_ref
-           hexactpos 1
-           vexactpos 1
-           hexactsize 0
-           vexactsize 0
-           image0 "set:cui image:User"
-           mode blend
-           "src alpha" 1
-          }
-         }
-        }
-       }
-      }
-     }
-    }
     GridSpacerWidgetClass ActionItems {
      visible 1
      ignorepointer 1
@@ -721,7 +443,7 @@ FrameWidgetClass main_menu_root {
        Columns 1
        Rows 5
        {
-        ButtonWidgetClass play {
+        ButtonWidgetClass PlayBtn {
          color 0 0 0 0
          position 0 0
          size 293 75
@@ -740,41 +462,26 @@ FrameWidgetClass main_menu_root {
          text_offset 0 0
          text_halign right
          {
-          PanelWidgetClass play_panel {
+          TextWidgetClass PlayBtn_label {
+           clipchildren 0
            ignorepointer 1
-           color 0 0 0 0
-           position 0 0
            size 1 1
            halign right_ref
            valign center_ref
-           hexactpos 0
+           hexactpos 1
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           style DayZDefaultPanel
-           {
-            TextWidgetClass play_label {
-             clipchildren 0
-             ignorepointer 1
-             size 1 1
-             halign right_ref
-             valign center_ref
-             hexactpos 1
-             vexactpos 0
-             hexactsize 0
-             vexactsize 0
-             scaled 1
-             text "PLAY"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
-             "text sharpness" 1.5
-             "exact text" 1
-             "exact text size" 45
-             "size to text h" 1
-             "size to text v" 0
-             "text halign" right
-             "text valign" center
-            }
-           }
+           scaled 1
+           text "PLAY"
+           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 45
+           "size to text h" 1
+           "size to text v" 0
+           "text halign" right
+           "text valign" center
           }
          }
         }
@@ -1367,7 +1074,7 @@ FrameWidgetClass main_menu_root {
      ignorepointer 1
      color 1 1 1 0.6078
      position 0 140
-     size 500 90
+     size 438 90
      valign center_ref
      hexactpos 1
      vexactpos 1
@@ -1552,7 +1259,7 @@ FrameWidgetClass main_menu_root {
      visible 1
      ignorepointer 1
      position 0.00078 0.0014
-     size 500 291
+     size 438 291
      valign bottom_ref
      hexactpos 0
      vexactpos 0
@@ -1856,6 +1563,24 @@ FrameWidgetClass main_menu_root {
        }
       }
      }
+    }
+    ImageWidgetClass Logo {
+     visible 1
+     inheritalpha 1
+     size 438 261
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     fixaspect outside
+     image0 ""
+     imageTexture "{995A4D44D78F2EC6}Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds"
+     mode blend
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+     filter 1
+     nocache 0
     }
    }
   }

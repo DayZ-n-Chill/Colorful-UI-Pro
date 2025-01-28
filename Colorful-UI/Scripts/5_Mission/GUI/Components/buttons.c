@@ -1,124 +1,125 @@
-class cuiButton {
-    static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
-
-    static void proBtn(ButtonWidget button, string text = "", int textColor = -1, int hoverTextColor = -1, int baseColor = -1, int hoverColor = -1) {
-        if (!button) return;
-
-        if (text == "") text = "Button";
-        if (textColor == -1) textColor = colorScheme.PrimaryText(); 
-        if (hoverTextColor == -1) hoverTextColor = colorScheme.TextHover(); 
-        if (baseColor == -1) baseColor = UIColor.Grey();     
-        if (hoverColor == -1) hoverColor = colorScheme.ButtonHover(); 
-
-        button.SetText(text);
-        button.SetTextColor(textColor);
-        button.SetColor(baseColor);
-
-        string textWidgetName = button.GetName() + "_label";
-        TextWidget textWidget = TextWidget.Cast(button.FindAnyWidget(textWidgetName));
-
-        string imageWidgetName = button.GetName() + "_img";
-        ImageWidget imageWidget = ImageWidget.Cast(button.FindAnyWidget(imageWidgetName));
-
-        if (textWidget) {
-            textWidget.SetColor(textColor);
-            textWidget.SetText(text);
-            button.SetText(""); 
-        }
-
-        if (imageWidget) {
-            imageWidget.SetColor(textColor);
-        }
-
-        CUIButtonHandler handler = new CUIButtonHandler(button, textWidget, imageWidget, textColor, hoverTextColor, baseColor, hoverColor);
-
-        WidgetEventHandler.GetInstance().RegisterOnMouseEnter(button, handler, "OnMouseEnter");
-        WidgetEventHandler.GetInstance().RegisterOnMouseLeave(button, handler, "OnMouseLeave");
-        WidgetEventHandler.GetInstance().RegisterOnClick(button, handler, "OnClick");
-        WidgetEventHandler.GetInstance().RegisterOnFocus(button, handler, "OnFocus");
-        WidgetEventHandler.GetInstance().RegisterOnFocusLost(button, handler, "OnFocusLost");
-
-        s_Handlers.Insert(handler);
-    }
-}
-
-class CUIButtonHandler {
+class CUIButtonHandler
+{
     private ButtonWidget m_Button;
-    private TextWidget m_TextWidget;
-    private ImageWidget m_ImageWidget;
-    private int m_baseColor;
-    private int m_HoverColor;
-    private int m_TextColor;
-    private int m_HoverTextColor;
+    private TextWidget   m_TextWidget;
+    private ImageWidget  m_ImageWidget;
+    private int          m_TextColor;
+    private int          m_HoverColor;
+    private string       m_ClickAction;
+    private Class        m_TargetClass;
+    private string       m_CallbackMethod;
+    private string       m_ServerIP;
+    private int          m_ServerPort;
 
-    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget, int textColor, int hoverTextColor, int baseColor, int hoverColor) {
-        m_Button = button;
-        m_TextWidget = textWidget;
-        m_ImageWidget = imageWidget;
-        m_TextColor = textColor;
-        m_HoverTextColor = hoverTextColor;
-        m_baseColor = baseColor;
-        m_HoverColor = hoverColor;
+    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget,
+                          int textColor, int hoverColor, string clickAction = "", Class targetClass = null,
+                          string callbackMethod = "", string serverIP = "", int serverPort = 0)
+    {
+        m_Button         = button;
+        m_TextWidget     = textWidget;
+        m_ImageWidget    = imageWidget;
+        m_TextColor      = textColor;
+        m_HoverColor     = hoverColor;
+        m_ClickAction    = clickAction;
+        m_TargetClass    = targetClass;
+        m_CallbackMethod = callbackMethod;
+        m_ServerIP       = serverIP;
+        m_ServerPort     = serverPort;
 
         ApplyBaseStyles();
+        RegisterEvents();
     }
 
-    private void ApplyBaseStyles() {
-        m_Button.SetColor(m_baseColor);
-        if (m_TextWidget) {
+    private void ApplyBaseStyles()
+    {
+        if (!m_TextWidget && !m_ImageWidget)
+        {
+            m_Button.SetTextColor(m_TextColor);
+            return;
+        }
+        if (m_TextWidget)
+        {
             m_TextWidget.SetColor(m_TextColor);
-        } else {
+        }
+        else
+        {
             m_Button.SetTextColor(m_TextColor);
         }
-        if (m_ImageWidget) {
-            m_ImageWidget.SetColor(m_TextColor);
+        if (m_ImageWidget)
+        {
+            m_ImageWidget.SetColor(m_HoverColor);
+            m_ImageWidget.SetImage(1);
         }
     }
 
-    private void ApplyHoverStyles() {
-        m_Button.SetColor(m_HoverColor);
-        if (m_TextWidget) {
-            m_TextWidget.SetColor(m_HoverTextColor);
-        } else {
-            m_Button.SetTextColor(m_HoverTextColor);
+    private void ApplyHoverStyles()
+    {
+        if (!m_TextWidget && !m_ImageWidget)
+        {
+            m_Button.SetColor(m_HoverColor);
+            return;
         }
-        if (m_ImageWidget) {
-            m_ImageWidget.SetColor(m_HoverTextColor);
+        if (m_TextWidget)
+        {
+            m_TextWidget.SetColor(m_HoverColor);
         }
+        if (m_ImageWidget)
+        {
+            m_ImageWidget.SetColor(m_HoverColor);
+        }
+        m_Button.SetColor(UIColor.Transparent());
     }
 
-    bool OnMouseEnter(Widget w, int x, int y) {
-        if (w == m_Button) {
-            ApplyHoverStyles();
-        }
+    private void RegisterEvents()
+    {
+        auto handler = WidgetEventHandler.GetInstance();
+        handler.RegisterOnMouseEnter(m_Button, this, "OnMouseEnter");
+        handler.RegisterOnMouseLeave(m_Button, this, "OnMouseLeave");
+        handler.RegisterOnClick(m_Button, this, "OnClick");
+        handler.RegisterOnFocus(m_Button, this, "OnFocus");
+        handler.RegisterOnFocusLost(m_Button, this, "OnFocusLost");
+    }
+
+    bool OnMouseEnter(Widget w, int x, int y)
+    {
+        ApplyHoverStyles();
         return true;
     }
 
-    bool OnMouseLeave(Widget w, Widget enterW, int x, int y) {
-        if (w == m_Button) {
-            ApplyBaseStyles();
-        }
+    bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
+    {
+        ApplyBaseStyles();
         return true;
     }
 
-    bool OnClick(Widget w, int x, int y, int button) {
-        if (w == m_Button && button == MouseState.LEFT) {
-            return true;
-        }
-        return false;
-    }
-
-    bool OnFocus(Widget w, int x, int y) {
-        if (w == m_Button) {
-            ApplyHoverStyles();
-        }
+    bool OnFocus(Widget w, int x, int y)
+    {
+        ApplyHoverStyles();
         return true;
     }
 
-    bool OnFocusLost(Widget w, int x, int y) {
-        if (w == m_Button) {
-            ApplyBaseStyles();
+    bool OnFocusLost(Widget w, int x, int y)
+    {
+        ApplyBaseStyles();
+        return true;
+    }
+
+    bool OnClick(Widget w, int x, int y, int button)
+    {
+        if (m_ClickAction)
+        {
+            GetGame().OpenURL(m_ClickAction);
+        }
+        else if (m_TargetClass && m_CallbackMethod)
+        {
+            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
+        }
+        else if (m_ServerIP != "" && m_ServerPort > 0)
+        {
+            g_Game.ConnectFromServerBrowser(m_ServerIP, m_ServerPort, "");
         }
         return true;
     }
 }
+
+

@@ -124,9 +124,11 @@ modded class LoginQueueBase extends LoginScreenBase
         if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
-        if (MenuURLS.urlPriorityQ == "#" || MenuURLS.urlPriorityQ == "")
+        if (CustomURL.PriorityQ == "#" || CustomURL.PriorityQ == "")
         {
-            if (cui_PrioQBtn) cui_PrioQBtn.Show(false);
+            cui_PrioQBtn.Show(false);
+        } else {
+            cui_PrioQBtn.Show(true);
         }
 
         return layoutRoot;
@@ -187,7 +189,7 @@ modded class LoginQueueBase extends LoginScreenBase
 	{
         if (button == MouseState.LEFT && w == cui_PrioQBtn)
 		{
-			GetGame().OpenURL(MenuURLS.urlPriorityQ);
+			GetGame().OpenURL(CustomURL.PriorityQ);
 			return false;
 		}	
 		return super.OnClick(w, x, y, button);

@@ -6,7 +6,11 @@ static bool MainMenuVideo     = false;   // If set to true, a video will be show
 static bool ShowDeadScreen    = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 static bool RandomDeadScreens = false;   // If set to true, a random game over screen will be shown when the player dies.
 
-// Load Screen Hints
+// Server Information
+static const string SERVER_IP = "127.0.0.1";
+static const int SERVER_PORT = 2302;
+
+// Loading Screens
 ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
@@ -17,29 +21,35 @@ ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
 };
 
-// Game Over Screen
-string SetRandomDeathScreen()
-{
-    TStringArray images = {
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS1.edds", 
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS2.edds",
-        "Colorful-UI/GUI/textures/DeathScreens/Cui3-DS3.edds"
-    };
+// Gameover Screens
+ref TStringArray GameOverScreens = {
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
+    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
+};
 
-    int randomIndex = cuiUtils.GetRandomIndex(images.Count());
-    return images.Get(randomIndex);
-}
+class GameOverScreen
+{
+    static string GameOverScreenImage() { return "Colorful-UI/GUI/textures/DeathScreens/DeathScreen.edds"; };
+};
 
 // Link URLs add more if you want.
-class MenuURLS {
-	static string urlDiscord    = "#";
-	static string urlFacebook   = "#";
-	static string urlTwitter    = "#";
-	static string urlReddit     = "#";
-	static string urlYoutube    = "#";
-	static string urlWebsite    = "#"; 
-	static string urlPriorityQ  = "http://feedback.dayz.com";
-	static string urlCustom     = "#";
+class CustomURL {
+	static string Website    = "http://www.dayznchill.com"; 
+	static string PriorityQ  = "http://www.dayznchill.com";
+	static string Custom     = "#";
+}
+
+class SocialURL {
+	static string Discord    = "discord.gg/dayznchill";
+	static string Facebook   = "#";
+	static string Twitter    = "#";
+	static string Reddit     = "#";
+	static string Youtube    = "#";
 }
 
 // Menu IDs
