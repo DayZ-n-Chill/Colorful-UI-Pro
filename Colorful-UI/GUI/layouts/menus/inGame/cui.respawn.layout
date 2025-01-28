@@ -15,7 +15,7 @@ WindowWidgetClass WindowWidget {
   FrameWidgetClass GameOverScreen {
    visible 0
    ignorepointer 1
-   position -0.93995 0
+   position -2.15404 3.64227
    size 1 1
    halign center_ref
    valign center_ref
