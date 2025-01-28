@@ -1,5 +1,5 @@
 // Constants.c v3.0.0
-static bool StartMainMenu     = false;   // If set to true, the main menu will be forced to show on startup.
+static bool StartMainMenu     = true;   // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			  = false;   // If set to true, the hints will not be shown during load screens.
 static bool LoadVideo         = false;   // If set to true, a video will be shown during load screens along with tips.
 static bool MainMenuVideo     = false;   // If set to true, a video will be shown during Main Menu Screens along with tips.

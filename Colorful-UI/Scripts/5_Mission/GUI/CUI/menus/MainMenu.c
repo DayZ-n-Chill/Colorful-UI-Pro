@@ -72,16 +72,4 @@ modded class MainMenu extends UIScriptedMenu
        
 		return layoutRoot;
 	}	    
-
-	override void Exit() {super.Exit();}
-    override void OpenSettings(){super.OpenSettings();}
-    override void OpenTutorials(){super.OpenTutorials();}
-    override void OpenCredits(){super.OpenCredits();}
-    override void PreviousCharacter(){super.PreviousCharacter();}
-    override void NextCharacter(){super.NextCharacter();}	
-    
-    // NOTE: This is not the best way to handle this, but it works for now
-    // Any suggestions on how to improve this would be greatly appreciated
-    // It has to do with the way I handle the buttons and their callbacks. 
-    // A more seasoned programmer might know how to properly handle this.
 }
