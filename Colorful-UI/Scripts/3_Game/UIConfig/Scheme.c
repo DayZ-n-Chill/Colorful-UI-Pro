@@ -10,7 +10,7 @@ class colorScheme
 	// Base Typography 
 	static int PrimaryText()         { return UIColor.White(); }        // Primary text color
 	static int SecondaryText()       { return UIColor.Grey(); }         // Color for secondary text, e.g., subtitles or info
-	static int TextHover()           { return BrandColor(); }          // Text color for hover effects
+	static int TextHover()           { return BrandColor(); }           // Text color for hover effects
 
 	// Global UI Elements 
 	static int ButtonHover()         { return BrandColor(); }           // Button color on hover
@@ -21,8 +21,8 @@ class colorScheme
 	static int Loadingbar()          { return BrandColor(); }           // Loading bar color
 
 	// Shader Colors 
-	static int TopShader()           {return UIColor.Black();}  // Top shader on layouts
-	static int BottomShader()        {return UIColor.Black();}  // Bottom shader on layouts
+	static int TopShader()           {return UIColor.Black();}  		// Top shader on layouts
+	static int BottomShader()        {return UIColor.Black();}  		// Bottom shader on layouts
 
 	// Loading Screen
 	static int TipText()             { return PrimaryText(); }          // Main text color for tips

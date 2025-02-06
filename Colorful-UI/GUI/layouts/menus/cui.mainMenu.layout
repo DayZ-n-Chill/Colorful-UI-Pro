@@ -102,7 +102,7 @@ FrameWidgetClass mainmenu_root {
   }
   FrameWidgetClass SafeZone {
    ignorepointer 1
-   position 0 0
+   position 1.16419 0
    size 0.9 0.9
    halign center_ref
    valign center_ref
@@ -1210,7 +1210,7 @@ FrameWidgetClass mainmenu_root {
        }
       }
       ButtonWidgetClass customize_character {
-       visible 1
+       visible 0
        color 0 0 0 1
        position 20 -16
        size 24 20
@@ -1253,6 +1253,39 @@ FrameWidgetClass mainmenu_root {
         }
        }
       }
+      ButtonWidgetClass characterBtn {
+       visible 1
+       color 0 0 0 1
+       position 20 -16
+       size 24 20
+       halign right_ref
+       valign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       style Default
+       "no focus" 0
+       "next left" "customize_character"
+       "next right" "customize_character"
+       "next up" "tutorials"
+       "next down" "choose_server"
+       {
+        ImageWidgetClass characterBtn_img {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         halign right_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         image0 "set:cui image:EditUser"
+         mode blend
+         "src alpha" 1
+        }
+       }
+      }
      }
     }
     FrameWidgetClass StatsBox {
@@ -1271,7 +1304,7 @@ FrameWidgetClass mainmenu_root {
        clipchildren 0
        ignorepointer 1
        color 1 1 1 0.6078
-       position 0 0
+       position 1.41368 0
        size 1 1
        hexactpos 1
        vexactpos 1

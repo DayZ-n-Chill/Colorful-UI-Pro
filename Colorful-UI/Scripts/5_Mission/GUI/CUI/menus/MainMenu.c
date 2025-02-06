@@ -1,8 +1,9 @@
 modded class MainMenu extends UIScriptedMenu
 {
-    protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider;
-    protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
+    protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox;
+    protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook, m_CharacterBtn;
 	protected Widget m_TopSpacer, m_BottomSpacer;
+    protected ProgressBarWidget m_LoadingBar;
 
 	override Widget Init()
 	{
@@ -13,6 +14,7 @@ modded class MainMenu extends UIScriptedMenu
         m_SettingsBtn       = layoutRoot.FindAnyWidget("SettingsBtn");
         m_TutorialBtn       = layoutRoot.FindAnyWidget("TutorialBtn");
         m_MessageBtn        = layoutRoot.FindAnyWidget("MessageBtn");
+        m_CharacterBtn      = layoutRoot.FindAnyWidget("CharacterBtn");
 
         m_PrioQ             = layoutRoot.FindAnyWidget("QueueBtn");
         m_Website           = layoutRoot.FindAnyWidget("WebsiteBtn");
@@ -24,15 +26,21 @@ modded class MainMenu extends UIScriptedMenu
 
         m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-        
+        m_StatisticsBoxBG   = layoutRoot.FindAnyWidget("StatisticsBoxBG");
+        m_SurvivorBox       = layoutRoot.FindAnyWidget("SurvivorBox");
         m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 
-        // Set the colors of Shader, Divider
+        m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+
+        // Set the colors of UI Elements
+        m_StatisticsBoxBG.SetColor(UIColor.cuiDarkBlue());
+        m_SurvivorBox.SetColor(UIColor.cuiDarkBlue());
         m_TopShader.SetColor(colorScheme.TopShader());
         m_BottomShader.SetColor(colorScheme.BottomShader());
         m_MenuDivider.SetColor(colorScheme.Separator());
+        m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
         // Example of a button that directly connects to a server
         cuiElmnt.proBtnDC(m_Play,"#main_menu_play",colorScheme.PrimaryText(),colorScheme.ButtonHover(),SERVER_IP,SERVER_PORT);
@@ -42,6 +50,10 @@ modded class MainMenu extends UIScriptedMenu
         cuiElmnt.proBtnCB(m_SettingsBtn,"Settings",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenSettings");
         cuiElmnt.proBtnCB(m_TutorialBtn,"Tutorial",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenTutorials");
         cuiElmnt.proBtnCB(m_MessageBtn,"Credits",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenCredits");
+        
+        // TODO:  I need to add a variant to the Pro Button function for just icons that are not default along side a buttons text
+        //        Gotta add the left and right button icons
+        cuiElmnt.proBtnCB(m_CharacterBtn,"Credits",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OpenMenuCustomizeCharacter"); 
 
 		// Custom Links
         cuiElmnt.proBtn(m_PrioQ,"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
@@ -63,6 +75,7 @@ modded class MainMenu extends UIScriptedMenu
         CheckSocials(m_Reddit,   SocialURL.Reddit);
         CheckSocials(m_Facebook, SocialURL.Facebook);
 
+        // Hide the spacer specific buttons are invalid
         if (allInvalid && m_MenuDivider)
         {
             m_TopSpacer.Show(false);
