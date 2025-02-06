@@ -36,31 +36,11 @@ class CfgMods
 		};
 		class defs
 		{
-			class imageSets
-			{
-				files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};
-			};
-			class gameScriptModule
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/3_Game"
-				};
-			};
-			class worldScriptModule
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/4_World"
-				};
-			};
-			class missionScriptModule 
-			{
-				files[] = 
-				{
-					"Colorful-UI/scripts/5_Mission"
-				};
-			};
+			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};};
+			class engineScriptModule  {files[]= {"Colorful-UI/scripts/1_Core"};};
+			class gameScriptModule 	  {files[]= {"Colorful-UI/scripts/3_Game"};};
+			class worldScriptModule	  {files[]= {"Colorful-UI/scripts/4_World"};};
+			class missionScriptModule {files[]= {"Colorful-UI/scripts/5_Mission"};};
 		};
 	};	
 };
@@ -95,6 +75,6 @@ class CfgSoundShaders
 			// {"\Colorful-UI\GUI\sounds\MainMenu_5.ogg", 1},
 			// {"\Colorful-UI\GUI\sounds\MainMenu_6.ogg", 1}
 		};
-		volume = 0.5;
+		volume = 0.0;
 	};
 };

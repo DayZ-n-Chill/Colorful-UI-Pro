@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <economycore>
+
 	<classes>
-<!--
-These are rootclasses to be used by economy.
-Do not forget to add attribute act="character", if root class represents character (player, infected, animal)
-Do not forget to add attribute act="car", if root class represents moveable vehicles
--->
-		<rootclass name="DefaultWeapon" /> <!-- weapons -->
-		<rootclass name="DefaultMagazine" /> <!-- magazines -->
-		<rootclass name="Inventory_Base" /> <!-- inventory items -->
-		<rootclass name="HouseNoDestruct" reportMemoryLOD="no" /> <!-- houses, wrecks -->
-		<rootclass name="SurvivorBase" act="character" reportMemoryLOD="no" /> <!-- player characters -->
-		<rootclass name="DZ_LightAI" act="character" reportMemoryLOD="no" /> <!-- infected, animals -->
-		<rootclass name="CarScript" act="car" reportMemoryLOD="no" /> <!-- cars (sedan, hatchback, transitBus, V3S, ...) -->
-		<rootclass name="BoatScript" act="car" reportMemoryLOD="no" /> <!-- boats -->
+		<rootclass name="DefaultWeapon"/>
+		<rootclass name="DefaultMagazine"/>
+		<rootclass name="Inventory_Base"/>
+		<rootclass name="HouseNoDestruct" reportMemoryLOD="no"/>
+		<rootclass name="SurvivorBase" act="character" reportMemoryLOD="no"/>
+		<rootclass name="DZ_LightAI" act="character" reportMemoryLOD="no"/>
+		<rootclass name="CarScript" act="car" reportMemoryLOD="no"/>
+		<rootclass name="BoatScript" act="car" reportMemoryLOD="no"/>
 	</classes>
+
 	<defaults>
-		<default name="dyn_radius" value="30" />
-		<default name="dyn_smin" value="0" />
-		<default name="dyn_smax" value="0" />
-		<default name="dyn_dmin" value="1" />
-		<default name="dyn_dmax" value="5" />
+		<default name="dyn_radius" value="30"/>
+		<default name="dyn_smin" value="0"/>
+		<default name="dyn_smax" value="0"/>
+		<default name="dyn_dmin" value="1"/>
+		<default name="dyn_dmax" value="5"/>
 		<default name="log_ce_loop" value="false"/>
 		<default name="log_ce_dynamicevent" value="false"/>
 		<default name="log_ce_vehicle" value="false"/>
@@ -35,4 +32,26 @@ Do not forget to add attribute act="car", if root class represents moveable vehi
 		<default name="save_events_startup" value="true"/>
 		<default name="save_types_startup" value="true"/>
 	</defaults>
+
+	<ce folder="types">
+		<file name="ammo.xml" type="types" />
+		<file name="ammo_boxes.xml" type="types" />
+		<file name="animals.xml" type="types" />
+		<file name="armbands.xml" type="types" />
+		<file name="clothes.xml" type="types" />
+		<file name="containers.xml" type="types" />
+		<file name="contamination.xml" type="types" />
+		<file name="explosives.xml" type="types" />
+		<file name="flags.xml" type="types" />
+		<file name="food.xml" type="types" />
+		<file name="seasonal.xml" type="types" />
+		<file name="staticObjs.xml" type="types" />
+		<file name="tools.xml" type="types" />
+		<file name="uncategorized.xml" type="types" />
+		<file name="vehicleParts.xml" type="types" />
+		<file name="vehicles.xml" type="types" />
+		<file name="weapons.xml" type="types" />
+		<file name="wrecks.xml" type="types" />
+		<file name="zombies.xml" type="types" />
+	</ce>
 </economycore>

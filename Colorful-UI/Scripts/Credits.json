@@ -7,8 +7,12 @@
                 "SectionLines": ["DayZ n' Chill"]
             },
             {
+                "SectionName": "Dedicate to my Children",
+                "SectionLines": ["Derak & Stephan"]
+            },
+            {
                 "SectionName": "Audio, Testing, and QA",
-                "SectionLines": ["BigDeano"]
+                "SectionLines": ["Cookup & BigDeano"]
             }
         ]
     }]
