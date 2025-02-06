@@ -114,7 +114,6 @@ PanelWidgetClass LoadingFrame {
   }
   FrameWidgetClass SafeZone {
    ignorepointer 1
-   position 0.96462 0
    size 0.9 0.9
    halign center_ref
    valign center_ref
