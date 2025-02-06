@@ -76,7 +76,7 @@ FrameWidgetClass controls_tab_root {
            vexactsize 1
            style Normal
            text "#layout_pc_controls_keyboard"
-           font "gui/fonts/sdf_MetronLight72"
+           font "colorful-ui/gui/fonts/GB-Regular.fnt"
            "exact text" 0
            "text halign" center
            "text valign" center
@@ -160,7 +160,7 @@ FrameWidgetClass controls_tab_root {
            vexactsize 1
            style Normal
            text "#STR_sensitivity_options_header"
-           font "gui/fonts/sdf_MetronLight72"
+           font "colorful-ui/gui/fonts/GB-Regular.fnt"
            "exact text" 0
            "text halign" center
            "text valign" center

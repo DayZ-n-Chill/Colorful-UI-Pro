@@ -9,7 +9,6 @@ FrameWidgetClass video_tab_root {
  {
   ScrollWidgetClass video_settings_scroll {
    ignorepointer 0
-   position 0.93967 0
    size 650 1
    hexactpos 1
    vexactpos 1

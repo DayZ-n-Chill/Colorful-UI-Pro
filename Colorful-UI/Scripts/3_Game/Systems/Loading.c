@@ -1,41 +1,44 @@
+// NOTE: You cannot use CUI Elements in this file, as it is loaded before the CUI is initialized.
+//       To control elements of this file, edit the at the Colorful-UI/Scripts/3_Game/UIConfig/Settings.c
+
 // Phase 1: Loading  -------------------------------------------------------------
 modded class LoadingScreen
 {
-    protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_Mask;
-    protected TextWidget cui_LoadingMsg;
+    protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_Mask;
+    protected TextWidget m_LoadingMsg;
 
     void LoadingScreen(DayZGame game)
     {
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
-        Class.CastTo(cui_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
-        Class.CastTo(cui_TopShader, m_WidgetRoot.FindAnyWidget("TopShader"));
-        Class.CastTo(cui_BottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
-        Class.CastTo(cui_LoadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
+        Class.CastTo(m_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
+        Class.CastTo(m_TopShader, m_WidgetRoot.FindAnyWidget("TopShader"));
+        Class.CastTo(m_BottomShader, m_WidgetRoot.FindAnyWidget("BottomShader"));
+        Class.CastTo(m_LoadingMsg, m_WidgetRoot.FindAnyWidget("LoadingMsg"));
         Class.CastTo(m_ProgressLoading, m_WidgetRoot.FindAnyWidget("LoadingBar"));
 
-        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
-        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
-        if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
-        if (cui_LoadingMsg) cui_LoadingMsg.SetText("GAME IS LOADING!");
+        if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_LoadingMsg) m_LoadingMsg.SetColor(colorScheme.LoadingMsg());
+        if (m_LoadingMsg) m_LoadingMsg.SetText("GAME IS LOADING!");
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
         ProgressAsync.SetProgressData(m_ProgressLoading);
-        ProgressAsync.SetUserData(cui_Background);
+        ProgressAsync.SetUserData(m_Background);
     }
 
     override void Show()
     {
-        if (cui_Background) cui_Background.LoadImageFile(0, loadscreens.GetRandomElement());
+        if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
     }
 }
 
 // Phase 2: Logging In ------------------------------------------------------------
 modded class LoginTimeBase extends LoginScreenBase
 {
-    protected ImageWidget cui_Background, cui_TopShader, cui_BottomShader, cui_ExitIcon;
-    protected TextWidget cui_LoadingMsg, cui_ExitText;
+    protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_ExitIcon;
+    protected TextWidget m_LoadingMsg, m_ExitText;
     protected ProgressBarWidget m_ProgressLoading;
     
     override Widget Init()
@@ -43,36 +46,36 @@ modded class LoginTimeBase extends LoginScreenBase
 
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
         
-        cui_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
-        cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-        cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-        cui_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        m_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
+        m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));      
         
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
-        cui_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
-        cui_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+        m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
+        m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
 
-        if (cui_Background) cui_Background.LoadImageFile(0, loadscreens.GetRandomElement()); 
-        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
-        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
-        if (cui_LoadingMsg) cui_LoadingMsg.SetColor(colorScheme.LoadingMsg());
+        if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement()); 
+        if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_LoadingMsg) m_LoadingMsg.SetColor(colorScheme.LoadingMsg());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
-        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.Icons());
+        if (m_ExitIcon) m_ExitIcon.SetColor(colorScheme.Icons());
         
         return layoutRoot;
     }   
     
     override void SetTime(int time) {
         super.SetTime(time);
-        cui_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+        m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
     }
  
     override bool OnMouseEnter(Widget w, int x, int y)
     {
         if (w == m_btnLeave)
         {
-            cui_ExitText.SetColor(colorScheme.ButtonHover());
+            m_ExitText.SetColor(colorScheme.ButtonHover());
             m_btnLeave.SetColor(UIColor.Transparent());
             return true;
         }
@@ -83,7 +86,7 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            cui_ExitText.SetColor(colorScheme.PrimaryText());
+            m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         return false;
@@ -93,10 +96,10 @@ modded class LoginTimeBase extends LoginScreenBase
 // Phase 3: Prio Queue  -------------------------------------------------------------
 modded class LoginQueueBase extends LoginScreenBase
 {
-    protected ImageWidget cui_TopShader, cui_BottomShader, cui_ExitIcon, cui_ShopIcon;
-    protected TextWidget cui_ExitText, cui_PrioText;
+    protected ImageWidget m_TopShader, m_BottomShader, m_ExitIcon, m_ShopIcon;
+    protected TextWidget m_ExitText, m_PrioText;
     protected ProgressBarWidget m_ProgressLoading;
-    protected ButtonWidget m_btnLeave, cui_PrioQBtn;
+    protected ButtonWidget m_btnLeave, m_PrioQBtn;
 
     override Widget Init()
     {    
@@ -106,29 +109,29 @@ modded class LoginQueueBase extends LoginScreenBase
         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
         
-        cui_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-        cui_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
         
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
-        cui_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
-        cui_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+        m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
+        m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
 
-        cui_PrioQBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
-        cui_PrioText = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
-        cui_ShopIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
+        m_PrioQBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
+        m_PrioText = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
+        m_ShopIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
 
-        if (cui_ExitIcon) cui_ExitIcon.SetColor(colorScheme.Icons());
-        if (cui_ShopIcon) cui_ShopIcon.SetColor(colorScheme.Icons());
-        if (cui_TopShader) cui_TopShader.SetColor(colorScheme.TopShader());
-        if (cui_BottomShader) cui_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_ExitIcon) m_ExitIcon.SetColor(colorScheme.Icons());
+        if (m_ShopIcon) m_ShopIcon.SetColor(colorScheme.Icons());
+        if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
         if (CustomURL.PriorityQ == "#" || CustomURL.PriorityQ == "")
         {
-            cui_PrioQBtn.Show(false);
+            m_PrioQBtn.Show(false);
         } else {
-            cui_PrioQBtn.Show(true);
+            m_PrioQBtn.Show(true);
         }
 
         return layoutRoot;
@@ -157,14 +160,14 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            cui_ExitText.SetColor(colorScheme.ButtonHover());
+            m_ExitText.SetColor(colorScheme.ButtonHover());
             m_btnLeave.SetColor(UIColor.Transparent());
             return true;
         }
-        if (w == cui_PrioQBtn)
+        if (w == m_PrioQBtn)
         {
-            cui_PrioText.SetColor(colorScheme.ButtonHover());
-            cui_PrioQBtn.SetColor(UIColor.Transparent());
+            m_PrioText.SetColor(colorScheme.ButtonHover());
+            m_PrioQBtn.SetColor(UIColor.Transparent());
             return true;
         }
         return false;
@@ -174,12 +177,12 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            cui_ExitText.SetColor(colorScheme.PrimaryText());
+            m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
-        if (w == cui_PrioQBtn)
+        if (w == m_PrioQBtn)
         {
-            cui_PrioText.SetColor(colorScheme.PrimaryText());
+            m_PrioText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         return false;
@@ -187,7 +190,7 @@ modded class LoginQueueBase extends LoginScreenBase
 
 	override bool OnClick(Widget w, int x, int y, int button)
 	{
-        if (button == MouseState.LEFT && w == cui_PrioQBtn)
+        if (button == MouseState.LEFT && w == m_PrioQBtn)
 		{
 			GetGame().OpenURL(CustomURL.PriorityQ);
 			return false;
