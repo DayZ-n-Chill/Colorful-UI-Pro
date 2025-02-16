@@ -1,7 +1,7 @@
 // Constants.c v3.0.0
 static bool StartMainMenu      = false;   // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;   // If set to true, the hints will not be shown during load screens.
-static bool LoadVideo          = false;   // If set to true, a video will be shown during load screens along with tips.
+static bool LoadVideo          = true;   // If set to true, a video will be shown during load screens along with tips.
 static bool ShowDeadScreen     = false;   // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
 
 // The below two settings are not yet implemented.
