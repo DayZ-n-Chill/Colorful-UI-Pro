@@ -40,7 +40,11 @@ PanelWidgetClass LoadingFrame {
    vexactpos 1
    hexactsize 0
    vexactsize 0
+   scaled 1
    fixaspect outside
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+   filter 1
   }
   FrameWidgetClass Shaders {
    visible 1
