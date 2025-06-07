@@ -73,7 +73,10 @@ modded class LoginTimeBase extends LoginScreenBase
     
     override void SetTime(int time) {
         super.SetTime(time);
-        m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+        if (m_LoadingMsg)
+        {
+            m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+        }
         CuiLogger.Log("LoginTimeBase SetTime " + time.ToString());
     }
  
@@ -160,8 +163,11 @@ modded class LoginQueueBase extends LoginScreenBase
         if (position != m_iPosition)
         {
             m_iPosition = position;
-            m_txtPosition.SetText("Position in Queue " + position.ToString());
-            m_txtPosition.SetColor(colorScheme.LoadingMsg());
+            if (m_txtPosition)
+            {
+                m_txtPosition.SetText("Position in Queue " + position.ToString());
+                m_txtPosition.SetColor(colorScheme.LoadingMsg());
+            }
             CuiLogger.Log("LoginQueueBase position " + position.ToString());
         }
     }

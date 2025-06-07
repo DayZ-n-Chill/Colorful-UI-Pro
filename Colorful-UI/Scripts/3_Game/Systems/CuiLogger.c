@@ -15,7 +15,20 @@ class CuiLogger
     protected static string Timestamp()
     {
         int year, month, day, hour, minute;
-        GetGame().GetWorld().GetDate(year, month, day, hour, minute);
+
+        if (GetGame() && GetGame().GetWorld())
+        {
+            GetGame().GetWorld().GetDate(year, month, day, hour, minute);
+        }
+        else
+        {
+            GetYear(year);
+            GetMonth(month);
+            GetDay(day);
+            GetHour(hour);
+            GetMinute(minute);
+        }
+
         return string.Format("%1-%2-%3 %4:%5", year, month, day, hour, minute);
     }
 }
