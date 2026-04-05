@@ -10,7 +10,7 @@ modded class LogoutMenu extends UIScriptedMenu
         {
                 layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-ui/gui/layouts/menus/inGame/cui.logout.layout");
 
-                CuiLogger.Log("LogoutMenu Init");
+
 	
 		m_Logo 				= ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
 		m_LogoutTimeText 	= TextWidget.Cast(layoutRoot.FindAnyWidget("txtLogoutTime"));
@@ -90,13 +90,13 @@ modded class LogoutMenu extends UIScriptedMenu
 
         void abortMission()
         {
-                CuiLogger.Log("LogoutMenu abortMission");
+
                 GetGame().GetMission().AbortMission();
         }
 
         void canelExit()
         {
-                CuiLogger.Log("LogoutMenu cancelExit");
+
                 Hide();
                 Cancel();
         }

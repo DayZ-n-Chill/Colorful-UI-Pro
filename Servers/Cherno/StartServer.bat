@@ -50,12 +50,6 @@ SET "PROFILES=%PROJECTDIR%\Servers\Cherno\Profiles"
 del /s /q /f "%PROFILES%\*.log" "%PROFILES%\*.rpt" "%PROFILES%\*.mdmp" "%PROFILES%\*.ADM" 2>nul
 del /s /q /f "%CLIENTLOGSDIR%\*.log" "%CLIENTLOGSDIR%\*.rpt" "%CLIENTLOGSDIR%\*.mdmp" "%CLIENTLOGSDIR%\*.ADM" 2>nul
 
-:: Check for CuiDebug in Settings.c
-findstr /R /C:"static bool CuiDebug.*=.*true" "P:\Colorful-UI\Scripts\3_Game\Config\Settings.c" >nul
-IF %ERRORLEVEL% EQU 0 (
-    :: Start Log Viewer
-    start "CUI Log Viewer" "%~dp0..\..\Utils\Batch\LogViewer.cmd"
-)
 
 :: Start local server.
 start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"

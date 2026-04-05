@@ -101,7 +101,7 @@ modded class MainMenu extends UIScriptedMenu
 		Branding.ApplyLogo(m_Logo);	
 
 		#ifdef WORKBENCH
-		CuiLogger.Log("Skipping video in Workbench mode");
+
 		#else
 		if (EnableMenuVideo)
 		{
@@ -121,7 +121,7 @@ modded class MainMenu extends UIScriptedMenu
 	
 	override void OnShow()
 	{
-		CuiLogger.Log("MainMenu.OnShow() - Validating UI elements");
+
 		if (!m_LoadingBar) m_LoadingBar = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (!m_Logo) m_Logo = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
 		if (!m_TopShader) m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
@@ -149,7 +149,7 @@ modded class MainMenu extends UIScriptedMenu
 			}
 			
 			string name = mission.GetIntroScenePC().GetIntroCharacter().GetCharacterNameById(charID);
-			CuiLogger.Log("MainMenu.OnChangeCharacter() - CharID: " + charID + " Name: " + name);
+
 			
 			if (m_PlayerName)
 				m_PlayerName.SetText(name);
@@ -158,7 +158,7 @@ modded class MainMenu extends UIScriptedMenu
 		}
 		else
 		{
-			CuiLogger.Log("MainMenu.OnChangeCharacter() - FAILED: Mission or IntroScene is NULL");
+
 		}
 	}
 	

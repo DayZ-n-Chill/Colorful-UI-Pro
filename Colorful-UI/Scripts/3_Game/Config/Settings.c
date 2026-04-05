@@ -3,7 +3,7 @@ static bool StartMainMenu      = false;  // If set to true, the main menu will b
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool LoadVideo          = true;   // If set to true, a video will be shown during load screens along with tips.
 static bool ShowDeadScreen     = false;  // If set to true, a custom game over screen will be shown when the player dies. if false, the default game over screen will be shown.
-static bool CuiDebug           = false;  // Turn on Colorful UI Debugging. This will show debug information in the console and log file. (You must build your mode each time you make a change to this settings)
+
 
 // The below two settings are not yet implemented.
 static bool EnableMenuVideo    = true;   // If set to true, a video will be shown during Main Menu Screens along with tips.
@@ -12,11 +12,10 @@ static bool VideoDeathScreens  = false;  // If set to true, a random game over s
 static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
 
 // Server Information 
-// (Possibly Buggy in the CUI Buttons. Not yet tested on live servers)
 static const string SERVER_IP = "127.0.0.1";
 static const int SERVER_PORT = 2302;
 
-// Video Settings (Change them up)
+// Video Settings
 static const string m_LoadingVideo     = "CUI_Video.mov";  // Video file name for loading screen video. 
 static const string m_MainMenuVideo    = "CUI_Video.mov";  // Video file name for Main Menu screen video. 
 static const string m_OptionsMenuVideo = "CUI_Video.mov";  // Video file name for Options screen video. 

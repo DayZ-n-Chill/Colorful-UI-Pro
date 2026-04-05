@@ -55,7 +55,7 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_Separator = layoutRoot.FindAnyWidget("colorful_separator");
 		
 		#ifdef WORKBENCH
-			CuiLogger.Log("OptionsMenu.Init() - Skipping video in Workbench mode");
+
 		#else
 			// Only show options video when opened from MAIN MENU, never from in-game pause/options.
 			if (EnableOptionsVideo && IsMainMenuContext())
