@@ -57,6 +57,6 @@ IF %ERRORLEVEL% EQU 0 (
 )
 
 :: Start local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-profiles=%CLIENTLOGSDIR%`" "-mod=%GLOBALMODS%%MODS%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
+start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
 start /D "%GAMEDIR%\" DayZDiag_x64.exe "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"

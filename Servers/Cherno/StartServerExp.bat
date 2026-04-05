@@ -47,6 +47,6 @@ SET "PROFILES=%PROJECTDIR%\Servers\Cherno\Profiles"
 :: ====================================================================================================================
 
 :: Start local server.
-start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%PROFILES%" "-mission=%EXPMISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
+start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%CLIENTLOGSDIR%" "-mission=%EXPMISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
-start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"
+start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe  "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"
