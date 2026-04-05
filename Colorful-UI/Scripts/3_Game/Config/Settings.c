@@ -71,17 +71,17 @@ class Branding
 //        This way it shows only the buttons you want to use.
 
 class CustomURL {
-	static string Website    = "test"; 
-	static string PriorityQ  = "test";
-	static string Custom     = "test";
+	static string Website    = "#"; 
+	static string PriorityQ  = "#";
+	static string Custom     = "#";
 }
 
 class SocialURL {
-	static string Discord    = "test";
-	static string Facebook   = "test";
-	static string Twitter    = "test";
-	static string Reddit     = "test";
-	static string Youtube    = "test";
+	static string Discord    = "#";
+	static string Facebook   = "#";
+	static string Twitter    = "#";
+	static string Reddit     = "#";
+	static string Youtube    = "#";
 }
 
 // Menu IDs
