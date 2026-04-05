@@ -89,4 +89,21 @@ modded class OptionsMenu extends UIScriptedMenu
 		}
 	}
 
+	override void Back()
+	{
+		if (!g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
+		{
+			if (m_Options && m_Options.IsChanged())
+			{
+				EnterScriptedMenu(COLORFUL_CONFIGURE);
+			}
+			else
+			{
+				if (m_Options) m_Options.Revert();
+				GetGame().EndOptionsVideo();
+				GetGame().GetUIManager().Back();
+			}
+		}
+	}
+
 }

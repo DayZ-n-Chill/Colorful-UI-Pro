@@ -34,7 +34,17 @@ class colorfulExitDialog extends UIScriptedMenu
 
 	void Exit()
 	{
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
+		Mission m = GetGame().GetMission();
+		if (m && m.IsInherited(MissionMainMenu))
+		{
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
+		}
+		else
+		{
+			UIMenuPanel parentMenu = this.GetParentMenu();
+			GetGame().GetUIManager().Back();
+			GetGame().GetUIManager().EnterScriptedMenu(MENU_LOGOUT, parentMenu);
+		}
 	}
 
 	void Cancel()
