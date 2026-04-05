@@ -21,7 +21,9 @@ static const string m_LoadingVideo     = "CUI_Video.mov";  // Video file name fo
 static const string m_MainMenuVideo    = "CUI_Video.mov";  // Video file name for Main Menu screen video. 
 static const string m_OptionsMenuVideo = "CUI_Video.mov";  // Video file name for Options screen video. 
 
-// Loading Screens
+// Loading Screens 
+// ( This Array is only used if you dont want to sync your images with the hints. It makes it as random as possible )
+// To edit the images that are by default used by the hints, go to hints.json data fldoer
 ref TStringArray loadscreens = {
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",

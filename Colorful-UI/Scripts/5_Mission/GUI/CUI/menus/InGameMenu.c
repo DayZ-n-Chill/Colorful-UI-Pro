@@ -114,4 +114,9 @@ modded class InGameMenu extends UIScriptedMenu
 			}
 		}
 	}
+
+	override void OnClick_Exit()
+	{
+		GetGame().GetUIManager().EnterScriptedMenu(COLORFUL_EXIT, this);
+	}
 }

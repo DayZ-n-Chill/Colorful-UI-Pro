@@ -16,129 +16,41 @@ class colorfulConfigureDialog extends UIScriptedMenu
 	{
 		m_Options		= new GameOptions();
 
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/new_ui/dialogs/cui.Configure.dialog.layout" );
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.configure.dialog.layout");
 		
-		m_Separator					= layoutRoot.FindAnyWidget( "SeparatorPanel" );
-		m_bYes						= layoutRoot.FindAnyWidget( "bYes" );
-		m_bNo						= layoutRoot.FindAnyWidget( "bNo" );
-		m_Text						= layoutRoot.FindAnyWidget( "Text" );
-		m_Caption					= layoutRoot.FindAnyWidget( "Caption" );
-		m_Reset						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("reset"));
+		m_Separator					= layoutRoot.FindAnyWidget("SeparatorPanel");
+		m_bYes						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("bYes"));
+		m_bNo						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("bNo"));
+		m_Reset						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("m_Reset"));
+		m_Text						= layoutRoot.FindAnyWidget("Text");
+		m_Caption					= layoutRoot.FindAnyWidget("Caption");
 		
-		m_TopShader 			    = layoutRoot.FindAnyWidget( "TopShader" );
-		m_BottomShader 			    = layoutRoot.FindAnyWidget( "BottomShader" );
+		m_TopShader 			    = layoutRoot.FindAnyWidget("TopShader");
+		m_BottomShader 			    = layoutRoot.FindAnyWidget("BottomShader");
 
-		m_Separator.SetColor( colorScheme.Separator() );
-		m_TopShader.SetColor(colorScheme.TopShader());
-		m_BottomShader.SetColor(colorScheme.BottomShader());
-		m_LastFocusedButton = 		m_bYes;
+		if (m_Separator) m_Separator.SetColor(colorScheme.Separator());
+		if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
+		if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
+		m_LastFocusedButton = m_bYes;
+		
+		cuiElmnt.proBtnCB(m_bYes, "#message_dialog_yes", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "ResetCurrentTab");
+		cuiElmnt.proBtnCB(m_bNo, "BACK", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Cancel");
+		cuiElmnt.proBtnCB(m_Reset, "#layout_xbox_reset_options_defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "ResetCurrentTab");
 		
 		return layoutRoot;
-	}
-	
-	override bool OnClick( Widget w, int x, int y, int button )
-	{
-		if( button == MouseState.LEFT )
-		{
-			if( w == m_bYes )
-			{
-				// TODO: For the sake of getting this out to the public
-				// We will make these warning diaolgs work only as back buttons. 
-				// As I dont want to fix all this at the moment. 
-				// Will do it in optimization stages after 3.0
-				m_LastFocusedButton = m_Reset;
-				ResetCurrentTab();
-				return true;
-			}
-			else if ( w == m_bNo )
-			{
-				m_LastFocusedButton = m_bNo;
-				Cancel();
-				return true;
-			}
-		}
-		return false;
 	}
 
 	void ResetCurrentTab()
 	{
-		if ( m_Options.IsChanged() )
+		if (m_Options && m_Options.IsChanged())
 		{
 			m_Options.Revert();
 		}
-
-		// TODO:  Wrap up the actual buttons reset later. 
-
-	}
-	
-	override bool OnMouseEnter( Widget w, int x, int y )
-	{		
-		if( IsFocusable( w ) )
-		{
-			ColorHighlight( w );
-			return true;
-		}
-		return false;
-	}
-
-	override bool OnMouseLeave( Widget w, Widget enterW, int x, int y )
-	{
-		if( IsFocusable( w ) )
-		{
-			ColorNormal( w );
-			return true;
-		}
-		return false;
-	}
-
-	override bool OnFocus( Widget w, int x, int y )
-	{
-		if( IsFocusable( w ) )
-		{
-			ColorHighlight( w );
-			return true;
-		}
-		return false;
-	}
-
-	override bool OnFocusLost( Widget w, int x, int y )
-	{
-		if( IsFocusable( w ) )
-		{
-			ColorNormal( w );
-			return true;
-		}
-		return false;
-	}
-
-	bool IsFocusable( Widget w )
-	{
-		if( w )
-		{
-			if( w == m_bYes || w == m_bNo )
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	void Exit()
-	{
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
 	}
 
 	void Cancel()
 	{
 		GetGame().GetUIManager().Back();
-	}
-
-	void ColorHighlight( Widget w )
-	{
-		if( !w )
-			return;
-
-		w.SetColor( colorScheme.ButtonHover() );
 	}
 
 	void ColorNormal( Widget w )

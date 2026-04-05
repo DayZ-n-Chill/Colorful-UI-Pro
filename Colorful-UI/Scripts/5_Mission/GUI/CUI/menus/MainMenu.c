@@ -189,4 +189,9 @@ modded class MainMenu extends UIScriptedMenu
 			}
 		}
 	}
+
+	override void Exit()
+	{
+		EnterScriptedMenu(COLORFUL_EXIT);
+	}
 }
