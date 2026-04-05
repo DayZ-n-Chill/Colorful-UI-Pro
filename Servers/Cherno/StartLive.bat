@@ -46,8 +46,9 @@ SET "PROFILES=%PROJECTDIR%\Servers\Cherno\Profiles"
 ::  If you need to use server side mods you will need to add this line to the start local server "-mod=%GLOBALSERVERMODS%"
 :: ====================================================================================================================
 
-:: Run Log Burner to clean up old logs
-call "..\..\Utils\Batch\LogBurner.cmd"
+:: Clean up old logs in profiles
+del /s /q /f "%PROFILES%\*.log" "%PROFILES%\*.rpt" "%PROFILES%\*.mdmp" "%PROFILES%\*.ADM" 2>nul
+del /s /q /f "%CLIENTLOGSDIR%\*.log" "%CLIENTLOGSDIR%\*.rpt" "%CLIENTLOGSDIR%\*.mdmp" "%CLIENTLOGSDIR%\*.ADM" 2>nul
 
 :: Start live server.
 start /D "%SERVERDIR%\" DayZServer_x64.exe -server -port=2302 "-mod=%GLOBALMODS%%MODS%" "-profiles=%PROFILES%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" -nosplash -noBenchmark -noPause -nolauncher

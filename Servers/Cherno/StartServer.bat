@@ -46,8 +46,9 @@ SET "PROFILES=%PROJECTDIR%\Servers\Cherno\Profiles"
 ::  If you need to use server side mods you will need to add this line to the start local server "-mod=%GLOBALSERVERMODS%"
 :: ====================================================================================================================
 
-:: Run Log Burner to clean up old logs
-call "..\..\Utils\Batch\LogBurner.cmd"
+:: Clean up old logs in profiles
+del /s /q /f "%PROFILES%\*.log" "%PROFILES%\*.rpt" "%PROFILES%\*.mdmp" "%PROFILES%\*.ADM" 2>nul
+del /s /q /f "%CLIENTLOGSDIR%\*.log" "%CLIENTLOGSDIR%\*.rpt" "%CLIENTLOGSDIR%\*.mdmp" "%CLIENTLOGSDIR%\*.ADM" 2>nul
 
 :: Check for CuiDebug in Settings.c
 findstr /R /C:"static bool CuiDebug.*=.*true" "P:\Colorful-UI\Scripts\3_Game\Config\Settings.c" >nul
@@ -57,6 +58,6 @@ IF %ERRORLEVEL% EQU 0 (
 )
 
 :: Start local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%PROFILES%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
+start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
 start /D "%GAMEDIR%\" DayZDiag_x64.exe "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"

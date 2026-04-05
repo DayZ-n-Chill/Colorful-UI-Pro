@@ -44,6 +44,6 @@ SET "PROFILES=%PROJECTDIR%\Servers\Others\Empty\Profiles"
 :: ====================================================================================================================
 
 :: Start local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%PROFILES%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
+start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe  -filePatching -connect=127.0.0.1 -port=2302 "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" "-newErrorsAreWarnings=1"
+start /D "%GAMEDIR%\" DayZDiag_x64.exe "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"

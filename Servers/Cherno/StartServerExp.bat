@@ -46,7 +46,11 @@ SET "PROFILES=%PROJECTDIR%\Servers\Cherno\Profiles"
 ::  If you need to use server side mods you will need to add this line to the start local server "-mod=%GLOBALSERVERMODS%"
 :: ====================================================================================================================
 
+:: Clean up old logs in profiles
+del /s /q /f "%PROFILES%\*.log" "%PROFILES%\*.rpt" "%PROFILES%\*.mdmp" "%PROFILES%\*.ADM" 2>nul
+del /s /q /f "%CLIENTLOGSDIR%\*.log" "%CLIENTLOGSDIR%\*.rpt" "%CLIENTLOGSDIR%\*.mdmp" "%CLIENTLOGSDIR%\*.ADM" 2>nul
+
 :: Start local server.
-start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%PROFILES%" "-mission=%EXPMISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
+start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%CLIENTLOGSDIR%" "-mission=%EXPMISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
-start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"
+start /D "%EXPGAMEDIR%\" DayZDiag_x64.exe "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"
