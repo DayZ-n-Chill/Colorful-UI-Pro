@@ -46,6 +46,6 @@ SET "PROFILES=%PROJECTDIR%\Servers\Livonia\Profiles"
 :: ====================================================================================================================
 
 :: Start local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe "-mod=%GLOBALMODS%%MODS%" -filePatching -server "-profiles=%PROFILES%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" 
+start /D "%GAMEDIR%\" DayZDiag_x64.exe -server -filePatching "-mod=%GLOBALMODS%%MODS%" "-profiles=%CLIENTLOGSDIR%" "-mission=%MISSIONDIR%" "-config=%SERVERCFG%" "-newErrorsAreWarnings=1"
 :: Play on local server.
-start /D "%GAMEDIR%\" DayZDiag_x64.exe "-profiles=%CLIENTLOGSDIR%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 
+start /D "%GAMEDIR%\" DayZDiag_x64.exe "-profiles=%PROFILES%" "-mod=%GLOBALMODS%%MODS%" -filePatching -connect=127.0.0.1 -port=2302 "-newErrorsAreWarnings=1"
