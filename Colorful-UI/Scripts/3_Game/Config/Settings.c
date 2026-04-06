@@ -87,3 +87,5 @@ class SocialURL {
 const int COLORFUL_EXIT		    = 666;
 const int COLORFUL_CONFIGURE    = 667;
 const int COLORFUL_DEFAULTS     = 668;
+const int COLORFUL_KEYBINDS_DEFAULT = 669;
+const int COLORFUL_KEYBINDS_HARD = 670;

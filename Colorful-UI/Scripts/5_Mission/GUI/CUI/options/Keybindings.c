@@ -48,6 +48,16 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		
 		return layoutRoot;
 	}
+
+	override void SetToDefaults()
+	{
+		EnterScriptedMenu(COLORFUL_KEYBINDS_DEFAULT);
+	}
+	
+	override void HardReset()
+	{
+		EnterScriptedMenu(COLORFUL_KEYBINDS_HARD);
+	}
 }
 
 modded class KeybindingElementNew extends ScriptedWidgetEventHandler

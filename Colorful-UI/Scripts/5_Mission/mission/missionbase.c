@@ -36,6 +36,14 @@ modded class MissionBase
 			menu = new colorfulConfigureDialog;
 			break;
 
+		case COLORFUL_KEYBINDS_DEFAULT:
+			menu = new colorfulKeybindsDefaultDialog;
+			break;
+
+		case COLORFUL_KEYBINDS_HARD:
+			menu = new colorfulKeybindsHardResetDialog;
+			break;
+
 		#ifdef CodeLock
         case CLMENU.SET_CODE_MENU:
         	{

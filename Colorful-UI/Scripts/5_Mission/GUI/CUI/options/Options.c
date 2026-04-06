@@ -60,7 +60,6 @@ modded class OptionsMenu extends UIScriptedMenu
 		#ifdef WORKBENCH
 
 		#else
-			// Only show options video when opened from MAIN MENU, never from in-game pause/options.
 			if (EnableOptionsVideo && IsMainMenuContext())
 			{
 				Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
