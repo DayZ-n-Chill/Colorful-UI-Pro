@@ -46,6 +46,13 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		g_Game.SetKeyboardHandle(this);
 		m_Tabber.RefreshTab(true);
 		
+		m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
+		ColorDisabled(m_Apply);
+		m_Undo.SetFlags(WidgetFlags.IGNOREPOINTER);
+		ColorDisabled(m_Undo);
+		m_Defaults.ClearFlags(WidgetFlags.IGNOREPOINTER);
+		ColorWhite(m_Defaults, null);
+		
 		return layoutRoot;
 	}
 
@@ -57,6 +64,46 @@ modded class KeybindingsMenu extends UIScriptedMenu
 	override void HardReset()
 	{
 		EnterScriptedMenu(COLORFUL_KEYBINDS_HARD);
+	}
+
+	override void ColorRed(Widget w)
+	{
+		SetFocus(w);
+		if (w)
+		{
+			w.SetAlpha(1.0);
+			Widget label = w.FindAnyWidget(w.GetName() + "_label");
+			if (label && label.IsInherited(TextWidget))
+				TextWidget.Cast(label).SetColor(colorScheme.ButtonHover());
+		}
+	}
+	
+	override void ColorWhite(Widget w, Widget enterW)
+	{
+		#ifdef PLATFORM_WINDOWS
+		SetFocus(null);
+		#endif
+		if (w)
+		{
+			w.SetAlpha(1.0);
+			Widget label = w.FindAnyWidget(w.GetName() + "_label");
+			if (label && label.IsInherited(TextWidget))
+				TextWidget.Cast(label).SetColor(colorScheme.PrimaryText());
+		}
+	}
+	
+	override void ColorDisabled(Widget w)
+	{
+		#ifdef PLATFORM_WINDOWS
+		SetFocus(null);
+		#endif
+		if (w)
+		{
+			w.SetAlpha(0.2);
+			Widget label = w.FindAnyWidget(w.GetName() + "_label");
+			if (label && label.IsInherited(TextWidget))
+				TextWidget.Cast(label).SetColor(colorScheme.DisabledText());
+		}
 	}
 }
 
