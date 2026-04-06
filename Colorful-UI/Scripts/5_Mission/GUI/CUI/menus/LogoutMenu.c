@@ -4,19 +4,17 @@ modded class LogoutMenu extends UIScriptedMenu
 	protected ButtonWidget m_LogoutNow, m_Cancel, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	private	Widget m_timerText;
-	protected TextWidget m_LogoutTimeText;
 
-        override Widget Init()
-        {
-                layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-ui/gui/layouts/menus/inGame/cui.logout.layout");
+    override Widget Init() 
+	{
+       	layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-ui/gui/layouts/menus/inGame/cui.logout.layout");
 
-
-	
-		m_Logo 				= ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
-		m_LogoutTimeText 	= TextWidget.Cast(layoutRoot.FindAnyWidget("txtLogoutTime"));
+		m_LogoutTimeText 	= TextWidget.Cast(layoutRoot.FindAnyWidget("txtLogoutTime"));		
 
 		m_LogoutNow			= layoutRoot.FindAnyWidget("ExitBtn");
 		m_Cancel			= layoutRoot.FindAnyWidget("CancelBtn");
+
+		m_Logo 				= ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
 
 		m_PrioQ				= layoutRoot.FindAnyWidget("QueueBtn");
 		m_Website			= layoutRoot.FindAnyWidget("WebsiteBtn");
@@ -43,7 +41,7 @@ modded class LogoutMenu extends UIScriptedMenu
 		// COLOR  CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Color.c
 		// GLOBAL CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Scheme.c
 		// You can even be specific and set the color directly. ie. argb(255, 255, 255, 255);
-		
+
 		// Example of a button with a callback
         cuiElmnt.proBtnCB(m_LogoutNow,"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"abortMission");
 		cuiElmnt.proBtnCB(m_Cancel,"Cancel",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"canelExit");
@@ -75,7 +73,7 @@ modded class LogoutMenu extends UIScriptedMenu
             m_BottomSpacer.Show(false);
         }
 
-		// Make the player lay down. Change with what ever emote you want to use. 
+		// Make the player lay down. Change with whatever emote you want to use. 
 		// Emotes:: scripts\5_mission\gui\gesturesmenu.c
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
 		if (player.GetEmoteManager() && !player.IsRestrained() && !player.IsUnconscious()) 
@@ -88,16 +86,14 @@ modded class LogoutMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 
-        void abortMission()
-        {
+    void abortMission()
+    {
+        GetGame().GetMission().AbortMission();
+    }
 
-                GetGame().GetMission().AbortMission();
-        }
-
-        void canelExit()
-        {
-
-                Hide();
-                Cancel();
-        }
+    void canelExit()
+    {
+        Hide();
+        Cancel();
+    }
 }
