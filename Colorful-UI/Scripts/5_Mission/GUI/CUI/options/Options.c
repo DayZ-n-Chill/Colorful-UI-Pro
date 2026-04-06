@@ -17,6 +17,9 @@ modded class OptionsMenu extends UIScriptedMenu
 		
 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_Tabber);
 		
+		m_Tabber.m_OnTabSwitch.Insert(OnTabSwitch);
+		m_Tabber.m_OnAttemptTabSwitch.Insert(OnAttemptTabSwitch);
+		
 		m_Details  = layoutRoot.FindAnyWidget("settings_details");
 		m_Version  = TextWidget.Cast(layoutRoot.FindAnyWidget("version"));
 		
@@ -90,5 +93,20 @@ modded class OptionsMenu extends UIScriptedMenu
 	}
 
 
-
+	override void Back()
+	{
+		if (!g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
+		{
+			if (m_Options && m_Options.IsChanged())
+			{
+				EnterScriptedMenu(COLORFUL_CONFIGURE);
+			}
+			else
+			{
+				if (m_Options) m_Options.Revert();
+				GetGame().EndOptionsVideo();
+				GetGame().GetUIManager().Back();
+			}
+		}
+	}
 }

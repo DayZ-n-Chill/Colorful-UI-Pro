@@ -6,7 +6,6 @@ class colorfulConfigureDialog extends UIScriptedMenu
 	protected Widget 				m_LastFocusedButton;
 	protected Widget 				m_Text;
 	protected Widget 				m_Caption;
-	protected ButtonWidget			m_Reset; //undo
 	protected ref GameOptions		m_Options;
 	private Widget m_TopShader;
 	private Widget m_BottomShader;
@@ -14,14 +13,12 @@ class colorfulConfigureDialog extends UIScriptedMenu
 
 	override Widget Init()
 	{
-		m_Options		= new GameOptions();
 
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.configure.dialog.layout");
 		
 		m_Separator					= layoutRoot.FindAnyWidget("SeparatorPanel");
 		m_bYes						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("bYes"));
 		m_bNo						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("bNo"));
-		m_Reset						= ButtonWidget.Cast(layoutRoot.FindAnyWidget("m_Reset"));
 		m_Text						= layoutRoot.FindAnyWidget("Text");
 		m_Caption					= layoutRoot.FindAnyWidget("Caption");
 		
@@ -35,16 +32,22 @@ class colorfulConfigureDialog extends UIScriptedMenu
 		
 		cuiElmnt.proBtnCB(m_bYes, "#message_dialog_yes", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "ResetCurrentTab");
 		cuiElmnt.proBtnCB(m_bNo, "BACK", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Cancel");
-		cuiElmnt.proBtnCB(m_Reset, "#layout_xbox_reset_options_defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "ResetCurrentTab");
 		
 		return layoutRoot;
 	}
 
 	void ResetCurrentTab()
 	{
-		if (m_Options && m_Options.IsChanged())
+		OptionsMenu optionsMenu = OptionsMenu.Cast(GetParentMenu());
+		if (optionsMenu)
 		{
-			m_Options.Revert();
+			// Close Configure Dialog first
+			GetGame().GetUIManager().Back(); 
+			
+			// Revert the actual parent options and close Options menu natively
+			optionsMenu.Reset(); 
+			GetGame().EndOptionsVideo();
+			GetGame().GetUIManager().Back(); 
 		}
 	}
 
