@@ -67,6 +67,8 @@ modded class OptionsMenu extends UIScriptedMenu
 				{
 					if (!FileExist("$saves:" + m_OptionsMenuVideo))
 						CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
+					
+					m_MenuVid.SetCallback(VideoCallback.ON_ERROR, OnVideoError);
 					m_MenuVid.Load("$saves:" + m_OptionsMenuVideo, true);
 					m_MenuVid.Play();
 				}
@@ -106,6 +108,15 @@ modded class OptionsMenu extends UIScriptedMenu
 				GetGame().EndOptionsVideo();
 				GetGame().GetUIManager().Back();
 			}
+		}
+	}
+
+	void OnVideoError()
+	{
+		Print("[Colorful-UI] Video Player Error: Failed to load or play video -> " + m_OptionsMenuVideo);
+		if (m_MenuVid)
+		{
+			m_MenuVid.Show(false);
 		}
 	}
 }

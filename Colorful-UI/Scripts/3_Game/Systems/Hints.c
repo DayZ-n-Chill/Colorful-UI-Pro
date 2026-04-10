@@ -70,6 +70,8 @@ modded class UiHintPanelLoading extends UiHintPanel
                 Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
                 if (!FileExist("$saves:" + m_LoadingVideo))
                     CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);
+                
+                m_Video.SetCallback(VideoCallback.ON_ERROR, OnVideoError);
                 m_Video.Load("$saves:" + m_LoadingVideo, true);
                 m_Video.Play();
             }
@@ -116,4 +118,13 @@ modded class UiHintPanelLoading extends UiHintPanel
 
         }
 	}
+
+    void OnVideoError()
+    {
+        Print("[Colorful-UI] Video Player Error: Failed to load or play video -> " + m_LoadingVideo);
+        if (m_Video)
+        {
+            m_Video.Show(false);
+        }
+    }
 }

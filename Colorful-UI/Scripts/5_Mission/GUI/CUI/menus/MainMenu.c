@@ -111,6 +111,7 @@ modded class MainMenu extends UIScriptedMenu
 				if (!FileExist("$saves:" + m_MainMenuVideo))
 					CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
 
+				m_MenuVid.SetCallback(VideoCallback.ON_ERROR, OnVideoError);
 				m_MenuVid.Load("$saves:" + m_MainMenuVideo, true);
 				m_MenuVid.Play();
 			}
@@ -193,5 +194,14 @@ modded class MainMenu extends UIScriptedMenu
 	override void Exit()
 	{
 		EnterScriptedMenu(COLORFUL_EXIT);
+	}
+
+	void OnVideoError()
+	{
+		Print("[Colorful-UI] Video Player Error: Failed to load or play video -> " + m_MainMenuVideo);
+		if (m_MenuVid)
+		{
+			m_MenuVid.Show(false);
+		}
 	}
 }
