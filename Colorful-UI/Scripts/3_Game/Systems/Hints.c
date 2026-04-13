@@ -12,26 +12,19 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	void ~UiHintPanelLoading()
 	{
-
-		
 		if (m_Video)
 		{
 			m_Video.Stop();
 			m_Video.Unload();
-	
-
 		}
 	}
 
 	override void Init(DayZGame game)
     {
-
-
         m_RootPath = "Colorful-UI/gui/layouts/loading/hints/cui.loadinghints.layout";
         
         if (!game)
         {
-
             return;
         }
 
@@ -39,7 +32,6 @@ modded class UiHintPanelLoading extends UiHintPanel
         LoadContentList();
         if (m_ContentList)    
         {
-
             BuildLayout(m_ParentWidget);
             RandomizePageIndex();
             PopulateLayout();
@@ -53,8 +45,6 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	override protected void BuildLayout(Widget parent_widget)
 	{
-
-
         protected ImageWidget m_TopShader;
 	    protected ImageWidget m_BottomShader;
         protected ImageWidget m_Icon;
@@ -65,8 +55,6 @@ modded class UiHintPanelLoading extends UiHintPanel
 
         #else
             if (LoadVideo) {
-
-
                 Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
                 if (!FileExist("$saves:" + m_LoadingVideo))
                     CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);
@@ -79,8 +67,6 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 		if (m_RootFrame)
 		{
-
-
             m_Icon              = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
 		    m_TipLineL          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
             m_TipLineR          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
@@ -106,16 +92,12 @@ modded class UiHintPanelLoading extends UiHintPanel
 
             if (NoHints)
             {
-
                 m_SpacerFrame.Show(false);
             }
-
-            
-
 		}
         else
         {
-
+            Print("[Colorful-UI] Failed to create root frame for hints.");
         }
 	}
 

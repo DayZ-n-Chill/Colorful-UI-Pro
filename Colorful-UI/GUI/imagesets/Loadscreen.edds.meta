@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{6D1E4B1E00D0AD96}Colorful-UI/GUI/imagesets/Loadscreen.edds"
+ Author "coruscant"
+ ChangeDate 674772109
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "Loadscreen.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

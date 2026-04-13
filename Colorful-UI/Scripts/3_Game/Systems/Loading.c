@@ -34,8 +34,6 @@ modded class LoadingScreen
         Branding.ApplyLogo(m_Logo);
         ProgressAsync.SetProgressData(m_ProgressLoading);
         ProgressAsync.SetUserData(m_Background);
-
-
     }
 
     override void Show()

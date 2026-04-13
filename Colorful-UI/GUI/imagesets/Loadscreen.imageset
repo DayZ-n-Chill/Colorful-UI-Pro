@@ -1,0 +1,102 @@
+ImageSetClass {
+ Name "Loadscreen"
+ RefSize 6464 5720
+ Textures {
+  ImageSetTextureClass {
+   mpix 1
+   path "{6D1E4B1E00D0AD96}Colorful-UI/GUI/imagesets/Loadscreen.edds"
+  }
+  ImageSetTextureClass {
+   mpix 1
+   path ""
+  }
+ }
+ Images {
+  ImageSetDefClass Loadscreen_1 {
+   Name "Loadscreen_1"
+   Pos 0 0
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_2 {
+   Name "Loadscreen_2"
+   Pos 2198 0
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_3 {
+   Name "Loadscreen_3"
+   Pos 4396 0
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_4 {
+   Name "Loadscreen_4"
+   Pos 0 1174
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_5 {
+   Name "Loadscreen_5"
+   Pos 2198 1174
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_6 {
+   Name "Loadscreen_6"
+   Pos 4396 1174
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_7 {
+   Name "Loadscreen_7"
+   Pos 0 2348
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_8 {
+   Name "Loadscreen_8"
+   Pos 2198 2348
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_9 {
+   Name "Loadscreen_9"
+   Pos 4396 2348
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_10 {
+   Name "Loadscreen_10"
+   Pos 0 3522
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_11 {
+   Name "Loadscreen_11"
+   Pos 2198 3522
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_12 {
+   Name "Loadscreen_12"
+   Pos 4396 3522
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_13 {
+   Name "Loadscreen_13"
+   Pos 0 4696
+   Size 2048 1024
+   Flags 0
+  }
+  ImageSetDefClass Loadscreen_14 {
+   Name "Loadscreen_14"
+   Pos 2198 4696
+   Size 2048 1024
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}
