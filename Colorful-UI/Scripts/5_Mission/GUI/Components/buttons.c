@@ -224,12 +224,30 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
             }
         }
     }
+
+    bool IsDead()
+    {
+        return !m_Button; // If DayZ C++ engine destroys the menu, the button becomes null natively
+    }
 }
 // NOTE: THese are not the final elements.  This was just a quick shit way of getting thing together for a release candadite. 
 // I schlocked it together and will be putting something more appropriate after the release candadite.  
 class cuiElmnt
 {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
+
+    // This makes the system 100% self-cleaning without throwing manual Cleanup() triggers on 15 different menus
+    static void AutoClean()
+    {
+        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        {
+            if (!s_Handlers[i] || s_Handlers[i].IsDead())
+            {
+                if (s_Handlers[i]) s_Handlers[i].Dispose();
+                s_Handlers.Remove(i);
+            }
+        }
+    }
 
     static void Cleanup()
     {
@@ -271,6 +289,7 @@ class cuiElmnt
             0,
         );
         h.SetSolidBg(true);
+        AutoClean();
         s_Handlers.Insert(h);
     }
 
@@ -295,6 +314,7 @@ class cuiElmnt
             "",
             0,
         );
+        AutoClean();
         s_Handlers.Insert(h);
     }
 
@@ -319,6 +339,7 @@ class cuiElmnt
             serverIP,
             serverPort,
         );
+        AutoClean();
         s_Handlers.Insert(h);
     }
 
@@ -345,6 +366,7 @@ class cuiElmnt
         h.SetIconOnly(true, iconImageIndex);
         if (icon) icon.SetColor(iconColor);
 
+        AutoClean();
         s_Handlers.Insert(h);
     }
 
@@ -381,6 +403,7 @@ class cuiElmnt
             h.SetIconOnly(true, -1);
         }
         
+        AutoClean();
         s_Handlers.Insert(h);
     }
 }
