@@ -6,7 +6,7 @@ static bool ShowDeadScreen     = false;  // If set to true, a custom game over s
 
 // The below two settings are not yet implemented.
 static bool EnableMenuVideo    = true;   // If set to true, a video will be shown during Main Menu Screens along with tips.
-static bool EnableOptionsVideo = true;   // If set to true, a video will be shown during Main Menu Screens along with tips.
+static bool EnableOptionsVideo = false;   // If set to true, a video will be shown during Main Menu Screens along with tips.
 static bool VideoDeathScreens  = false;  // If set to true, a random game over screen will be shown when the player dies.
 static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
 
