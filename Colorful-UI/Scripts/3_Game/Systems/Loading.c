@@ -106,23 +106,23 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
 
-        m_HintPanel        = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
-        m_txtPosition      = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        m_txtNote          = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
-        m_TopShader        = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-        m_BottomShader     = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-        m_ProgressLoading  = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
-        m_btnLeave         = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
-        m_ExitText         = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
-        m_ExitIcon         = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
-        m_PrioQBtn         = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
-        m_PrioText         = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
-        m_ShopIcon         = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
+        m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+        m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        m_txtNote = TextWidget.Cast(layoutRoot.FindAnyWidget("txtNote"));
+        m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+        m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+        m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+        m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
+        m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
+        m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
+        m_PrioQBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
+        m_PrioText = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
+        m_ShopIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
 
-        if (m_ExitIcon)        m_ExitIcon.SetColor(colorScheme.Icons());
-        if (m_ShopIcon)        m_ShopIcon.SetColor(colorScheme.Icons());
-        if (m_TopShader)       m_TopShader.SetColor(colorScheme.TopShader());
-        if (m_BottomShader)    m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_ExitIcon) m_ExitIcon.SetColor(colorScheme.Icons());
+        if (m_ShopIcon) m_ShopIcon.SetColor(colorScheme.Icons());
+        if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
         if (CustomURL.PriorityQ == "#" || CustomURL.PriorityQ == "")

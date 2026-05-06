@@ -67,18 +67,18 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 		if (m_RootFrame)
 		{
-            m_Icon              = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
-		    m_TipLineL          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
-            m_TipLineR          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
-            m_TopShader         = ImageWidget.Cast(m_RootFrame.FindAnyWidget("TopShader"));
-		    m_BottomShader      = ImageWidget.Cast(m_RootFrame.FindAnyWidget("BottomShader"));
-            m_SpacerFrame		= m_RootFrame.FindAnyWidget("Hints");	
-			m_UiLeftButton		= ButtonWidget.Cast(m_RootFrame.FindAnyWidget("LeftButton"));		
-			m_UiRightButton		= ButtonWidget.Cast(m_RootFrame.FindAnyWidget("RightButton"));
-			m_UiHeadlineLabel	= TextWidget.Cast(m_RootFrame.FindAnyWidget("HeadlineLabel"));	
-			m_UiDescLabel		= RichTextWidget.Cast(m_RootFrame.FindAnyWidget("HintDescLabel"));
-			m_UiHintImage		= ImageWidget.Cast(m_RootFrame.FindAnyWidget("HintImage"));
-			m_UiPageingLabel	= TextWidget.Cast(m_RootFrame.FindAnyWidget("PageInfoLabel"));
+            m_Icon = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
+		    m_TipLineL = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
+            m_TipLineR = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
+            m_TopShader = ImageWidget.Cast(m_RootFrame.FindAnyWidget("TopShader"));
+		    m_BottomShader = ImageWidget.Cast(m_RootFrame.FindAnyWidget("BottomShader"));
+            m_SpacerFrame = m_RootFrame.FindAnyWidget("Hints");	
+			m_UiLeftButton = ButtonWidget.Cast(m_RootFrame.FindAnyWidget("LeftButton"));		
+			m_UiRightButton = ButtonWidget.Cast(m_RootFrame.FindAnyWidget("RightButton"));
+			m_UiHeadlineLabel = TextWidget.Cast(m_RootFrame.FindAnyWidget("HeadlineLabel"));	
+			m_UiDescLabel = RichTextWidget.Cast(m_RootFrame.FindAnyWidget("HintDescLabel"));
+			m_UiHintImage = ImageWidget.Cast(m_RootFrame.FindAnyWidget("HintImage"));
+			m_UiPageingLabel = TextWidget.Cast(m_RootFrame.FindAnyWidget("PageInfoLabel"));
             
 		    m_BottomShader.SetColor(colorScheme.BottomShader());
             m_TopShader.SetColor(colorScheme.TopShader());
