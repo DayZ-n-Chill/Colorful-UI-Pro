@@ -37,4 +37,10 @@ modded class InviteMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 	
+
+	void ~InviteMenu()
+	{
+		GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateTime);
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

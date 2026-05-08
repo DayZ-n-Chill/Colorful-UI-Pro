@@ -220,4 +220,9 @@ class colorfulConfigureDialog extends UIScriptedMenu
 		
 	// 	m_CanApplyOrReset = false;
 	// }
+
+	void ~colorfulConfigureDialog()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 };

@@ -27,11 +27,9 @@ modded class TabberUI extends ScriptedWidgetEventHandler
 
 	override void SelectTabControl(int index)
 	{
-		CuiLogger.Log("[CuiTabber] Tab Clicked! Index: " + index);
 		Widget tab_control = m_TabControls.Get(index);
 		ApplyTabColor(tab_control, true, false);
 		m_SelectedIndex = index;
-		CuiLogger.Log("[CuiTabber] Active Tab is now: " + m_SelectedIndex);
 	}
 
 	override bool OnMouseEnter(Widget w, int x, int y)

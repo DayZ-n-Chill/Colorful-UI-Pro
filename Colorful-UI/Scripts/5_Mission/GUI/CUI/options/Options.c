@@ -37,10 +37,10 @@ modded class OptionsMenu extends UIScriptedMenu
 		
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 		
-		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
-		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Defaults), "Defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
-		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Reset), "Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Defaults), "Defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Reset), "Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
 		
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());
@@ -55,7 +55,6 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_Separator = layoutRoot.FindAnyWidget("colorful_separator");
 		
 		#ifdef WORKBENCH
-			CuiLogger.Log("OptionsMenu.Init() - Skipping video in Workbench mode");
 		#else
 			// Only show options video when opened from MAIN MENU, never from in-game pause/options.
 			if (EnableOptionsVideo && IsMainMenuContext())
@@ -89,4 +88,9 @@ modded class OptionsMenu extends UIScriptedMenu
 		}
 	}
 
+
+	void ~OptionsMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

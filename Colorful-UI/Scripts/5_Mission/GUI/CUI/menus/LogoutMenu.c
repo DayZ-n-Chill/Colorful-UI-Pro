@@ -10,8 +10,6 @@ modded class LogoutMenu extends UIScriptedMenu
         {
                 layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/inGame/cui.logout.layout");
 
-                CuiLogger.Log("LogoutMenu Init");
-	
 		m_Logo 				= ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
 		m_LogoutTimeText 	= TextWidget.Cast(layoutRoot.FindAnyWidget("txtLogoutTime"));
 
@@ -45,19 +43,19 @@ modded class LogoutMenu extends UIScriptedMenu
 		// You can even be specific and set the color directly. ie. argb(255, 255, 255, 255);
 		
 		// Example of a button with a callback
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_LogoutNow),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"abortMission");
-		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Cancel),"Cancel",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"canelExit");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_LogoutNow),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"abortMission");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Cancel),"Cancel",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"canelExit");
 
 		// Custom Links
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
 
 		// Social Links
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
 
 		// These checks show/hide what buttons that are invalid or null
         allInvalid = true; // reset shared state before this menu's checks
@@ -91,14 +89,17 @@ modded class LogoutMenu extends UIScriptedMenu
 
         void abortMission()
         {
-                CuiLogger.Log("LogoutMenu abortMission");
                 GetGame().GetMission().AbortMission();
         }
 
         void canelExit()
         {
-                CuiLogger.Log("LogoutMenu cancelExit");
                 Hide();
                 Cancel();
         }
+
+	void ~LogoutMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

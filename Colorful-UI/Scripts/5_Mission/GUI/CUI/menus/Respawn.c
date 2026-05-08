@@ -42,20 +42,20 @@ modded class RespawnDialogue extends UIScriptedMenu
         m_MenuDivider.SetColor(colorScheme.Separator());
 
         // CALLBACK BUTTONS
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_CancelBtn),        "#menu_cancel",                colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "CancelBtn");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_RandomRespawnBtn), "#main_menu_respawn_random",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnRandomRespawnClick");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_CustomRespawnBtn), "#main_menu_respawn_custom",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCustomRespawnClick");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CancelBtn),        "#menu_cancel",                colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "CancelBtn");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RandomRespawnBtn), "#main_menu_respawn_random",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnRandomRespawnClick");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CustomRespawnBtn), "#main_menu_respawn_custom",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCustomRespawnClick");
 
         // URL BUTTONS (FIXED)
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_PrioQ),   "Priority Queue", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Website), "Visit Website",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.Website);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),   "Priority Queue", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website), "Visit Website",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.Website);
 
         // SOCIAL URL BUTTONS (FIXED)
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Discord),  "Discord",  colorScheme.PrimaryText(), UIColor.Discord(),  SocialURL.Discord);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Twitter),  "Twitter",  colorScheme.PrimaryText(), UIColor.Twitter(),  SocialURL.Twitter);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Youtube),  "Youtube",  colorScheme.PrimaryText(), UIColor.YouTube(),  SocialURL.Youtube);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Reddit),   "Reddit",   colorScheme.PrimaryText(), UIColor.Reddit(),   SocialURL.Reddit);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Facebook), "Facebook", colorScheme.PrimaryText(), UIColor.Facebook(), SocialURL.Facebook);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),  "Discord",  colorScheme.PrimaryText(), UIColor.Discord(),  SocialURL.Discord);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter),  "Twitter",  colorScheme.PrimaryText(), UIColor.Twitter(),  SocialURL.Twitter);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Youtube),  "Youtube",  colorScheme.PrimaryText(), UIColor.YouTube(),  SocialURL.Youtube);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit),   "Reddit",   colorScheme.PrimaryText(), UIColor.Reddit(),   SocialURL.Reddit);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook), "Facebook", colorScheme.PrimaryText(), UIColor.Facebook(), SocialURL.Facebook);
 
         allInvalid = true; // reset shared state before this menu's checks
         CheckURL(m_PrioQ,      CustomURL.PriorityQ);
@@ -110,4 +110,9 @@ modded class RespawnDialogue extends UIScriptedMenu
     {
         RequestRespawn(true);
     }
+
+	void ~RespawnDialogue()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

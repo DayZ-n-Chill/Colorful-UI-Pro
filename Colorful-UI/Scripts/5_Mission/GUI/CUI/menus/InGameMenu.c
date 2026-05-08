@@ -42,22 +42,22 @@ modded class InGameMenu extends UIScriptedMenu
         if (m_MenuDivider)  m_MenuDivider.SetColor(colorScheme.Separator());
 
         // Example of a button with a callbacks
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_ExitButton),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Exit");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_ContinueButton),"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Continue");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_OptionsButton),"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Options");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_RestartButton),"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Restart");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_RespawnButton),"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Respawn");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_ExitButton),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Exit");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_ContinueButton),"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Continue");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_OptionsButton),"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Options");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RestartButton),"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Restart");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RespawnButton),"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Respawn");
 
 		// Custom Links
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
 
 		// Social Links
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
-        cuiElmnt.proBtnURL(ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
 
 		// These checks show/hide what buttons that are invalid or null
         allInvalid = true; // reset shared state before this menu's checks
@@ -114,5 +114,10 @@ modded class InGameMenu extends UIScriptedMenu
 				m_GameOverScreenImage.SetAlpha(Math.Min(m_GameOverScreenImage.GetAlpha() + (1.25 * timeslice), 1));
 			}
 		}
+	}
+
+	void ~InGameMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
 	}
 }

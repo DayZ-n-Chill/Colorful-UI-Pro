@@ -45,9 +45,123 @@ Recommended fix order: BLOCKING → HIGH → MEDIUM → LOW. Build + smoke test 
   - [x] L-7 — `Workbench/server.cfg` reviewed: contains only stock debug-server defaults (empty passwords, `BattlEye = 0`, `instanceId = 1`, dayzOffline.chernarusplus mission) — no sensitive data; safe in repo
   - [x] L-8 — AddonBuilder source roots are `P:\Colorful-UI\GUI` and `P:\Colorful-UI\Scripts` (not the parent), so `Colorful-UI/Workbench/` is never traversed during packing — naturally excluded
   - [x] post-fix — Rebuild PBOs and smoke test in DayZDiag (Mission module compiles, server binds, client connects, no script errors in RPT)
+- [x] **LEAKS / PERF** (not in original audit — found in deeper review)
+  - [x] LK-1 — `cuiElmnt.s_Handlers` per-owner cleanup: added `Class m_Owner` to `CUIButtonHandler`, added `cuiElmnt.CleanupForOwner(Class)`, threaded `this` as first arg to all `proBtnXX` call sites (8 menu files), added `~MenuClass()` destructors to 12 menu/dialog classes calling `cuiElmnt.CleanupForOwner(this)`
+  - [x] LK-2 — `~InviteMenu()` now calls `Remove(UpdateTime)` to cancel the 1-sec repeating timer
+  - [x] LK-3 — `LoginQueueBase.Show()` only allocates `m_HintPanel` when null
+  - [x] LK-4 — `TutorialsMenu` calls `Remove(DrawConnectingLines)` before `Insert()` so reopens don't duplicate
+  - [x] LK-5 — `DayZPlayerImplement.ShowDeadScreen` calls `Remove(StopDeathDarkeningEffect)` before scheduling the next one
+  - [x] PF-1 — `CuiLogger` keeps a single `FileHandle` open; close+reopen every 64 writes acts as a bounded flush. Added explicit `Close()` for shutdown.
 - [x] **DISCOVERED-AT-RUNTIME** (not in original audit — surfaced when actually loading the mod into Diag)
   - [x] D-1 — `Mission` script module failed to compile: 19 methods missing `override` keyword. Added across `OptionSelectorBase.c` (13), `MainMenu.c` (`NextCharacter`, `PreviousCharacter`), `Respawn.c` (`Update`), `OptionsTabs.c` (4× `GetLayoutName`).
   - [x] D-2 — Type errors after D-1 fix: ~50 `Cannot convert 'Widget' to 'ButtonWidget'` / `Unsafe down-casting` errors across 7 menu files. Cause: `m_X = layoutRoot.FindAnyWidget(...)` assigning untyped `Widget` to typed `ButtonWidget`/`ImageWidget` fields, plus vanilla field-name shadowing where the modded class's stricter type was overridden by the base class's `Widget` declaration. Fix: PowerShell pass that wrapped every assignment with `<Type>.Cast(...)` and every `cuiElmnt.proBtnXX(m_X, ...)` call site with `ButtonWidget.Cast(m_X)`. Files modified: `MainMenu.c`, `InGameMenu.c`, `LogoutMenu.c`, `Respawn.c`, `CharacterCreation.c`, `Options.c`, `Keybindings.c`.
+
+---
+
+# LEAKS & PERF (deeper review)
+
+## LK-1 — `cuiElmnt.s_Handlers` grows unbounded (CRITICAL)
+
+**File:** `Colorful-UI/Scripts/5_Mission/GUI/Components/buttons.c:232`
+
+`s_Handlers` is a static `array<ref CUIButtonHandler>`. Every call to `proBtnCB`/`proBtnDC`/`proBtnURL`/`proSolidBtn` does `s_Handlers.Insert(h)`. A `Cleanup()` method exists at line 234, but **nothing in the codebase calls it**.
+
+Per menu Init: 5–15 handlers added. Each handler holds a ButtonWidget ref, TextWidget ref, and Class targetClass ref. Closing the menu does not release them.
+
+After ~50 menu opens (a normal session — open Esc, close, reopen), s_Handlers has hundreds of dead handlers each pinning widgets that should have been GC'd.
+
+**Fix path:**
+- Naive: call `cuiElmnt.Cleanup()` at the start of each menu's Init(). Side-effect: if a dialog opens on top of an active menu, its Cleanup() wipes the parent's handlers and breaks the parent's buttons. Not safe.
+- Per-menu: change `proBtnXX(...)` to take an `owner` Class param. Track handlers as `map<Class, array<ref CUIButtonHandler>>`. Add `cuiElmnt.CleanupForOwner(this)` and call it from each menu's destructor (`~MainMenu()`, etc.). Or each menu maintains its own `protected ref array<ref CUIButtonHandler>` and disposes it in its destructor.
+- Recommended: per-menu local handler array. Refactor in `cuiElmnt` + add destructors to MainMenu, InGameMenu, LogoutMenu, RespawnDialogue, CharacterCreationMenu, TutorialsMenu, OptionsMenu*, LogoutMenu*.
+
+## LK-2 — `InviteMenu.UpdateTime` zombie timer
+
+**File:** `Colorful-UI/Scripts/5_Mission/GUI/CUI/dialogs/Invite.c:34`
+
+```c
+GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).CallLater(UpdateTime, 1000, true);
+```
+
+Repeating callback (`true`) with no matching `Remove()` anywhere. There is no `~InviteMenu()` destructor in this file. The vanilla destructor may or may not cancel it.
+
+After the dialog closes, `UpdateTime` keeps firing every 1 second forever. If the player opens/closes Invite multiple times, each open spawns a new zombie timer.
+
+**Fix:**
+```c
+void ~InviteMenu()
+{
+    GetGame().GetCallQueue(CALL_CATEGORY_SYSTEM).Remove(UpdateTime);
+}
+```
+
+## LK-3 — `LoginQueueBase.Show()` re-allocates `m_HintPanel`
+
+**File:** `Colorful-UI/Scripts/3_Game/Systems/Loading.c:190`
+
+```c
+override void Show()
+{
+    ...
+    if (!NoHints)
+    {
+        layoutRoot.Show(true);
+        m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+    }
+}
+```
+
+`Show()` is called every time the queue screen is shown (potentially repeatedly during reconnects). Each call creates a new `UiHintPanelLoading` (which loads a video, allocates widgets). The previous instance's destructor will run when ref-count drops, but there's a window where two are live, and any code that holds an external ref to the old `m_HintPanel` keeps it alive forever.
+
+`m_HintPanel` is also set in `Init()` at line 149, so the first `Show()` after Init double-creates.
+
+**Fix:** Only create on first show, or null-check before creating. Better: move creation entirely into Init() and let Show() just toggle visibility.
+
+## LK-4 — `TutorialsMenu.Init` duplicate-inserts `DrawConnectingLines`
+
+**File:** `Colorful-UI/Scripts/5_Mission/GUI/CUI/options/Tutorials.c:18`
+
+```c
+m_TabScript.m_OnTabSwitch.Insert(DrawConnectingLines);
+```
+
+If TutorialsMenu is opened, closed, opened again, this inserts `DrawConnectingLines` into the event handler array a second time. On the next tab switch the function fires twice. After N opens, fires N times.
+
+**Fix:** Either guard with a "already inserted" flag, or call `m_TabScript.m_OnTabSwitch.RemoveItem(DrawConnectingLines)` before inserting (idempotent).
+
+## LK-5 — `DeathScreens.ShowDeadScreen()` queues without canceling pending
+
+**File:** `Colorful-UI/Scripts/4_World/DeathScreens.c:18`
+
+```c
+GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(StopDeathDarkeningEffect, duration * 1000, false);
+```
+
+If the player dies, respawns mid-fade, and dies again before the previous `duration*1000` ms elapses, two `StopDeathDarkeningEffect` calls stack up. Each will fire and stomp the fade state.
+
+**Fix:** Call `Remove(StopDeathDarkeningEffect)` before scheduling.
+
+## PF-1 — `CuiLogger.Log()` opens/closes file every call
+
+**File:** `Colorful-UI/Scripts/3_Game/Systems/Logger.c:16`
+
+```c
+FileHandle handle = OpenFile(LOG_FILE, FileMode.APPEND);
+if (handle != 0)
+{
+    FPrintln(handle, ...);
+    CloseFile(handle);
+}
+```
+
+Every `CuiLogger.Log()` call opens the file, appends one line, closes the file. With `CuiDebug = true`, every mouse-enter/leave on a button triggers a Log call. The FS is hammered. On HDD-backed servers this is meaningfully slow.
+
+`CuiDebug = false` in release (defaults to false in `Settings.c`), so this is mostly a dev-time perf issue. But the pattern is wrong even for debug builds.
+
+**Fix path:**
+- Open file once at `InitCUILogger()` and keep the handle open until shutdown. Risk: the engine doesn't always call a clean shutdown; partial writes possible.
+- Buffer log lines in memory and flush every N calls or every M ms.
+- Cheapest: just leave the open/close pattern but add a guard so identical messages within 1ms are coalesced.
 
 ---
 

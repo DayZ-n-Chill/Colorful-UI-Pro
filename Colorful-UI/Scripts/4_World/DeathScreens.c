@@ -13,6 +13,8 @@ modded class DayZPlayerImplement extends DayZPlayer
             GetGame().GetUIManager().ScreenFadeOut(0);
         };
 
+        // Cancel any prior pending fade-stop so consecutive deaths don't stack timers.
+        GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(StopDeathDarkeningEffect);
         if (duration > 0)
         {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(StopDeathDarkeningEffect, duration * 1000, false);

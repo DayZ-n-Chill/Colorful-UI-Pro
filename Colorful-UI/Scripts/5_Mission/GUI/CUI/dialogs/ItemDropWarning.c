@@ -20,4 +20,9 @@ modded class WarningMenuBase extends UIScriptedMenu
         
 		return layoutRoot;
 	}
+
+	void ~WarningMenuBase()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

@@ -171,4 +171,9 @@ class colorfulExitDialog extends UIScriptedMenu
 			text2.SetColor( color );
 		}
 	}
+
+	void ~colorfulExitDialog()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 };

@@ -12,49 +12,35 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	void ~UiHintPanelLoading()
 	{
-		CuiLogger.Log("UiHintPanelLoading.~UiHintPanelLoading() - Cleaning up video resources");
-		
 		if (m_Video)
 		{
 			m_Video.Stop();
 			m_Video.Unload();
-	
-			CuiLogger.Log("UiHintPanelLoading.~UiHintPanelLoading() - Video stopped and unloaded");
 		}
 	}
 
 	override void Init(DayZGame game)
     {
-        CuiLogger.Log("UiHintPanelLoading.Init() - Starting hint panel init");
-
         m_RootPath = "Colorful-UI/GUI/layouts/loading/hints/cui.loadinghints.layout";
-        
+
         if (!game)
         {
-            CuiLogger.Log("UiHintPanelLoading.Init() - Game context not found, aborting init");
             return;
         }
 
         m_Game = game;
         LoadContentList();
-        if (m_ContentList)    
+        if (m_ContentList)
         {
-            CuiLogger.Log("UiHintPanelLoading.Init() - Content list loaded, building layout...");
             BuildLayout(m_ParentWidget);
             RandomizePageIndex();
             PopulateLayout();
-            StartSlideshow();            
-        }
-        else 
-        {
-            CuiLogger.Log("ERROR: UiHintPanelLoading.Init() - Could not create the hint panel. The data are missing!");
+            StartSlideshow();
         }
     }
 
 	override protected void BuildLayout(Widget parent_widget)
 	{
-        CuiLogger.Log("UiHintPanelLoading.BuildLayout() - Creating layout");
-
         protected ImageWidget m_TopShader;
 	    protected ImageWidget m_BottomShader;
         protected ImageWidget m_Icon;
@@ -62,11 +48,8 @@ modded class UiHintPanelLoading extends UiHintPanel
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
         #ifdef WORKBENCH
-            CuiLogger.Log("UiHintPanelLoading.BuildLayout() - Skipping video in Workbench mode");
         #else
             if (LoadVideo) {
-                CuiLogger.Log("UiHintPanelLoading.BuildLayout() - Loading and playing video");
-
                 Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
                 if (!FileExist("$saves:" + m_LoadingVideo))
                     CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);
@@ -77,9 +60,7 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 		if (m_RootFrame)
 		{
-            CuiLogger.Log("UiHintPanelLoading.BuildLayout() - Root frame created, finding widgets");
-
-            m_Icon              = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));	
+            m_Icon              = ImageWidget.Cast(m_RootFrame.FindAnyWidget("hintIcon"));
 		    m_TipLineL          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageLeft"));
             m_TipLineR          = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LinesImageRight"));
             m_TopShader         = ImageWidget.Cast(m_RootFrame.FindAnyWidget("TopShader"));
@@ -104,16 +85,8 @@ modded class UiHintPanelLoading extends UiHintPanel
 
             if (NoHints)
             {
-                CuiLogger.Log("UiHintPanelLoading.BuildLayout() - NoHints flag set, hiding spacer frame");
                 m_SpacerFrame.Show(false);
             }
-
-            
-            CuiLogger.Log("UiHintPanelLoading.BuildLayout() - Layout successfully built");
 		}
-        else
-        {
-            CuiLogger.Log("ERROR: UiHintPanelLoading.BuildLayout() - Failed to create root frame");
-        }
 	}
 }
