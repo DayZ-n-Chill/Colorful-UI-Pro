@@ -1,11 +1,11 @@
 modded class WarningMenuBase extends UIScriptedMenu
 {
-    private Widget m_Separator1
-	private	Widget m_shader
+    private Widget m_Separator1;
+	private	Widget m_shader;
 
 	override Widget Init()
 	{
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/cui.day_z_dropped_items.layout");
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.droppedItems.dialog.layout");
 		string text = GetText();
 		if(text)
 		{

@@ -142,7 +142,7 @@ FrameWidgetClass DialogRoot {
        "no focus" 1
        text "#message_dialog_yes"
        text_proportion 0.5
-       font "Colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        {
         ImageWidgetClass XboxHintYes {
          visible 0
@@ -175,7 +175,7 @@ FrameWidgetClass DialogRoot {
        "no focus" 1
        text "#message_dialog_yes"
        text_proportion 0.5
-       font "Colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        {
         ImageWidgetClass XboxHintYes0 {
          visible 0
@@ -208,7 +208,7 @@ FrameWidgetClass DialogRoot {
        style EmptyHighlight
        text "BACK"
        text_proportion 0.5
-       font "Colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        {
         ImageWidgetClass XboxHintNo {
          visible 0
@@ -301,7 +301,7 @@ FrameWidgetClass DialogRoot {
        hexactsize 0
        vexactsize 1
        text " Please go back and apply them. "
-       font "Colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "exact text" 0
        "exact text size" 22
        "size to text h" 1
@@ -321,7 +321,7 @@ FrameWidgetClass DialogRoot {
        vexactsize 1
        style Bold
        text "Unsaved Changes"
-       font "Colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "text color" 1 1 1 1
        "exact text" 0
        "text halign" center

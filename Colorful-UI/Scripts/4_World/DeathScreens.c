@@ -16,12 +16,12 @@ modded class DayZPlayerImplement extends DayZPlayer
         if (duration > 0)
         {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(StopDeathDarkeningEffect, duration * 1000, false);
-            ShowDeadScreen = true;
+            ShowGameOverOverlay = true;
         }
         else
         {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(StopDeathDarkeningEffect);
-            ShowDeadScreen = false;
+            ShowGameOverOverlay = false;
         };
         #endif
     };

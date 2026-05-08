@@ -190,7 +190,7 @@ PanelWidgetClass LoadingFrame {
      hexactsize 1
      vexactsize 1
      text "Position in Queue"
-     font "colorful-ui/gui/fonts/GB-ClearnRegular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
      "exact text" 1
      "exact text size" 18
      "size to text h" 1
@@ -262,7 +262,7 @@ PanelWidgetClass LoadingFrame {
        hexactsize 0
        vexactsize 0
        text "GET Priority QUEUE"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "shadow size" 3
        "shadow offset" 3 3
        "shadow opacity" 0.25
@@ -319,7 +319,7 @@ PanelWidgetClass LoadingFrame {
        hexactsize 0
        vexactsize 0
        text "Exit"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "shadow size" 3
        "shadow offset" 3 3
        "shadow opacity" 0.25

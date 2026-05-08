@@ -13,7 +13,7 @@ modded class OptionsMenu extends UIScriptedMenu
 	{
 		m_Options = new GameOptions();
 		
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-ui/gui/layouts/options/cui.options_menu.layout", null);
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/options/cui.options_menu.layout", null);
 		
 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_Tabber);
 		
@@ -37,10 +37,10 @@ modded class OptionsMenu extends UIScriptedMenu
 		
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 		
-		cuiElmnt.proBtnCB(m_Back, "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
-		cuiElmnt.proBtnCB(m_Defaults, "Defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
-		cuiElmnt.proBtnCB(m_Apply, "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-		cuiElmnt.proBtnCB(m_Reset, "Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Defaults), "Defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Reset), "Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
 		
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());

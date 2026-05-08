@@ -4,7 +4,7 @@ class CfgPatches
 	class ColorfulUI_Scripts
 	{
         requiredVersion = 0.1;
-		requiredAddons[] = {"DZ_Data","DZ_Scripts","DZ_Sounds_Effects"};
+		requiredAddons[] = {"DZ_Data","DZ_Scripts","DZ_Sounds_Effects","ColorfulUI_GUI"};
 	};
 };
 
@@ -15,7 +15,7 @@ class CfgAddons
 	{
 		class DayZ
 		{
-			list[] = {"DZ_Data","DZ_Scripts","DZ_UI","DZ_UIFonts","DZ_Sounds_Effects","COLORFUL_HUD"};
+			list[] = {"DZ_Data","DZ_Scripts","DZ_UI","DZ_UIFonts","DZ_Sounds_Effects","ColorfulUI_GUI","ColorfulUI_Scripts"};
 		};
 	};
 };
@@ -24,7 +24,7 @@ class CfgMods
 {
 	class ColorfulUI
 	{
-		name = "DayZ-Mod-Template";
+		name = "Colorful-UI";
 		dir = "Colorful-UI";
 		creditsJson = "Colorful-UI/Scripts/Credits.json";
 		inputs = "Colorful-UI/Scripts/Inputs.xml";
@@ -37,17 +37,16 @@ class CfgMods
 		class defs
 		{
 			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};};
-			class engineScriptModule  {files[]= {"Colorful-UI/scripts/1_Core"};};
-			class gameScriptModule 	  {files[]= {"Colorful-UI/scripts/3_Game"};};
-			class worldScriptModule	  {files[]= {"Colorful-UI/scripts/4_World"};};
-			class missionScriptModule {files[]= {"Colorful-UI/scripts/5_Mission"};};
+			class gameScriptModule 	  {files[]= {"Colorful-UI/Scripts/3_Game"};};
+			class worldScriptModule	  {files[]= {"Colorful-UI/Scripts/4_World"};};
+			class missionScriptModule {files[]= {"Colorful-UI/Scripts/5_Mission"};};
 		};
 	};	
 };
 
 class CfgSoundSets
 {
-	class Music_Menu_SoundSet
+	class CUI_Music_Menu_SoundSet
 	{
 		soundShaders[] = {"DZNC_Music_Menu_SoundShader"};
 		volumeFactor = 1;
@@ -64,15 +63,15 @@ class CfgSoundShaders
 		// Just add additional lines following the format above. 
 		// Providing a single song will override all time-of-day variations.
 		// The music will play in a random order.
-		samples[] = 
-		{	
-			{"\Colorful-UI\GUI\sounds\MainMenu\Battle", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Cello", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Cinematic", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Emotional_Piano", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Piano", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Horror_Suspense", 1},
-			{"\Colorful-UI\GUI\sounds\MainMenu\Guitar_Reverb", 1}
+		samples[] =
+		{
+			{"Colorful-UI/GUI/sounds/MainMenu/Battle", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Cello", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Cinematic", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Emotional_Piano", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Piano", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Horror_Suspense", 1},
+			{"Colorful-UI/GUI/sounds/MainMenu/Guitar_Reverb", 1}
 		};
 		volume = 0.8;
 	};

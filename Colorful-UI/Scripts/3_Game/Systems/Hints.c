@@ -1,7 +1,7 @@
 modded class UiHintPanel extends ScriptedWidgetEventHandler
 {	
-	protected const string m_DataPath = "Colorful-UI/Scripts/data/hints.json";
-	protected string m_RootPath       = "Colorful-UI/Gui/layouts/loading/hints/cui.ingamehints.layout";	
+	protected const string m_DataPath = "Colorful-UI/Scripts/Data/hints.json";
+	protected string m_RootPath       = "Colorful-UI/GUI/layouts/loading/hints/cui.ingamehints.layout";
 }
 
 modded class UiHintPanelLoading extends UiHintPanel
@@ -27,7 +27,7 @@ modded class UiHintPanelLoading extends UiHintPanel
     {
         CuiLogger.Log("UiHintPanelLoading.Init() - Starting hint panel init");
 
-        m_RootPath = "Colorful-UI/gui/layouts/loading/hints/cui.loadinghints.layout";
+        m_RootPath = "Colorful-UI/GUI/layouts/loading/hints/cui.loadinghints.layout";
         
         if (!game)
         {

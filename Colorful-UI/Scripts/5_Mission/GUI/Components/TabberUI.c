@@ -54,7 +54,7 @@ modded class TabberUI extends ScriptedWidgetEventHandler
 	{
 		int new_index = m_Tabs.Count();
 
-		Widget tab = GetGame().GetWorkspace().CreateWidgets("gui/layouts/new_ui/tabber_prefab/tab.layout", m_Root);
+		Widget tab = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/components/tabber_prefab/tab.layout", m_Root);
 		Widget control = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/components/tabber_prefab/cui.tab_control.layout", m_Root.FindAnyWidget("Tab_Control_Container"));
 		TextWidget title = TextWidget.Cast(control.FindAnyWidget("Tab_Control_x_Title"));
 

@@ -165,7 +165,7 @@ PanelWidgetClass LoadingFrame {
      hexactsize 1
      vexactsize 1
      text "Load screen message"
-     font "colorful-ui/gui/fonts/GB-ClearnRegular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
      "exact text" 1
      "exact text size" 18
      "size to text h" 1

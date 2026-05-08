@@ -15,11 +15,11 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		m_Defaults  = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ResetBtn"));
 		m_HardReset = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ResetAllBtn"));
 
-		cuiElmnt.proBtnCB(m_Apply,     "Apply",      colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-		cuiElmnt.proBtnCB(m_Back,      "Back",       colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
-		cuiElmnt.proBtnCB(m_Undo,      "Undo",       colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
-		cuiElmnt.proBtnCB(m_Defaults,  "Defaults",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "SetToDefaults");
-		cuiElmnt.proBtnCB(m_HardReset, "Hard Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "HardReset");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Apply),     "Apply",      colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Back),      "Back",       colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Undo),      "Undo",       colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Defaults),  "Defaults",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "SetToDefaults");
+		cuiElmnt.proBtnCB(ButtonWidget.Cast(m_HardReset), "Hard Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "HardReset");
 
 		m_TopShader    = layoutRoot.FindAnyWidget( "TopShader" );
 		m_BottomShader = layoutRoot.FindAnyWidget( "BottomShader" );
