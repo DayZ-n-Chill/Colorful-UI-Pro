@@ -103,7 +103,7 @@ WindowWidgetClass WindowWidget {
      vexactsize 1
      style Normal
      text "#menu_warning"
-     font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "text color" 1 1 1 1
      "italic text" 0
      "bold text" 1
@@ -121,7 +121,7 @@ WindowWidgetClass WindowWidget {
      vexactpos 1
      hexactsize 1
      vexactsize 1
-     font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "exact text" 1
      "size to text h" 0
      "size to text v" 0
@@ -141,7 +141,7 @@ WindowWidgetClass WindowWidget {
      style MainMenu
      text "#early_access_alpha_understand"
      text_proportion 0.75
-     font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
     }
     PanelWidgetClass SeparatorPanel {
      color 0.7569 0.0941 0.0941 1

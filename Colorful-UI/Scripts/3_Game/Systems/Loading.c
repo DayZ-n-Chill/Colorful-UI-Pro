@@ -10,12 +10,8 @@ modded class LoadingScreen
 
     void LoadingScreen(DayZGame game)
     {
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Initializing loading layout");
-
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
-
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Widget root created");
 
         Class.CastTo(m_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
         Class.CastTo(m_Logo, m_WidgetRoot.FindAnyWidget("Logo"));
@@ -34,13 +30,10 @@ modded class LoadingScreen
         Branding.ApplyLogo(m_Logo);
         ProgressAsync.SetProgressData(m_ProgressLoading);
         ProgressAsync.SetUserData(m_Background);
-
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Layout initialized");
     }
 
     override void Show()
     {
-        CuiLogger.Log("LoadingScreen.Show() - Showing loading screen");
         if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
     }
 
@@ -49,16 +42,11 @@ modded class LoadingScreen
         if (!m_Title)
         {
             m_Title = TextWidget.Cast(m_WidgetRoot.FindAnyWidget("Title"));
-            CuiLogger.Log("LoadingScreen.SetTitle() - Rebinding m_Title");
         }
 
         if (m_Title)
         {
             m_Title.SetText(title);
-        }
-        else
-        {
-            CuiLogger.Log("LoadingScreen.SetTitle() - m_Title is null");
         }
     }
 }
@@ -72,11 +60,7 @@ modded class LoginTimeBase extends LoginScreenBase
 
     override Widget Init()
     {
-        CuiLogger.Log("LoginTimeBase.Init() - Creating logging in layout");
-
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
-
-        CuiLogger.Log("LoginTimeBase.Init() - Layout created");
 
         m_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_Logo = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
@@ -92,7 +76,6 @@ modded class LoginTimeBase extends LoginScreenBase
         if (m_Background)
         {
             string bg = loadscreens.GetRandomElement();
-            CuiLogger.Log("LoginTimeBase.Init() - Background selected: " + bg);
             m_Background.LoadImageFile(0, bg);
         }
 
@@ -111,7 +94,6 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginTimeBase.OnMouseEnter() - Hovered Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
             if (m_btnLeave) m_btnLeave.SetColor(UIColor.Transparent());
             return true;
@@ -123,7 +105,6 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginTimeBase.OnMouseLeave() - Left Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
@@ -141,10 +122,7 @@ modded class LoginQueueBase extends LoginScreenBase
 
     override Widget Init()
     {
-        CuiLogger.Log("LoginQueueBase.Init() - Setting up Priority Queue UI");
-
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
-        CuiLogger.Log("LoginQueueBase.Init() - Layout created");
 
         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
@@ -174,7 +152,6 @@ modded class LoginQueueBase extends LoginScreenBase
         }
         else
         {
-            CuiLogger.Log("LoginQueueBase.Init() - Showing Priority Queue button");
             m_PrioQBtn.Show(true);
         }
 
@@ -183,11 +160,13 @@ modded class LoginQueueBase extends LoginScreenBase
 
     override void Show()
     {
-        CuiLogger.Log("LoginQueueBase.Show() - Displaying queue screen");
         if (!NoHints)
         {
             layoutRoot.Show(true);
-            m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+            // Only allocate the hint panel once. Show() may fire multiple times
+            // (reconnects, etc.); recreating leaks the previous panel + its video.
+            if (!m_HintPanel)
+                m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         }
     }
 
@@ -201,10 +180,6 @@ modded class LoginQueueBase extends LoginScreenBase
                 m_txtPosition.SetText("Position in Queue " + position.ToString());
                 m_txtPosition.SetColor(colorScheme.LoadingMsg());
             }
-            else
-            {
-                CuiLogger.Log("LoginQueueBase.SetPosition() - ERROR: m_txtPosition is null!");
-            }
         }
     }
 
@@ -212,14 +187,12 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseEnter() - Hovered Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
             if (m_btnLeave) m_btnLeave.SetColor(UIColor.Transparent());
             return true;
         }
         if (w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseEnter() - Hovered Prio Queue Button");
             if (m_PrioText) m_PrioText.SetColor(colorScheme.ButtonHover());
             if (m_PrioQBtn) m_PrioQBtn.SetColor(UIColor.Transparent());
             return true;
@@ -231,13 +204,11 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseLeave() - Left Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         if (w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseLeave() - Left Prio Queue Button");
             if (m_PrioText) m_PrioText.SetColor(colorScheme.PrimaryText());
             return true;
         }
@@ -248,7 +219,6 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (button == MouseState.LEFT && w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnClick() - Opening Prio Queue URL: " + CustomURL.PriorityQ);
             GetGame().OpenURL(CustomURL.PriorityQ);
             return false;
         }
@@ -263,26 +233,18 @@ modded class LoginTimeStatic extends LoginTimeBase
     {
         if (!layoutRoot)
         {
-            CuiLogger.Log("LoginTimeStatic.SetTime() - layoutRoot is null, skipping call");
             return;
         }
 
         if (!m_LoadingMsg)
         {
             m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-            CuiLogger.Log("LoginTimeStatic.SetTime() - Rebinding m_LoadingMsg");
         }
 
         if (m_LoadingMsg)
         {
             m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
         }
-        else
-        {
-            CuiLogger.Log("LoginTimeStatic.SetTime() - m_LoadingMsg is still null");
-        }
-
-        CuiLogger.Log("LoginTimeStatic.SetTime() - Countdown: " + time.ToString());
     }
 }
 
@@ -291,7 +253,6 @@ modded class DayZGame
 {
     override void ConnectLaunch()
     {
-        CuiLogger.Log("DayZGame.ConnectLaunch() - Launching game from CLI or menu");
         if (StartMainMenu) { MainMenuLaunch(); }
         else { ConnectFromCLI(); };
     };

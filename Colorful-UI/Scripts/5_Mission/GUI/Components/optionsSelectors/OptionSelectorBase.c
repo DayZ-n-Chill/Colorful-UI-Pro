@@ -84,26 +84,26 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		return true;
 	}
 
-	void Focus()
+	override void Focus()
 	{
 		SetFocus(m_Parent);
 	}
 
-	void Enable()
+	override void Enable()
 	{
 		m_Enabled = true;
 		m_Parent.ClearFlags(WidgetFlags.IGNOREPOINTER);
 		ColorNormal(m_Parent);
 	}
 
-	void Disable()
+	override void Disable()
 	{
 		m_Enabled = false;
 		m_Parent.SetFlags(WidgetFlags.IGNOREPOINTER);
 		ColorDisabled(m_Parent);
 	}
 
-	void ColorHighlight(Widget w)
+	override void ColorHighlight(Widget w)
 	{
 		if (!w)
 			return;
@@ -112,7 +112,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		ButtonSetIconColor(w, colorScheme.OptionIconHover());
 	}
 
-	void ColorNormal(Widget w)
+	override void ColorNormal(Widget w)
 	{
 		if (!w)
 			return;
@@ -137,7 +137,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		}
 	}
 
-	void ColorDisabled(Widget w)
+	override void ColorDisabled(Widget w)
 	{
 		if (!w)
 			return;
@@ -163,7 +163,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		}		
 	}
 
-	void ButtonSetColor(Widget w, int color)
+	override void ButtonSetColor(Widget w, int color)
 	{
 		Widget option = w.FindAnyWidget(w.GetName() + "_image");
 
@@ -195,7 +195,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		}
 	}
 
-	void ColorHighlightConsole(Widget w)
+	override void ColorHighlightConsole(Widget w)
 	{
 		if (!w)
 			return;
@@ -209,7 +209,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		ButtonSetIconColor(w, colorScheme.OptionIconHover());
 	}
 
-	void ColorNormalConsole(Widget w)
+	override void ColorNormalConsole(Widget w)
 	{
 		if (!w)
 			return;
@@ -223,7 +223,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		ButtonSetIconColor(w, colorScheme.OptionIconNormal());
 	}
 
-	void ColorDisabledConsole(Widget w)
+	override void ColorDisabledConsole(Widget w)
 	{
 		if (!w)
 			return;
@@ -237,12 +237,12 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		ButtonSetIconColor(w, colorScheme.DisabledText());
 	}
 
-	void ButtonSetColorConsole(Widget w, int color)
+	override void ButtonSetColorConsole(Widget w, int color)
 	{
 		w.SetColor(color);
 	}
 
-	void ButtonSetAlphaAnimConsole(Widget w)
+	override void ButtonSetAlphaAnimConsole(Widget w)
 	{
 		if (!w)
 			return;
@@ -255,7 +255,7 @@ modded class OptionSelectorBase extends ScriptedWidgetEventHandler
 		}
 	}
 
-	void ButtonSetTextColorConsole(Widget w, int color)
+	override void ButtonSetTextColorConsole(Widget w, int color)
 	{
 		if (!w)
 			return;

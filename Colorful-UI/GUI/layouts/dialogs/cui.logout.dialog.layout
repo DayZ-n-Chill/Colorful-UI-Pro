@@ -45,7 +45,7 @@ WindowWidgetClass LogoutDialogRoot {
      vexactsize 0
      style Bold
      text "Logout in"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "text color" 1 1 1 1
      "exact text" 1
      "exact text size" 32
@@ -87,7 +87,7 @@ WindowWidgetClass LogoutDialogRoot {
      vexactsize 0
      priority 10
      text "#layout_logout_dialog_note_invite"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "exact text" 1
      "exact text size" 20
      "size to text h" 0
@@ -131,7 +131,7 @@ WindowWidgetClass LogoutDialogRoot {
        style EmptyHighlight
        text "#cancel"
        text_proportion 0.55
-       font "colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
       }
      }
     }

@@ -185,7 +185,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 0
            vexactsize 0
            text "#main_menu_exit"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -224,7 +224,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 0
            vexactsize 0
            text "#main_menu_restart"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -264,7 +264,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 0
            vexactsize 0
            text "#layout_xbox_ingame_menu_options"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -303,7 +303,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 0
            vexactsize 0
            text "#main_menu_continue"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -335,7 +335,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "#main_menu_respawn"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -366,7 +366,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Priority Queue"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -397,7 +397,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Website"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -483,7 +483,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Discord"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -534,7 +534,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Twitter"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -584,7 +584,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "YouTube"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -634,7 +634,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Reddit"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -684,7 +684,7 @@ FrameWidgetClass InGameMenuRoot {
            hexactsize 1
            vexactsize 1
            text "Facebook"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26

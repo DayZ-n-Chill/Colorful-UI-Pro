@@ -7,7 +7,7 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 
 	override Widget Init()
 	{
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets( "Colorful-UI/gui/layouts/options/cui.characters.layout" );
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets( "Colorful-UI/GUI/layouts/options/cui.characters.layout" );
 		
 		m_CharacterRotationFrame	= layoutRoot.FindAnyWidget("character_rotation_frame");
 		m_Apply						= layoutRoot.FindAnyWidget("ApplyBtn");
@@ -25,10 +25,10 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 		m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-        cuiElmnt.proBtnCB(m_Save, "Save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_RandomizeCharacter), "",     colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "RandomizeCharacter");
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_BackButton), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Save), "Save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RandomizeCharacter), "",     colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "RandomizeCharacter");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_BackButton), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
         if (m_MenuDivider) m_MenuDivider.SetColor(colorScheme.Separator());
 	
 		if (m_Scene && m_Scene.GetIntroCharacter())
@@ -107,4 +107,9 @@ modded class CharacterCreationMenu extends UIScriptedMenu
         Save();
         GetGame().GetUIManager().Back();
     }
+
+	void ~CharacterCreationMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 }

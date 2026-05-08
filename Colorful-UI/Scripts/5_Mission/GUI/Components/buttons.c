@@ -1,5 +1,6 @@
 class CUIButtonHandler : ScriptedWidgetEventHandler
 {
+    Class                m_Owner;          // Menu instance that registered this handler; used by cuiElmnt.CleanupForOwner()
     private ButtonWidget m_Button;
     private TextWidget   m_TextWidget;
     private ImageWidget  m_ImageWidget;
@@ -15,18 +16,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     private int          m_IconImageIndex = -1;
     private bool         m_SolidBg = false;
 
-    void CUIButtonHandler(
-        ButtonWidget button,
-        TextWidget textWidget,
-        ImageWidget imageWidget,
-        int textColor,
-        int hoverColor,
-        string clickAction,
-        Class targetClass,
-        string callbackMethod,
-        string serverIP,
-        int serverPort,
-    )
+    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget, int textColor, int hoverColor, string clickAction, Class targetClass, string callbackMethod, string serverIP, int serverPort)
     {
         m_Button         = button;
         m_TextWidget     = textWidget;
@@ -182,25 +172,20 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (w != m_Button) return false;
 
-        CuiLogger.Log("[CuiButton] Clicked: " + w.GetName());
-
         if (m_ClickAction != "")
         {
-            CuiLogger.Log("   >> Opening URL: " + m_ClickAction);
             GetGame().OpenURL(m_ClickAction);
             return true;
         }
 
         if (m_TargetClass && m_CallbackMethod != "")
         {
-            CuiLogger.Log("   >> Calling Method: " + m_CallbackMethod);
             GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
             return true;
         }
 
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            CuiLogger.Log("   >> Connecting to: " + m_ServerIP + ":" + m_ServerPort);
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.DoDirectConnect, 100, false);
             return true;
         }
@@ -231,6 +216,7 @@ class cuiElmnt
 {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
+    // Cleanup ALL handlers. Last-resort full purge — prefer CleanupForOwner.
     static void Cleanup()
     {
         for (int i = 0; i < s_Handlers.Count(); i++)
@@ -239,6 +225,22 @@ class cuiElmnt
             delete s_Handlers[i];
         }
         s_Handlers.Clear();
+    }
+
+    // Dispose every handler tagged with `owner`. Call from each menu's destructor:
+    //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
+    // Reverse iteration so Remove() doesn't skip indices.
+    static void CleanupForOwner(Class owner)
+    {
+        if (!owner) return;
+        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        {
+            if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
+            {
+                s_Handlers[i].Dispose();
+                s_Handlers.Remove(i);
+            }
+        }
     }
 
     protected static void GetParts(ButtonWidget button, out TextWidget label, out ImageWidget icon)
@@ -250,7 +252,7 @@ class cuiElmnt
         if (!icon) icon = ImageWidget.Cast(button.FindAnyWidget(button.GetName() + "_image"));
     }
 
-    static void proSolidBtn(ButtonWidget button, string text, int bgColor, int hoverBgColor, string clickAction)
+    static void proSolidBtn(Class owner, ButtonWidget button, string text, int bgColor, int hoverBgColor, string clickAction)
     {
         if (!button) return;
 
@@ -258,23 +260,13 @@ class cuiElmnt
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) { label.SetText(text); button.SetText(""); }
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            icon,
-            bgColor,
-            hoverBgColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, icon, bgColor, hoverBgColor, clickAction, null, "", "", 0);
         h.SetSolidBg(true);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnURL(ButtonWidget button, string text, int textColor, int hoverColor, string clickAction)
+    static void proBtnURL(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, string clickAction)
     {
         if (!button) return;
 
@@ -283,22 +275,12 @@ class cuiElmnt
         if (label) { label.SetText(text); button.SetText(""); }
         if (icon) icon.SetColor(hoverColor);
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            NULL,
-            textColor,
-            hoverColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, NULL, textColor, hoverColor, clickAction, null, "", "", 0);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnDC(ButtonWidget button, string text, int textColor, int hoverColor, string serverIP, int serverPort)
+    static void proBtnDC(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, string serverIP, int serverPort)
     {
         if (!button) return;
 
@@ -307,22 +289,12 @@ class cuiElmnt
         if (label) { label.SetText(text); button.SetText(""); }
         if (icon) icon.SetColor(colorScheme.Icons());
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            NULL,
-            textColor,
-            hoverColor,
-            "",
-            null,
-            "",
-            serverIP,
-            serverPort,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, NULL, textColor, hoverColor, "", null, "", serverIP, serverPort);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proIconBtn(ButtonWidget button, int iconImageIndex, int iconColor, int hoverColor, string clickAction)
+    static void proIconBtn(Class owner, ButtonWidget button, int iconImageIndex, int iconColor, int hoverColor, string clickAction)
     {
         if (!button) return;
 
@@ -330,57 +302,37 @@ class cuiElmnt
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) label.Show(false);
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            NULL,
-            icon,
-            iconColor,
-            hoverColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, NULL, icon, iconColor, hoverColor, clickAction, null, "", "", 0);
         h.SetIconOnly(true, iconImageIndex);
         if (icon) icon.SetColor(iconColor);
 
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnCB(ButtonWidget button, string text, int textColor, int hoverColor, Class targetClass, string callbackMethod)
+    static void proBtnCB(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, Class targetClass, string callbackMethod)
     {
         if (!button) return;
 
         button.SetText(text);
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) { label.SetText(text); button.SetText(""); }
-        
+
         ImageWidget handlerIcon = icon;
-        if (icon && text != "") 
+        if (icon && text != "")
         {
             icon.SetColor(hoverColor);
             handlerIcon = NULL; // Match proBtnURL: Handler handles text, script handles icon color
         }
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            handlerIcon,
-            textColor,
-            hoverColor,
-            "",
-            targetClass,
-            callbackMethod,
-            "",
-            0,
-        );
-        
+        CUIButtonHandler h = new CUIButtonHandler(button, label, handlerIcon, textColor, hoverColor, "", targetClass, callbackMethod, "", 0);
+
         if (text == "" && icon)
         {
             h.SetIconOnly(true, -1);
         }
-        
+
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 }

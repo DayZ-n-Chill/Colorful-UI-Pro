@@ -185,7 +185,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "#menu_cancel"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -216,7 +216,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "#main_menu_respawn_random"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -247,7 +247,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "#main_menu_respawn_custom"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -278,7 +278,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Priority Queue"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -309,7 +309,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Website"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -395,7 +395,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Discord"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -446,7 +446,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Twitter"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -496,7 +496,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "YouTube"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -546,7 +546,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Reddit"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26
@@ -596,7 +596,7 @@ WindowWidgetClass WindowWidget {
            hexactsize 1
            vexactsize 1
            text "Facebook"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 26

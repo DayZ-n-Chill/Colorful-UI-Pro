@@ -16,7 +16,7 @@ class colorfulConfigureDialog extends UIScriptedMenu
 	{
 		m_Options		= new GameOptions();
 
-		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/new_ui/dialogs/cui.Configure.dialog.layout" );
+		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.configure.dialog.layout");
 		
 		m_Separator					= layoutRoot.FindAnyWidget( "SeparatorPanel" );
 		m_bYes						= layoutRoot.FindAnyWidget( "bYes" );
@@ -220,4 +220,9 @@ class colorfulConfigureDialog extends UIScriptedMenu
 		
 	// 	m_CanApplyOrReset = false;
 	// }
+
+	void ~colorfulConfigureDialog()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
 };
