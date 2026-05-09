@@ -89,6 +89,35 @@ modded class OptionsMenu extends UIScriptedMenu
 	}
 
 
+	// Vanilla OptionsMenu.Reset() and PerformSetToDefaults() revert immediately
+	// with no confirmation. Wrap each with a CuiDialog so the user gets a
+	// chance to back out — Confirm fires the vanilla revert via super.
+	override void Reset()
+	{
+		CuiDialog.Show(
+			"Reset Settings",
+			"Revert all settings to their saved values? Any unsaved changes will be lost.",
+			true, this, "DoReset", "");
+	}
+
+	void DoReset()
+	{
+		super.Reset();
+	}
+
+	override void PerformSetToDefaults()
+	{
+		CuiDialog.Show(
+			"Reset to Defaults",
+			"Reset all settings to factory defaults? This will overwrite your saved configuration.",
+			true, this, "DoSetToDefaults", "");
+	}
+
+	void DoSetToDefaults()
+	{
+		super.PerformSetToDefaults();
+	}
+
 	void ~OptionsMenu()
 	{
 		cuiElmnt.CleanupForOwner(this);

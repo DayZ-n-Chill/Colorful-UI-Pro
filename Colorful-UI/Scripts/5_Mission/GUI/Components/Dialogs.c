@@ -31,13 +31,13 @@
 //   body      alpha 0 -> 1, Y +9→0   [140..300] ease-out cubic
 //   buttons   alpha 0 -> 1, Y -15→0  [180..360] ease-out cubic   (rises from below; valign bottom_ref)
 //
-// Exit (~360ms — same total as entrance, reversed order):
+// Exit (~600ms — backdrop fade gets a visible tail after dialog elements leave):
 //   buttons   alpha 1 -> 0, Y 0→-12  [0..160]   ease-in cubic    (drops; valign bottom_ref)
 //   body      alpha 1 -> 0, Y 0→+8   [60..220]  ease-in cubic
 //   separator alpha 1 -> 0, w base→0 [90..260]  ease-in-out
 //   caption   alpha 1 -> 0, Y 0→+6   [120..280] ease-in cubic
 //   dialogbox alpha 1 -> 0, Y 0→+18  [140..360] ease-in cubic
-//   backdrop  alpha 0.7 -> 0         [60..360]  ease-out
+//   backdrop  alpha 0.7 -> 0         [0..600]   linear (slow visible fade)
 //
 // Driven by a CallLater that re-schedules itself every 16ms (~60fps).
 // CleanupForOwner is called BEFORE Unlink so SetHandler(null) runs against
@@ -48,7 +48,7 @@ class CuiDialog
     static ref array<ref CuiDialog> s_OpenDialogs = new array<ref CuiDialog>();
 
     static const float ANIM_IN_TOTAL_MS  = 360.0;
-    static const float ANIM_OUT_TOTAL_MS = 360.0;
+    static const float ANIM_OUT_TOTAL_MS = 600.0;   // backdrop needs a long tail after dialog elements leave
     static const int   ANIM_TICK_MS      = 16;
 
     // Vertical layout constants for responsive height. Sum = total non-body
@@ -348,8 +348,12 @@ class CuiDialog
         SetA(m_DialogBox, 1.0 - p);
         SetY(m_DialogBox, m_DlgBaseY, Lerp(0, 18, p));
 
-        // Backdrop fades last so the dialog disappears against it [60..360]
-        p = EaseOutCubic(Track(elapsed, 60, 300));
+        // Backdrop: linear fade across the full exit window. Dialog elements
+        // are all gone by ~220ms, so the second half of this window is a
+        // backdrop-only fade — clearly visible to the user. Linear because
+        // both EaseOut (front-loaded, lingers) and EaseIn (back-loaded,
+        // snaps) read poorly here. [0..600]
+        p = Track(elapsed, 0, 600);
         if (m_Backdrop) m_Backdrop.SetAlpha(1.0 - p);
     }
 
