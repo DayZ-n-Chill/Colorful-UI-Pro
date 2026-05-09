@@ -89,6 +89,41 @@ modded class OptionsMenu extends UIScriptedMenu
 	}
 
 
+	// Vanilla OptionsMenu.ColorHighlight tints option rows red — it's the
+	// handler triggered when the chevron or row is hovered. Mirror vanilla's
+	// structure (P:\scripts\5_mission\gui\newui\options\optionsmenu.c:759-811)
+	// but swap the red ARGBs for our scheme hover color.
+	override void ColorHighlight(Widget w)
+	{
+		if ((w.GetFlags() & WidgetFlags.IGNOREPOINTER) == WidgetFlags.IGNOREPOINTER)
+			return;
+
+		int hover = colorScheme.TextHover();
+
+		if (w.IsInherited(ButtonWidget))
+		{
+			ButtonWidget button = ButtonWidget.Cast(w);
+			button.SetTextColor(hover);
+		}
+
+		// Vanilla fills the row background black on hover — preserved.
+		w.SetColor(UIColor.Black());
+
+		TextWidget  text1        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text"));
+		TextWidget  text2        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
+		TextWidget  text3        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text_1"));
+		ImageWidget image        = ImageWidget.Cast(w.FindAnyWidget(w.GetName() + "_image"));
+		Widget      option       = Widget.Cast(w.FindAnyWidget(w.GetName() + "_option_wrapper"));
+		Widget      option_label = w.FindAnyWidget("option_label");
+
+		if (text1)        text1.SetColor(hover);
+		if (text2)        text2.SetColor(hover);
+		if (text3)        { text3.SetColor(hover); w.SetAlpha(1); }
+		if (image)        image.SetColor(hover);
+		if (option)       option.SetColor(hover);
+		if (option_label) option_label.SetColor(hover);
+	}
+
 	// Vanilla OptionsMenu.Reset() and PerformSetToDefaults() revert immediately
 	// with no confirmation. Wrap each with a CuiDialog so the user gets a
 	// chance to back out — Confirm fires the vanilla revert via super.
