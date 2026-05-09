@@ -60,7 +60,7 @@ class CuiDialog
     static const int   BODY_MIN_H        = 32;   // floor so single-line bodies aren't squashed
 
     protected Widget         m_Root;
-    protected Widget         m_Backdrop;
+    protected ref CuiBackdrop m_Backdrop;
     protected Widget         m_DialogBox;
     protected Widget         m_Separator;
     protected ButtonWidget   m_Confirm;
@@ -95,25 +95,20 @@ class CuiDialog
         m_OnConfirmMethod = onConfirm;
         m_OnCancelMethod  = onCancel;
 
+        // Backdrop is its own atomic-design component. Created BEFORE the
+        // dialog tree so it sits underneath at workspace level (priority 999
+        // vs dialog's 1000). When useBackdrop=false, simply skip creating it.
+        if (useBackdrop) m_Backdrop = new CuiBackdrop();
+
         m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cuidialogs.layout");
         if (!m_Root) return;
 
-        m_Backdrop  = m_Root.FindAnyWidget("Backdrop");
         m_DialogBox = m_Root.FindAnyWidget("DialogBox");
         m_Separator = m_Root.FindAnyWidget("SeparatorPanel");
         m_Caption   = TextWidget.Cast(m_Root.FindAnyWidget("Caption"));
         m_Body      = RichTextWidget.Cast(m_Root.FindAnyWidget("Body"));
         m_Confirm   = ButtonWidget.Cast(m_Root.FindAnyWidget("Confirm"));
         m_Cancel    = ButtonWidget.Cast(m_Root.FindAnyWidget("Cancel"));
-
-        // If the caller doesn't want the dim full-screen overlay, drop it from
-        // the tree entirely. This also stops it from blocking clicks behind
-        // the dialog. The animation's SetA() helpers are null-safe.
-        if (!useBackdrop && m_Backdrop)
-        {
-            m_Backdrop.Unlink();
-            m_Backdrop = null;
-        }
 
         if (m_Caption) m_Caption.SetText(title);
         if (m_Body)    m_Body.SetText(body);
@@ -290,9 +285,10 @@ class CuiDialog
 
     protected void ApplyEntrance(float elapsed)
     {
-        // Backdrop: alpha 0 -> 1 (color alpha 0.7 baked in by layout) [0..200]
+        // Backdrop component handles its own widget; we just drive alpha.
+        // Final rendered alpha = backdrop's color_alpha (~0.7) * widget alpha.
         float p = EaseOutCubic(Track(elapsed, 0, 200));
-        SetA(m_Backdrop, p);
+        if (m_Backdrop) m_Backdrop.SetAlpha(p);
 
         // Dialog box: alpha + Y rise [0..220]
         p = EaseOutCubic(Track(elapsed, 0, 220));
@@ -354,7 +350,7 @@ class CuiDialog
 
         // Backdrop fades last so the dialog disappears against it [60..360]
         p = EaseOutCubic(Track(elapsed, 60, 300));
-        SetA(m_Backdrop, 1.0 - p);
+        if (m_Backdrop) m_Backdrop.SetAlpha(1.0 - p);
     }
 
     // ----- Teardown -----

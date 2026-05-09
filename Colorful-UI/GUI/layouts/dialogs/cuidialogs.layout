@@ -13,19 +13,6 @@ FrameWidgetClass DialogRoot {
  scaled 1
  priority 1000
  {
-  PanelWidgetClass Backdrop {
-   visible 1
-   color 0 0 0 0.7
-   position 0 0
-   size 1 1
-   halign center_ref
-   valign center_ref
-   hexactpos 1
-   vexactpos 1
-   hexactsize 0
-   vexactsize 0
-   scaled 1
-  }
   PanelWidgetClass DialogBox {
    visible 1
    color 0.243 0.243 0.243 1
