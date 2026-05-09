@@ -33,20 +33,25 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 		m_MenuDivider.SetColor(colorScheme.Separator());
 		
-		layoutRoot.FindAnyWidget("Tabber").GetScript(m_Tabber);		
-		
+		layoutRoot.FindAnyWidget("Tabber").GetScript(m_Tabber);
+
 		InitInputSortingMap();
 		CreateTabs();
 		CreateGroupContainer();
-		
+
 		InitPresets(-1, layoutRoot.FindAnyWidget("group_header"), input);
 		m_Tabber.m_OnTabSwitch.Insert(UpdateTabContent);
 		m_Tabber.SelectTabControl(0);
 		m_Tabber.SelectTabPanel(0);
 		g_Game.SetKeyboardHandle(this);
 		m_Tabber.RefreshTab(true);
-		
+
 		return layoutRoot;
+	}
+
+	void ~KeybindingsMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
 	}
 }
 
@@ -118,10 +123,5 @@ modded class KeybindingElementNew extends ScriptedWidgetEventHandler
 			}
 		}
 		return false;
-	}
-
-	void ~KeybindingsMenu()
-	{
-		cuiElmnt.CleanupForOwner(this);
 	}
 }

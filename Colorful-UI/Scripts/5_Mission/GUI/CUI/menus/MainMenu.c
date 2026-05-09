@@ -68,7 +68,7 @@ modded class MainMenu extends UIScriptedMenu
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Exit");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "Settings", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "Tutorial", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Test Dialog", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTestDialog");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CharacterBtn), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenMenuCustomizeCharacter");
 		
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_PrevCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PreviousCharacter");
@@ -182,6 +182,11 @@ modded class MainMenu extends UIScriptedMenu
 				OnChangeCharacter();
 			}
 		}
+	}
+
+	void OpenTestDialog()
+	{
+		CuiDialog.Show("Test Dialog", "Hello from the new blue dialog system. This is a longer body intended to wrap across multiple lines so we can verify that the dialog box height auto-grows to match the body content. The chrome (caption, separator, and bottom buttons) should stay correctly framed regardless of body length, and a single short line should produce a compact dialog. Click Confirm or Cancel.");
 	}
 
 	void ~MainMenu()
