@@ -89,6 +89,181 @@ modded class OptionsMenu extends UIScriptedMenu
 	}
 
 
+	// Vanilla OptionsMenu.ColorHighlight tints option rows red — it's the
+	// handler triggered when the chevron or row is hovered. Mirror vanilla's
+	// structure (P:\scripts\5_mission\gui\newui\options\optionsmenu.c:759-811)
+	// but swap the red ARGBs for our scheme hover color.
+	override void ColorHighlight(Widget w)
+	{
+		if ((w.GetFlags() & WidgetFlags.IGNOREPOINTER) == WidgetFlags.IGNOREPOINTER)
+			return;
+
+		int hover = colorScheme.TextHover();
+
+		if (w.IsInherited(ButtonWidget))
+		{
+			ButtonWidget button = ButtonWidget.Cast(w);
+			button.SetTextColor(hover);
+		}
+
+		// Vanilla fills the row background black on hover — preserved.
+		w.SetColor(UIColor.Black());
+
+		TextWidget  text1        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text"));
+		TextWidget  text2        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
+		TextWidget  text3        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text_1"));
+		ImageWidget image        = ImageWidget.Cast(w.FindAnyWidget(w.GetName() + "_image"));
+		Widget      option       = Widget.Cast(w.FindAnyWidget(w.GetName() + "_option_wrapper"));
+		Widget      option_label = w.FindAnyWidget("option_label");
+
+		if (text1)        text1.SetColor(hover);
+		if (text2)        text2.SetColor(hover);
+		if (text3)        { text3.SetColor(hover); w.SetAlpha(1); }
+		if (image)        image.SetColor(hover);
+		if (option)       option.SetColor(hover);
+		if (option_label) option_label.SetColor(hover);
+	}
+
+	// Vanilla OptionsMenu.Reset() and PerformSetToDefaults() revert immediately
+	// with no confirmation. Wrap each with a CuiDialog so the user gets a
+	// chance to back out — Confirm fires the vanilla revert via super.
+	override void Reset()
+	{
+		CuiDialog.Show(
+			"Reset Settings",
+			"Revert all settings to their saved values? Any unsaved changes will be lost.",
+			true, this, "DoReset", "");
+	}
+
+	void DoReset()
+	{
+		super.Reset();
+	}
+
+	override void PerformSetToDefaults()
+	{
+		CuiDialog.Show(
+			"Reset to Defaults",
+			"Reset all settings to factory defaults? This will overwrite your saved configuration.",
+			true, this, "DoSetToDefaults", "");
+	}
+
+	void DoSetToDefaults()
+	{
+		super.PerformSetToDefaults();
+	}
+
+	// ---- ShowDialog -> CuiDialog wiring ---------------------------------------
+	// Vanilla optionsmenu.c uses g_Game.GetUIManager().ShowDialog(...) in
+	// Apply() (restart-needed), Back() (discard changes), and OnAttemptTabSwitch
+	// (discard changes on tab switch). Each method body is replicated verbatim
+	// from vanilla, with the ShowDialog call replaced by CuiDialog.Show and
+	// the OnModalResult Yes-branch logic moved into a Confirm callback.
+	// Vanilla source: P:\scripts\5_mission\gui\newui\options\optionsmenu.c
+
+	protected int m_PendingTabTarget;
+
+	override void Apply()
+	{
+		if (m_ControlsTab.IsChanged()) m_ControlsTab.Apply();
+		if (m_SoundsTab.IsChanged())   m_SoundsTab.Apply();
+		if (m_GameTab.IsChanged())     m_GameTab.Apply();
+
+		if (m_Options.IsChanged() || m_GameTab.IsChanged())
+		{
+			m_Options.Test();
+			m_Options.Apply();
+		}
+
+		GetUApi().Export();
+
+		if (g_Game.GetInput().IsEnabledMouseAndKeyboard())
+		{
+			m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
+			ColorDisable(m_Apply);
+			m_Reset.SetFlags(WidgetFlags.IGNOREPOINTER);
+			ColorDisable(m_Reset);
+		}
+
+		m_CanApplyOrReset = false;
+
+		#ifdef PLATFORM_CONSOLE
+		UpdateControlsElements();
+		UpdateControlsElementVisibility();
+
+		IngameHud hud;
+		if (g_Game.GetMission() && Class.CastTo(hud, g_Game.GetMission().GetHud()))
+		{
+			hud.ShowQuickBar(g_Game.GetInput().IsEnabledMouseAndKeyboardEvenOnServer());
+		}
+		#endif
+
+		if (m_Options.NeedRestart())
+		{
+			CuiDialog.Show(
+				"#main_menu_configure", "#menu_restart_needed",
+				true, this, "DoRequestRestart", "");
+		}
+	}
+
+	void DoRequestRestart()
+	{
+		g_Game.RequestRestart(IDC_MAIN_QUIT);
+	}
+
+	override void Back()
+	{
+		if (g_Game.GetUIManager().IsDialogVisible() || g_Game.GetUIManager().IsModalVisible())
+			return;
+
+		if (IsAnyTabChanged())
+		{
+			CuiDialog.Show(
+				"#main_menu_configure", "#main_menu_configure_desc",
+				true, this, "DoConfirmBack", "");
+		}
+		else
+		{
+			m_Options.Revert();
+			g_Game.EndOptionsVideo();
+			g_Game.GetUIManager().Back();
+		}
+	}
+
+	void DoConfirmBack()
+	{
+		m_Options.Revert();
+		g_Game.EndOptionsVideo();
+		g_Game.GetUIManager().Back();
+	}
+
+	override void OnAttemptTabSwitch(int source, int target)
+	{
+		bool changed = IsAnyTabChanged();
+		if (changed)
+		{
+			if (!g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
+			{
+				m_PendingTabTarget = target;
+				CuiDialog.Show(
+					"#main_menu_configure", "#main_menu_configure_desc",
+					true, this, "DoConfirmTabSwitch", "");
+			}
+		}
+		else
+		{
+			ResetCurrentTab();
+		}
+
+		m_Tabber.SetCanSwitch(!changed);
+	}
+
+	void DoConfirmTabSwitch()
+	{
+		ResetCurrentTab();
+		m_Tabber.PerformSwitchTab(m_PendingTabTarget);
+	}
+
 	void ~OptionsMenu()
 	{
 		cuiElmnt.CleanupForOwner(this);
