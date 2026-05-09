@@ -153,6 +153,117 @@ modded class OptionsMenu extends UIScriptedMenu
 		super.PerformSetToDefaults();
 	}
 
+	// ---- ShowDialog -> CuiDialog wiring ---------------------------------------
+	// Vanilla optionsmenu.c uses g_Game.GetUIManager().ShowDialog(...) in
+	// Apply() (restart-needed), Back() (discard changes), and OnAttemptTabSwitch
+	// (discard changes on tab switch). Each method body is replicated verbatim
+	// from vanilla, with the ShowDialog call replaced by CuiDialog.Show and
+	// the OnModalResult Yes-branch logic moved into a Confirm callback.
+	// Vanilla source: P:\scripts\5_mission\gui\newui\options\optionsmenu.c
+
+	protected int m_PendingTabTarget;
+
+	override void Apply()
+	{
+		if (m_ControlsTab.IsChanged()) m_ControlsTab.Apply();
+		if (m_SoundsTab.IsChanged())   m_SoundsTab.Apply();
+		if (m_GameTab.IsChanged())     m_GameTab.Apply();
+
+		if (m_Options.IsChanged() || m_GameTab.IsChanged())
+		{
+			m_Options.Test();
+			m_Options.Apply();
+		}
+
+		GetUApi().Export();
+
+		if (g_Game.GetInput().IsEnabledMouseAndKeyboard())
+		{
+			m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
+			ColorDisable(m_Apply);
+			m_Reset.SetFlags(WidgetFlags.IGNOREPOINTER);
+			ColorDisable(m_Reset);
+		}
+
+		m_CanApplyOrReset = false;
+
+		#ifdef PLATFORM_CONSOLE
+		UpdateControlsElements();
+		UpdateControlsElementVisibility();
+
+		IngameHud hud;
+		if (g_Game.GetMission() && Class.CastTo(hud, g_Game.GetMission().GetHud()))
+		{
+			hud.ShowQuickBar(g_Game.GetInput().IsEnabledMouseAndKeyboardEvenOnServer());
+		}
+		#endif
+
+		if (m_Options.NeedRestart())
+		{
+			CuiDialog.Show(
+				"#main_menu_configure", "#menu_restart_needed",
+				true, this, "DoRequestRestart", "");
+		}
+	}
+
+	void DoRequestRestart()
+	{
+		g_Game.RequestRestart(IDC_MAIN_QUIT);
+	}
+
+	override void Back()
+	{
+		if (g_Game.GetUIManager().IsDialogVisible() || g_Game.GetUIManager().IsModalVisible())
+			return;
+
+		if (IsAnyTabChanged())
+		{
+			CuiDialog.Show(
+				"#main_menu_configure", "#main_menu_configure_desc",
+				true, this, "DoConfirmBack", "");
+		}
+		else
+		{
+			m_Options.Revert();
+			g_Game.EndOptionsVideo();
+			g_Game.GetUIManager().Back();
+		}
+	}
+
+	void DoConfirmBack()
+	{
+		m_Options.Revert();
+		g_Game.EndOptionsVideo();
+		g_Game.GetUIManager().Back();
+	}
+
+	override void OnAttemptTabSwitch(int source, int target)
+	{
+		bool changed = IsAnyTabChanged();
+		if (changed)
+		{
+			if (!g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
+			{
+				m_PendingTabTarget = target;
+				CuiDialog.Show(
+					"#main_menu_configure", "#main_menu_configure_desc",
+					true, this, "DoConfirmTabSwitch", "");
+			}
+		}
+		else
+		{
+			ResetCurrentTab();
+		}
+
+		m_Tabber.SetCanSwitch(!changed);
+	}
+
+	void DoConfirmTabSwitch()
+	{
+		ResetCurrentTab();
+		m_Tabber.PerformSwitchTab(m_PendingTabTarget);
+	}
+
 	void ~OptionsMenu()
 	{
 		cuiElmnt.CleanupForOwner(this);
