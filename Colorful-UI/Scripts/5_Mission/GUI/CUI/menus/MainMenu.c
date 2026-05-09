@@ -65,7 +65,7 @@ modded class MainMenu extends UIScriptedMenu
 
 		cuiElmnt.proBtnDC(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), SERVER_IP, SERVER_PORT);
 
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Exit");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenExitDialog");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "Settings", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "Tutorial", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Test Dialog", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTestDialog");
@@ -187,6 +187,19 @@ modded class MainMenu extends UIScriptedMenu
 	void OpenTestDialog()
 	{
 		CuiDialog.Show("Test Dialog", "Hello from the new blue dialog system. This is a longer body intended to wrap across multiple lines so we can verify that the dialog box height auto-grows to match the body content. The chrome (caption, separator, and bottom buttons) should stay correctly framed regardless of body length, and a single short line should produce a compact dialog. Click Confirm or Cancel.");
+	}
+
+	// Replaces the vanilla colorfulExitDialog flow. Show our CuiDialog with
+	// a Confirm callback that fires the same RequestExit(IDC_MAIN_QUIT) the
+	// old dialog used. Cancel just closes (no callback needed).
+	void OpenExitDialog()
+	{
+		CuiDialog.Show("#main_menu_exit", "#main_menu_exit_desc", true, this, "DoExit", "");
+	}
+
+	void DoExit()
+	{
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
 	}
 
 	void ~MainMenu()

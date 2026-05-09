@@ -5,6 +5,13 @@
 //   CuiDialog.Show("Title", "Body text");
 //   CuiDialog.Show("Title", "Body text", false);  // no dim overlay behind dialog
 //
+// With confirm/cancel callbacks:
+//   CuiDialog.Show("Exit?", "Are you sure?", true, this, "DoExit", "");
+//
+// callbackTarget + method names are dispatched via GameScript.CallFunction;
+// pass "" as a method name to skip that side. Callbacks fire BEFORE the exit
+// animation, matching how vanilla CALL_CATEGORY_GUI handlers work.
+//
 // Lifecycle: instances are kept alive by s_OpenDialogs while visible. On close,
 // the exit animation runs; when it finishes, button handlers are disposed,
 // the widget tree is unlinked, and the instance is removed from s_OpenDialogs
@@ -62,6 +69,12 @@ class CuiDialog
     protected RichTextWidget m_Body;
     protected bool           m_Closing;
 
+    // Callback dispatch (target + method name, vanilla GameScript.CallFunction
+    // pattern). Empty method name on either side = skip that callback.
+    protected Class          m_CallbackTarget;
+    protected string         m_OnConfirmMethod;
+    protected string         m_OnCancelMethod;
+
     // Base layout values, captured at construction so each animation can
     // compute offsets relative to where the layout puts each element.
     protected float m_DlgBaseY;
@@ -76,8 +89,12 @@ class CuiDialog
     protected int   m_AnimDir;
     protected float m_Elapsed;       // ms since current animation started
 
-    void CuiDialog(string title, string body, bool useBackdrop = true)
+    void CuiDialog(string title, string body, bool useBackdrop = true, Class callbackTarget = null, string onConfirm = "", string onCancel = "")
     {
+        m_CallbackTarget  = callbackTarget;
+        m_OnConfirmMethod = onConfirm;
+        m_OnCancelMethod  = onCancel;
+
         m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cuidialogs.layout");
         if (!m_Root) return;
 
@@ -142,9 +159,9 @@ class CuiDialog
         m_DialogBox.SetSize(dlgW, DLG_TOP_REGION + contentH + DLG_BOTTOM_REGION);
     }
 
-    static CuiDialog Show(string title, string body, bool useBackdrop = true)
+    static CuiDialog Show(string title, string body, bool useBackdrop = true, Class callbackTarget = null, string onConfirm = "", string onCancel = "")
     {
-        CuiDialog dlg = new CuiDialog(title, body, useBackdrop);
+        CuiDialog dlg = new CuiDialog(title, body, useBackdrop, callbackTarget, onConfirm, onCancel);
         // Don't keep an instance whose widgets failed to load — it would
         // never be removed (no buttons -> no OnCancel/OnConfirm path).
         if (!dlg.m_Root) return null;
@@ -152,8 +169,26 @@ class CuiDialog
         return dlg;
     }
 
-    void OnConfirm() { Close(); }
-    void OnCancel()  { Close(); }
+    void OnConfirm()
+    {
+        // Fire the caller's callback BEFORE starting the exit animation. The
+        // dialog is still alive (m_Closing not yet set), so the callback can
+        // even open another dialog if it wants — that one stacks on top.
+        if (m_CallbackTarget && m_OnConfirmMethod != "")
+        {
+            GetGame().GameScript.CallFunction(m_CallbackTarget, m_OnConfirmMethod, null, 0);
+        }
+        Close();
+    }
+
+    void OnCancel()
+    {
+        if (m_CallbackTarget && m_OnCancelMethod != "")
+        {
+            GetGame().GameScript.CallFunction(m_CallbackTarget, m_OnCancelMethod, null, 0);
+        }
+        Close();
+    }
 
     // Idempotent: a fast double-click that fires both OnConfirm and OnCancel
     // before the exit animation finishes will only run one close sequence.
