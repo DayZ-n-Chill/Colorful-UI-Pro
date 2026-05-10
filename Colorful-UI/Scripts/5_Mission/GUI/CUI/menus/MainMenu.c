@@ -197,9 +197,18 @@ modded class MainMenu extends UIScriptedMenu
 
 	// Vanilla Update() calls Exit() on UAUIBack (Escape) and Exit() routes
 	// to GetUIManager().ShowDialog — bypassing our CuiDialog. Override so
-	// Escape and the Exit button take the same path.
+	// Escape and the Exit button take the same path. If a CuiDialog is
+	// already open (e.g. our exit confirm), treat Escape as Cancel on the
+	// top dialog instead of stacking another one.
 	override void Exit()
 	{
+		int n = CuiDialog.s_OpenDialogs.Count();
+		if (n > 0)
+		{
+			CuiDialog top = CuiDialog.s_OpenDialogs.Get(n - 1);
+			if (top) top.OnCancel();
+			return;
+		}
 		OpenExitDialog();
 	}
 

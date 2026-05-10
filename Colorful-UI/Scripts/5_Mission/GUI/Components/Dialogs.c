@@ -100,7 +100,7 @@ class CuiDialog
         // vs dialog's 1000). When useBackdrop=false, simply skip creating it.
         if (useBackdrop) m_Backdrop = new CuiBackdrop();
 
-        m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cuidialogs.layout");
+        m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.dialogs.layout");
         if (!m_Root) return;
 
         m_DialogBox = m_Root.FindAnyWidget("DialogBox");
