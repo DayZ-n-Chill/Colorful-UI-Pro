@@ -112,4 +112,42 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 	{
 		cuiElmnt.CleanupForOwner(this);
 	}
+
+	// Vanilla CharacterCreationMenu.ColorHighlight hardcodes red ARGB(255,255,0,0)
+	// across every label/text/option widget on hover (and the input panel). Swap
+	// the red for our scheme's hover/brand colors. ColorNormal already paints
+	// COLOR_NORMAL_TEXT (white) which matches our scheme, so no override there.
+	// Vanilla source: P:\scripts\5_mission\gui\newui\charactercreation\charactercreationmenu.c:623-672
+	override void ColorHighlight(Widget w)
+	{
+		if (!w) return;
+
+		int hoverText = colorScheme.TextHover();
+		int hoverIcon = colorScheme.ButtonHover();
+
+		if (w.IsInherited(ButtonWidget))
+		{
+			ButtonWidget button = ButtonWidget.Cast(w);
+			button.SetTextColor(hoverText);
+		}
+
+		w.SetColor(ARGB(255, 0, 0, 0));
+
+		TextWidget  text1        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text"));
+		TextWidget  text2        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
+		TextWidget  text3        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text_1"));
+		ImageWidget image        = ImageWidget.Cast(w.FindAnyWidget(w.GetName() + "_image"));
+		Widget      option       = w.FindAnyWidget(w.GetName() + "_option_wrapper");
+		Widget      option_label = w.FindAnyWidget("option_label");
+
+		if (text1) text1.SetColor(hoverText);
+		if (text2) text2.SetColor(hoverText);
+		if (text3) { text3.SetColor(hoverText); w.SetAlpha(1); }
+		if (image) image.SetColor(hoverIcon);
+		if (option) option.SetColor(hoverText);
+
+		#ifndef PLATFORM_CONSOLE
+		if (option_label) option_label.SetColor(hoverText);
+		#endif
+	}
 }
