@@ -1,7 +1,6 @@
 modded class OptionsMenu extends UIScriptedMenu
 {
 	private Widget m_Separator, m_shader, m_TopShader, m_BottomShader, m_MenuDivider, m_LoadingBar;
-	protected VideoWidget m_MenuVid;
 
 	private bool IsMainMenuContext()
 	{
@@ -55,19 +54,14 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_Separator = layoutRoot.FindAnyWidget("colorful_separator");
 		
 		#ifndef WORKBENCH
-		// Only show options video when opened from MAIN MENU, never from in-game pause/options.
-		// Original pattern: copy from the addon folder into $saves: and
-		// Load from there. GetState() guard prevents re-Load on reopen.
+		// Only show options video when opened from MAIN MENU, never from
+		// in-game pause/options. Uses singleton CuiBackgroundVideo — Ensure()
+		// is a no-op if already running (e.g. from MainMenu).
 		if (EnableOptionsVideo && IsMainMenuContext())
 		{
-			Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
-			if (m_MenuVid && m_MenuVid.GetState() == VideoState.NONE)
-			{
-				if (!FileExist("$saves:" + m_OptionsMenuVideo))
-					CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
-				m_MenuVid.Load("$saves:" + m_OptionsMenuVideo, true);
-				m_MenuVid.Play();
-			}
+			if (!FileExist("$saves:" + m_OptionsMenuVideo))
+				CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
+			CuiBackgroundVideo.Ensure("$saves:" + m_OptionsMenuVideo, true);
 		}
 		#endif
 
@@ -267,18 +261,8 @@ modded class OptionsMenu extends UIScriptedMenu
 
 	void ~OptionsMenu()
 	{
-		// Don't touch m_MenuVid here — widget is already torn down. Unload
-		// runs earlier in OnVisibilityChanged(false).
+		// Singleton bg video persists — do not touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
-	}
-
-	// Vanilla pattern (mainmenuvideo.c:82-88) — Unload before layoutRoot is
-	// destroyed. Without this, the video decoder keeps ticking on a torn-
-	// down widget when a button transition closes Options → engine crash.
-	override void OnVisibilityChanged(bool isVisible)
-	{
-		if (!isVisible && m_MenuVid)
-			m_MenuVid.Unload();
 	}
 
 	// Vanilla Refresh (optionsmenu.c:676-692) calls m_Version.SetText

@@ -8,7 +8,6 @@ modded class MainMenu extends UIScriptedMenu
 	protected ButtonWidget m_TestBtn0, m_TestBtn1, m_TestBtn2, m_TestBtn3, m_TestBtn4, m_TestBtn5;
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	protected ProgressBarWidget m_LoadingBar;
-	protected VideoWidget m_MenuVid;
 
 	override Widget Init()
 	{
@@ -30,7 +29,14 @@ modded class MainMenu extends UIScriptedMenu
 		m_Facebook          = ButtonWidget.Cast(layoutRoot.FindAnyWidget("FacebookBtn"));
 
 		m_Background        = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
-		if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
+		if (m_Background)
+		{
+			// Static bg only when video is off; otherwise the menu's
+			// ImageBackground (priority inside layoutRoot 951) covers the
+			// workspace-rooted CuiBackgroundVideo (priority 1).
+			if (EnableMenuVideo) m_Background.Show(false);
+			else                 m_Background.LoadImageFile(0, GetMainMenuBackground());
+		}
 
 		m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
 		m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
@@ -105,19 +111,14 @@ modded class MainMenu extends UIScriptedMenu
 		Branding.ApplyLogo(m_Logo);	
 
 		#ifndef WORKBENCH
-		// Original pattern: copy from the addon folder into $saves: and
-		// Load from there. Launcher pre-copies as well. GetState() guard
-		// prevents re-Load on menu reopen.
+		// Singleton workspace-rooted video — persists across menu transitions
+		// so MainMenu → Credits → Options never blackscreens between teardowns.
+		// Ensure() is a no-op if already running.
 		if (EnableMenuVideo)
 		{
-			Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
-			if (m_MenuVid && m_MenuVid.GetState() == VideoState.NONE)
-			{
-				if (!FileExist("$saves:" + m_MainMenuVideo))
-					CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
-				m_MenuVid.Load("$saves:" + m_MainMenuVideo, true);
-				m_MenuVid.Play();
-			}
+			if (!FileExist("$saves:" + m_MainMenuVideo))
+				CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
+			CuiBackgroundVideo.Ensure("$saves:" + m_MainMenuVideo, true);
 		}
 		#endif		
 		return layoutRoot;
@@ -220,20 +221,8 @@ modded class MainMenu extends UIScriptedMenu
 
 	void ~MainMenu()
 	{
-		// Don't touch m_MenuVid here — widget is already torn down by the UI
-		// manager. Unload runs earlier in OnVisibilityChanged(false).
+		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
-	}
-
-	// Vanilla pattern (mainmenuvideo.c:82-88): Unload the video when the
-	// menu becomes invisible. This fires BEFORE layoutRoot is destroyed, so
-	// we're not dereferencing freed native widgets. Without this, the video
-	// decoder keeps ticking on a torn-down widget → engine crash when a
-	// button transition closes the menu while video is playing.
-	override void OnVisibilityChanged(bool isVisible)
-	{
-		if (!isVisible && m_MenuVid)
-			m_MenuVid.Unload();
 	}
 }
 
@@ -289,10 +278,34 @@ modded class CreditsMenu
 			m_CuiTopShader    = ImageWidget.Cast(panel.FindAnyWidget("TopShader"));
 			m_CuiBottomShader = ImageWidget.Cast(panel.FindAnyWidget("BottomShader"));
 
-			if (m_CuiBackground)   m_CuiBackground.LoadImageFile(0, GetMainMenuBackground());
+			// Static bg only when video is off — otherwise the injected
+			// ImageBackground covers the workspace-rooted video below.
+			if (m_CuiBackground)
+			{
+				if (EnableMenuVideo) m_CuiBackground.Show(false);
+				else                 m_CuiBackground.LoadImageFile(0, GetMainMenuBackground());
+			}
 			if (m_CuiTopShader)    m_CuiTopShader.SetColor(colorScheme.TopShader());
 			if (m_CuiBottomShader) m_CuiBottomShader.SetColor(colorScheme.BottomShader());
 		}
+
+		#ifndef WORKBENCH
+		// Same singleton CuiBackgroundVideo MainMenu uses; just Ensure() it
+		// (no-op if already running). Persists across MainMenu→Credits so
+		// there's no black flash during the transition.
+		if (EnableMenuVideo)
+		{
+			if (!FileExist("$saves:" + m_MainMenuVideo))
+				CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
+			CuiBackgroundVideo.Ensure("$saves:" + m_MainMenuVideo, true);
+		}
+		#endif
+
 		return root;
+	}
+
+	void ~CreditsMenu()
+	{
+		// Singleton bg video persists — do nothing here.
 	}
 }

@@ -6,8 +6,8 @@ static bool LoadVideo          = true;   // If set to true, a video will be show
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
 // The below two settings are not yet implemented.
-static bool EnableMenuVideo    = false;  // DISABLED — engine crash on button-driven menu transitions while video is playing. Loading-screen video still works (LoadVideo).
-static bool EnableOptionsVideo = false;  // DISABLED — same crash. Cancel from Options while video playing destroys the widget mid-decode.
+static bool EnableMenuVideo    = true;   // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
+static bool EnableOptionsVideo = true;   // Background video on options menu (when opened from main menu).
 static bool VideoDeathScreens  = false;  // If set to true, a random game over screen will be shown when the player dies.
 // static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
 
