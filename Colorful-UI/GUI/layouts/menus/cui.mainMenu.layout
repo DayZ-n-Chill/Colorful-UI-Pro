@@ -1284,7 +1284,7 @@ FrameWidgetClass mainmenu_root {
        "next up" "tutorials"
        "next down" "choose_server"
        {
-        ImageWidgetClass characterBtn_img {
+        ImageWidgetClass CharacterBtn_img {
          ignorepointer 1
          position 0 0
          size 1 1
