@@ -104,16 +104,17 @@ modded class MainMenu extends UIScriptedMenu
 		
 		Branding.ApplyLogo(m_Logo);	
 
-		#ifdef WORKBENCH
-		#else
+		#ifndef WORKBENCH
+		// Original pattern: copy from the addon folder into $saves: and
+		// Load from there. Launcher pre-copies as well. GetState() guard
+		// prevents re-Load on menu reopen.
 		if (EnableMenuVideo)
 		{
 			Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
-			if (m_MenuVid)
+			if (m_MenuVid && m_MenuVid.GetState() == VideoState.NONE)
 			{
 				if (!FileExist("$saves:" + m_MainMenuVideo))
 					CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
-
 				m_MenuVid.Load("$saves:" + m_MainMenuVideo, true);
 				m_MenuVid.Play();
 			}
@@ -219,7 +220,20 @@ modded class MainMenu extends UIScriptedMenu
 
 	void ~MainMenu()
 	{
+		// Don't touch m_MenuVid here — widget is already torn down by the UI
+		// manager. Unload runs earlier in OnVisibilityChanged(false).
 		cuiElmnt.CleanupForOwner(this);
+	}
+
+	// Vanilla pattern (mainmenuvideo.c:82-88): Unload the video when the
+	// menu becomes invisible. This fires BEFORE layoutRoot is destroyed, so
+	// we're not dereferencing freed native widgets. Without this, the video
+	// decoder keeps ticking on a torn-down widget → engine crash when a
+	// button transition closes the menu while video is playing.
+	override void OnVisibilityChanged(bool isVisible)
+	{
+		if (!isVisible && m_MenuVid)
+			m_MenuVid.Unload();
 	}
 }
 

@@ -193,9 +193,13 @@ modded class UiHintPanelLoading extends UiHintPanel
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
 		#ifndef WORKBENCH
+			// Original pattern: copy from the addon folder into $saves: and
+			// Load from there. Launcher pre-copies the source .mov too so
+			// $saves: always has a valid file even if the in-engine CopyFile
+			// no-ops. GetState() guard prevents re-Load on reopen.
 			if (LoadVideo) {
 				Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
-				if (m_Video)
+				if (m_Video && m_Video.GetState() == VideoState.NONE)
 				{
 					if (!FileExist("$saves:" + m_LoadingVideo))
 						CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);

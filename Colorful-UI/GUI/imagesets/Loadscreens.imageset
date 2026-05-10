@@ -1,6 +1,6 @@
 ImageSetClass {
  Name "Loadscreens"
- RefSize 4096 5120
+ RefSize 3480 4340
  Textures {
   ImageSetTextureClass {
    mpix 1
@@ -11,61 +11,61 @@ ImageSetClass {
   ImageSetDefClass loadscreen_1 {
    Name "loadscreen_1"
    Pos 0 0
-   Size 2048 1024
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_2 {
    Name "loadscreen_2"
-   Pos 2048 0
-   Size 2048 1024
+   Pos 1740 0
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_3 {
    Name "loadscreen_3"
-   Pos 0 1024
-   Size 2048 1024
+   Pos 0 868
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_4 {
    Name "loadscreen_4"
-   Pos 2048 1024
-   Size 2048 1024
+   Pos 1740 868
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_5 {
    Name "loadscreen_5"
-   Pos 0 2048
-   Size 2048 1024
+   Pos 0 1736
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_6 {
    Name "loadscreen_6"
-   Pos 2048 2048
-   Size 2048 1024
+   Pos 1740 1736
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_7 {
    Name "loadscreen_7"
-   Pos 0 3072
-   Size 2048 1024
+   Pos 0 2604
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_8 {
    Name "loadscreen_8"
-   Pos 2048 3072
-   Size 2048 1024
+   Pos 1740 2604
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_9 {
    Name "loadscreen_9"
-   Pos 0 4096
-   Size 2048 1024
+   Pos 0 3472
+   Size 1740 868
    Flags 0
   }
   ImageSetDefClass loadscreen_10 {
    Name "loadscreen_10"
-   Pos 2048 4096
-   Size 2048 1024
+   Pos 1740 3472
+   Size 1740 868
    Flags 0
   }
  }

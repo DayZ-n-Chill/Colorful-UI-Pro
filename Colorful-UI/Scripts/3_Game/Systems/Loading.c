@@ -32,10 +32,13 @@ modded class LoadingScreen
         ProgressAsync.SetUserData(m_Background);
     }
 
-    // override void Show()
-    // {
-    //     if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
-    // }
+    // Override vanilla LoadingScreen.Show to avoid the NPE on m_ProgressText
+    // (vanilla expects widgets our layout doesn't have). Routes background
+    // through GetMainMenuBackground() so the UseImagesets toggle keeps working.
+    override void Show()
+    {
+        if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
+    }
 
     override void SetTitle(string title)
     {
@@ -73,11 +76,8 @@ modded class LoginTimeBase extends LoginScreenBase
         m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
         m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
 
-        // if (m_Background)
-        // {
-        //     string bg = loadscreens.GetRandomElement();
-        //     m_Background.LoadImageFile(0, bg);
-        // }
+        if (m_Background)
+            m_Background.LoadImageFile(0, GetMainMenuBackground());
 
         if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
         if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());

@@ -459,7 +459,7 @@ FrameWidgetClass mainmenu_root {
         ButtonWidgetClass PlayBtn {
          color 0 0 0 0
          position 0 0
-         size 293 75
+         size 293 50
          halign right_ref
          valign center_ref
          hexactpos 1
@@ -1304,7 +1304,6 @@ FrameWidgetClass mainmenu_root {
     FrameWidgetClass StatsBox {
      visible 1
      ignorepointer 1
-     position 0.001 0.001
      size 438 291
      valign bottom_ref
      hexactpos 0

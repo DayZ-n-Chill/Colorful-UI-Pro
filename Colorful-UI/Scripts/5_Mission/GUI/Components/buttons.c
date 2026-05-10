@@ -178,9 +178,18 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
             return true;
         }
 
+        // Defer the callback to the next GUI tick. Calling m_CallbackMethod
+        // synchronously here is a use-after-free hazard: methods like
+        // MainMenu.OpenSettings or OptionsMenu.Back destroy the current
+        // menu, which fires CleanupForOwner, which deletes THIS handler
+        // mid-OnClick. When OnClick returns, the engine's event dispatcher
+        // does a vtable touch on the freed handler -> ACCESS_VIOLATION at
+        // call qword [rax+0x88]. Posting via CallLater(0) lets the engine
+        // finish its event loop on a still-live handler before menu
+        // teardown begins.
         if (m_TargetClass && m_CallbackMethod != "")
         {
-            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.InvokeCallback, 0, false);
             return true;
         }
 
@@ -191,6 +200,12 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
         }
 
         return true;
+    }
+
+    void InvokeCallback()
+    {
+        if (m_TargetClass && m_CallbackMethod != "")
+            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
     }
 
     override bool OnMouseButtonUp(Widget w, int x, int y, int button)
@@ -229,17 +244,22 @@ class cuiElmnt
 
     // Dispose every handler tagged with `owner`. Call from each menu's destructor:
     //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
-    // Reverse iteration so Remove() doesn't skip indices.
+    //
+    // IMPORTANT: We Dispose() (clears widget binding so no more events route
+    // to this handler) but DO NOT Remove() from s_Handlers. Removing drops
+    // the strong ref and frees the handler synchronously — and the engine
+    // may still be inside a callback frame on that handler (OnClick that
+    // posted CallLater(InvokeCallback), or a CallLater dispatch in flight).
+    // Freeing it mid-dispatch causes ACCESS_VIOLATION on the return vtable
+    // touch. Keeping it in s_Handlers leaks a small object per closed menu
+    // but eliminates the UAF crash.
     static void CleanupForOwner(Class owner)
     {
         if (!owner) return;
-        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        for (int i = 0; i < s_Handlers.Count(); i++)
         {
             if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
-            {
                 s_Handlers[i].Dispose();
-                s_Handlers.Remove(i);
-            }
         }
     }
 

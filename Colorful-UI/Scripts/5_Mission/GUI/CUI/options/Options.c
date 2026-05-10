@@ -54,20 +54,21 @@ modded class OptionsMenu extends UIScriptedMenu
 		Class.CastTo(m_shader, layoutRoot.FindAnyWidget("Colorful_Shader"));
 		m_Separator = layoutRoot.FindAnyWidget("colorful_separator");
 		
-		#ifdef WORKBENCH
-		#else
-			// Only show options video when opened from MAIN MENU, never from in-game pause/options.
-			if (EnableOptionsVideo && IsMainMenuContext())
+		#ifndef WORKBENCH
+		// Only show options video when opened from MAIN MENU, never from in-game pause/options.
+		// Original pattern: copy from the addon folder into $saves: and
+		// Load from there. GetState() guard prevents re-Load on reopen.
+		if (EnableOptionsVideo && IsMainMenuContext())
+		{
+			Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
+			if (m_MenuVid && m_MenuVid.GetState() == VideoState.NONE)
 			{
-				Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
-				if (m_MenuVid)
-				{
-					if (!FileExist("$saves:" + m_OptionsMenuVideo))
-						CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
-					m_MenuVid.Load("$saves:" + m_OptionsMenuVideo, true);
-					m_MenuVid.Play();
-				}
+				if (!FileExist("$saves:" + m_OptionsMenuVideo))
+					CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
+				m_MenuVid.Load("$saves:" + m_OptionsMenuVideo, true);
+				m_MenuVid.Play();
 			}
+		}
 		#endif
 
 		return layoutRoot;
@@ -266,6 +267,32 @@ modded class OptionsMenu extends UIScriptedMenu
 
 	void ~OptionsMenu()
 	{
+		// Don't touch m_MenuVid here — widget is already torn down. Unload
+		// runs earlier in OnVisibilityChanged(false).
 		cuiElmnt.CleanupForOwner(this);
+	}
+
+	// Vanilla pattern (mainmenuvideo.c:82-88) — Unload before layoutRoot is
+	// destroyed. Without this, the video decoder keeps ticking on a torn-
+	// down widget when a button transition closes Options → engine crash.
+	override void OnVisibilityChanged(bool isVisible)
+	{
+		if (!isVisible && m_MenuVid)
+			m_MenuVid.Unload();
+	}
+
+	// Vanilla Refresh (optionsmenu.c:676-692) calls m_Version.SetText
+	// unconditionally. Our cui.options_menu.layout has no "version" widget,
+	// so m_Version stays null after Init's FindAnyWidget — and vanilla's
+	// Refresh NPEs the next time it fires (OnShow → Refresh, triggered by
+	// MainMenu OpenSettings or by Cancel returning to OptionsMenu).
+	override void Refresh()
+	{
+		if (m_Version)
+		{
+			string version;
+			g_Game.GetVersion(version);
+			m_Version.SetText("#main_menu_version" + " " + version);
+		}
 	}
 }
