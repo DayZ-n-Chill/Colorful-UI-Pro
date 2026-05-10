@@ -36,7 +36,7 @@ class CfgMods
 		};
 		class defs
 		{
-			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};};
+			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset","Colorful-UI/GUI/imagesets/Loadscreens.imageset"};};
 			class gameScriptModule 	  {files[]= {"Colorful-UI/Scripts/3_Game"};};
 			class worldScriptModule	  {files[]= {"Colorful-UI/Scripts/4_World"};};
 			class missionScriptModule {files[]= {"Colorful-UI/Scripts/5_Mission"};};

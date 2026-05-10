@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{E4C7D3F019A852B6}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_4.png"
+ Author "coruscant"
+ ChangeDate -1798277974
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "Loadscreen_4.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}
