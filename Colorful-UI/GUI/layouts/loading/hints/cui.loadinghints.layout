@@ -12,7 +12,7 @@ FrameWidgetClass rootFrame {
    visible 1
    ignorepointer 1
    position 0 0
-   size 0.16 0.09
+   size 0.17 0.09
    halign center_ref
    valign center_ref
    hexactpos 1

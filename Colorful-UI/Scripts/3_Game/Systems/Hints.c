@@ -1,3 +1,15 @@
+// Extend the vanilla hint-page data model with optional imageset coordinates.
+// Both fields are populated by JsonFileLoader when present in hints.json; if
+// absent (or UseImagesets is off), the engine falls back to m_ImagePath.
+modded class HintPage
+{
+	private string m_ImageSet;
+	private string m_ImageName;
+
+	string GetImageSet()  { return m_ImageSet; }
+	string GetImageName() { return m_ImageName; }
+}
+
 modded class UiHintPanel extends ScriptedWidgetEventHandler
 {
 	protected const string m_DataPath = "Colorful-UI/Scripts/Data/hints.json";
@@ -52,15 +64,45 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		}
 	}
 
-	// Vanilla SetHintImage() calls m_UiHintImage.Show(true) unconditionally
-	// whenever a hint has an image_path — and it runs on every page change,
-	// every slideshow tick, and every menu reopen. Without this override our
-	// "hide" state would get clobbered moments after the user clicks it.
-	// Vanilla source: P:\scripts\3_game\gui\hints\uihintpanel.c:140-157.
+	// Replaces vanilla SetHintImage (uihintpanel.c:140-157) so we can:
+	//   1. Optionally route image loading through a registered imageset
+	//      ("set:<set> image:<name>") when UseImagesets is on and the page
+	//      provides m_ImageSet/m_ImageName. Falls back to m_ImagePath if
+	//      either field is missing or the toggle is off.
+	//   2. Honor the persistent s_HintImageHidden toggle. Vanilla calls
+	//      m_UiHintImage.Show(true) unconditionally on every page change,
+	//      slideshow tick, and menu reopen — without this override our hide
+	//      state would get clobbered moments after the user clicks it.
 	override protected void SetHintImage()
 	{
-		super.SetHintImage();
-		if (m_UiHintImage && s_HintImageHidden) m_UiHintImage.Show(false);
+		if (!m_UiHintImage)
+			return;
+
+		HintPage page = m_ContentList.Get(m_PageIndex);
+		string image_path;
+
+		if (UseImagesets && page)
+		{
+			string set_name = page.GetImageSet();
+			string img_name = page.GetImageName();
+			if (set_name != "" && img_name != "")
+				image_path = "set:" + set_name + " image:" + img_name;
+		}
+
+		if (image_path == "" && page)
+			image_path = page.GetImagePath();
+
+		if (image_path != "")
+		{
+			m_UiHintImage.Show(true);
+			m_UiHintImage.LoadImageFile(0, image_path);
+		}
+		else
+		{
+			m_UiHintImage.Show(false);
+		}
+
+		if (s_HintImageHidden) m_UiHintImage.Show(false);
 	}
 
 	override bool OnClick(Widget w, int x, int y, int button)
