@@ -12,7 +12,7 @@ FrameWidgetClass rootFrame {
    visible 1
    ignorepointer 1
    position 0 0
-   size 0.17 0.09
+   size 0.16 0.08
    halign center_ref
    valign center_ref
    hexactpos 1
@@ -20,7 +20,7 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    fixaspect outside
-   imageTexture "{BBD2BF0B2499F4A7}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds"
+   imageTexture "{715127BF710BCA59}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_2.edds"
    "clamp mode" clamp
    "stretch mode" stretch_w_h
   }
@@ -41,7 +41,7 @@ FrameWidgetClass rootFrame {
    visible 1
    clipchildren 0
    ignorepointer 1
-   size 1.02 1.02
+   size 1 1.02
    halign center_ref
    valign center_ref
    hexactpos 1
@@ -53,7 +53,7 @@ FrameWidgetClass rootFrame {
      visible 1
      clipchildren 0
      ignorepointer 1
-     size 1.02 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
@@ -70,7 +70,7 @@ FrameWidgetClass rootFrame {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.02 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
@@ -88,7 +88,7 @@ FrameWidgetClass rootFrame {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.02 1
+     size 1 1
      halign center_ref
      valign center_ref
      hexactpos 1

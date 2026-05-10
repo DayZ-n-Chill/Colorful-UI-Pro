@@ -3,7 +3,7 @@ modded class MainMenu extends UIScriptedMenu
 	protected ref MainMenuStats m_Stats;
 	protected TextWidget m_PlayerName;
 	protected ButtonWidget m_PrevCharacter, m_NextCharacter;
-	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider0, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo;
+	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider0, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
 	protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook, m_CharacterBtn;
 	protected ButtonWidget m_TestBtn0, m_TestBtn1, m_TestBtn2, m_TestBtn3, m_TestBtn4, m_TestBtn5;
 	protected Widget m_TopSpacer, m_BottomSpacer;
@@ -29,10 +29,13 @@ modded class MainMenu extends UIScriptedMenu
 		m_Reddit            = ButtonWidget.Cast(layoutRoot.FindAnyWidget("RedditBtn"));
 		m_Facebook          = ButtonWidget.Cast(layoutRoot.FindAnyWidget("FacebookBtn"));
 
+		m_Background        = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
+		if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
+
 		m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
 		m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-		m_StatisticsBoxBG = ImageWidget.Cast(layoutRoot.FindAnyWidget("StatisticsBoxBG"));
-		m_SurvivorBox = ImageWidget.Cast(layoutRoot.FindAnyWidget("SurvivorBox"));
+		m_StatisticsBoxBG 	= ImageWidget.Cast(layoutRoot.FindAnyWidget("StatisticsBoxBG"));
+		m_SurvivorBox 		= ImageWidget.Cast(layoutRoot.FindAnyWidget("SurvivorBox"));
 		m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
 		m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
 		m_MenuDivider0      = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider0"));
@@ -192,6 +195,14 @@ modded class MainMenu extends UIScriptedMenu
 		CuiDialog.Show("#main_menu_exit", "#main_menu_exit_desc", true, this, "DoExit", "");
 	}
 
+	// Vanilla Update() calls Exit() on UAUIBack (Escape) and Exit() routes
+	// to GetUIManager().ShowDialog — bypassing our CuiDialog. Override so
+	// Escape and the Exit button take the same path.
+	override void Exit()
+	{
+		OpenExitDialog();
+	}
+
 	void DoExit()
 	{
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
@@ -200,5 +211,65 @@ modded class MainMenu extends UIScriptedMenu
 	void ~MainMenu()
 	{
 		cuiElmnt.CleanupForOwner(this);
+	}
+}
+
+// Vanilla's department_element.layout and department_section.layout bake
+// SeparatorPanel as DayZ red (color 0.7569 0.0941 0.0941 0.7843). Modded
+// constructors chain after the original, so by the time these run m_Root
+// is built and SeparatorPanel exists.
+modded class CreditsDepartmentElement
+{
+	void CreditsDepartmentElement(int index, Widget parent, JsonDataCreditsDepartment department_data)
+	{
+		if (m_Root)
+		{
+			Widget sep = m_Root.FindAnyWidget("SeparatorPanel");
+			if (sep) sep.SetColor(colorScheme.Separator());
+		}
+	}
+}
+
+modded class CreditsDepartmentSection
+{
+	void CreditsDepartmentSection(int index, Widget parent, JsonDataCreditsSection section_data)
+	{
+		if (m_Root)
+		{
+			Widget sep = m_Root.FindAnyWidget("SeparatorPanel");
+			if (sep) sep.SetColor(colorScheme.Separator());
+		}
+	}
+}
+
+// Vanilla credits_menu.layout has a fully transparent root, so the main
+// menu's character preview rendered behind it leaks through. Inject our
+// fullscreen background panel (ImageBackground + Top/BottomShader,
+// mirroring the main-menu structure) with priority -1 so credits content
+// stays on top. The injected panel is a child of layoutRoot so vanilla's
+// SetAlpha-driven fade in Update() cascades to it for free.
+modded class CreditsMenu
+{
+	protected ImageWidget m_CuiBackground;
+	protected ImageWidget m_CuiTopShader;
+	protected ImageWidget m_CuiBottomShader;
+
+	override Widget Init()
+	{
+		Widget root = super.Init();
+		if (!root) return root;
+
+		Widget panel = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/cui.credits_bg.layout", root);
+		if (panel)
+		{
+			m_CuiBackground   = ImageWidget.Cast(panel.FindAnyWidget("ImageBackground"));
+			m_CuiTopShader    = ImageWidget.Cast(panel.FindAnyWidget("TopShader"));
+			m_CuiBottomShader = ImageWidget.Cast(panel.FindAnyWidget("BottomShader"));
+
+			if (m_CuiBackground)   m_CuiBackground.LoadImageFile(0, GetMainMenuBackground());
+			if (m_CuiTopShader)    m_CuiTopShader.SetColor(colorScheme.TopShader());
+			if (m_CuiBottomShader) m_CuiBottomShader.SetColor(colorScheme.BottomShader());
+		}
+		return root;
 	}
 }

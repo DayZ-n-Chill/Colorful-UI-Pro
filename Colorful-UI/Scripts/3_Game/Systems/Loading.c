@@ -32,10 +32,10 @@ modded class LoadingScreen
         ProgressAsync.SetUserData(m_Background);
     }
 
-    override void Show()
-    {
-        if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
-    }
+    // override void Show()
+    // {
+    //     if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
+    // }
 
     override void SetTitle(string title)
     {
@@ -73,11 +73,11 @@ modded class LoginTimeBase extends LoginScreenBase
         m_ExitText = TextWidget.Cast(layoutRoot.FindAnyWidget("ExitText"));
         m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
 
-        if (m_Background)
-        {
-            string bg = loadscreens.GetRandomElement();
-            m_Background.LoadImageFile(0, bg);
-        }
+        // if (m_Background)
+        // {
+        //     string bg = loadscreens.GetRandomElement();
+        //     m_Background.LoadImageFile(0, bg);
+        // }
 
         if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
         if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());

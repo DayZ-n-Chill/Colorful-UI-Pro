@@ -4,7 +4,7 @@ ImageSetClass {
  Textures {
   ImageSetTextureClass {
    mpix 1
-   path "{D735912D442E5651}Colorful-UI/GUI/imagesets/Loadscreens-Imageset.edds"
+   path "{3FF042D5CECDF081}Colorful-UI/GUI/imagesets/Loadscreens-Imageset.edds"
   }
  }
  Images {

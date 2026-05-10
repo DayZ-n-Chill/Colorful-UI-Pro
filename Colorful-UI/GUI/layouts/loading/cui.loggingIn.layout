@@ -14,7 +14,7 @@ PanelWidgetClass LoadingFrame {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.16 0.09
+   size 0.16 0.08
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -24,7 +24,7 @@ PanelWidgetClass LoadingFrame {
    scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{F20AAA14565F80CD}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds"
+   imageTexture "{92695C7BB19D5848}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_7.edds"
    mode opaque
    "src alpha" 0
    "clamp mode" clamp
@@ -67,7 +67,7 @@ PanelWidgetClass LoadingFrame {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.01 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
@@ -103,7 +103,7 @@ PanelWidgetClass LoadingFrame {
    visible 1
    clipchildren 0
    ignorepointer 1
-   position 0.00114 0
+   position 0.001 0
    size 1 1
    halign center_ref
    hexactpos 0
@@ -162,7 +162,7 @@ PanelWidgetClass LoadingFrame {
       FrameWidgetClass Icons {
        visible 0
        ignorepointer 1
-       position 317.77103 64.6788
+       position 317.771 64.679
        size 48 24
        hexactpos 1
        vexactpos 1
