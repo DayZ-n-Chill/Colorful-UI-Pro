@@ -151,14 +151,16 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
-		#ifdef WORKBENCH
-		#else
+		#ifndef WORKBENCH
 			if (LoadVideo) {
 				Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
-				if (!FileExist("$saves:" + m_LoadingVideo))
-					CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);
-				m_Video.Load("$saves:" + m_LoadingVideo, true);
-				m_Video.Play();
+				if (m_Video)
+				{
+					if (!FileExist("$saves:" + m_LoadingVideo))
+						CopyFile("Colorful-UI/GUI/video/" + m_LoadingVideo, "$saves:" + m_LoadingVideo);
+					m_Video.Load("$saves:" + m_LoadingVideo, true);
+					m_Video.Play();
+				}
 			}
 		#endif
 
