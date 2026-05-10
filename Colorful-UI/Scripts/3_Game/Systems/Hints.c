@@ -112,6 +112,9 @@ modded class UiHintPanelLoading extends UiHintPanel
 {
 	protected ImageWidget m_TipLineL;
 	protected ImageWidget m_TipLineR;
+	protected ImageWidget m_TopShader;
+	protected ImageWidget m_BottomShader;
+	protected ImageWidget m_Icon;
 	protected VideoWidget m_Video;
 
 	void ~UiHintPanelLoading()
@@ -145,10 +148,6 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	override protected void BuildLayout(Widget parent_widget)
 	{
-		protected ImageWidget m_TopShader;
-		protected ImageWidget m_BottomShader;
-		protected ImageWidget m_Icon;
-
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
 		#ifndef WORKBENCH
@@ -179,20 +178,18 @@ modded class UiHintPanelLoading extends UiHintPanel
 			m_UiHintImage       = ImageWidget.Cast(m_RootFrame.FindAnyWidget("HintImage"));
 			m_UiPageingLabel    = TextWidget.Cast(m_RootFrame.FindAnyWidget("PageInfoLabel"));
 
-			m_BottomShader.SetColor(colorScheme.BottomShader());
-			m_TopShader.SetColor(colorScheme.TopShader());
-			m_Icon.SetColor(colorScheme.Icons());
-			m_TipLineL.SetColor(colorScheme.TipLine());
-			m_TipLineR.SetColor(colorScheme.TipLine());
-			m_UiHeadlineLabel.SetColor(colorScheme.TipHeader());
-			m_UiDescLabel.SetColor(colorScheme.TipText());
+			if (m_BottomShader)    m_BottomShader.SetColor(colorScheme.BottomShader());
+			if (m_TopShader)       m_TopShader.SetColor(colorScheme.TopShader());
+			if (m_Icon)            m_Icon.SetColor(colorScheme.Icons());
+			if (m_TipLineL)        m_TipLineL.SetColor(colorScheme.TipLine());
+			if (m_TipLineR)        m_TipLineR.SetColor(colorScheme.TipLine());
+			if (m_UiHeadlineLabel) m_UiHeadlineLabel.SetColor(colorScheme.TipHeader());
+			if (m_UiDescLabel)     m_UiDescLabel.SetColor(colorScheme.TipText());
 
 			m_RootFrame.SetHandler(this);
 
-			if (NoHints)
-			{
+			if (NoHints && m_SpacerFrame)
 				m_SpacerFrame.Show(false);
-			}
 		}
 	}
 }
