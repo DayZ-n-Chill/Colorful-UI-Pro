@@ -91,7 +91,3 @@ class SocialURL {
 	static string Youtube    = "https://www.youtube.com/dayznchill";
 }
 
-// Menu IDs
-const int COLORFUL_EXIT		    = 666;
-const int COLORFUL_CONFIGURE    = 667;
-const int COLORFUL_DEFAULTS     = 668;

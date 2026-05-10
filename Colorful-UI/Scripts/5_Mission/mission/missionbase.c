@@ -28,14 +28,6 @@
 // 			menu = new OptionsMenu;
 // 			break;
 
-// 		case COLORFUL_EXIT:
-// 			menu = new colorfulExitDialog;
-// 			break;
-
-// 		case COLORFUL_CONFIGURE:
-// 			menu = new colorfulConfigureDialog;
-// 			break;
-
 // 		#ifdef CodeLock
 //         case CLMENU.SET_CODE_MENU:
 //         	{
