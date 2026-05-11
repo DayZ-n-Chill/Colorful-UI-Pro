@@ -65,13 +65,13 @@ class CfgSoundShaders
 		// The music will play in a random order.
 		samples[] =
 		{
-			{"Colorful-UI/GUI/sounds/MainMenu/Battle", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Cello", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Cinematic", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Emotional_Piano", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Piano", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Horror_Suspense", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Guitar_Reverb", 1}
+			{"\Colorful-UI\GUI\sounds\MainMenu\Battle", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Cello", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Cinematic", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Emotional_Piano", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Piano", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Horror_Suspense", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Guitar_Reverb", 1}
 		};
 		volume = 0.8;
 	};
