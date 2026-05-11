@@ -2,12 +2,12 @@
 static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool UseImagesets       = false;   // If set to true, hints.json entries with m_ImageSet/m_ImageName load from the registered imageset; otherwise m_ImagePath is used.
-static bool LoadVideo          = true;   // If set to true, a video will be shown during load screens along with tips.
+static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
 // The below two settings are not yet implemented.
-static bool EnableMenuVideo    = true;   // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
-static bool EnableOptionsVideo = true;   // Background video on options menu (when opened from main menu).
+static bool EnableMenuVideo    = false;  // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
+static bool EnableOptionsVideo = false;  // Background video on options menu (when opened from main menu).
 static bool VideoDeathScreens  = false;  // If set to true, a random game over screen will be shown when the player dies.
 // static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
 
