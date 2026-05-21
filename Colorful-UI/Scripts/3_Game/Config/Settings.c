@@ -40,7 +40,12 @@ class GameOverScreen
 //        Recommended size is 512x512 But you can set the size manually in the layout file for the moment.
 class Branding
 {
-    static string Logo() { return "Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds"; }; 
+    static string Logo()
+    {
+        if (UseImagesets)
+            return "set:branding image:logo";
+        return "Colorful-UI/GUI/textures/Shared/Colorful UI Logo.edds";
+    }
     static void ApplyLogo(ImageWidget widget)
     {
         if (!widget) return;

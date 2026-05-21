@@ -1,0 +1,20 @@
+ImageSetClass {
+ Name "branding"
+ RefSize 900 537
+ Textures {
+  ImageSetTextureClass {
+   mpix 1
+   path "{42E121BAB69F8229}Colorful-UI/GUI/textures/Shared/Colorful UI Logo.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass logo {
+   Name "logo"
+   Pos 0 0
+   Size 900 537
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}
