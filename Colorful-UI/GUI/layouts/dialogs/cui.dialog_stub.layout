@@ -1,0 +1,7 @@
+PanelWidgetClass StubRoot {
+ visible 0
+ size 0 0
+ hexactsize 1
+ vexactsize 1
+ ignorepointer 1
+}

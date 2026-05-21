@@ -4,7 +4,7 @@ void CheckSocials(Widget w, string url)
 {
     if (!w) return;
     
-    if (url == "#" || url == "")
+    if (url == "#" || url == "" || url == "test" || url == "/test")
     {
         w.Show(false);
     }
@@ -19,7 +19,7 @@ void CheckURL(Widget w, string url)
 {
     if (!w) return;
     
-    if (url == "#" || url == "")
+    if (url == "#" || url == "" || url == "test" || url == "/test")
     {
         w.Show(false);
     }

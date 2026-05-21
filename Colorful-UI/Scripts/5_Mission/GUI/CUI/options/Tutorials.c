@@ -1,66 +1,49 @@
-// modded class TutorialsMenu extends UIScriptedMenu
-// {
-// 	private	Widget m_shader
-// 	private Widget m_TopShader;
-// 	private Widget m_BottomShader;
-// 	override Widget Init()
-// 	{
-// 		layoutRoot	= GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/new_ui/tutorials/pc/cui.tutorials.layout");
+modded class TutorialsMenu extends UIScriptedMenu
+{
+	private	Widget m_shader, m_TopShader, m_BottomShader;
+	private ButtonWidget m_Back;
+	protected ProgressBarWidget m_LoadingBar;
+
+	override Widget Init()
+	{
+		layoutRoot	= GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/options/cui.tutorials.layout");
 	
-// 		m_InfoTextLeft	= layoutRoot.FindAnyWidget("InfoTextLeft");
-// 		m_InfoTextRight	= layoutRoot.FindAnyWidget("InfoTextRight");
+		m_InfoTextLeft	= layoutRoot.FindAnyWidget("InfoTextLeft");
+		m_InfoTextRight	= layoutRoot.FindAnyWidget("InfoTextRight");
 		
-// 		m_Back			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("back"));
+		m_Back			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("BackBtn"));
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
 		
-// 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_TabScript);
-// 		m_TabScript.m_OnTabSwitch.Insert(DrawConnectingLines);
+		layoutRoot.FindAnyWidget("Tabber").GetScript(m_TabScript);
+		// Remove first so reopening the menu doesn't accumulate duplicate callbacks.
+		m_TabScript.m_OnTabSwitch.Remove(DrawConnectingLines);
+		m_TabScript.m_OnTabSwitch.Insert(DrawConnectingLines);
 			
-// 		m_tab_images[0] = ImageWidget.Cast(layoutRoot.FindAnyWidget("MovementTabBackdropImageWidget"));
-// 		m_tab_images[1] = ImageWidget.Cast(layoutRoot.FindAnyWidget("WeaponsAndActionsBackdropImageWidget"));
-// 		m_tab_images[2] = ImageWidget.Cast(layoutRoot.FindAnyWidget("InventoryTabBackdropImageWidget"));
-// 		m_tab_images[3] = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenusTabBackdropImageWidget"));
+		m_tab_images[0] = ImageWidget.Cast(layoutRoot.FindAnyWidget("MovementTabBackdropImageWidget"));
+		m_tab_images[1] = ImageWidget.Cast(layoutRoot.FindAnyWidget("WeaponsAndActionsBackdropImageWidget"));
+		m_tab_images[2] = ImageWidget.Cast(layoutRoot.FindAnyWidget("InventoryTabBackdropImageWidget"));
+		m_tab_images[3] = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenusTabBackdropImageWidget"));
 		
-// 		m_TopShader 			    = layoutRoot.FindAnyWidget( "TopShader" );
-// 		m_BottomShader 			    = layoutRoot.FindAnyWidget( "BottomShader" );
-		
-// 		m_TopShader.SetColor(colorScheme.TopShader());
-// 		m_BottomShader.SetColor(colorScheme.BottomShader());
+		// Note that this is just used as a visual trim, not a real loading bar.
+		m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
-// 		PPERequesterBank.GetRequester(PPERequester_TutorialMenu).Start(new Param1<float>(0.6));
-// 		DrawConnectingLines(0);
-
-// 		Class.CastTo(m_shader, layoutRoot.FindAnyWidget("Colorful_Shader"));
-// 		// m_shader.SetColor(colorScheme.ShaderColor());
-
-// 		return layoutRoot;
-// 	}
+		m_TopShader     = layoutRoot.FindAnyWidget( "TopShader" );
+		m_BottomShader  = layoutRoot.FindAnyWidget( "BottomShader" );
 		
-// 	//Coloring functions (Until WidgetStyles are useful)
-// 	override void ColorHighlight( Widget w )
-// 	{
-// 		if( !w )
-// 			return;
+		m_TopShader.SetColor(colorScheme.TopShader());
+		m_BottomShader.SetColor(colorScheme.BottomShader());
 
-// 		int color_pnl = UIColor.Transparent();
-// 		int color_lbl = colorScheme.ButtonHover();
-// 		int color_img = UIColor.Transparent();
-			
-// 		ButtonSetColor(w, color_pnl);
-// 		ButtonSetTextColor(w, color_lbl);
-// 		ImagenSetColor(w, color_img);
-// 	}
-	
-// 	override void ColorNormal( Widget w )
-// 	{
-// 		if( !w )
-// 			return;
-		
-// 		int color_pnl = UIColor.Transparent();
-// 		int color_lbl = colorScheme.PrimaryText(); 
-// 		int color_img = colorScheme.PrimaryText(); 
-		
-// 		ButtonSetColor(w, color_pnl);
-// 		ButtonSetTextColor(w, color_lbl);
-// 		ImagenSetColor(w, color_img);
-// 	}
-// }
+		PPERequesterBank.GetRequester(PPERequester_TutorialMenu).Start(new Param1<float>(0.6));
+		DrawConnectingLines(0);
+
+		Class.CastTo(m_shader, layoutRoot.FindAnyWidget("Colorful_Shader"));
+
+		return layoutRoot;
+	}
+
+	void ~TutorialsMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
+	}
+}

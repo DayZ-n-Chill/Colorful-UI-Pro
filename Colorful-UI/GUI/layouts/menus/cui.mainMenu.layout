@@ -14,7 +14,7 @@ FrameWidgetClass mainmenu_root {
   ImageWidgetClass ImageBackground {
    visible 1
    position 0 0
-   size 0.16 0.09
+   size 0.16 0.08
    halign center_ref
    valign center_ref
    hexactpos 0
@@ -24,15 +24,28 @@ FrameWidgetClass mainmenu_root {
    scaled 1
    fixaspect outside
    image0 ""
-   imageTexture "{1132D1D096C912DC}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds"
+   imageTexture "{66611BE3BC40303C}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_6.edds"
    mode opaque
-   "src alpha" 1
+   "src alpha" 0
    "clamp mode" clamp
    "stretch mode" stretch_w_h
    "flip u" 0
    filter 0
    "Transition width" 1
    Progress 0
+  }
+  VideoWidgetClass MenuVideo {
+   ignorepointer 1
+   size 0.16 0.09
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   fixaspect outside
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
   }
   FrameWidgetClass Shaders {
    visible 1
@@ -102,7 +115,7 @@ FrameWidgetClass mainmenu_root {
   }
   FrameWidgetClass SafeZone {
    ignorepointer 1
-   position 1.16419 0
+   position 1.164 0
    size 0.9 0.9
    halign center_ref
    valign center_ref
@@ -137,7 +150,7 @@ FrameWidgetClass mainmenu_root {
        hexactsize 1
        vexactsize 1
        style Empty
-       "no focus" 0
+       "no focus" 1
        "next left" ""
        "next right" ""
        "next up" ""
@@ -183,7 +196,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "Credits"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
            "size to text h" 1
@@ -205,7 +218,7 @@ FrameWidgetClass mainmenu_root {
        hexactsize 1
        vexactsize 1
        style Empty
-       "no focus" 0
+       "no focus" 1
        "next left" ""
        "next right" ""
        "next up" ""
@@ -252,7 +265,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "Tutorial"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
            "size to text h" 1
@@ -275,7 +288,7 @@ FrameWidgetClass mainmenu_root {
        hexactsize 1
        vexactsize 1
        style Empty
-       "no focus" 0
+       "no focus" 1
        "next left" ""
        "next right" ""
        "next up" ""
@@ -325,7 +338,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "Settings"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
            "size to text h" 1
@@ -348,7 +361,7 @@ FrameWidgetClass mainmenu_root {
        vexactsize 1
        scriptclass ""
        style Empty
-       "no focus" 0
+       "no focus" 1
        "next left" ""
        "next right" ""
        "next up" ""
@@ -395,7 +408,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "Exit"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
            "size to text h" 1
@@ -413,7 +426,7 @@ FrameWidgetClass mainmenu_root {
      visible 1
      ignorepointer 1
      keepsafezone 1
-     size 293 618.29999
+     size 293 618.3
      halign right_ref
      valign bottom_ref
      hexactpos 0
@@ -446,7 +459,7 @@ FrameWidgetClass mainmenu_root {
         ButtonWidgetClass PlayBtn {
          color 0 0 0 0
          position 0 0
-         size 293 75
+         size 293 50
          halign right_ref
          valign center_ref
          hexactpos 1
@@ -474,7 +487,7 @@ FrameWidgetClass mainmenu_root {
            vexactsize 0
            scaled 1
            text "PLAY"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 45
@@ -525,7 +538,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Priority Queue"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "text sharpness" 1.5
              "exact text" 1
              "exact text size" 30
@@ -578,7 +591,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Website"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "text sharpness" 1.5
              "exact text" 1
              "exact text size" 30
@@ -596,7 +609,7 @@ FrameWidgetClass mainmenu_root {
       FrameWidgetClass TopSpacer {
        visible 1
        ignorepointer 1
-       position 174.92999 0.3113
+       position 174.93 0.311
        size 48 15
        hexactpos 1
        vexactpos 1
@@ -621,7 +634,7 @@ FrameWidgetClass mainmenu_root {
       FrameWidgetClass BottomSpacer {
        visible 1
        ignorepointer 1
-       position 174.92999 0.3113
+       position 174.93 0.311
        size 48 15
        hexactpos 1
        vexactpos 1
@@ -704,7 +717,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Discord"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -775,7 +788,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "YouTube"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -844,7 +857,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Twitter"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -915,7 +928,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Reddit"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -986,7 +999,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Facebook"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -1055,7 +1068,7 @@ FrameWidgetClass mainmenu_root {
              hexactsize 0
              vexactsize 0
              text "Meta"
-             font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "exact text" 1
              "exact text size" 30
              "size to text h" 1
@@ -1072,7 +1085,7 @@ FrameWidgetClass mainmenu_root {
     }
     ImageWidgetClass SurvivorBox {
      ignorepointer 1
-     color 1 1 1 0.6078
+     color 1 1 1 0.608
      position 0 140
      size 438 90
      valign center_ref
@@ -1096,7 +1109,7 @@ FrameWidgetClass mainmenu_root {
        hexactsize 0
        vexactsize 1
        text "Welcome Back"
-       font "Colorful-UI/gui/fonts/GB-ClearnRegular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
        "text sharpness" 1.5
        "exact text" 1
        "exact text size" 24
@@ -1109,14 +1122,14 @@ FrameWidgetClass mainmenu_root {
        ignorepointer 1
        keepsafezone 0
        position 20 15
-       size 0.0283 28.71
+       size 0.028 28.71
        valign bottom_ref
        hexactpos 1
        vexactpos 1
        hexactsize 0
        vexactsize 1
        text "character_name_text"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "text sharpness" 1.5
        "exact text" 1
        "exact text size" 32
@@ -1253,7 +1266,7 @@ FrameWidgetClass mainmenu_root {
         }
        }
       }
-      ButtonWidgetClass characterBtn {
+      ButtonWidgetClass CharacterBtn {
        visible 1
        color 0 0 0 1
        position 20 -16
@@ -1271,7 +1284,7 @@ FrameWidgetClass mainmenu_root {
        "next up" "tutorials"
        "next down" "choose_server"
        {
-        ImageWidgetClass characterBtn_img {
+        ImageWidgetClass CharacterBtn_img {
          ignorepointer 1
          position 0 0
          size 1 1
@@ -1291,7 +1304,6 @@ FrameWidgetClass mainmenu_root {
     FrameWidgetClass StatsBox {
      visible 1
      ignorepointer 1
-     position 0.00078 0.0014
      size 438 291
      valign bottom_ref
      hexactpos 0
@@ -1303,8 +1315,8 @@ FrameWidgetClass mainmenu_root {
        visible 1
        clipchildren 0
        ignorepointer 1
-       color 1 1 1 0.6078
-       position 1.41368 0
+       color 1 1 1 0.608
+       position 1.414 0
        size 1 1
        hexactpos 1
        vexactpos 1
@@ -1326,7 +1338,7 @@ FrameWidgetClass mainmenu_root {
        hexactsize 1
        vexactsize 1
        text "SURVIVOR STATISTICS"
-       font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "italic text" 0
        "bold text" 0
        "text sharpness" 1.5
@@ -1335,20 +1347,6 @@ FrameWidgetClass mainmenu_root {
        "size to text h" 1
        "size to text v" 0
        "text valign" center
-      }
-      PanelWidgetClass SurvivorDivider {
-       color 0.7569 0.7569 0.7569 1
-       position 0 75
-       size 1 3
-       halign center_ref
-       hexactpos 1
-       vexactpos 1
-       hexactsize 0
-       vexactsize 1
-       scaled 1
-       priority 10
-       style DayZDefaultPanel
-       "no focus" 0
       }
       GridSpacerWidgetClass character_stats_content {
        ignorepointer 1
@@ -1387,7 +1385,7 @@ FrameWidgetClass mainmenu_root {
            vexactsize 1
            scaled 1
            text "Players Killed"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "size to text h" 1
@@ -1403,11 +1401,11 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "0"
-           font "Colorful-UI/gui/fonts/GB-CleanItalic.fnt"
+           font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1430,7 +1428,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "Infected Killed"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "size to text h" 1
@@ -1446,11 +1444,11 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "0"
-           font "Colorful-UI/gui/fonts/GB-CleanItalic.fnt"
+           font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1468,21 +1466,21 @@ FrameWidgetClass mainmenu_root {
            clipchildren 0
            ignorepointer 1
            position 0 0
-           size 1.0486 1
+           size 1.049 1
            valign center_ref
            hexactpos 1
            vexactpos 1
            hexactsize 0
            vexactsize 0
            text "Distance Traveled"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "size to text h" 1
            "size to text v" 0
            "text valign" center
           }
-          TextWidgetClass DistanceTraveledValue {
+          RichTextWidgetClass DistanceTraveledValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1492,11 +1490,11 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "0"
-           font "Colorful-UI/gui/fonts/GB-CleanItalic.fnt"
+           font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1516,20 +1514,20 @@ FrameWidgetClass mainmenu_root {
            inheritalpha 0
            ignorepointer 1
            position 0 0
-           size 301 32
+           size 315 30
            valign center_ref
            hexactpos 1
            vexactpos 1
            hexactsize 1
            vexactsize 1
            text "Time Alive"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "size to text h" 1
            "text valign" center
           }
-          TextWidgetClass TimeSurvivedValue {
+          RichTextWidgetClass TimeSurvivedValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1539,11 +1537,12 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "0"
-           font "Colorful-UI/gui/fonts/GB-CleanItalic.fnt"
+           font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
+           "text offset" 2 0
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1567,14 +1566,14 @@ FrameWidgetClass mainmenu_root {
            hexactsize 1
            vexactsize 1
            text "Longest Player Hit"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "size to text h" 1
            "size to text v" 0
            "text valign" center
           }
-          TextWidgetClass LongRangeShotValue {
+          RichTextWidgetClass LongRangeShotValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1584,16 +1583,32 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            text "0"
-           font "Colorful-UI/gui/fonts/GB-CleanItalic.fnt"
+           font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
         }
        }
+      }
+      ImageWidgetClass MenuDivider0 {
+       visible 1
+       ignorepointer 1
+       position 0 75
+       size 1 3
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       image0 "set:cui image:MenuDivider"
+       mode blend
+       "src alpha" 1
+       "flip u" 1
+       "flip v" 0
       }
      }
     }
@@ -1619,7 +1634,6 @@ FrameWidgetClass mainmenu_root {
   }
   ProgressBarWidgetClass LoadingBar {
    ignorepointer 1
-   color 0.8118 0.8118 0.8118 1
    size 1 8
    halign center_ref
    valign bottom_ref
@@ -1628,6 +1642,7 @@ FrameWidgetClass mainmenu_root {
    hexactsize 0
    vexactsize 1
    style Stamina
+   minimum 100
    current 100
   }
  }

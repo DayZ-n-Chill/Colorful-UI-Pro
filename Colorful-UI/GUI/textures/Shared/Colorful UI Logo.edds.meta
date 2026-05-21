@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{42E121BAB69F8229}Colorful-UI/GUI/textures/Shared/Colorful UI Logo.edds"
+ Author "coruscant"
+ ChangeDate -811207500
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "Colorful UI Logo.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

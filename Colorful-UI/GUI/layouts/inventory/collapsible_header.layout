@@ -11,7 +11,7 @@ ImageWidgetClass height_wrapper {
  scaled 1
  fixaspect inside
  image0 ""
- imageTexture "{1EBDEB3BCB073C08}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Background.edds"
+ imageTexture "{1EBDEB3BCB073C08}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Background.edds"
  mode opaque
  "src alpha" 0
  {
@@ -80,7 +80,7 @@ ImageWidgetClass height_wrapper {
    vexactsize 0
    style Normal
    text "#layout_collapsible_header"
-   font "Colorful-UI/gui/fonts/SquareFont28"
+   font "Colorful-UI/GUI/fonts/GB-Regular"
    "text offset" 25 0
    "bold text" 1
    "text sharpness" 0.5
@@ -99,7 +99,7 @@ ImageWidgetClass height_wrapper {
    vexactpos 1
    hexactsize 0
    vexactsize 1
-   imageTexture "{C439858A6B95BCA0}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Border.edds"
+   imageTexture "{C439858A6B95BCA0}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Border.edds"
    "clamp mode" clamp
    "stretch mode" stretch_w_h
   }

@@ -55,7 +55,7 @@ FrameWidgetClass grid_container_root {
        draggable 1
        scriptclass ""
        image0 ""
-       imageTexture "{1EBDEB3BCB073C08}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Background.edds"
+       imageTexture "{1EBDEB3BCB073C08}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Background.edds"
        mode opaque
        "src alpha" 1
        stretch 1

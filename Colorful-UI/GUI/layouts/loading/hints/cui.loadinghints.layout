@@ -1,6 +1,6 @@
 FrameWidgetClass rootFrame {
  clipchildren 0
- position 0.00081 0
+ position 0 0
  size 1 1
  halign center_ref
  hexactpos 0
@@ -12,7 +12,7 @@ FrameWidgetClass rootFrame {
    visible 1
    ignorepointer 1
    position 0 0
-   size 0.18 0.09
+   size 0.16 0.08
    halign center_ref
    valign center_ref
    hexactpos 1
@@ -20,7 +20,7 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    fixaspect outside
-   imageTexture "{BBD2BF0B2499F4A7}Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds"
+   imageTexture "{715127BF710BCA59}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_2.edds"
    "clamp mode" clamp
    "stretch mode" stretch_w_h
   }
@@ -34,12 +34,14 @@ FrameWidgetClass rootFrame {
    hexactsize 0
    vexactsize 0
    fixaspect outside
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
   }
   FrameWidgetClass Shaders {
    visible 1
    clipchildren 0
    ignorepointer 1
-   size 1.02 1.02
+   size 1 1.02
    halign center_ref
    valign center_ref
    hexactpos 1
@@ -51,7 +53,7 @@ FrameWidgetClass rootFrame {
      visible 1
      clipchildren 0
      ignorepointer 1
-     size 1.02 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
@@ -68,7 +70,7 @@ FrameWidgetClass rootFrame {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.02 1
+     size 1 1
      halign center_ref
      hexactpos 1
      vexactpos 1
@@ -86,7 +88,7 @@ FrameWidgetClass rootFrame {
      clipchildren 0
      ignorepointer 1
      position 0 0
-     size 1.02 1
+     size 1 1
      halign center_ref
      valign center_ref
      hexactpos 1
@@ -163,7 +165,7 @@ FrameWidgetClass rootFrame {
      ignorepointer 1
      color 0 0 0 0
      position 0 0
-     size 1 40
+     size 1 45
      halign center_ref
      valign bottom_ref
      hexactpos 1
@@ -217,12 +219,12 @@ FrameWidgetClass rootFrame {
          hexactsize 0
          vexactsize 0
          text "HINT HEADLINE"
-         font "colorful-ui/gui/fonts/GB-Regular.fnt"
+         font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
          "shadow size" 3
          "shadow offset" 3 3
          "shadow opacity" 0.5
          "exact text" 1
-         "exact text size" 20
+         "exact text size" 24
          "size to text h" 1
          "size to text v" 1
          "text halign" center
@@ -265,7 +267,7 @@ FrameWidgetClass rootFrame {
      vexactsize 1
      scaled 1
      text "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "text offset" 50 0
      "shadow size" 4
      "shadow offset" 3 3
@@ -274,7 +276,7 @@ FrameWidgetClass rootFrame {
      "bold text" 0
      "text sharpness" 1.5
      "exact text" 1
-     "exact text size" 22
+     "exact text size" 20
      "size to text h" 1
      "size to text v" 0
      "text halign" center

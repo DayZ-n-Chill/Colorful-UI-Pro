@@ -27,7 +27,7 @@ GridSpacerWidgetClass closable_header_root {
    scaled 1
    fixaspect inside
    image0 ""
-   imageTexture "{1EBDEB3BCB073C08}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Background.edds"
+   imageTexture "{1EBDEB3BCB073C08}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Background.edds"
    mode opaque
    "src alpha" 0
    "no wrap" 0
@@ -45,7 +45,7 @@ GridSpacerWidgetClass closable_header_root {
      vexactsize 0
      style Normal
      text "#container_hands"
-     font "Colorful-UI/gui/fonts/SquareFont28"
+     font "Colorful-UI/GUI/fonts/GB-Regular"
      "text offset" 25 0
      "text spacing" 50 0
      "bold text" 1
@@ -65,7 +65,7 @@ GridSpacerWidgetClass closable_header_root {
      vexactpos 1
      hexactsize 0
      vexactsize 1
-     imageTexture "{C439858A6B95BCA0}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Border.edds"
+     imageTexture "{C439858A6B95BCA0}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Border.edds"
      "no wrap" 1
      stretch 1
     }
@@ -184,7 +184,7 @@ GridSpacerWidgetClass closable_header_root {
        vexactsize 1
        style DayZNormal
        text "#STR_widget_TextWidget00"
-       font "Colorful-UI/gui/fonts/SquareFont24"
+       font "Colorful-UI/GUI/fonts/GB-Regular"
        "exact text" 1
        "exact text size" 20
        "size to text h" 0
