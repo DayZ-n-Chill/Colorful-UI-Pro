@@ -126,6 +126,12 @@ class CuiDialog
         cuiElmnt.proBtnCB(this, m_Confirm, "Confirm", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnConfirm");
         cuiElmnt.proBtnCB(this, m_Cancel,  "Cancel",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCancel");
 
+        // Layout bakes Cancel/Confirm with hardcoded blue colors that leak
+        // for one frame before the button handler's ApplyBaseStyles runs.
+        // Force transparent here so the layout color never shows.
+        if (m_Confirm) m_Confirm.SetColor(UIColor.Transparent());
+        if (m_Cancel)  m_Cancel.SetColor(UIColor.Transparent());
+
         // Capture base layout values so animations can interpolate around them.
         float xtmp;
         if (m_DialogBox) m_DialogBox.GetPos(xtmp, m_DlgBaseY);

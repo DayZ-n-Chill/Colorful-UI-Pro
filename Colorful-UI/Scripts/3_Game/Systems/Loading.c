@@ -52,6 +52,19 @@ modded class LoadingScreen
             m_Title.SetText(title);
         }
     }
+
+    // Vanilla SetStatus(string) writes to its m_TextWidgetStatus, which on our
+    // layout is m_LoadingMsg. Engine calls SetStatus("") moments after the
+    // constructor runs, wiping our "GAME IS LOADING!" default and exposing the
+    // layout's baked placeholder ("Load screen message"). Override to ignore
+    // empty strings — keep the constructor default visible until a real
+    // engine status (e.g. "Connecting...") replaces it.
+    override void SetStatus(string status)
+    {
+        if (!m_LoadingMsg) return;
+        if (status == "") m_LoadingMsg.SetText("GAME IS LOADING!");
+        else              m_LoadingMsg.SetText(status);
+    }
 }
 
 // Phase 2: Logging In ------------------------------------------------------------

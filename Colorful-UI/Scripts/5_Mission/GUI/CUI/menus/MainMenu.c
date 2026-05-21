@@ -78,6 +78,9 @@ modded class MainMenu extends UIScriptedMenu
 		if (m_MenuDivider0) m_MenuDivider0.SetColor(colorScheme.Separator());
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
+		TextWidget statsHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("character_stats_textImg"));
+		if (statsHeader) statsHeader.SetColor(colorScheme.BrandColor());
+
 		cuiElmnt.proBtnDC(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), SERVER_IP, SERVER_PORT);
 
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenExitDialog");
@@ -239,12 +242,21 @@ modded class MainMenu extends UIScriptedMenu
 // RichTextWidget explicitly (don't rely on TextWidget polymorphism).
 modded class MainMenuStats
 {
-	// Must match colorScheme.BrandColor() = ARGB(255,255,204,102).
-	static const string BRAND_RGBA = "255, 204, 102, 255";
-
 	protected RichTextWidget m_RichTime;
 	protected RichTextWidget m_RichDistance;
 	protected RichTextWidget m_RichLongRange;
+
+	// Build "R, G, B, A" string from colorScheme.BrandColor() at call time so
+	// rich-text markup follows theme swaps instead of a baked literal.
+	protected string BrandRgba()
+	{
+		int c = colorScheme.BrandColor();
+		int a = (c >> 24) & 0xFF;
+		int r = (c >> 16) & 0xFF;
+		int g = (c >> 8)  & 0xFF;
+		int b =  c        & 0xFF;
+		return string.Format("%1, %2, %3, %4", r, g, b, a);
+	}
 
 	void MainMenuStats(Widget root)
 	{
@@ -274,7 +286,7 @@ modded class MainMenuStats
 
 	protected string ColorTag(string locKey)
 	{
-		return string.Format("<color rgba=\"%1\">%2</color>", BRAND_RGBA, locKey);
+		return string.Format("<color rgba=\"%1\">%2</color>", BrandRgba(), locKey);
 	}
 
 	protected string BuildColoredTime(FullTimeData ft)

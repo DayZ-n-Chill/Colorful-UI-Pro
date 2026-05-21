@@ -45,6 +45,27 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 		m_MenuDivider.SetColor(colorScheme.Separator());
 
+		// TutorialsTextWidget is a vanilla-string-id developer marker baked
+		// purple in the layout — hide it.
+		Widget tutorialsLabel = layoutRoot.FindAnyWidget("TutorialsTextWidget");
+		if (tutorialsLabel) tutorialsLabel.Show(false);
+
+		// Tab bar bg: layout's `color 0 0 0 0.549` drops the fractional alpha,
+		// rendering fully opaque. Re-apply via ARGB so the bg stays translucent.
+		Widget tabBarBg = layoutRoot.FindAnyWidget("Tab_Control_Container");
+		if (tabBarBg) tabBarBg.SetColor(ARGB(140, 0, 0, 0));
+
+		// Game-tab section headers — color via OptionHeaders so they follow
+		// brand. All four tabs are constructed up-front so widgets exist here.
+		TextWidget genHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("general_text"));
+		TextWidget camHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("camera_text"));
+		TextWidget hudHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("hud_text"));
+		TextWidget chatHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("chat_text"));
+		if (genHeader)  genHeader.SetColor(colorScheme.OptionHeaders());
+		if (camHeader)  camHeader.SetColor(colorScheme.OptionHeaders());
+		if (hudHeader)  hudHeader.SetColor(colorScheme.OptionHeaders());
+		if (chatHeader) chatHeader.SetColor(colorScheme.OptionHeaders());
+
 		m_ModalLock = false;
 		m_CanApplyOrReset = false;
 		SetFocus(null);
