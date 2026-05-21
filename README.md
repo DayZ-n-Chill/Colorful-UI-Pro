@@ -1,5 +1,7 @@
 # Colorful UI Pro
 
+![Colorful UI Pro](CUI_Pro.png)
+
 ## Features
 - Fully Responsive Design (UHD & Ultrawide Supported)
 - Loading Screen with Synced BG Images & Tips
