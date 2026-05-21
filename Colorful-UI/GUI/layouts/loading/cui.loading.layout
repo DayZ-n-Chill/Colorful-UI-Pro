@@ -23,7 +23,7 @@ PanelWidgetClass LoadingFrame {
    vexactsize 0
    fixaspect outside
    image0 ""
-   imageTexture "{01D976455411B09C}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_9.edds"
+   imageTexture "{CBF3E789FBAEE334}Colorful-UI/GUI/textures/LoadScreens/MainMenu.edds"
    mode blend
    "src alpha" 0
    "stretch mode" stretch_w_h

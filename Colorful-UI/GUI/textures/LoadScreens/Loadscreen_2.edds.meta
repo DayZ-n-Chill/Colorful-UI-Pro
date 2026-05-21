@@ -1,7 +1,7 @@
 MetaFileClass {
- Name "{D61094BC2A3F78E5}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_2.png"
+ Name "{715127BF710BCA59}Colorful-UI/GUI/textures/LoadScreens/Loadscreen_2.edds"
  Author "coruscant"
- ChangeDate -1831832406
+ ChangeDate -908741452
  Configurations {
   PNGResourceClass PC {
    SourceFile "Loadscreen_2.png"
