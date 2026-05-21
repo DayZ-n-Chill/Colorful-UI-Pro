@@ -247,22 +247,23 @@ GridSpacerWidgetClass rootFrame {
          vexactsize 1
          style Empty
          "no focus" 1
+         clipchildren 0
          {
           TextWidgetClass HideImageBtn_label {
            ignorepointer 1
-           size 1 16
+           size 120 16
            valign center_ref
            hexactpos 1
            vexactpos 1
-           hexactsize 0
+           hexactsize 1
            vexactsize 1
            text "Hide Image"
            font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
            "exact text" 1
            "exact text size" 16
-           "size to text h" 0
+           "size to text h" 1
            "size to text v" 1
-           "text halign" right
+           "text halign" left
            "text valign" center
           }
          }

@@ -2,10 +2,10 @@
 static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool UseImagesets       = false;  // If set to true, hints.json entries with m_ImageSet/m_ImageName load from the registered imageset; otherwise m_ImagePath is used. Off by default: the Loadscreens atlas .edds isn't committed (too large, no LFS), so imageset mode breaks Loadscreens/credits/main-menu bg on fresh clones. Flip back to true once you've baked Loadscreens-Imageset.edds locally.
-static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
+static bool LoadVideo          = true;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
-// The below two settings are not yet implemented.
+// The below tend to break right now. Fix with 4.0.0 Update.
 static bool EnableMenuVideo    = false;  // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
 static bool EnableOptionsVideo = false;  // Background video on options menu (when opened from main menu).
 static bool VideoDeathScreens  = false;  // If set to true, a random game over screen will be shown when the player dies.
@@ -55,16 +55,16 @@ class Branding
 //        This way it shows only the buttons you want to use.
 
 class CustomURL {
-	static string Website    = "#"; 
-	static string PriorityQ  = "#";
-	static string Custom     = "#";
+	static string Website    = "twitch.tv/tworadev"; 
+	static string PriorityQ  = "twitter.com/tworadev";
+	static string Custom     = "discord.gg/FhEw2x7R";
 }
 
 class SocialURL {
-	static string Discord    = "#";
-	static string Facebook   = "#";
-	static string Twitter    = "#";
-	static string Reddit     = "#";
-	static string Youtube    = "#";
+	static string Discord    = "discord.gg/FhEw2x7R";
+	static string Facebook   = "twitter.com/tworadev";
+	static string Twitter    = "twitter.com/tworadev";
+	static string Reddit     = "twitter.com/tworadev";
+	static string Youtube    = "youtube.com/@tworadev";
 }
 

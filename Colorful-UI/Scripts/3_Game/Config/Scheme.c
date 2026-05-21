@@ -3,7 +3,7 @@
 class colorScheme 
 {
 	// Brand Specific 
-	static int BrandColor()          { return ARGB(255, 255, 204, 102); }
+	static int BrandColor()          { return UIColor.Orange(); }
 	static int AccentColor()         { return ARGB(255, 100, 35, 35); }  
 	static int TertiaryColor()       { return ARGB(255, 204, 255, 204); }
 

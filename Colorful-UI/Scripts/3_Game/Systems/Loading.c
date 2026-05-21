@@ -68,7 +68,10 @@ modded class LoadingScreen
 }
 
 // Phase 2: Logging In ------------------------------------------------------------
-modded class LoginTimeBase extends LoginScreenBase
+// NOTE: modded class declarations MUST NOT have an `extends` clause — vanilla's
+// parent is implicit, and adding `extends X` silently breaks the modded chain
+// (the override never runs, vanilla's body runs and crashes on null widget refs).
+modded class LoginTimeBase
 {
     protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_ExitIcon, m_Logo;
     protected TextWidget m_LoadingMsg, m_ExitText;
@@ -83,6 +86,9 @@ modded class LoginTimeBase extends LoginScreenBase
         m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        // Point vanilla's m_txtLabel field at our LoadingMsg widget too — any
+        // vanilla code path that still touches m_txtLabel won't NPE.
+        m_txtLabel = m_LoadingMsg;
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
@@ -123,10 +129,23 @@ modded class LoginTimeBase extends LoginScreenBase
         }
         return false;
     }
+
+    // Override here on LoginTimeBase (not LoginTimeStatic) — vanilla's SetTime
+    // body lives on LoginTimeBase and dereferences m_txtLabel (a widget our
+    // layout doesn't have). LoginTimeStatic inherits, so engine dispatch
+    // resolves to whichever class defines SetTime closest to the instance.
+    override void SetTime(int time)
+    {
+        if (!layoutRoot) return;
+        if (!m_LoadingMsg)
+            m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        if (m_LoadingMsg)
+            m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+    }
 }
 
 // Phase 3: Prio Queue  -------------------------------------------------------------
-modded class LoginQueueBase extends LoginScreenBase
+modded class LoginQueueBase
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_ExitIcon, m_ShopIcon;
     protected TextWidget m_ExitText, m_PrioText;
@@ -236,28 +255,6 @@ modded class LoginQueueBase extends LoginScreenBase
             return false;
         }
         return super.OnClick(w, x, y, button);
-    }
-}
-
-// Final Crash Fix — Executed by DayZ Engine
-modded class LoginTimeStatic extends LoginTimeBase
-{
-    override void SetTime(int time)
-    {
-        if (!layoutRoot)
-        {
-            return;
-        }
-
-        if (!m_LoadingMsg)
-        {
-            m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        }
-
-        if (m_LoadingMsg)
-        {
-            m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
-        }
     }
 }
 
