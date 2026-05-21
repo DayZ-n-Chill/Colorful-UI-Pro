@@ -1,7 +1,7 @@
 // Constants.c v3.0.0
 static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
-static bool UseImagesets       = true;  // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used. Off until Backgrounds-Imageset.edds is baked from the .tga via Workbench.
+static bool UseImagesets       = false;   // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used.
 static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
