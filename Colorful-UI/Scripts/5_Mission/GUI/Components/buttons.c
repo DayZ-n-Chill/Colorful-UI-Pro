@@ -1,3 +1,6 @@
+// NOTE TO ALL:  THE CUI ELEMENETS AND WRAPPER CONCEPTS ARE OBSOLETE. THIS CODE IS HERE FOR REFERENCE ONLY.
+//  I have begun to think my concept for this wrapper was a bad idea. 4.0 has removed it as it just causes issues here and there and I dont want to keep fixing it.  
+// However, I have a much better and more stable solution already in place for 4.0. 
 class CUIButtonHandler : ScriptedWidgetEventHandler
 {
     Class                m_Owner;          // Menu instance that registered this handler; used by cuiElmnt.CleanupForOwner()

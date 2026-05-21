@@ -1,7 +1,7 @@
 // Constants.c v3.0.0
 static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
-static bool UseImagesets       = false;   // If set to true, hints.json entries with m_ImageSet/m_ImageName load from the registered imageset; otherwise m_ImagePath is used.
+static bool UseImagesets       = false;  // If set to true, hints.json entries with m_ImageSet/m_ImageName load from the registered imageset; otherwise m_ImagePath is used. Off by default: the Loadscreens atlas .edds isn't committed (too large, no LFS), so imageset mode breaks Loadscreens/credits/main-menu bg on fresh clones. Flip back to true once you've baked Loadscreens-Imageset.edds locally.
 static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
@@ -21,28 +21,6 @@ static const string m_LoadingVideo     = "CUI_Video.mov";  // Video file name fo
 static const string m_MainMenuVideo    = "CUI_Video.mov";  // Video file name for Main Menu screen video. 
 static const string m_OptionsMenuVideo = "CUI_Video.mov";  // Video file name for Options screen video. 
 
-// Loading Screens
-// ref TStringArray loadscreens = {
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
-// };
-
-// Gameover Screens (Array Not yet implemented)
-// ref TStringArray GameOverScreens = {
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
-//     "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
-// };
-
 // Main Menu Background — picks between imageset sprite and raw .edds
 // based on UseImagesets. Edit either side to repoint.
 string GetMainMenuBackground()
@@ -51,7 +29,6 @@ string GetMainMenuBackground()
         return "set:Loadscreens image:loadscreen_6";
     return "Colorful-UI/GUI/textures/LoadScreens/Loadscreen_6.edds";
 }
-
 // Set Single Game Over Screen ( Death Screen )
 class GameOverScreen
 {
@@ -78,16 +55,16 @@ class Branding
 //        This way it shows only the buttons you want to use.
 
 class CustomURL {
-	static string Website    = "https://www.dayznchill.com/"; 
-	static string PriorityQ  = "https://www.dayznchill.com/priority-queue";
-	static string Custom     = "https://www.dayznchill.com/Testing-Link";
+	static string Website    = "#"; 
+	static string PriorityQ  = "#";
+	static string Custom     = "#";
 }
 
 class SocialURL {
-	static string Discord    = "https://discord.gg/dayznchill";
-	static string Facebook   = "https://www.facebook.com/dayznchill";
-	static string Twitter    = "https://twitter.com/dayznchill";
-	static string Reddit     = "https://www.reddit.com/r/dayznchill";
-	static string Youtube    = "https://www.youtube.com/dayznchill";
+	static string Discord    = "#";
+	static string Facebook   = "#";
+	static string Twitter    = "#";
+	static string Reddit     = "#";
+	static string Youtube    = "#";
 }
 

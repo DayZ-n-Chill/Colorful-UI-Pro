@@ -104,7 +104,12 @@ class CuiDialog
         if (!m_Root) return;
 
         m_DialogBox = m_Root.FindAnyWidget("DialogBox");
+        // Layout's `color R G B A` drops the alpha component, so apply the
+        // translucent panel color at runtime via ARGB. Widget-level alpha
+        // (animated by SetA below) multiplies on top of this.
+        if (m_DialogBox) m_DialogBox.SetColor(ARGB(220, 62, 62, 62));
         m_Separator = m_Root.FindAnyWidget("SeparatorPanel");
+        if (m_Separator) m_Separator.SetColor(colorScheme.Separator());
         m_Caption   = TextWidget.Cast(m_Root.FindAnyWidget("Caption"));
         m_Body      = RichTextWidget.Cast(m_Root.FindAnyWidget("Body"));
         m_Confirm   = ButtonWidget.Cast(m_Root.FindAnyWidget("Confirm"));

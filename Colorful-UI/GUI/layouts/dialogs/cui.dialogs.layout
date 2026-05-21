@@ -57,6 +57,7 @@ FrameWidgetClass DialogRoot {
      vexactsize 1
      scaled 1
      priority 10
+     style DayZDefaultPanel
     }
     RichTextWidgetClass Body {
      clipchildren 1
@@ -70,9 +71,9 @@ FrameWidgetClass DialogRoot {
      vexactsize 1
      text "Body"
      font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text spacing" 0 4
      "exact text" 1
      "exact text size" 22
-     "text spacing" 0 4
      "size to text h" 1
      "size to text v" 1
      "text halign" center

@@ -1403,9 +1403,9 @@ FrameWidgetClass mainmenu_root {
            text "0"
            font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1446,9 +1446,9 @@ FrameWidgetClass mainmenu_root {
            text "0"
            font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1480,7 +1480,7 @@ FrameWidgetClass mainmenu_root {
            "size to text v" 0
            "text valign" center
           }
-          TextWidgetClass DistanceTraveledValue {
+          RichTextWidgetClass DistanceTraveledValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1492,9 +1492,9 @@ FrameWidgetClass mainmenu_root {
            text "0"
            font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1514,7 +1514,7 @@ FrameWidgetClass mainmenu_root {
            inheritalpha 0
            ignorepointer 1
            position 0 0
-           size 301 32
+           size 315 30
            valign center_ref
            hexactpos 1
            vexactpos 1
@@ -1527,7 +1527,7 @@ FrameWidgetClass mainmenu_root {
            "size to text h" 1
            "text valign" center
           }
-          TextWidgetClass TimeSurvivedValue {
+          RichTextWidgetClass TimeSurvivedValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1538,10 +1538,11 @@ FrameWidgetClass mainmenu_root {
            vexactsize 0
            text "0"
            font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
+           "text offset" 2 0
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }
@@ -1572,7 +1573,7 @@ FrameWidgetClass mainmenu_root {
            "size to text v" 0
            "text valign" center
           }
-          TextWidgetClass LongRangeShotValue {
+          RichTextWidgetClass LongRangeShotValue {
            ignorepointer 1
            size 1 1
            halign right_ref
@@ -1584,9 +1585,9 @@ FrameWidgetClass mainmenu_root {
            text "0"
            font "Colorful-UI/GUI/fonts/GB-CleanItalic.fnt"
            "exact text" 1
-           "size to text h" 1
+           "size to text h" 0
            "size to text v" 0
-           "text halign" center
+           "text halign" right
            "text valign" center
           }
          }

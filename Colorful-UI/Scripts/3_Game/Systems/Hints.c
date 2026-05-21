@@ -117,10 +117,20 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 	// Icon-only hover for the Left/Right chevrons + label hover for the
 	// hide-image toggle. Layout has style=Empty and a transparent button bg;
-	// we color the icon / label ourselves. super still drives vanilla's
-	// slideshow pause/resume on hover.
+	// we color the icon / label ourselves.
+	//
+	// HideImageBtn returns true to bypass vanilla's UiHintPanel hover paint
+	// (which repaints child text red, clobbering our SetColor). Mirrors the
+	// Keybindings.c pattern. Left/Right still call super so vanilla's
+	// slideshow pause/resume on hover keeps working.
 	override bool OnMouseEnter(Widget w, int x, int y)
 	{
+		if (w == m_HideImageBtn && m_HideImageBtnLabel)
+		{
+			m_HideImageBtnLabel.SetColor(colorScheme.ButtonHover());
+			return true;
+		}
+
 		ImageWidget icon;
 		if (w == m_UiLeftButton)
 			icon = ImageWidget.Cast(w.FindAnyWidget("LeftImage"));
@@ -128,23 +138,23 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 			icon = ImageWidget.Cast(w.FindAnyWidget("RightImage"));
 		if (icon) icon.SetColor(colorScheme.ButtonHover());
 
-		if (w == m_HideImageBtn && m_HideImageBtnLabel)
-			m_HideImageBtnLabel.SetColor(colorScheme.ButtonHover());
-
 		return super.OnMouseEnter(w, x, y);
 	}
 
 	override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
 	{
+		if (w == m_HideImageBtn && m_HideImageBtnLabel)
+		{
+			m_HideImageBtnLabel.SetColor(colorScheme.PrimaryText());
+			return true;
+		}
+
 		ImageWidget icon;
 		if (w == m_UiLeftButton)
 			icon = ImageWidget.Cast(w.FindAnyWidget("LeftImage"));
 		else if (w == m_UiRightButton)
 			icon = ImageWidget.Cast(w.FindAnyWidget("RightImage"));
 		if (icon) icon.SetColor(colorScheme.PrimaryText());
-
-		if (w == m_HideImageBtn && m_HideImageBtnLabel)
-			m_HideImageBtnLabel.SetColor(colorScheme.PrimaryText());
 
 		return super.OnMouseLeave(w, enterW, x, y);
 	}

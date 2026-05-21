@@ -2,8 +2,12 @@ modded class MainMenu extends UIScriptedMenu
 {
 	protected ref MainMenuStats m_Stats;
 	protected TextWidget m_PlayerName;
+	protected TextWidget m_WelcomeBack;
 	protected ButtonWidget m_PrevCharacter, m_NextCharacter;
-	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider0, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
+	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
+	// MenuDivider0 was switched to PanelWidget (solid bg) in the layout, so it's
+	// typed as plain Widget here — SetColor lives on the base Widget class.
+	protected Widget m_MenuDivider0;
 	protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook, m_CharacterBtn;
 	protected ButtonWidget m_TestBtn0, m_TestBtn1, m_TestBtn2, m_TestBtn3, m_TestBtn4, m_TestBtn5;
 	protected Widget m_TopSpacer, m_BottomSpacer;
@@ -44,12 +48,14 @@ modded class MainMenu extends UIScriptedMenu
 		m_SurvivorBox 		= ImageWidget.Cast(layoutRoot.FindAnyWidget("SurvivorBox"));
 		m_TopSpacer         = layoutRoot.FindAnyWidget("TopSpacer");
 		m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
-		m_MenuDivider0      = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider0"));
+		m_MenuDivider0      = layoutRoot.FindAnyWidget("MenuDivider0");
 		m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 
 		m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		m_Logo              = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
 		m_PlayerName        = TextWidget.Cast(layoutRoot.FindAnyWidget("character_name_text"));
+		m_WelcomeBack       = TextWidget.Cast(layoutRoot.FindAnyWidget("WelcomeBack"));
+		if (m_WelcomeBack) m_WelcomeBack.SetColor(colorScheme.BrandColor());
 		m_PrevCharacter     = ButtonWidget.Cast(layoutRoot.FindAnyWidget("prev_character"));
 		m_NextCharacter     = ButtonWidget.Cast(layoutRoot.FindAnyWidget("next_character"));
 
@@ -223,6 +229,74 @@ modded class MainMenu extends UIScriptedMenu
 	{
 		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
+	}
+}
+
+// Brand-color the unit suffixes (h/m/s/d in time, m/km in distance + long-range hit).
+// The 3 value widgets are RichTextWidgetClass in the layout so SetText parses
+// the <color rgba="R, G, B, A"> markup. rgba MUST be comma-separated decimal —
+// hex like #FFCC66FF is not recognized by the rich-text parser. Cast as
+// RichTextWidget explicitly (don't rely on TextWidget polymorphism).
+modded class MainMenuStats
+{
+	// Must match colorScheme.BrandColor() = ARGB(255,255,204,102).
+	static const string BRAND_RGBA = "255, 204, 102, 255";
+
+	protected RichTextWidget m_RichTime;
+	protected RichTextWidget m_RichDistance;
+	protected RichTextWidget m_RichLongRange;
+
+	void MainMenuStats(Widget root)
+	{
+		m_RichTime      = RichTextWidget.Cast(root.FindAnyWidget("TimeSurvivedValue"));
+		m_RichDistance  = RichTextWidget.Cast(root.FindAnyWidget("DistanceTraveledValue"));
+		m_RichLongRange = RichTextWidget.Cast(root.FindAnyWidget("LongRangeShotValue"));
+	}
+
+	override void UpdateStats()
+	{
+		super.UpdateStats();
+
+		PlayerBase player;
+		MissionMainMenu missionMainMenu = MissionMainMenu.Cast(g_Game.GetMission());
+		if (!missionMainMenu || !missionMainMenu.GetIntroScenePC()) return;
+
+		player = missionMainMenu.GetIntroScenePC().GetIntroCharacter().GetCharacterObj();
+		if (!player) return;
+
+		FullTimeData ft = new FullTimeData();
+		TimeConversions.ConvertSecondsToFullTime(player.StatGet(AnalyticsManagerServer.STAT_PLAYTIME), ft);
+		if (m_RichTime) m_RichTime.SetText(BuildColoredTime(ft));
+
+		if (m_RichDistance)  m_RichDistance.SetText(BuildColoredDistance(player.StatGet(AnalyticsManagerServer.STAT_DISTANCE), false));
+		if (m_RichLongRange) m_RichLongRange.SetText(BuildColoredDistance(player.StatGet(AnalyticsManagerServer.STAT_LONGEST_SURVIVOR_HIT), true));
+	}
+
+	protected string ColorTag(string locKey)
+	{
+		return string.Format("<color rgba=\"%1\">%2</color>", BRAND_RGBA, locKey);
+	}
+
+	protected string BuildColoredTime(FullTimeData ft)
+	{
+		string msg;
+		if (ft.m_Days > 0)    msg += string.Format("%1%2 ", ft.m_Days,    ColorTag("#STR_time_unit_abbrev_day_0"));
+		if (ft.m_Hours > 0)   msg += string.Format("%1%2 ", ft.m_Hours,   ColorTag("#STR_time_unit_abbrev_hour_0"));
+		if (ft.m_Minutes > 0) msg += string.Format("%1%2 ", ft.m_Minutes, ColorTag("#STR_time_unit_abbrev_minute_0"));
+		msg += string.Format("%1%2", ft.m_Seconds, ColorTag("#STR_time_unit_abbrev_second_0"));
+		return msg;
+	}
+
+	protected string BuildColoredDistance(float total_distance, bool meters_only)
+	{
+		if (total_distance > 0)
+		{
+			float kilometers = Math.Round(total_distance * 0.001);
+			if (kilometers >= 10 && !meters_only)
+				return GetValueString(kilometers, true) + " " + ColorTag("#STR_distance_unit_abbrev_kilometer_0");
+			return GetValueString(total_distance) + " " + ColorTag("#STR_distance_unit_abbrev_meter_0");
+		}
+		return "0 " + ColorTag("#STR_distance_unit_abbrev_meter_0");
 	}
 }
 
