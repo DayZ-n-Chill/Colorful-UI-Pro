@@ -72,10 +72,10 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		if (!w) return;
 
 		ButtonWidget button = ButtonWidget.Cast(w);
-		if (button) button.SetTextColor(ARGB(100, 255, 255, 255));
+		if (button) button.SetTextColor(colorScheme.DisabledText());
 
 		TextWidget label = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
-		if (label) label.SetColor(ARGB(100, 255, 255, 255));
+		if (label) label.SetColor(colorScheme.DisabledText());
 	}
 
 	// Vanilla SetToDefaults() and HardReset() open the engine's yes/no dialog
@@ -117,14 +117,14 @@ modded class KeybindingsMenu extends UIScriptedMenu
 
 		if (button)
 		{
-			if (disabled) button.SetTextColor(ARGB(100, 255, 255, 255));
-			else          button.SetTextColor(ARGB(255, 255, 255, 255));
+			if (disabled) button.SetTextColor(colorScheme.DisabledText());
+			else          button.SetTextColor(colorScheme.PrimaryText());
 		}
 
 		TextWidget label = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
 		if (label)
 		{
-			if (disabled) label.SetColor(ARGB(100, 255, 255, 255));
+			if (disabled) label.SetColor(colorScheme.DisabledText());
 			else          label.SetColor(colorScheme.PrimaryText());
 		}
 	}
@@ -227,7 +227,7 @@ modded class KeybindingElementNew
 		else
 		{
 			m_PrimaryBindButton.SetColor(ARGBF(0, 0, 0, 0));
-			m_AlternativeBindButton.SetColor(ARGBF(1, 0, 0, 0));
+			m_AlternativeBindButton.SetColor(ARGBF(0, 0, 0, 0));
 			m_PrimaryClear.Show(false);
 			m_AlternativeClear.Show(false);
 		}

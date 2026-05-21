@@ -81,13 +81,13 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
 
         if (m_SolidBg)
         {
-            if (m_TextWidget) m_TextWidget.SetColor(UIColor.White());
-            else m_Button.SetTextColor(UIColor.White());
+            if (m_TextWidget) m_TextWidget.SetColor(colorScheme.BtnText());
+            else m_Button.SetTextColor(colorScheme.BtnText());
 
             if (m_ImageWidget)
             {
                 if (m_IconImageIndex >= 0) m_ImageWidget.SetImage(m_IconImageIndex);
-                m_ImageWidget.SetColor(UIColor.White());
+                m_ImageWidget.SetColor(colorScheme.BtnText());
             }
 
             m_Button.SetColor(m_TextColor);
