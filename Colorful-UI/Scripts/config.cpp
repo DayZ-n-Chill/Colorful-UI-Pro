@@ -36,7 +36,7 @@ class CfgMods
 		};
 		class defs
 		{
-			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset"};};
+			class imageSets			  {files[]= {"Colorful-UI/GUI/imagesets/CUI.imageset","Colorful-UI/GUI/imagesets/Backgrounds.imageset"};};
 			class gameScriptModule 	  {files[]= {"Colorful-UI/Scripts/3_Game"};};
 			class worldScriptModule	  {files[]= {"Colorful-UI/Scripts/4_World"};};
 			class missionScriptModule {files[]= {"Colorful-UI/Scripts/5_Mission"};};
@@ -65,13 +65,13 @@ class CfgSoundShaders
 		// The music will play in a random order.
 		samples[] =
 		{
-			{"Colorful-UI/GUI/sounds/MainMenu/Battle", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Cello", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Cinematic", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Emotional_Piano", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Piano", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Horror_Suspense", 1},
-			{"Colorful-UI/GUI/sounds/MainMenu/Guitar_Reverb", 1}
+			{"\Colorful-UI\GUI\sounds\MainMenu\Battle", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Cello", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Cinematic", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Emotional_Piano", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Piano", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Horror_Suspense", 1},
+			{"\Colorful-UI\GUI\sounds\MainMenu\Guitar_Reverb", 1}
 		};
 		volume = 0.8;
 	};

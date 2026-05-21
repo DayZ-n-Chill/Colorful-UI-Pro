@@ -6,6 +6,8 @@
 .idea/
 
 # Agentic Settings
-.server
-.claude
-.agentic-z
+.* 
+
+# Files not to be included in the repo
+*.tga
+*.png

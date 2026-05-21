@@ -1,0 +1,62 @@
+ImageSetClass {
+ Name "backgrounds"
+ RefSize 3840 4320
+ Textures {
+  ImageSetTextureClass {
+   mpix 1
+   path "{BCA2A6E121673F00}Colorful-UI/GUI/imagesets/Backgrounds-Imageset.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass loadscreen_1 {
+   Name "loadscreen_1"
+   Pos 0 0
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_2 {
+   Name "loadscreen_2"
+   Pos 1920 0
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_3 {
+   Name "loadscreen_3"
+   Pos 0 1080
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_4 {
+   Name "loadscreen_4"
+   Pos 1920 1080
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_5 {
+   Name "loadscreen_5"
+   Pos 0 2160
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_6 {
+   Name "loadscreen_6"
+   Pos 1920 2160
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass loadscreen_7 {
+   Name "loadscreen_7"
+   Pos 0 3240
+   Size 1920 1080
+   Flags 0
+  }
+  ImageSetDefClass mainmenu {
+   Name "mainmenu"
+   Pos 1920 3240
+   Size 1920 1080
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}

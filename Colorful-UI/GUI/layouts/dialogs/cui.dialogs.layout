@@ -1,0 +1,118 @@
+FrameWidgetClass DialogRoot {
+ visible 1
+ clipchildren 1
+ inheritalpha 0
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ scaled 1
+ priority 1000
+ {
+  PanelWidgetClass DialogBox {
+   visible 1
+   color 0.243 0.243 0.243 1
+   position 0 0
+   size 600 280
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   scaled 1
+   style DayZDefaultPanel
+   {
+    TextWidgetClass Caption {
+     visible 1
+     clipchildren 0
+     position 0 20
+     size 0.9 32
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     style Bold
+     text "Title"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text color" 1 1 1 1
+     "exact text" 0
+     "exact text size" 28
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass SeparatorPanel {
+     color 0.863 0.271 0.271 0.6
+     position 0 62
+     size 0.85 2
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scaled 1
+     priority 10
+     style DayZDefaultPanel
+    }
+    RichTextWidgetClass Body {
+     clipchildren 1
+     color 1 1 1 1
+     position 0 80
+     size 0.9 100
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Body"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text spacing" 0 4
+     "exact text" 1
+     "exact text size" 22
+     "size to text h" 1
+     "size to text v" 1
+     "text halign" center
+     wrap 1
+    }
+    ButtonWidgetClass Cancel {
+     visible 1
+     color 0.2 0.4 0.8 1
+     position 20 16
+     size 270 56
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style EmptyHighlight
+     "no focus" 0
+     text "Cancel"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+    }
+    ButtonWidgetClass Confirm {
+     visible 1
+     color 0.1 0.6 1 1
+     position 20 16
+     size 270 56
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style EmptyHighlight
+     "no focus" 0
+     text "Confirm"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+    }
+   }
+  }
+ }
+}

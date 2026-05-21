@@ -1,7 +1,6 @@
 modded class OptionsMenu extends UIScriptedMenu
 {
 	private Widget m_Separator, m_shader, m_TopShader, m_BottomShader, m_MenuDivider, m_LoadingBar;
-	protected VideoWidget m_MenuVid;
 
 	private bool IsMainMenuContext()
 	{
@@ -46,6 +45,27 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 		m_MenuDivider.SetColor(colorScheme.Separator());
 
+		// TutorialsTextWidget is a vanilla-string-id developer marker baked
+		// purple in the layout — hide it.
+		Widget tutorialsLabel = layoutRoot.FindAnyWidget("TutorialsTextWidget");
+		if (tutorialsLabel) tutorialsLabel.Show(false);
+
+		// Tab bar bg: layout's `color 0 0 0 0.549` drops the fractional alpha,
+		// rendering fully opaque. Re-apply via ARGB so the bg stays translucent.
+		Widget tabBarBg = layoutRoot.FindAnyWidget("Tab_Control_Container");
+		if (tabBarBg) tabBarBg.SetColor(ARGB(140, 0, 0, 0));
+
+		// Game-tab section headers — color via OptionHeaders so they follow
+		// brand. All four tabs are constructed up-front so widgets exist here.
+		TextWidget genHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("general_text"));
+		TextWidget camHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("camera_text"));
+		TextWidget hudHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("hud_text"));
+		TextWidget chatHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("chat_text"));
+		if (genHeader)  genHeader.SetColor(colorScheme.OptionHeaders());
+		if (camHeader)  camHeader.SetColor(colorScheme.OptionHeaders());
+		if (hudHeader)  hudHeader.SetColor(colorScheme.OptionHeaders());
+		if (chatHeader) chatHeader.SetColor(colorScheme.OptionHeaders());
+
 		m_ModalLock = false;
 		m_CanApplyOrReset = false;
 		SetFocus(null);
@@ -54,20 +74,16 @@ modded class OptionsMenu extends UIScriptedMenu
 		Class.CastTo(m_shader, layoutRoot.FindAnyWidget("Colorful_Shader"));
 		m_Separator = layoutRoot.FindAnyWidget("colorful_separator");
 		
-		#ifdef WORKBENCH
-		#else
-			// Only show options video when opened from MAIN MENU, never from in-game pause/options.
-			if (EnableOptionsVideo && IsMainMenuContext())
-			{
-				Class.CastTo(m_MenuVid, layoutRoot.FindAnyWidget("MenuVideo"));
-				if (m_MenuVid)
-				{
-					if (!FileExist("$saves:" + m_OptionsMenuVideo))
-						CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
-					m_MenuVid.Load("$saves:" + m_OptionsMenuVideo, true);
-					m_MenuVid.Play();
-				}
-			}
+		#ifndef WORKBENCH
+		// Only show options video when opened from MAIN MENU, never from
+		// in-game pause/options. Uses singleton CuiBackgroundVideo — Ensure()
+		// is a no-op if already running (e.g. from MainMenu).
+		if (EnableOptionsVideo && IsMainMenuContext())
+		{
+			if (!FileExist("$saves:" + m_OptionsMenuVideo))
+				CopyFile("Colorful-UI/GUI/video/" + m_OptionsMenuVideo, "$saves:" + m_OptionsMenuVideo);
+			CuiBackgroundVideo.Ensure("$saves:" + m_OptionsMenuVideo, true);
+		}
 		#endif
 
 		return layoutRoot;
@@ -266,6 +282,22 @@ modded class OptionsMenu extends UIScriptedMenu
 
 	void ~OptionsMenu()
 	{
+		// Singleton bg video persists — do not touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
+	}
+
+	// Vanilla Refresh (optionsmenu.c:676-692) calls m_Version.SetText
+	// unconditionally. Our cui.options_menu.layout has no "version" widget,
+	// so m_Version stays null after Init's FindAnyWidget — and vanilla's
+	// Refresh NPEs the next time it fires (OnShow → Refresh, triggered by
+	// MainMenu OpenSettings or by Cancel returning to OptionsMenu).
+	override void Refresh()
+	{
+		if (m_Version)
+		{
+			string version;
+			g_Game.GetVersion(version);
+			m_Version.SetText("#main_menu_version" + " " + version);
+		}
 	}
 }

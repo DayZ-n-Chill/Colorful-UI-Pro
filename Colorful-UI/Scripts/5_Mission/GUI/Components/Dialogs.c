@@ -100,11 +100,16 @@ class CuiDialog
         // vs dialog's 1000). When useBackdrop=false, simply skip creating it.
         if (useBackdrop) m_Backdrop = new CuiBackdrop();
 
-        m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cuidialogs.layout");
+        m_Root = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.dialogs.layout");
         if (!m_Root) return;
 
         m_DialogBox = m_Root.FindAnyWidget("DialogBox");
+        // Layout's `color R G B A` drops the alpha component, so apply the
+        // translucent panel color at runtime via ARGB. Widget-level alpha
+        // (animated by SetA below) multiplies on top of this.
+        if (m_DialogBox) m_DialogBox.SetColor(ARGB(220, 62, 62, 62));
         m_Separator = m_Root.FindAnyWidget("SeparatorPanel");
+        if (m_Separator) m_Separator.SetColor(colorScheme.Separator());
         m_Caption   = TextWidget.Cast(m_Root.FindAnyWidget("Caption"));
         m_Body      = RichTextWidget.Cast(m_Root.FindAnyWidget("Body"));
         m_Confirm   = ButtonWidget.Cast(m_Root.FindAnyWidget("Confirm"));
@@ -120,6 +125,12 @@ class CuiDialog
 
         cuiElmnt.proBtnCB(this, m_Confirm, "Confirm", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnConfirm");
         cuiElmnt.proBtnCB(this, m_Cancel,  "Cancel",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCancel");
+
+        // Layout bakes Cancel/Confirm with hardcoded blue colors that leak
+        // for one frame before the button handler's ApplyBaseStyles runs.
+        // Force transparent here so the layout color never shows.
+        if (m_Confirm) m_Confirm.SetColor(UIColor.Transparent());
+        if (m_Cancel)  m_Cancel.SetColor(UIColor.Transparent());
 
         // Capture base layout values so animations can interpolate around them.
         float xtmp;

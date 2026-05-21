@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{CBF3E789FBAEE334}Colorful-UI/GUI/textures/LoadScreens/MainMenu.edds"
+ Author "coruscant"
+ ChangeDate -1780632396
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "MainMenu.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

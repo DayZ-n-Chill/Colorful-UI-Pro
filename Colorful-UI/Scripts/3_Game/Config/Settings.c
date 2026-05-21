@@ -1,14 +1,15 @@
 // Constants.c v3.0.0
-static bool StartMainMenu      = false;  // If set to true, the main menu will be forced to show on startup.
+static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
-static bool LoadVideo          = true;   // If set to true, a video will be shown during load screens along with tips.
+static bool UseImagesets       = false;   // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used.
+static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
-// The below two settings are not yet implemented.
-static bool EnableMenuVideo    = true;   // If set to true, a video will be shown during Main Menu Screens along with tips.
-static bool EnableOptionsVideo = true;   // If set to true, a video will be shown during Main Menu Screens along with tips.
+// The below tend to break right now. Fix with 4.0.0 Update.
+static bool EnableMenuVideo    = false;  // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
+static bool EnableOptionsVideo = false;  // Background video on options menu (when opened from main menu).
 static bool VideoDeathScreens  = false;  // If set to true, a random game over screen will be shown when the player dies.
-static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
+// static bool RandomDeathScreens = false;  // If set to true, a random game over video that will be shown when the player dies.
 
 // Server Information 
 // (Possibly Buggy in the CUI Buttons. Not yet tested on live servers)
@@ -20,28 +21,14 @@ static const string m_LoadingVideo     = "CUI_Video.mov";  // Video file name fo
 static const string m_MainMenuVideo    = "CUI_Video.mov";  // Video file name for Main Menu screen video. 
 static const string m_OptionsMenuVideo = "CUI_Video.mov";  // Video file name for Options screen video. 
 
-// Loading Screens
-ref TStringArray loadscreens = {
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
-};
-
-// Gameover Screens (Array Not yet implemented)
-ref TStringArray GameOverScreens = {
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG1.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG2.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG3.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG4.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG5.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG6.edds",
-    "Colorful-UI/GUI/textures/LoadScreens/Cui3-BG7.edds"
-};
-
+// Main Menu Background — picks between imageset sprite and raw .edds
+// based on UseImagesets. Edit either side to repoint.
+string GetMainMenuBackground()
+{
+    if (UseImagesets)
+        return "set:backgrounds image:mainmenu";
+    return "Colorful-UI/GUI/textures/LoadScreens/MainMenu.edds";
+}
 // Set Single Game Over Screen ( Death Screen )
 class GameOverScreen
 {
@@ -68,20 +55,16 @@ class Branding
 //        This way it shows only the buttons you want to use.
 
 class CustomURL {
-	static string Website    = "test"; 
-	static string PriorityQ  = "test";
-	static string Custom     = "test";
+	static string Website    = "#"; 
+	static string PriorityQ  = "#";
+	static string Custom     = "#";
 }
 
 class SocialURL {
-	static string Discord    = "test";
-	static string Facebook   = "test";
-	static string Twitter    = "test";
-	static string Reddit     = "test";
-	static string Youtube    = "test";
+	static string Discord    = "#";
+	static string Facebook   = "#";
+	static string Twitter    = "#";
+	static string Reddit     = "#";
+	static string Youtube    = "#";
 }
 
-// Menu IDs
-const int COLORFUL_EXIT		    = 666;
-const int COLORFUL_CONFIGURE    = 667;
-const int COLORFUL_DEFAULTS     = 668;

@@ -1,3 +1,6 @@
+// NOTE TO ALL:  THE CUI ELEMENETS AND WRAPPER CONCEPTS ARE OBSOLETE. THIS CODE IS HERE FOR REFERENCE ONLY.
+//  I have begun to think my concept for this wrapper was a bad idea. 4.0 has removed it as it just causes issues here and there and I dont want to keep fixing it.  
+// However, I have a much better and more stable solution already in place for 4.0. 
 class CUIButtonHandler : ScriptedWidgetEventHandler
 {
     Class                m_Owner;          // Menu instance that registered this handler; used by cuiElmnt.CleanupForOwner()
@@ -78,13 +81,13 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
 
         if (m_SolidBg)
         {
-            if (m_TextWidget) m_TextWidget.SetColor(UIColor.White());
-            else m_Button.SetTextColor(UIColor.White());
+            if (m_TextWidget) m_TextWidget.SetColor(colorScheme.BtnText());
+            else m_Button.SetTextColor(colorScheme.BtnText());
 
             if (m_ImageWidget)
             {
                 if (m_IconImageIndex >= 0) m_ImageWidget.SetImage(m_IconImageIndex);
-                m_ImageWidget.SetColor(UIColor.White());
+                m_ImageWidget.SetColor(colorScheme.BtnText());
             }
 
             m_Button.SetColor(m_TextColor);
@@ -178,9 +181,18 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
             return true;
         }
 
+        // Defer the callback to the next GUI tick. Calling m_CallbackMethod
+        // synchronously here is a use-after-free hazard: methods like
+        // MainMenu.OpenSettings or OptionsMenu.Back destroy the current
+        // menu, which fires CleanupForOwner, which deletes THIS handler
+        // mid-OnClick. When OnClick returns, the engine's event dispatcher
+        // does a vtable touch on the freed handler -> ACCESS_VIOLATION at
+        // call qword [rax+0x88]. Posting via CallLater(0) lets the engine
+        // finish its event loop on a still-live handler before menu
+        // teardown begins.
         if (m_TargetClass && m_CallbackMethod != "")
         {
-            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.InvokeCallback, 0, false);
             return true;
         }
 
@@ -191,6 +203,12 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
         }
 
         return true;
+    }
+
+    void InvokeCallback()
+    {
+        if (m_TargetClass && m_CallbackMethod != "")
+            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
     }
 
     override bool OnMouseButtonUp(Widget w, int x, int y, int button)
@@ -229,17 +247,22 @@ class cuiElmnt
 
     // Dispose every handler tagged with `owner`. Call from each menu's destructor:
     //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
-    // Reverse iteration so Remove() doesn't skip indices.
+    //
+    // IMPORTANT: We Dispose() (clears widget binding so no more events route
+    // to this handler) but DO NOT Remove() from s_Handlers. Removing drops
+    // the strong ref and frees the handler synchronously — and the engine
+    // may still be inside a callback frame on that handler (OnClick that
+    // posted CallLater(InvokeCallback), or a CallLater dispatch in flight).
+    // Freeing it mid-dispatch causes ACCESS_VIOLATION on the return vtable
+    // touch. Keeping it in s_Handlers leaks a small object per closed menu
+    // but eliminates the UAF crash.
     static void CleanupForOwner(Class owner)
     {
         if (!owner) return;
-        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        for (int i = 0; i < s_Handlers.Count(); i++)
         {
             if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
-            {
                 s_Handlers[i].Dispose();
-                s_Handlers.Remove(i);
-            }
         }
     }
 
