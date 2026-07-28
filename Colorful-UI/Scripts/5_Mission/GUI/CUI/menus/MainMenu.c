@@ -144,10 +144,22 @@ modded class MainMenu extends UIScriptedMenu
 		OnChangeCharacter(false);
 	}
 	
+	// No super.Refresh(): vanilla dereferences m_Version unguarded and the CUI
+	// layout has no "version" widget, so the chain throws a VM exception on
+	// every login/database-ID refresh. Replicate vanilla behavior with guards.
 	override void Refresh()
 	{
-		super.Refresh();
 		OnChangeCharacter(false);
+
+		if (m_Version)
+		{
+			string version;
+			g_Game.GetVersion(version);
+			m_Version.SetText("#main_menu_version" + " " + version);
+		}
+
+		if (m_DisplayedDlcHandler)
+			m_DisplayedDlcHandler.UpdateAllPromotionInfo();
 	}
 	
 	override void OnChangeCharacter(bool create_character = true)
@@ -225,13 +237,36 @@ modded class MainMenu extends UIScriptedMenu
 
 	void DoExit()
 	{
-		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Call(g_Game.RequestExit, IDC_MAIN_QUIT);
+		// RequestExit must NOT run from inside the GUI ScriptCallQueue tick:
+		// it tears the whole game down while the engine is still iterating
+		// that same queue, which then reads freed memory -> access violation
+		// (the crash-on-exit at main menu). Flag the mission instead; it
+		// fires the quit from OnUpdate, outside the queue iteration.
+		MissionMainMenu.s_CuiQuitRequested = true;
 	}
 
 	void ~MainMenu()
 	{
 		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
+	}
+}
+
+// Quit deferral target for MainMenu.DoExit() — see comment there. Mission
+// OnUpdate runs outside the ScriptCallQueue tick, so teardown started here
+// can't invalidate a queue the engine is mid-iterating.
+modded class MissionMainMenu
+{
+	static bool s_CuiQuitRequested;
+
+	override void OnUpdate(float timeslice)
+	{
+		super.OnUpdate(timeslice);
+		if (s_CuiQuitRequested)
+		{
+			s_CuiQuitRequested = false;
+			g_Game.RequestExit(IDC_MAIN_QUIT);
+		}
 	}
 }
 

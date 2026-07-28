@@ -141,6 +141,10 @@ modded class LoginTimeBase
             m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         if (m_LoadingMsg)
             m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+
+        // Vanilla tail — without it respawn hangs on a black screen until kicked
+        if (m_IsRespawn && time <= 1)
+            GetGame().SetLoginTimerFinished();
     }
 }
 
