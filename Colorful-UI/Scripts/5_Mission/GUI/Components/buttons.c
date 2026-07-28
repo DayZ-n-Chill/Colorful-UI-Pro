@@ -18,6 +18,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     private bool         m_IconOnly = false;
     private int          m_IconImageIndex = -1;
     private bool         m_SolidBg = false;
+    private bool         m_Disposed = false;
 
     void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget, int textColor, int hoverColor, string clickAction, Class targetClass, string callbackMethod, string serverIP, int serverPort)
     {
@@ -42,6 +43,18 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
         m_Button = null;
         m_TextWidget = null;
         m_ImageWidget = null;
+        if (GetGame())
+        {
+            ScriptCallQueue queue = GetGame().GetCallQueue(CALL_CATEGORY_GUI);
+            queue.Remove(this.InvokeCallback);
+            queue.Remove(this.DoDirectConnect);
+        }
+        m_Disposed = true;
+    }
+
+    bool IsDisposed()
+    {
+        return m_Disposed;
     }
 
     void SetIconOnly(bool isIconOnly, int imageIdx)
@@ -220,7 +233,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            GetGame().GetUIManager().CloseAll();
+            // No CloseAll() here — vanilla Connect() needs the current menu still open
             DayZGame game = DayZGame.Cast(GetGame());
             if (game) {
                 game.ConnectFromJoin(m_ServerIP, m_ServerPort);
@@ -247,15 +260,8 @@ class cuiElmnt
 
     // Dispose every handler tagged with `owner`. Call from each menu's destructor:
     //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
-    //
-    // IMPORTANT: We Dispose() (clears widget binding so no more events route
-    // to this handler) but DO NOT Remove() from s_Handlers. Removing drops
-    // the strong ref and frees the handler synchronously — and the engine
-    // may still be inside a callback frame on that handler (OnClick that
-    // posted CallLater(InvokeCallback), or a CallLater dispatch in flight).
-    // Freeing it mid-dispatch causes ACCESS_VIOLATION on the return vtable
-    // touch. Keeping it in s_Handlers leaks a small object per closed menu
-    // but eliminates the UAF crash.
+    // Removal from s_Handlers is deferred to PurgeDisposed() — removing
+    // synchronously frees the handler mid-dispatch and crashes (UAF).
     static void CleanupForOwner(Class owner)
     {
         if (!owner) return;
@@ -263,6 +269,17 @@ class cuiElmnt
         {
             if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
                 s_Handlers[i].Dispose();
+        }
+        if (GetGame())
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(PurgeDisposed, 1000, false);
+    }
+
+    static void PurgeDisposed()
+    {
+        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        {
+            if (!s_Handlers[i] || s_Handlers[i].IsDisposed())
+                s_Handlers.RemoveOrdered(i);
         }
     }
 
