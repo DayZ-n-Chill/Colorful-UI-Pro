@@ -1,48 +1,20 @@
-// CuiBackgroundVideo
-// -----------------------------------------------------------------------------
-// Reusable full-screen background video. Used by MainMenu / OptionsMenu (any
-// menu that wants a looping background video) WITHOUT embedding VideoWidget
-// inside the menu's own layoutRoot — that pattern crashes the engine.
+// CuiBackgroundVideo — looping full-screen background video for menus.
 //
-//   m_BgVideo = new CuiBackgroundVideo("Colorful-UI/GUI/video/CUI_Video.mov");
-//   // ...
-//   delete m_BgVideo;          // or drop the ref; destructor Stop+Unload+Unlink
+//   CuiBackgroundVideo.Ensure("Colorful-UI/GUI/video/CUI_Video.mov");
 //
-// Why this exists:
+// IMPORTANT: never place a VideoWidget inside a menu's own layout. Video
+// decoding runs on its own thread and keeps writing to the widget while the
+// engine destroys the menu, which crashes the game when menus change. This
+// component keeps the video outside every menu so that cannot happen.
 //
-// Embedding a VideoWidget inside a UIScriptedMenu's layoutRoot triggers a
-// reproducible ACCESS_VIOLATION (`mov rax,[rcx]; call [rax+0x88]` in the
-// native video module) when the menu transitions to another menu. WMF
-// decodes on a background thread; when EnterScriptedMenu starts tearing
-// down the source menu's widget tree, the WMF thread keeps pushing frames
-// to the widget while its vtable is being freed on the main thread. No
-// script-side hook (OnHide, OnVisibilityChanged, destructor) fires early
-// enough or synchronously enough to coordinate the shutdown.
-//
-// Mirrors CuiBackdrop's pattern: parent the widget at the workspace root
-// (no parent arg to CreateWidgets), so the widget's lifetime is owned by
-// this instance — not by any menu's layoutRoot. The video widget stays
-// alive while we have a ref. When ~CuiBackgroundVideo fires, the widget is
-// still allocated (workspace hasn't unlinked it), so Stop + Unload + Unlink
-// runs cleanly. The WMF thread can't race because we hold a strong ref
-// throughout the menu's lifetime.
-//
-// Layout (`Colorful-UI/GUI/layouts/components/cui.bgVideo.layout`):
-//   - FrameWidget root at priority 1 (low) so any menu drawn above renders on top.
-//   - Inner VideoWidget BgVideo, fullscreen (size 1 1), fixaspect outside,
-//     ignorepointer 1 (never blocks input).
-//
-// Vanilla reference: P:\scripts\5_mission\gui\newui\mainmenu\mainmenuvideo.c
-// uses Unload via OnVisibilityChanged because vanilla's MainMenuVideo is a
-// dedicated UIScriptedMenu — its widget tree dies cleanly on Back(). Our
-// pattern achieves the same widget-lifetime isolation with less ceremony.
+// Layout: Colorful-UI/GUI/layouts/components/cui.bgVideo.layout — lowest
+// draw priority so menus render over it, and it never blocks clicks.
 
 class CuiBackgroundVideo
 {
-    // Singleton — the workspace-rooted widget persists across menu transitions
-    // so MainMenu → Credits → Options never goes through a black frame between
-    // teardown of one menu's video and load of the next. Use Ensure() to start
-    // it; nothing destroys it, it lives until game exit.
+    // One shared instance that outlives individual menus, so moving between
+    // Main Menu, Options and Credits never flashes a black frame. Start it
+    // with Ensure(); it runs until the game closes.
     static ref CuiBackgroundVideo s_Instance;
 
     protected Widget       m_Root;
@@ -79,10 +51,8 @@ class CuiBackgroundVideo
         }
     }
 
-    // Idempotent: returns the singleton, creating it on first call. If a
-    // different videoPath is requested later, the existing widget is reused
-    // (only the loaded source is swapped). Menus call this in Init and just
-    // forget — never null-out the static, never delete.
+    // Safe to call every time a menu opens: starts the video on first use,
+    // and afterwards only swaps the file if a different one is asked for.
     static CuiBackgroundVideo Ensure(string videoPath, bool looping = true)
     {
         if (!s_Instance || !s_Instance.IsValid())

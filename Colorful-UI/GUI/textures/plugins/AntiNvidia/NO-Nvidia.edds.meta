@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{042A3775826AB8DB}Colorful-UI/GUI/textures/plugins/AntiNvidia/NO-Nvidia.edds"
+ Author "coruscant"
+ ChangeDate 498955355
+ Configurations {
+  PNGResourceClass PC {
+   SourceFile "NO-Nvidia.png"
+  }
+  PNGResourceClass XBOX_ONE : PC {
+  }
+  PNGResourceClass PS4 : PC {
+  }
+  PNGResourceClass LINUX : PC {
+  }
+ }
+}

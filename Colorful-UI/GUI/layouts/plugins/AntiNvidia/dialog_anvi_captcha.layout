@@ -1,0 +1,596 @@
+FrameWidgetClass CaptchaRoot {
+ visible 1
+ clipchildren 0
+ inheritalpha 0
+ ignoregloballv 0
+ keepsafezone 0
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ scaled 1
+ priority 1000
+ {
+  ImageWidgetClass Backdrop {
+   visible 1
+   keepsafezone 0
+   color 0.098 0.098 0.098 0.702
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   priority 1
+   mode blend
+   "src alpha" 1
+   "clamp mode" clamp
+   "stretch mode" stretch_w_h
+  }
+  PanelWidgetClass DialogBox {
+   visible 1
+   keepsafezone 0
+   color 0.243 0.243 0.243 1
+   position 0 0
+   size 0.34 460
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   scaled 1
+   priority 2
+   style DayZDefaultPanel
+   {
+    TextWidgetClass Caption {
+     visible 1
+     clipchildren 0
+     position 0 24
+     size 0.9 32
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     style Bold
+     text "SECURITY CHECK"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text color" 1 1 1 1
+     "exact text" 0
+     "exact text size" 28
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass SeparatorPanel {
+     color 0.863 0.271 0.271 0.6
+     position 0 66
+     size 0.85 2
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scaled 1
+     priority 10
+     style DayZDefaultPanel
+    }
+    PanelWidgetClass BodyPanel {
+     visible 1
+     clipchildren 0
+     ignorepointer 1
+     keepsafezone 0
+     position 0 82
+     size 0.92 290
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     priority 12
+     style blank
+     {
+      TextWidgetClass CaptchaQuestion {
+       ignorepointer 0
+       color 1 1 1 1
+       position 0 0
+       size 0.95 26
+       halign center_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       priority 10
+       text "What number do you see in the box above?"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+       "exact text" 1
+       "exact text size" 20
+       "size to text h" 0
+       "size to text v" 0
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass CaptchaNumber {
+       clipchildren 0
+       ignorepointer 1
+       keepsafezone 0
+       color 0.8314 0.8314 0.8314 1
+       position 0 30
+       size 150 100
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       scaled 1
+       priority 6
+       style Outline
+       {
+        ImageWidgetClass DigitLeft {
+         visible 1
+         disabled 0
+         inheritalpha 0
+         position 1 0
+         size 0.5 1
+         valign center_ref
+         hexactpos 1
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         userID 1
+         imageTexture "{81191AAEBE129F2B}Colorful-UI/GUI/textures/plugins/AntiNvidia/numbers/0.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" fit_h_center
+         filter 1
+         nocache 0
+        }
+        ImageWidgetClass DigitRight {
+         visible 1
+         position 1 0
+         size 0.5 1
+         halign right_ref
+         valign center_ref
+         hexactpos 1
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         userID 1
+         imageTexture "{75115D36B3CFF75F}Colorful-UI/GUI/textures/plugins/AntiNvidia/numbers/1.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" fit_h_center
+         filter 1
+         nocache 0
+        }
+        ImageWidgetClass Bars_00 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_01 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_02 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_03 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_04 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_05 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_06 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_07 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_08 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+        ImageWidgetClass Bars_09 {
+         visible 1
+         disabled 0
+         clipchildren 0
+         inheritalpha 0
+         position 0 0
+         size 1 1
+         halign center_ref
+         valign center_ref
+         hexactpos 0
+         vexactpos 0
+         hexactsize 0
+         vexactsize 0
+         priority 100
+         userID 1
+         imageTexture "{493817D69326D911}Colorful-UI/GUI/textures/plugins/AntiNvidia/bars.edds"
+         mode blend
+         "src alpha" 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_center
+         "flip u" 0
+         "flip v" 0
+         filter 0
+         nocache 0
+        }
+       }
+      }
+      TextWidgetClass CaptchaAttempts {
+       visible 1
+       color 1 1 1 1
+       position 0 138
+       size 0.85 20
+       halign center_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       priority 10
+       text "attempts left: 3"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+       "exact text" 1
+       "exact text size" 16
+       "size to text h" 0
+       "size to text v" 0
+       "text halign" center
+       "text valign" center
+      }
+      PanelWidgetClass InputRow {
+       visible 1
+       ignorepointer 1
+       keepsafezone 0
+       position 0 164
+       size 1 74
+       halign center_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       priority 12
+       style blank
+       {
+        TextWidgetClass AnswerInputLabel {
+         visible 1
+         color 1 1 1 1
+         position 0 0
+         size 0.7 20
+         halign center_ref
+         hexactpos 0
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         priority 10
+         text "ANSWER:"
+         font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+         "exact text" 1
+         "exact text size" 16
+         text_proportion 0.55
+         "size to text h" 0
+         "size to text v" 0
+         "text halign" center
+         "text valign" center
+        }
+        EditBoxWidgetClass AnswerInput {
+         visible 1
+         disabled 0
+         color 0.15 0.15 0.15 1
+         position 0 26
+         size 130 38
+         halign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         userID 1
+         style DefaultBorder
+         "limit visible" 0
+         "disabled text color" 0.3412 0.3412 0.3412 1
+        }
+       }
+      }
+      TextWidgetClass QuitWarning {
+       visible 0
+       disabled 0
+       clipchildren 1
+       inheritalpha 0
+       ignorepointer 0
+       ignoregloballv 0
+       keepsafezone 0
+       color 0.9608 0.3059 0.3059 1
+       position 0 244
+       size 0.85 34
+       halign center_ref
+       hexactpos 0
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       scaled 1
+       priority 17
+       draggable 0
+       style Normal
+       text "Captcha is mandatory and leaving this menu will be reported!"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+       "italic text" 0
+       "bold text" 0
+       "exact text" 1
+       "exact text size" 16
+       "size to text h" 0
+       "size to text v" 0
+       "text halign" center
+       "text valign" center
+      }
+     }
+    }
+    ButtonWidgetClass QuitButton {
+     visible 1
+     disabled 0
+     color 0.2 0.4 0.8 1
+     keepsafezone 0
+     position 20 16
+     size 0.4 48
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     userID 1
+     style EmptyHighlight
+     "no focus" 0
+     text "QUIT"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "disabled text color" 0.3412 0.3412 0.3412 1
+    }
+    ButtonWidgetClass ConfirmQuitButton {
+     visible 0
+     disabled 0
+     color 0.2 0.4 0.8 1
+     keepsafezone 0
+     position 20 16
+     size 0.4 48
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     userID 1
+     style EmptyHighlight
+     "no focus" 0
+     text "CONFIRM QUIT"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "disabled text color" 0.3412 0.3412 0.3412 1
+    }
+    ButtonWidgetClass AnswerSubmitButton {
+     visible 1
+     disabled 0
+     color 0.1 0.6 1 1
+     keepsafezone 0
+     position 20 16
+     size 0.4 48
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     userID 1
+     style EmptyHighlight
+     "no focus" 0
+     text "SUBMIT"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "disabled text color" 0.3412 0.3412 0.3412 1
+    }
+   }
+  }
+ }
+}

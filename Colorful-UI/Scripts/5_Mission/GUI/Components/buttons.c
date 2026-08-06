@@ -233,7 +233,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            // No CloseAll() here — vanilla Connect() needs the current menu still open
+            // Do not close menus here; the join needs this one still open.
             DayZGame game = DayZGame.Cast(GetGame());
             if (game) {
                 game.ConnectFromJoin(m_ServerIP, m_ServerPort);
@@ -250,6 +250,14 @@ class cuiElmnt
     // Cleanup ALL handlers. Last-resort full purge — prefer CleanupForOwner.
     static void Cleanup()
     {
+        // s_Handlers is a script-module static. At game shutdown, module
+        // statics can already be torn down by the time some object's
+        // destructor runs and calls back in here (observed: ~CuiDialog ->
+        // CleanupForOwner during "Cleaning up script module globals" ->
+        // VM Exception, NULL pointer to instance on s_Handlers.Count()).
+        // Guard every entry point.
+        if (!s_Handlers) return;
+
         for (int i = 0; i < s_Handlers.Count(); i++)
         {
             if (s_Handlers[i]) s_Handlers[i].Dispose();
@@ -265,6 +273,8 @@ class cuiElmnt
     static void CleanupForOwner(Class owner)
     {
         if (!owner) return;
+        if (!s_Handlers) return;
+
         for (int i = 0; i < s_Handlers.Count(); i++)
         {
             if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
@@ -276,6 +286,8 @@ class cuiElmnt
 
     static void PurgeDisposed()
     {
+        if (!s_Handlers) return;
+
         for (int i = s_Handlers.Count() - 1; i >= 0; i--)
         {
             if (!s_Handlers[i] || s_Handlers[i].IsDisposed())
