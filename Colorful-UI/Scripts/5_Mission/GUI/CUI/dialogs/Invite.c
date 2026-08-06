@@ -5,8 +5,11 @@
 // referenced a non-existent layout (`cui.invite.dialog.layout`) and silently
 // failed.
 //
-// This version delegates the visible UI to CuiDialog and keeps the vanilla
-// timer/connect logic intact via super calls.
+// This version delegates the visible UI to CuiDialog. Vanilla's 15s
+// auto-connect countdown is intentionally NOT armed (its CallLater lives in
+// vanilla Init(), which we replace) — instead the user chooses explicitly:
+// Connect performs the join (same calls vanilla makes at countdown expiry),
+// Cancel runs vanilla Cancel() to stay on the current session.
 
 modded class InviteMenu extends UIScriptedMenu
 {
@@ -36,9 +39,14 @@ modded class InviteMenu extends UIScriptedMenu
 
 	void DoConnect()
 	{
-		// Tell the menu to dismiss; vanilla connect logic will run on close.
-		// (For the test flow this just closes — the real auto-connect happens
-		// on the timer in vanilla Update().)
+		// Vanilla's only connect path is the countdown expiry inside
+		// Update() (invitemenu.c:78-85) — but the countdown CallLater is
+		// armed in vanilla Init(), which we replaced, so m_iTime stays at 15
+		// forever and that branch never fires. Perform the same join here.
+		string ip;
+		int port;
+		OnlineServices.GetInviteServerInfo(ip, port);
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(g_Game.ConnectFromJoin, ip, port);
 		Close();
 	}
 

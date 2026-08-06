@@ -133,6 +133,11 @@ modded class KeybindingsMenu extends UIScriptedMenu
 	// Replicated verbatim, ShowDialog -> CuiDialog. Vanilla source: line 247-271.
 	override void Back()
 	{
+		// Escape with a CuiDialog open cancels the dialog instead of running
+		// the back flow again (which would stack another confirm dialog).
+		if (CuiDialog.CancelTop())
+			return;
+
 		if (m_CurrentSettingKeyIndex != -1)
 		{
 			CancelEnteringKeybind();
