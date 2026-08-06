@@ -1,7 +1,8 @@
 // CuiBackdrop
 // -----------------------------------------------------------------------------
 // Reusable full-screen dim overlay. Used by CuiDialog and any other UI that
-// needs a modal scrim.
+// needs a modal scrim. The tint image does NOT set ignorepointer, so the
+// scrim swallows clicks — UI underneath a dialog is not clickable.
 //
 //   m_Bd = new CuiBackdrop();         // uses layout-defined tint (default)
 //   m_Bd.SetTint(ARGB(...));          // override tint+alpha at runtime

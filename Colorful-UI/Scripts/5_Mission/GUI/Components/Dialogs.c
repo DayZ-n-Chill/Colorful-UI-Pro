@@ -175,8 +175,25 @@ class CuiDialog
         return dlg;
     }
 
+    // If any dialog is open, cancel the topmost one and return true. Menus
+    // whose Back/Exit path can retrigger while a dialog is up (Escape) call
+    // this first so the key dismisses the dialog instead of stacking another.
+    static bool CancelTop()
+    {
+        int n = s_OpenDialogs.Count();
+        if (n == 0) return false;
+        CuiDialog top = s_OpenDialogs.Get(n - 1);
+        if (top) top.OnCancel();
+        return true;
+    }
+
     void OnConfirm()
     {
+        // Ignore clicks that land during the exit animation — the buttons
+        // stay alive (invisible) until DoClose disposes their handlers, and
+        // without this guard a second click re-fires the caller's callback.
+        if (m_Closing) return;
+
         // Fire the caller's callback BEFORE starting the exit animation. The
         // dialog is still alive (m_Closing not yet set), so the callback can
         // even open another dialog if it wants — that one stacks on top.
@@ -189,6 +206,8 @@ class CuiDialog
 
     void OnCancel()
     {
+        if (m_Closing) return;
+
         if (m_CallbackTarget && m_OnCancelMethod != "")
         {
             GetGame().GameScript.CallFunction(m_CallbackTarget, m_OnCancelMethod, null, 0);

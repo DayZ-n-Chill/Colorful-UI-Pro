@@ -12,7 +12,6 @@ FrameWidgetClass CuiBackdropRoot {
  priority 999
  {
   ImageWidgetClass ImageWidget0 {
-   ignorepointer 1
    color 0.098 0.098 0.098 0.702
    size 1 1
    halign center_ref

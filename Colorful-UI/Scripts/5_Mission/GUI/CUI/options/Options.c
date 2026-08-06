@@ -229,6 +229,12 @@ modded class OptionsMenu extends UIScriptedMenu
 
 	override void Back()
 	{
+		// Vanilla's IsDialogVisible guard doesn't know about CuiDialog, so
+		// without this check Escape would stack a new confirm dialog on each
+		// press. Treat Escape as Cancel on the open dialog instead.
+		if (CuiDialog.CancelTop())
+			return;
+
 		if (g_Game.GetUIManager().IsDialogVisible() || g_Game.GetUIManager().IsModalVisible())
 			return;
 
