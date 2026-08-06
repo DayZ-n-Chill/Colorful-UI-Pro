@@ -57,6 +57,12 @@ class Branding
     }
 };
 
+// Credits screen
+// This must match "DepartmentName" in Colorful-UI/Scripts/Credits.json.
+// The matching department is always drawn first, above every other mod's
+// credits, no matter which order mods load in. Rename it in both places.
+static const string CUI_CREDITS_DEPARTMENT = "Colorful-UI";
+
 // Link URLs (Add your own links here)
 // NOTE:  If you do not want to use a button, set the URL to "#" or "".
 //        If you do not set them they will not show up in the layout when compiled.

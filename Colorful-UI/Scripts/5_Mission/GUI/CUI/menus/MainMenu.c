@@ -422,6 +422,12 @@ modded class CreditsDepartmentElement
 		{
 			Widget sep = m_Root.FindAnyWidget("SeparatorPanel");
 			if (sep) sep.SetColor(colorScheme.Separator());
+
+			// Keep our own credits at the top of the list. Every department
+			// gets a draw order starting at 1, so 0 always wins — whatever
+			// other mods are loaded and in whatever order.
+			if (department_data && department_data.DepartmentName == CUI_CREDITS_DEPARTMENT)
+				m_Root.SetSort(0);
 		}
 	}
 }
