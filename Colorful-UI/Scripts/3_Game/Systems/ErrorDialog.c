@@ -1,65 +1,87 @@
-// DialogueErrorProperties override — capture only, no 3_Game widgets
+// DialogueErrorProperties override — generic capture, no 3_Game widgets
 // -----------------------------------------------------------------------------
 // Vanilla DialogueErrorProperties.HandleError (errorproperties.c:55-74) is the
 // generic handler behind every dialog-shown error in the game, rendering via
 // g_Game.GetUIManager().ShowDialog(...), a `proto native` call with no
 // .layout file behind it.
 //
+// Scoping — generalized from an earlier ClientKicked-only version: ANY error
+// that reaches HandleError() with NO attached UIScriptedMenu handler is now
+// captured and routed to the CUI dialog system, regardless of category or
+// code. Handler presence is the only thing that decides it, checked via
+// GetHandler() (DialogueErrorProperties.GetHandler(), errorproperties.c:80),
+// because a handler means real interactive semantics (Yes/No/Cancel driving
+// OnModalResult callbacks — e.g. ConnectErrorScriptModuleUI's
+// DisconnectSessionForce()/DisconnectSessionScript() dance for
+// ALREADY_CONNECTING, connecterrorscriptmodule.c:53-93) that an info-only
+// CuiDialog can't replicate. Those stay on the native path untouched — this
+// only ever intercepts info dialogs (m_Handler left at its default null,
+// errorhandlermodule.c:67), which is what every OTHER category
+// (ConnectErrorClient, ConnectErrorServer, ClientKicked, BIOSError, Generic)
+// registers.
+//
 // History of this file, briefly: an earlier version created a custom
 // inline-chrome widget panel directly from HandleError (deferred one
 // CallLater tick), fully suppressing the native ShowDialog call for kicks.
-// It worked functionally (diagnostics confirmed the panel rendered) but a
-// native access-violation crash followed shortly after, during a rapid
-// double-kick (duplicate-UID) test. Research into the crash found:
-//   - DisconnectSessionEx explicitly closes the NATIVE dialog when tearing
-//     a session down (dayzgame.c:2721-2729: CloseAllSubmenus() + CloseDialog()
-//     if IsDialogVisible()) — a script-owned widget tree is invisible to that
-//     cleanup and has no equivalent teardown path.
-//   - Vanilla's dialog system has its own built-in queue/safety mechanism
-//     (UIManager.IsDialogQueued()/ShowQueuedDialog(), uimanager.c:49-50) that
-//     the engine drives via a native DialogQueuedEventTypeID event
-//     (dayzgame.c:1573-1577) into DayZGame.CheckDialogs()
-//     (dayzgame.c:3386-3396): only actually shows a queued dialog once
-//     `!m_loading.IsLoading()`. Fully suppressing the native ShowDialog call
-//     meant we never got any of that engine-side "is it actually safe right
-//     now" gating — we were creating widgets on our own guess (one deferred
-//     tick) instead of on the engine's own signal.
-//   - The AV's actual crash stack was in the native session/connection layer
-//     (CDPCreateServer), not conclusively pinned to widget creation itself —
-//     but suppressing the native dialog path removes engine-level coupling
-//     between dialog state and connection state that we don't have full
-//     visibility into from script source alone. Given that, the design
-//     changed: this file no longer creates ANY widgets and calls nothing
-//     UI-related at HandleError() time. It only captures data.
+// It worked functionally but a native access-violation crash followed
+// shortly after, during a rapid double-kick test — root cause was never
+// conclusively pinned to the widget creation itself, but the design changed
+// afterward to remove that whole class of risk: this file creates no widgets
+// and calls nothing UI-related at HandleError() time. It only captures data
+// into the CuiPendingError static holder and, further below, asks whatever
+// Mission is currently running to flush it.
 //
-// Current design: for the case this is scoped to (ErrorCategory.ClientKicked
-// with no UI handler — see below for why that scoping is safe), the resolved
-// caption/message are translated and stored in the CuiPendingError static
-// holder, and HandleError() returns WITHOUT calling super.HandleError() —
-// the native dialog never fires for these. Display happens later, from
-// 5_Mission, once the main menu is reliably back up after the kick (see
-// Colorful-UI\Scripts\5_Mission\GUI\CUI\menus\MainMenu.c, CheckPendingCuiError,
-// hooked at the end of Init()). That is provably a safe, stable point: it's
-// the same call path vanilla itself already uses every time the player
-// returns to the main menu after ANY disconnect/kick (confirmed via repeated
-// "Creating Mission: ...intro.ChernarusPlus\mission.c" log lines across the
-// rapid-reconnect test session), so widget creation there carries no more
-// risk than the main menu's own widget construction already does on every
-// single kick, successfully, today.
+// Cross-module dispatch - how 3_Game reaches a 5_Mission method:
+// CuiFlushPendingError() is declared on `modded class MissionBase`
+// (Colorful-UI\Scripts\5_Mission\GUI\CUI\menus\MainMenu.c). MissionBase lives
+// in the missionScriptModule (P:\scripts\5_mission\mission\missionbase.c:1),
+// which this gameScriptModule file cannot name at compile time. The obvious
+// workaround - an empty CuiFlushPendingError() stub on `modded class Mission`
+// here in 3_Game, overridden there - does NOT compile: Mission
+// (P:\scripts\3_game\gameplay.c:685) is instantiated and owned by the engine,
+// and the compiler rejects it with "engine class Mission cannot be modded".
 //
-// Scoping (unchanged from before): every kick/BattlEye/DB/auth error in
-// ClientKickedModule.c (P:\scripts\3_game\global\errormodulehandler\
-// clientkickedmodule.c) is inserted with m_UIHandler left at its default of
-// null (only ConnectErrorScriptModule ever assigns a real one,
-// connecterrorscriptmodule.c:23) — so intercepting only ClientKicked-with-
-// no-handler never swallows a callback contract we'd need to replicate.
-// Live diagnostic data (client script_2026-08-05_23-10-58.log) confirmed a
-// real kick (duplicate-UID) takes exactly this path: category matched
-// ErrorCategory.ClientKicked and hasHandler was false. Everything outside
-// that — Generic, ConnectErrorClient/Server/Script, BIOSError, or any
-// ClientKicked error that somehow does carry a handler — still calls
-// super.HandleError() untouched, i.e. the native dialog, exactly as before
-// this mod ever touched this class.
+// So the call is dispatched dynamically by name instead:
+//   GetGame().GameScript.CallFunction(mission, "CuiFlushPendingError", null, 0)
+// ScriptModule.CallFunction(Class inst, string function, out void returnVal,
+// void parm) is declared at P:\scripts\1_core\proto\enscript.c:146; a null
+// returnVal for a void method plus 0 for the unused parameter is the vanilla
+// idiom (P:\scripts\3_game\gui\effects\radialmenu.c:144,
+// P:\scripts\3_game\entities\dayzanimal.c:443) and is already how this mod
+// dispatches its own UI callbacks (Components/buttons.c:224,
+// Components/Dialogs.c:202 and :213). It resolves against the runtime type of
+// the instance, so no compile-time knowledge of MissionBase is needed here.
+// Trade-off: a rename on the 5_Mission side fails at runtime, not at compile
+// time. That is the price of crossing the module boundary.
+//
+// The instance handed to CallFunction is whatever GetMission() returns, and
+// MissionMainMenu / MissionGameplay / MissionServer all extend MissionBase,
+// so one implementation covers "player is at the main menu" and "player is
+// in a mission" alike.
+//
+// (Historical note: an earlier revision of this file tried the
+// stub-in-an-early-module / override-in-a-later-module pattern that vanilla
+// itself uses for Mission -> MissionBaseWorld -> MissionBase and for
+// Hud -> IngameHud. That pattern only works between script-only classes;
+// Mission is not one of them, hence the dispatch-by-name above.)
+//
+// Two flush points exist:
+//   1. Immediate-deferred: one GUI-queue tick after capture, TryImmediateFlush()
+//      checks the exact same "is it safe to show a dialog right now" gate
+//      vanilla's own dialog-queue draining uses — DayZGame.CheckDialogs()
+//      (dayzgame.c:3386-3396): `mission && !m_loading.IsLoading()`, exposed
+//      publicly as DayZGame.IsLoading() (dayzgame.c:3410-3413). If stable,
+//      shows the dialog right then, wherever the player is (main menu or
+//      in-game). If not, it's a no-op — the error stays pending.
+//   2. Catch-all: Colorful-UI\Scripts\5_Mission\GUI\CUI\menus\MainMenu.c's
+//      Init() flushes any still-pending error once the main menu is back up,
+//      covering every return-to-menu path (including one that raced past
+//      flush #1's stability window).
+// Both funnel through the same MissionBase.CuiFlushPendingError() method,
+// which clears CuiPendingError.s_Pending on entry — so if both flush points
+// (or the error-test harness's own explicit flush call, ErrorTestScreen.c's
+// CUI_ErrorTest_FlushPendingError) fire for the same pending error, every
+// call after the first is a harmless no-op.
 class CuiPendingError
 {
     static bool   s_Pending;
@@ -67,8 +89,18 @@ class CuiPendingError
     static string s_Message;
     static int    s_ErrorCode;
 
+    // Dialogs blow up in height (CuiDialog.ResizeToBody, Dialogs.c:149-166,
+    // has no upper bound) if fed an unbounded string — some kick reasons
+    // (BattlEye, missing-mod lists) can be long. Clamp defensively here
+    // rather than touching the shared CuiDialog component, which other
+    // callers (exit confirm, item-drop warning, etc.) also depend on.
+    static const int MAX_MESSAGE_LEN = 600;
+
     static void Set(string caption, string message, int errorCode)
     {
+        if (message.Length() > MAX_MESSAGE_LEN)
+            message = message.Substring(0, MAX_MESSAGE_LEN) + "...";
+
         s_Caption   = caption;
         s_Message   = message;
         s_ErrorCode = errorCode;
@@ -95,7 +127,10 @@ modded class DialogueErrorProperties
             "[CUI ErrorDialog] HandleError errorCode=%1 hex=%2 category=%3 hasHandler=%4 additionalInfo='%5'",
             errorCode, ErrorModuleHandler.GetErrorHex(errorCode), category, handler != null, additionalInfo));
 
-        bool wouldUseCui = (category == ErrorCategory.ClientKicked) && !handler;
+        // Generalized: any category/code with no attached UI handler goes
+        // through the CUI dialog system. See file header for why handler
+        // presence (not category) is the deciding signal.
+        bool wouldUseCui = !handler;
         Print(string.Format("[CUI ErrorDialog] wouldUseCui=%1", wouldUseCui));
 
 #ifdef NO_GUI
@@ -111,7 +146,7 @@ modded class DialogueErrorProperties
 #else
         if (!wouldUseCui)
         {
-            Print("[CUI ErrorDialog] wouldUseCui=false - calling super.HandleError (native ShowDialog path)");
+            Print("[CUI ErrorDialog] wouldUseCui=false (has UI handler) - calling super.HandleError (native ShowDialog path)");
             super.HandleError(errorCode, additionalInfo);
             return;
         }
@@ -137,15 +172,40 @@ modded class DialogueErrorProperties
 
         Print(string.Format("[CUI ErrorDialog] wouldUseCui=true - storing pending CUI error. caption='%1' message='%2'", translatedCaption, translatedMessage));
 
-        // Double-kicks (two HandleError calls back to back, observed live)
-        // simply overwrite: CuiPendingError.Set() has no accumulation, so
-        // the second call's data replaces the first's. Only one dialog shows
-        // at the menu, and it's the latest one.
+        // Latest-error-wins: CuiPendingError.Set() has no accumulation, so a
+        // second HandleError before the first is shown just replaces the
+        // stored data. Only one dialog shows, and it's the latest one.
         CuiPendingError.Set(translatedCaption, translatedMessage, errorCode);
 
-        // Deliberately NOT calling super.HandleError() here. This category/
-        // no-handler case is fully owned by the CUI display path in
-        // MainMenu.c now — the native dialog never fires for it.
+        // Immediate-deferred flush attempt — one GUI tick later, try to show
+        // it right now if the game is in a stable state. See file header for
+        // the exact vanilla-sourced state check.
+        GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.TryImmediateFlush, 0, false);
+
+        // Deliberately NOT calling super.HandleError() here. This no-handler
+        // case is fully owned by the CUI display path now — the native
+        // dialog never fires for it.
 #endif
+    }
+
+    protected void TryImmediateFlush()
+    {
+        if (!CuiPendingError.s_Pending) return;
+
+        DayZGame game = DayZGame.Cast(GetGame());
+        bool hasMission = game && game.GetMission() != null;
+        bool isLoading  = game && game.IsLoading();
+        bool stable     = game && hasMission && !isLoading;
+
+        Print(string.Format("[CUI ErrorDialog] TryImmediateFlush stable=%1 (hasMission=%2 isLoading=%3)", stable, hasMission, isLoading));
+
+        if (!stable) return;
+
+        // Dispatch by name: CuiFlushPendingError() is declared on MissionBase,
+        // a missionScriptModule type this gameScriptModule file cannot name at
+        // compile time, and Mission itself cannot be modded to hold a stub
+        // (engine-owned class). See the file header for the full reasoning and
+        // the vanilla references for this CallFunction shape.
+        GetGame().GameScript.CallFunction(game.GetMission(), "CuiFlushPendingError", null, 0);
     }
 }

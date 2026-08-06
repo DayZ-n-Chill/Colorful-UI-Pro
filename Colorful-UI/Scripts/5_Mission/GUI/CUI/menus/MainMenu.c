@@ -13,8 +13,25 @@ modded class MainMenu extends UIScriptedMenu
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	protected ProgressBarWidget m_LoadingBar;
 
+	// --- CUI Error Test Harness (additive; see ErrorTestScreen.c / ErrorTestData.c) ---
+	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
+
 	override Widget Init()
 	{
+		// Additive early branch: when Settings.c's ErrorTestScreen flag is set,
+		// boot into the error/dialog test harness instead of the normal main
+		// menu layout, and return immediately. Never falls through to the
+		// normal wiring below, so it never touches CheckPendingCuiError/
+		// ErrorDialog.c's pending-error hook that runs at the end of the
+		// normal branch's Init() (the harness flushes pending errors itself -
+		// see CUI_ErrorTest_FlushPendingError() below).
+		if (ErrorTestScreen)
+		{
+			m_ErrorTestScreen = new CUI_ErrorTestScreen();
+			layoutRoot = m_ErrorTestScreen.Build(this);
+			return layoutRoot;
+		}
+
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/cui.mainMenu.layout");
 
 		m_Play              = ButtonWidget.Cast(layoutRoot.FindAnyWidget("PlayBtn"));
@@ -146,32 +163,17 @@ modded class MainMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 
-	// See CuiPendingError (ErrorDialog.c). Never touches the native dialog
-	// path directly except as a last-resort fallback if CuiDialog itself
-	// fails to build its widget tree — the player should never end up with
-	// neither dialog after a kick.
+	// Catch-all flush point (see ErrorDialog.c header for the other one,
+	// TryImmediateFlush). Delegates to MissionBase.CuiFlushPendingError()
+	// below rather than duplicating the display logic — that's the same
+	// method ErrorDialog.c's immediate-deferred flush reaches via
+	// GameScript.CallFunction (it can't name MissionBase from 3_Game), so
+	// there is exactly one place that actually shows the dialog. This call
+	// site is inside 5_Mission, so it binds directly at compile time.
 	protected void CheckPendingCuiError()
 	{
-		if (!CuiPendingError.s_Pending) return;
-
-		string caption   = CuiPendingError.s_Caption;
-		string message   = CuiPendingError.s_Message;
-		int    errorCode = CuiPendingError.s_ErrorCode;
-		CuiPendingError.Clear();
-
-		// Info-only presentation: CuiDialog.Show's Confirm/Cancel default to
-		// null callback target with empty method names, which CuiDialog
-		// itself treats as "skip that callback" (Dialogs.c:200-216) — both
-		// buttons just close the dialog. Not redesigning CuiDialog for a
-		// single-button case; showing both is acceptable here.
-		CuiDialog dlg = CuiDialog.Show(caption, message);
-		if (!dlg)
-		{
-			// CuiDialog's own widget tree failed to build (Dialogs.c:168-176
-			// returns null in that case). Fall back to the native dialog so
-			// the player still sees something instead of nothing.
-			g_Game.GetUIManager().ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
-		}
+		MissionBase mission = MissionBase.Cast(GetGame().GetMission());
+		if (mission) mission.CuiFlushPendingError();
 	}
 	
 	override void OnShow()
@@ -281,10 +283,37 @@ modded class MainMenu extends UIScriptedMenu
 		MissionMainMenu.s_CuiQuitRequested = true;
 	}
 
+	// --- CUI Error Test Harness glue (additive) ---
+	// Public wrapper: CheckPendingCuiError() above is protected, and the
+	// harness's per-error button handler lives in a separate class
+	// (ErrorTestScreen.c) so it can't call it directly. Does not change
+	// CheckPendingCuiError() or ErrorDialog.c - just lets the harness flush a
+	// CuiPendingError (set by ErrorDialog.c's DialogueErrorProperties override
+	// for ClientKicked-category throws) immediately, the same way a normal
+	// post-kick main menu load already does.
+	void CUI_ErrorTest_FlushPendingError()
+	{
+		CheckPendingCuiError();
+	}
+
+	// Back button target for the error test screen. Flips the flag off and
+	// re-enters MENU_MAIN so the next Init() takes the normal branch above.
+	// Safe to destroy `this` here: proBtnCB defers the callback via
+	// CallLater(0) (see Components/buttons.c, CUIButtonHandler.OnClick) -
+	// the same deferral this file's own OpenSettings/OpenExitDialog-style
+	// callbacks already rely on to destroy/replace the current menu safely.
+	void CUI_BackToMainMenu()
+	{
+		ErrorTestScreen = false;
+		Close();
+		GetGame().GetUIManager().EnterScriptedMenu(MENU_MAIN, null);
+	}
+
 	void ~MainMenu()
 	{
 		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
+		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
 	}
 }
 
@@ -302,6 +331,69 @@ modded class MissionMainMenu
 		{
 			s_CuiQuitRequested = false;
 			g_Game.RequestExit(IDC_MAIN_QUIT);
+		}
+	}
+}
+
+// Sole implementation of CuiFlushPendingError(). MissionBase is
+// the common ancestor of MissionMainMenu, MissionGameplay, and MissionServer
+// (all `extends MissionBase`), so declaring it here covers "player is at
+// the main menu" and "player is in a mission" at once — matching
+// the requirement that the flush work wherever the player is, not just after
+// a kick back to the main menu. On a dedicated server this method still
+// exists (MissionServer extends MissionBase too) but is never reached with
+// anything pending: ErrorDialog.c's HandleError() never calls
+// CuiPendingError.Set() under `#ifdef SERVER` in the first place.
+//
+// This is the ONLY place that actually shows the dialog. Both flush points —
+// ErrorDialog.c's TryImmediateFlush() (reaching this by name through
+// GameScript.CallFunction, one GUI tick after any no-handler error) and
+// MainMenu.CheckPendingCuiError() (the Init()-time catch-all for any error
+// that was still pending when TryImmediateFlush ran but the game wasn't
+// stable yet) — delegate here rather than duplicating this logic. Same for
+// the error-test harness's explicit flush (ErrorTestScreen.c,
+// CUI_ErrorTest_FlushPendingError -> MainMenu.CheckPendingCuiError -> here):
+// CuiPendingError.Clear() runs as the first thing on a successful entry, so
+// any flush call that arrives after another already handled the same
+// pending error just sees s_Pending == false and returns immediately.
+//
+// Coexists with the other `modded class MissionBase` in this same module
+// (Colorful-UI\Scripts\5_Mission\Plugins\AntiNvidia\missionbase.c, which
+// overrides CreateScriptedMenu). Multiple modded bodies for one class inside
+// a single script module are chained by the compiler — this mod already does
+// exactly that for DayZGame in 3_Game (Plugins\AntiNvidia\dayzgame.c and
+// Systems\Loading.c). Do not merge them; they touch unrelated members.
+modded class MissionBase
+{
+	// NOT `override`: nothing declares CuiFlushPendingError() further up the
+	// chain. The base would have had to be Mission (3_Game), and Mission is
+	// engine-owned - `modded class Mission` is rejected outright with "engine
+	// class Mission cannot be modded". This is a brand-new method introduced
+	// on MissionBase, so `override` here would fail to compile too.
+	void CuiFlushPendingError()
+	{
+		if (!CuiPendingError.s_Pending) return;
+
+		string caption   = CuiPendingError.s_Caption;
+		string message   = CuiPendingError.s_Message;
+		int    errorCode = CuiPendingError.s_ErrorCode;
+		CuiPendingError.Clear();
+
+		Print(string.Format("[CUI ErrorDialog] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
+
+		// Info-only presentation: CuiDialog.Show's Confirm/Cancel default to
+		// null callback target with empty method names, which CuiDialog
+		// itself treats as "skip that callback" (Dialogs.c:200-216) — both
+		// buttons just close the dialog. Not redesigning CuiDialog for a
+		// single-button case; showing both is acceptable here.
+		CuiDialog dlg = CuiDialog.Show(caption, message);
+		if (!dlg)
+		{
+			// CuiDialog's own widget tree failed to build (Dialogs.c:168-176
+			// returns null in that case). Fall back to the native dialog so
+			// the player still sees something instead of nothing.
+			Print("[CUI ErrorDialog] CuiDialog.Show returned null - falling back to native ShowDialog");
+			g_Game.GetUIManager().ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
 		}
 	}
 }

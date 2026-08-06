@@ -1,0 +1,137 @@
+FrameWidgetClass ErrorTestRoot {
+ visible 1
+ clipchildren 1
+ position 0 0
+ size 1 1
+ halign center_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ scaled 1
+ {
+  PanelWidgetClass ErrorTestBg {
+   visible 1
+   color 0.05 0.05 0.05 1
+   position 0 0
+   size 1 1
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   scaled 1
+   style DayZDefaultPanel
+  }
+  PanelWidgetClass ErrorTestPanel {
+   visible 1
+   color 0.243 0.243 0.243 1
+   position 0 0
+   size 1700 940
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   scaled 1
+   style DayZDefaultPanel
+   {
+    TextWidgetClass ErrorTestTitle {
+     visible 1
+     clipchildren 0
+     position 0 24
+     size 0.94 36
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     style Bold
+     text "Error / Dialog Test Harness"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text color" 1 1 1 1
+     "exact text" 1
+     "exact text size" 28
+     "text halign" center
+     "text valign" center
+    }
+    TextWidgetClass ErrorTestSubtitle {
+     visible 1
+     clipchildren 0
+     position 0 64
+     size 0.94 24
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     text "Every button below calls ErrorModuleHandler.ThrowError() for real - the resulting dialog is the genuine vanilla/CUI article."
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+     "text color" 0.75 0.75 0.75 1
+     "exact text" 1
+     "exact text size" 16
+     "text halign" center
+     "text valign" center
+    }
+    PanelWidgetClass ErrorTestSeparator {
+     color 0.863 0.271 0.271 0.6
+     position 0 96
+     size 0.94 2
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     scaled 1
+     priority 10
+     style DayZDefaultPanel
+    }
+    ScrollWidgetClass ErrorTestScroll {
+     visible 1
+     position 0 112
+     size 1620 748
+     halign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     "Scrollbar V" 1
+     {
+      WrapSpacerWidgetClass ErrorTestContent {
+       visible 1
+       position 0 0
+       size 1 30
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       "Size To Content V" 1
+       Padding 6
+       Margin 8
+      }
+     }
+    }
+    ButtonWidgetClass BackBtn {
+     visible 1
+     color 0.2 0.4 0.8 1
+     position 0 20
+     size 320 50
+     halign center_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style EmptyHighlight
+     "no focus" 0
+     text "Back to Main Menu"
+     text_proportion 0.5
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+    }
+   }
+  }
+ }
+}
