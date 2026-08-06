@@ -1,40 +1,15 @@
-// ANVICaptchaMenu
-// -----------------------------------------------------------------------------
-// AntiNvidia's captcha gate, restyled to match the mod's CuiDialog modal
-// chrome and animation choreography (see Colorful-UI/Scripts/5_Mission/GUI/
-// Components/Dialogs.c + Backdrop.c for the source of truth).
+// The Anti-NVIDIA captcha the player solves before connecting, styled to
+// match the rest of the Colorful-UI dialogs.
 //
-// This class lives in 3_Game (it's constructed from DayZGame.Connect(), a
-// 3_Game override, before any mission/5_Mission context is guaranteed to
-// exist). 3_Game compiles as a parent module to 5_Mission, so it cannot
-// declare a variable of, cast to, or otherwise reference CuiDialog,
-// CuiBackdrop, or cuiElmnt (all 5_Mission-only types) — doing so is a
-// compile-time "unknown type" error, not a runtime risk. The dialog chrome,
-// backdrop dim, and button hover styling below are therefore reimplemented
-// inline rather than reusing those 5_Mission components.
+// Enable it with the AntiNvidia switch in Scripts/3_Game/Config/Settings.c.
 //
-// Animation choreography (ported from CuiDialog, same easing/timing so it
-// reads identically to every other modal in the mod):
-//   Entrance (~360ms): backdrop fade -> dialogbox rise -> caption rise ->
-//   separator draws in by width -> body rise -> buttons rise from below.
-//   Exit (~600ms, reverse order, backdrop gets a slow visible tail).
+// The player gets three attempts at a two-digit code. A correct answer
+// connects to the server, running out of attempts or confirming Quit closes
+// the game.
 //
-// Functional behavior preserved from the pre-restyle version (unchanged):
-//   - two-digit image captcha via SetCorrectAnswer/DrawNumber
-//   - answer input clamped to 2 chars in OnChange
-//   - 3 attempts, decrement + Reset() on wrong answer, Leave() when exhausted
-//   - Quit -> reveals QuitWarning + ConfirmQuitButton (now swaps into the
-//     same bottom-row slot instead of a separate tiny corner widget)
-//   - correct answer -> green feedback, "JOINING..", controls disabled,
-//     queued DoConnect() -> game.Connect() (non-overloaded wrapper; do not
-//     replace with a method pointer to the overloaded Connect())
-//
-// New in this version: on correct answer or on Leave(), the exit animation
-// plays FIRST, and the original queued action (DoConnect / RequestExit) only
-// fires once the exit animation's AnimTick completes. This keeps the timing
-// of DoConnect's CallLater identical in spirit (still queued, still a direct
-// call to the non-overloaded wrapper) — it's just deferred behind ~600ms of
-// motion instead of a flat 10ms.
+// The dialog frame and animation are written out here rather than reusing
+// CuiDialog, because this screen loads earlier in the game than the shared
+// dialog components are available.
 class ANVICaptchaMenu extends UIScriptedMenu
 {
   private int m_CorrectAnswer;
@@ -47,8 +22,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
   protected ButtonWidget m_QuitButton;
   protected ButtonWidget m_QuitConfirmButton;
 
-  // ----- Dialog chrome (CuiDialog-equivalent widgets, found in this menu's
-  // own layoutRoot instead of a separately-created component) -----
+  // ----- Dialog frame widgets -----
   protected ImageWidget m_Backdrop;
   protected float       m_BackdropMaxAlpha;
   protected Widget      m_DialogBox;
@@ -58,14 +32,13 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   protected bool m_Closing;
 
-  // Deferred post-exit-animation action.
+  // What to do once the closing animation finishes.
   protected static const int ACTION_NONE    = 0;
   protected static const int ACTION_CONNECT = 1;
   protected static const int ACTION_LEAVE   = 2;
   protected int m_PendingAction;
 
-  // Base layout values, captured once after widget creation so the
-  // animation can compute offsets relative to where the layout puts them.
+  // Where the layout puts each element, so animations can offset from it.
   protected float m_DlgBaseY;
   protected float m_CapBaseY;
   protected float m_BodyBaseY;
@@ -74,7 +47,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
   protected float m_SepBaseW;
   protected float m_SepBaseH;
 
-  // Animation state. m_AnimDir: +1 entering, -1 exiting, 0 idle.
+  // +1 entering, -1 exiting, 0 idle.
   protected static const float ANIM_IN_TOTAL_MS  = 360.0;
   protected static const float ANIM_OUT_TOTAL_MS = 600.0;
   protected static const int   ANIM_TICK_MS      = 16;
@@ -85,9 +58,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   void ~ANVICaptchaMenu()
   {
-    // GetGame() can already be gone when this destructor runs during script
-    // module teardown (same shutdown window documented in
-    // Components/buttons.c, cuiElmnt.Cleanup) - guard before touching it.
+    // At game shutdown the engine may already be gone.
     if (GetGame())
       GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
   }
@@ -144,20 +115,16 @@ class ANVICaptchaMenu extends UIScriptedMenu
     return layoutRoot;
   }
 
-  // ----- Chrome setup (CuiDialog/CuiBackdrop-equivalent runtime styling) -----
+  // ----- Appearance -----
 
   protected void SetupChrome()
   {
-    // Layout's `color R G B A` on a DayZDefaultPanel drops the alpha
-    // component, so the translucent dialog panel color is applied at
-    // runtime via ARGB, same as CuiDialog.CuiDialog (Dialogs.c:110).
+    // Layouts cannot express a see-through panel colour, so set it here.
     if (m_DialogBox) m_DialogBox.SetColor(ARGB(220, 62, 62, 62));
     if (m_Separator) m_Separator.SetColor(colorScheme.Separator());
 
-    // Backdrop: capture the layout-baked peak alpha, force the widget's
-    // color to fully opaque, then drive 0..1 via SetAlpha as a multiplier.
-    // Mirrors CuiBackdrop.CuiBackdrop (Backdrop.c:42-55) — reimplemented
-    // inline because CuiBackdrop is a 5_Mission-only type.
+    // Take the layout's dim opacity as the maximum, then make the colour
+    // opaque so the fade can run cleanly from 0 to it.
     if (m_Backdrop)
     {
       int layoutColor = m_Backdrop.GetColor();
@@ -169,11 +136,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
     if (m_TextAnswerInput) m_TextAnswerInput.SetColor(colorScheme.OptionInputColors());
 
-    // Bottom-row buttons: same treatment as CuiDialog's Confirm/Cancel via
-    // cuiElmnt.proBtnCB (buttons.c:353-377) — text tinted with PrimaryText,
-    // base color forced transparent so only the EmptyHighlight style shows,
-    // hover swap handled manually via OnMouseEnter/OnMouseLeave below since
-    // CUIButtonHandler is 5_Mission-only.
+    // Buttons are styled to match the rest of the mod's dialogs.
     ApplyButtonBaseStyle(m_QuitButton);
     ApplyButtonBaseStyle(m_QuitConfirmButton);
     ApplyButtonBaseStyle(m_AnswerSubmit);
@@ -197,7 +160,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
     if (m_Separator)       m_Separator.GetSize(m_SepBaseW, m_SepBaseH);
   }
 
-  // ----- Hover styling (manual CUIButtonHandler-equivalent) -----
+  // ----- Hover styling -----
 
   override bool OnMouseEnter(Widget w, int x, int y)
   {
@@ -222,17 +185,13 @@ class ANVICaptchaMenu extends UIScriptedMenu
   override bool OnClick(Widget w, int x, int y, int button) {
     super.OnClick(w, x, y, button);
 
-    // Ignore clicks that land during the exit animation — buttons stay
-    // alive (just invisible/fading) until the menu actually tears down.
+    // Ignore clicks while the dialog is closing.
     if (m_Closing) return true;
 
-    // A null `w` would compare equal to any widget member that failed to
-    // resolve in Init(), which would then be dereferenced below.
+    // Guard against a missing widget matching a null click target.
     if (!w) return false;
 
-    // Clicking anything other than the quit controls themselves cancels a
-    // pending quit confirmation and restores the QUIT button (it's hidden
-    // while ConfirmQuitButton occupies its slot below).
+    // Clicking elsewhere cancels a pending quit confirmation.
     if (w != m_QuitButton && w != m_QuitConfirmButton) {
       if (m_QuitButton)        m_QuitButton.Show(true);
       if (m_QuitConfirmButton) m_QuitConfirmButton.Show(false);
@@ -308,14 +267,9 @@ class ANVICaptchaMenu extends UIScriptedMenu
     }
   }
 
-  // DayZGame.Connect is overloaded (no-arg + multi-arg), and CallLater cannot
-  // bind to an overloaded method pointer. This non-overloaded wrapper calls
-  // the no-arg Connect() directly (a direct call to an overloaded method is
-  // legal), which is safe to use here: m_ConnectAddress/m_ConnectPort are set
-  // by whatever initiated the join (server browser, invite/ConnectFromJoin,
-  // CLI) before AntiNvidia's Connect() override intercepted, and neither
-  // DisconnectSessionScript() nor DisconnectSessionEx() clears them
-  // (P:\scripts\3_game\dayzgame.c:2689-2758), so they're still valid here.
+  // Connect() cannot be scheduled directly because it has several forms, so
+  // this wrapper calls it. The server chosen before the captcha appeared is
+  // still remembered, so this reconnects to the right one.
   private void DoConnect() {
     DayZGame game = DayZGame.Cast(GetGame());
     if (game)

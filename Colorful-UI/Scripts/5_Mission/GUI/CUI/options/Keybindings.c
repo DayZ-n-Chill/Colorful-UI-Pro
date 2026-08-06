@@ -46,12 +46,7 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		g_Game.SetKeyboardHandle(this);
 		m_Tabber.RefreshTab(true);
 
-		// Match vanilla initial state — Apply/Undo are disabled until the user
-		// edits a bind. Our `override Init()` replaces vanilla's, so vanilla's
-		// own ColorDisabled() init lines (keybindingsmenu.c:76-81) never ran;
-		// reapply them here. Vanilla's bind-edit handlers (ConfirmKeybindEntry
-		// etc.) call ColorWhite() and ClearFlags() at the right time so these
-		// re-enable themselves when the user actually changes a binding.
+		// Apply and Undo start disabled until a binding is changed.
 		ColorDisabled(m_Apply);
 		m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
 		ColorDisabled(m_Undo);
@@ -60,12 +55,7 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 
-	// Vanilla ColorDisabled / ColorWhite only call button.SetTextColor — but
-	// our cuiElmnt.proBtnCB puts the visible text on a `_label` child, so the
-	// button's own text color is invisible. Replicate vanilla's body inline
-	// (no super — vanilla's methods aren't overrides on UIScriptedMenu, so a
-	// super call would fail to compile) and also color the `_label` child.
-	// Vanilla source: keybindingsmenu.c:446-477.
+	// The visible button text lives on a child widget, so colour that too.
 
 	override void ColorDisabled(Widget w)
 	{

@@ -4,7 +4,7 @@ static bool ErrorTestScreen    = false; // If set to true, MainMenu boots into t
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool UseImagesets       = false;   // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used.
 static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
-static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
+static bool ShowGameOverOverlay = true;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
 static bool AntiNvidia         = false;  // If set to true, the Anti-NVIDIA Inspector captcha will be shown before connecting.
 

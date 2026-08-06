@@ -45,7 +45,7 @@ modded class OptionsMenu extends UIScriptedMenu
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 		m_MenuDivider.SetColor(colorScheme.Separator());
 
-		// TutorialsTextWidget is a vanilla-string-id developer marker baked
+		// Developer marker left in the layout; hidden here.
 		// purple in the layout — hide it.
 		Widget tutorialsLabel = layoutRoot.FindAnyWidget("TutorialsTextWidget");
 		if (tutorialsLabel) tutorialsLabel.Show(false);
@@ -89,7 +89,7 @@ modded class OptionsMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 
-	// // vanilla color helpers (unchanged)
+	// Row hover and disabled colouring.
 	override void ColorDisable(Widget w)
 	{
 		SetFocus(null);
@@ -105,10 +105,7 @@ modded class OptionsMenu extends UIScriptedMenu
 	}
 
 
-	// Vanilla OptionsMenu.ColorHighlight tints option rows red — it's the
-	// handler triggered when the chevron or row is hovered. Mirror vanilla's
-	// structure (P:\scripts\5_mission\gui\newui\options\optionsmenu.c:759-811)
-	// but swap the red ARGBs for our scheme hover color.
+	// Highlights an option row on hover, using the mod's colour scheme.
 	override void ColorHighlight(Widget w)
 	{
 		if ((w.GetFlags() & WidgetFlags.IGNOREPOINTER) == WidgetFlags.IGNOREPOINTER)
@@ -122,7 +119,7 @@ modded class OptionsMenu extends UIScriptedMenu
 			button.SetTextColor(hover);
 		}
 
-		// Vanilla fills the row background black on hover — preserved.
+		// Row background darkens on hover.
 		w.SetColor(UIColor.Black());
 
 		TextWidget  text1        = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_text"));
@@ -140,9 +137,7 @@ modded class OptionsMenu extends UIScriptedMenu
 		if (option_label) option_label.SetColor(hover);
 	}
 
-	// Vanilla OptionsMenu.Reset() and PerformSetToDefaults() revert immediately
-	// with no confirmation. Wrap each with a CuiDialog so the user gets a
-	// chance to back out — Confirm fires the vanilla revert via super.
+	// Resetting normally happens instantly; ask first.
 	override void Reset()
 	{
 		CuiDialog.Show(

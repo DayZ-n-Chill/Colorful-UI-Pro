@@ -5,26 +5,19 @@ modded class MainMenu extends UIScriptedMenu
 	protected TextWidget m_WelcomeBack;
 	protected ButtonWidget m_PrevCharacter, m_NextCharacter;
 	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
-	// MenuDivider0 was switched to PanelWidget (solid bg) in the layout, so it's
-	// typed as plain Widget here — SetColor lives on the base Widget class.
+	// Plain Widget because the divider is a panel, not a text widget.
 	protected Widget m_MenuDivider0;
 	protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook, m_CharacterBtn;
 	protected ButtonWidget m_TestBtn0, m_TestBtn1, m_TestBtn2, m_TestBtn3, m_TestBtn4, m_TestBtn5;
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	protected ProgressBarWidget m_LoadingBar;
 
-	// --- CUI Error Test Harness (additive; see ErrorTestScreen.c / ErrorTestData.c) ---
+	// --- Error/dialog test screen (see ErrorTestScreen.c) ---
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
 
 	override Widget Init()
 	{
-		// Additive early branch: when Settings.c's ErrorTestScreen flag is set,
-		// boot into the error/dialog test harness instead of the normal main
-		// menu layout, and return immediately. Never falls through to the
-		// normal wiring below, so it never touches CheckPendingCuiError/
-		// ErrorDialog.c's pending-error hook that runs at the end of the
-		// normal branch's Init() (the harness flushes pending errors itself -
-		// see CUI_ErrorTest_FlushPendingError() below).
+		// Debug option: show the error test screen instead of the main menu.
 		if (ErrorTestScreen)
 		{
 			m_ErrorTestScreen = new CUI_ErrorTestScreen();
@@ -52,9 +45,8 @@ modded class MainMenu extends UIScriptedMenu
 		m_Background        = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
 		if (m_Background)
 		{
-			// Static bg only when video is off; otherwise the menu's
-			// ImageBackground (priority inside layoutRoot 951) covers the
-			// workspace-rooted CuiBackgroundVideo (priority 1).
+			// Only show the still image when the background video is off,
+			// otherwise it would cover the video.
 			if (EnableMenuVideo) m_Background.Show(false);
 			else                 m_Background.LoadImageFile(0, GetMainMenuBackground());
 		}
@@ -137,9 +129,7 @@ modded class MainMenu extends UIScriptedMenu
 		Branding.ApplyLogo(m_Logo);	
 
 		#ifndef WORKBENCH
-		// Singleton workspace-rooted video — persists across menu transitions
-		// so MainMenu → Credits → Options never blackscreens between teardowns.
-		// Ensure() is a no-op if already running.
+		// Safe to call every time; the video keeps playing between menus.
 		if (EnableMenuVideo)
 		{
 			if (!FileExist("$saves:" + m_MainMenuVideo))
@@ -148,28 +138,14 @@ modded class MainMenu extends UIScriptedMenu
 		}
 		#endif
 
-		// Pick up a kick/error dialog captured by DialogueErrorProperties
-		// (Colorful-UI/Scripts/3_Game/Systems/ErrorDialog.c, CuiPendingError
-		// holder) while we were mid-disconnect. Deferred one CallLater tick
-		// past this menu's own widget construction, same "let the engine
-		// finish this frame first" technique already used elsewhere in this
-		// mod (buttons.c's CUIButtonHandler.OnClick) — this menu's Init()
-		// running to completion is itself proof the main menu is safely up
-		// (it's the same construction that already happens, successfully,
-		// after every kick), so this carries no more risk than the rest of
-		// this method already does.
+		// Show any error message saved while the player was being kicked,
+		// once this menu has finished building.
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.CheckPendingCuiError, 0, false);
 
 		return layoutRoot;
 	}
 
-	// Catch-all flush point (see ErrorDialog.c header for the other one,
-	// TryImmediateFlush). Delegates to MissionBase.CuiFlushPendingError()
-	// below rather than duplicating the display logic — that's the same
-	// method ErrorDialog.c's immediate-deferred flush reaches via
-	// GameScript.CallFunction (it can't name MissionBase from 3_Game), so
-	// there is exactly one place that actually shows the dialog. This call
-	// site is inside 5_Mission, so it binds directly at compile time.
+	// Shows an error saved by ErrorDialog.c, if there is one waiting.
 	protected void CheckPendingCuiError()
 	{
 		MissionBase mission = MissionBase.Cast(GetGame().GetMission());
@@ -178,10 +154,7 @@ modded class MainMenu extends UIScriptedMenu
 	
 	override void OnShow()
 	{
-		// layoutRoot is null when CreateWidgets failed (missing/corrupt layout
-		// in the PBO) or when the error-test harness's Build() returned null.
-		// Init() returns that null straight through, and the engine still shows
-		// the menu, so these lookups must not assume a root exists.
+		// The layout may have failed to load, so check before using it.
 		if (layoutRoot)
 		{
 			if (!m_LoadingBar) m_LoadingBar = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
@@ -194,9 +167,8 @@ modded class MainMenu extends UIScriptedMenu
 		OnChangeCharacter(false);
 	}
 	
-	// No super.Refresh(): vanilla dereferences m_Version unguarded and the CUI
-	// layout has no "version" widget, so the chain throws a VM exception on
-	// every login/database-ID refresh. Replicate vanilla behavior with guards.
+	// Rewritten rather than calling the original, which expects a version
+	// label this layout does not have and would crash without it.
 	override void Refresh()
 	{
 		OnChangeCharacter(false);
@@ -260,19 +232,14 @@ modded class MainMenu extends UIScriptedMenu
 		}
 	}
 
-	// Replaces the vanilla colorfulExitDialog flow. Show our CuiDialog with
-	// a Confirm callback that fires the same RequestExit(IDC_MAIN_QUIT) the
-	// old dialog used. Cancel just closes (no callback needed).
+	// "Are you sure you want to quit?" confirmation.
 	void OpenExitDialog()
 	{
 		CuiDialog.Show("#main_menu_exit", "#main_menu_exit_desc", true, this, "DoExit", "");
 	}
 
-	// Vanilla Update() calls Exit() on UAUIBack (Escape) and Exit() routes
-	// to GetUIManager().ShowDialog — bypassing our CuiDialog. Override so
-	// Escape and the Exit button take the same path. If a CuiDialog is
-	// already open (e.g. our exit confirm), treat Escape as Cancel on the
-	// top dialog instead of stacking another one.
+	// Escape and the Exit button behave the same. If a dialog is already
+	// open, Escape closes that instead of opening another.
 	override void Exit()
 	{
 		if (CuiDialog.CancelTop())
@@ -282,33 +249,19 @@ modded class MainMenu extends UIScriptedMenu
 
 	void DoExit()
 	{
-		// RequestExit must NOT run from inside the GUI ScriptCallQueue tick:
-		// it tears the whole game down while the engine is still iterating
-		// that same queue, which then reads freed memory -> access violation
-		// (the crash-on-exit at main menu). Flag the mission instead; it
-		// fires the quit from OnUpdate, outside the queue iteration.
+		// Quitting straight from a button press crashes the game, so ask the
+		// mission to quit on its next update instead.
 		MissionMainMenu.s_CuiQuitRequested = true;
 	}
 
-	// --- CUI Error Test Harness glue (additive) ---
-	// Public wrapper: CheckPendingCuiError() above is protected, and the
-	// harness's per-error button handler lives in a separate class
-	// (ErrorTestScreen.c) so it can't call it directly. Does not change
-	// CheckPendingCuiError() or ErrorDialog.c - just lets the harness flush a
-	// CuiPendingError (set by ErrorDialog.c's DialogueErrorProperties override
-	// for ClientKicked-category throws) immediately, the same way a normal
-	// post-kick main menu load already does.
+	// Lets the error test screen show a thrown error straight away.
 	void CUI_ErrorTest_FlushPendingError()
 	{
 		CheckPendingCuiError();
 	}
 
-	// Back button target for the error test screen. Flips the flag off and
-	// re-enters MENU_MAIN so the next Init() takes the normal branch above.
-	// Safe to destroy `this` here: proBtnCB defers the callback via
-	// CallLater(0) (see Components/buttons.c, CUIButtonHandler.OnClick) -
-	// the same deferral this file's own OpenSettings/OpenExitDialog-style
-	// callbacks already rely on to destroy/replace the current menu safely.
+	// Back button on the error test screen: turns it off and reopens the
+	// normal main menu.
 	void CUI_BackToMainMenu()
 	{
 		ErrorTestScreen = false;
@@ -318,22 +271,18 @@ modded class MainMenu extends UIScriptedMenu
 
 	void ~MainMenu()
 	{
-		// Cancel the pending-error flush queued in Init(). If this menu is torn
-		// down inside that one-tick window the callback would fire against a
-		// dead instance; the error itself stays in CuiPendingError and the next
-		// MainMenu.Init() picks it up.
+		// Drop the queued error check; the message stays saved for next time.
 		if (GetGame())
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
 
-		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
+		// Leave the background video running; it outlives this menu.
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
 	}
 }
 
-// Quit deferral target for MainMenu.DoExit() — see comment there. Mission
-// OnUpdate runs outside the ScriptCallQueue tick, so teardown started here
-// can't invalidate a queue the engine is mid-iterating.
+// Quitting is requested here and carried out on the next mission update,
+// which is the only safe moment to shut the game down.
 modded class MissionMainMenu
 {
 	static bool s_CuiQuitRequested;
@@ -349,29 +298,13 @@ modded class MissionMainMenu
 	}
 }
 
-// Sole implementation of CuiFlushPendingError(). MissionBase is
-// the common ancestor of MissionMainMenu, MissionGameplay, and MissionServer
-// (all `extends MissionBase`), so declaring it here covers "player is at
-// the main menu" and "player is in a mission" at once — matching
-// the requirement that the flush work wherever the player is, not just after
-// a kick back to the main menu. On a dedicated server this method still
-// exists (MissionServer extends MissionBase too) but is never reached with
-// anything pending: ErrorDialog.c's HandleError() never calls
-// CuiPendingError.Set() under `#ifdef SERVER` in the first place.
+// Shows an error message that was saved earlier by ErrorDialog.c. This is
+// the only place that displays it, and it clears the saved message first so
+// it can never appear twice.
 //
-// This is the ONLY place that actually shows the dialog. Both flush points —
-// ErrorDialog.c's TryImmediateFlush() (reaching this by name through
-// GameScript.CallFunction, one GUI tick after any no-handler error) and
-// MainMenu.CheckPendingCuiError() (the Init()-time catch-all for any error
-// that was still pending when TryImmediateFlush ran but the game wasn't
-// stable yet) — delegate here rather than duplicating this logic. Same for
-// the error-test harness's explicit flush (ErrorTestScreen.c,
-// CUI_ErrorTest_FlushPendingError -> MainMenu.CheckPendingCuiError -> here):
-// CuiPendingError.Clear() runs as the first thing on a successful entry, so
-// any flush call that arrives after another already handled the same
-// pending error just sees s_Pending == false and returns immediately.
-//
-// Coexists with the other `modded class MissionBase` in this same module
+// This class is also modded in Plugins/AntiNvidia/missionbase.c for a
+// different purpose; keep the two separate.
+modded class MissionBase` in this same module
 // (Colorful-UI\Scripts\5_Mission\Plugins\AntiNvidia\missionbase.c, which
 // overrides CreateScriptedMenu). Multiple modded bodies for one class inside
 // a single script module are chained by the compiler — this mod already does

@@ -1,34 +1,13 @@
-// CUI_ErrorTestScreen
-// -----------------------------------------------------------------------------
-// Debug harness: one button per error/dialog the vanilla ErrorModuleHandler
-// system can produce (see ErrorTestData.c). Booted instead of the normal main
-// menu when Settings.c's ErrorTestScreen flag is true (MainMenu.c, top of
-// Init()). Every button throws its error through the real public API -
-// ErrorModuleHandler.ThrowError(ErrorCategory category, int code,
-// string additionalInfo = "") - P:\scripts\3_game\global\errormodulehandler\
-// errormodulehandler.c:43 - so whatever dialog results (native ShowDialog or
-// this mod's CuiDialog reskin) is the genuine article, not a mock.
+// Debug screen listing every error message the game can produce, one button
+// each. Turn it on with the ErrorTestScreen switch in
+// Scripts/3_Game/Config/Settings.c; the Back button turns it off again.
 //
-// Buttons are generated dynamically from CUI_ErrorTestData's table (~185
-// entries) rather than hand-placed in the layout: cui.errortest.layout only
-// supplies the screen chrome + a ScrollWidget/WrapSpacer content container,
-// and cui.errortest.row.layout / cui.errortest.header.layout are single-widget
-// prototypes cloned per entry via GetGame().GetWorkspace().CreateWidgets(path,
-// parent) - the same pattern vanilla's own CreditsDepartmentSection uses for
-// dynamic list rows (P:\scripts\5_mission\gui\newui\credits\elements\
-// creditsdepartmentelement.c:65-77).
+// Each button raises its error for real, so the popup you see is exactly
+// what a player would get. Use it to check dialog styling without having to
+// provoke a genuine kick or connection failure.
 //
-// Handler choice: cuiElmnt.proBtnCB (Components/buttons.c) is NOT used for the
-// per-error buttons. Its InvokeCallback dispatches via
-// GetGame().GameScript.CallFunction(target, methodName, null, 0) - no
-// arguments - so it only works when N buttons all call the same fixed,
-// pre-existing method name. Here every button needs a distinct (category,
-// code) pair carried alongside it, and there's no way to synthesize ~185
-// uniquely-named callback methods. A plain ScriptedWidgetEventHandler that
-// stores category+code as instance fields (one instance per button, set via
-// ButtonWidget.SetHandler - the same primitive CUIButtonHandler itself uses
-// under proBtnCB) fits a data-driven list directly. The Back button, which
-// needs no parameters, still uses proBtnCB like the rest of this mod's chrome.
+// The buttons are built from the list in ErrorTestData.c, so adding an entry
+// there adds a button here.
 class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 {
 	protected ButtonWidget m_Button;
@@ -45,8 +24,7 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 		if (m_Button) m_Button.SetHandler(this);
 	}
 
-	// Mirrors CUIButtonHandler.Dispose() (Components/buttons.c) - detach from
-	// the widget before the widget tree is torn down.
+	// Detach from the button before its widget is destroyed.
 	void Dispose()
 	{
 		if (m_Button) m_Button.SetHandler(null);
@@ -60,19 +38,8 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 
 		ErrorModuleHandler.ThrowError(m_Category, m_Code);
 
-		// ClientKicked-category throws are captured by ErrorDialog.c's modded
-		// DialogueErrorProperties.HandleError() into CuiPendingError instead of
-		// firing the native dialog immediately (see that file - it only fires
-		// for ClientKicked entries with no UIScriptedMenu handler, which is all
-		// of them). Normally that pending error is only flushed on the NEXT
-		// MainMenu.Init() (CheckPendingCuiError, called after this screen's
-		// early-return branch, so it wouldn't run automatically while this
-		// screen is up). Flush it here instead, one GUI tick later, through the
-		// public wrapper MainMenu.CUI_ErrorTest_FlushPendingError() so the
-		// operator sees the actual CuiDialog result immediately. For every
-		// other category (ConnectErrorClient/Server/Script, BIOSError -1) this
-		// call is a harmless no-op - CuiPendingError.s_Pending stays false
-		// because ErrorDialog.c's override never touches those categories.
+		// Kick errors are normally shown on returning to the main menu; on
+		// this screen show them straight away instead.
 		if (m_Owner)
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(m_Owner.CUI_ErrorTest_FlushPendingError, 0, false);
 
@@ -119,10 +86,7 @@ class CUI_ErrorTestScreen
 				TextWidget header = TextWidget.Cast(headerRoot);
 				if (header)
 				{
-					// EnumTools.EnumToString (P:\scripts\1_core\proto\enconvert.c:614),
-					// not m_Category.ToString(): an enum variable is int-backed, so
-					// ToString() would print "5" instead of "ClientKicked" even if the
-					// compiler accepts the member call on an enum-typed value.
+					// Prints the category name; ToString() would print a number.
 					header.SetText(EnumTools.EnumToString(ErrorCategory, entry.m_Category));
 					header.SetColor(colorScheme.BrandColor());
 				}
@@ -145,8 +109,7 @@ class CUI_ErrorTestScreen
 		content.Update();
 	}
 
-	// Called from MainMenu.~MainMenu(). Detaches every dynamically-created
-	// button handler before the widget tree goes away.
+	// Detaches every button handler before the screen is destroyed.
 	void Cleanup()
 	{
 		if (!m_Handlers) return;
