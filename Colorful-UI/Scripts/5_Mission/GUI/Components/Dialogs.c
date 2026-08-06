@@ -171,6 +171,7 @@ class CuiDialog
         // Don't keep an instance whose widgets failed to load — it would
         // never be removed (no buttons -> no OnCancel/OnConfirm path).
         if (!dlg.m_Root) return null;
+        if (!s_OpenDialogs) return null;
         s_OpenDialogs.Insert(dlg);
         return dlg;
     }
@@ -180,6 +181,7 @@ class CuiDialog
     // this first so the key dismisses the dialog instead of stacking another.
     static bool CancelTop()
     {
+        if (!s_OpenDialogs) return false;
         int n = s_OpenDialogs.Count();
         if (n == 0) return false;
         CuiDialog top = s_OpenDialogs.Get(n - 1);
@@ -391,7 +393,8 @@ class CuiDialog
 
     protected void DoClose()
     {
-        GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
+        if (GetGame())
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
         cuiElmnt.CleanupForOwner(this);
 
         m_Confirm   = null;
@@ -408,13 +411,20 @@ class CuiDialog
             m_Root = null;
         }
 
-        int idx = s_OpenDialogs.Find(this);
-        if (idx >= 0) s_OpenDialogs.Remove(idx);
+        if (s_OpenDialogs)
+        {
+            int idx = s_OpenDialogs.Find(this);
+            if (idx >= 0) s_OpenDialogs.Remove(idx);
+        }
     }
 
     void ~CuiDialog()
     {
-        GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
+        // Reached during "Cleaning up script module globals" at shutdown, where
+        // GetGame() can already be null — this is the exact path documented in
+        // Components/buttons.c (cuiElmnt.Cleanup) that produced a VM Exception.
+        if (GetGame())
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
         cuiElmnt.CleanupForOwner(this);
     }
 }

@@ -178,11 +178,18 @@ modded class MainMenu extends UIScriptedMenu
 	
 	override void OnShow()
 	{
-		if (!m_LoadingBar) m_LoadingBar = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
-		if (!m_Logo) m_Logo = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
-		if (!m_TopShader) m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
-		if (!m_BottomShader) m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-		
+		// layoutRoot is null when CreateWidgets failed (missing/corrupt layout
+		// in the PBO) or when the error-test harness's Build() returned null.
+		// Init() returns that null straight through, and the engine still shows
+		// the menu, so these lookups must not assume a root exists.
+		if (layoutRoot)
+		{
+			if (!m_LoadingBar) m_LoadingBar = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
+			if (!m_Logo) m_Logo = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
+			if (!m_TopShader) m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
+			if (!m_BottomShader) m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
+		}
+
 		if (m_Stats) m_Stats.UpdateStats();
 		OnChangeCharacter(false);
 	}
@@ -311,6 +318,13 @@ modded class MainMenu extends UIScriptedMenu
 
 	void ~MainMenu()
 	{
+		// Cancel the pending-error flush queued in Init(). If this menu is torn
+		// down inside that one-tick window the callback would fire against a
+		// dead instance; the error itself stays in CuiPendingError and the next
+		// MainMenu.Init() picks it up.
+		if (GetGame())
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
+
 		// Singleton bg video persists — do NOT touch CuiBackgroundVideo.s_Instance.
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
@@ -393,7 +407,11 @@ modded class MissionBase
 			// returns null in that case). Fall back to the native dialog so
 			// the player still sees something instead of nothing.
 			Print("[CUI ErrorDialog] CuiDialog.Show returned null - falling back to native ShowDialog");
-			g_Game.GetUIManager().ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
+			// This runs on a GUI-queue tick during post-kick teardown, where
+			// the UIManager is not guaranteed to still be around.
+			UIManager ui = g_Game.GetUIManager();
+			if (ui)
+				ui.ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
 		}
 	}
 }

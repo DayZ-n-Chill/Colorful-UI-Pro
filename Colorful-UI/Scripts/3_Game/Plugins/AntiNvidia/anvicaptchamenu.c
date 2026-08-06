@@ -85,7 +85,11 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   void ~ANVICaptchaMenu()
   {
-    GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
+    // GetGame() can already be gone when this destructor runs during script
+    // module teardown (same shutdown window documented in
+    // Components/buttons.c, cuiElmnt.Cleanup) - guard before touching it.
+    if (GetGame())
+      GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
   }
 
   override void OnShow() {
@@ -222,19 +226,23 @@ class ANVICaptchaMenu extends UIScriptedMenu
     // alive (just invisible/fading) until the menu actually tears down.
     if (m_Closing) return true;
 
+    // A null `w` would compare equal to any widget member that failed to
+    // resolve in Init(), which would then be dereferenced below.
+    if (!w) return false;
+
     // Clicking anything other than the quit controls themselves cancels a
     // pending quit confirmation and restores the QUIT button (it's hidden
     // while ConfirmQuitButton occupies its slot below).
     if (w != m_QuitButton && w != m_QuitConfirmButton) {
-      m_QuitButton.Show(true);
-      m_QuitConfirmButton.Show(false);
-      m_QuitWarning.Show(false);
+      if (m_QuitButton)        m_QuitButton.Show(true);
+      if (m_QuitConfirmButton) m_QuitConfirmButton.Show(false);
+      if (m_QuitWarning)       m_QuitWarning.Show(false);
     }
     switch (w) {
     case m_QuitButton: {
       m_QuitButton.Show(false);
-      m_QuitConfirmButton.Show(true);
-      m_QuitWarning.Show(true);
+      if (m_QuitConfirmButton) m_QuitConfirmButton.Show(true);
+      if (m_QuitWarning)       m_QuitWarning.Show(true);
       return true;
     }
     case m_QuitConfirmButton: {
@@ -242,6 +250,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
       return true;
     }
     case m_AnswerSubmit: {
+      if (!m_TextAnswerInput) return true;
       string answer = m_TextAnswerInput.GetText();
       if (answer != string.Empty) {
         HandleAnswer(answer.ToInt());
@@ -254,7 +263,7 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   override bool OnChange(Widget w, int x, int y, bool finished) {
     super.OnChange(w, x, y, finished);
-    if (w == m_TextAnswerInput) {
+    if (w && w == m_TextAnswerInput) {
       string fieldText = m_TextAnswerInput.GetText();
       if (fieldText.Length() > 2) {
         m_TextAnswerInput.SetText(fieldText.Substring(0, 2));
@@ -280,12 +289,18 @@ class ANVICaptchaMenu extends UIScriptedMenu
     DayZGame game = DayZGame.Cast(GetGame());
     if (game) {
       game.m_CaptchaCompleted = true;
-      m_TextAnswerInput.SetColor(COLOR_GREEN);
-      m_TextAnswerInput.SetFlags(WidgetFlags.NOFOCUS);
-      m_AnswerSubmit.SetTextColor(COLOR_GREEN);
-      m_AnswerSubmit.SetText("JOINING..");
-      m_AnswerSubmit.SetFlags(WidgetFlags.DISABLED);
-      m_QuitButton.SetFlags(WidgetFlags.DISABLED);
+      if (m_TextAnswerInput)
+      {
+        m_TextAnswerInput.SetColor(COLOR_GREEN);
+        m_TextAnswerInput.SetFlags(WidgetFlags.NOFOCUS);
+      }
+      if (m_AnswerSubmit)
+      {
+        m_AnswerSubmit.SetTextColor(COLOR_GREEN);
+        m_AnswerSubmit.SetText("JOINING..");
+        m_AnswerSubmit.SetFlags(WidgetFlags.DISABLED);
+      }
+      if (m_QuitButton) m_QuitButton.SetFlags(WidgetFlags.DISABLED);
       if (m_QuitConfirmButton) m_QuitConfirmButton.SetFlags(WidgetFlags.DISABLED);
 
       m_PendingAction = ACTION_CONNECT;
@@ -325,13 +340,17 @@ class ANVICaptchaMenu extends UIScriptedMenu
     StartExitAnim();
   }
 
+  // Reset() and SetAttempts() are called from outside this class (DayZGame.
+  // CreateCaptchaMenu, right after EnterScriptedMenu), so they can run with
+  // every widget member still null if Init()'s CreateWidgets failed.
   void Reset() {
-    m_TextAnswerInput.SetText("");
+    if (m_TextAnswerInput) m_TextAnswerInput.SetText("");
     m_CorrectAnswer = DrawNumber(100);
     SetCorrectAnswer(m_CorrectAnswer);
   }
 
   private void SetCorrectAnswer(int number) {
+    if (!m_CorrectNumberDigit_0 || !m_CorrectNumberDigit_1) return;
     string numberString = number.ToStringLen(2);
     string prefix = "Colorful-UI/GUI/textures/plugins/AntiNvidia/numbers/";
     m_CorrectNumberDigit_0.LoadImageFile(0, prefix + numberString[0] + ".edds");
@@ -342,7 +361,8 @@ class ANVICaptchaMenu extends UIScriptedMenu
     DayZGame game = DayZGame.Cast(GetGame());
     if (game)
       game.m_CaptchaAttempts = attempts;
-    m_CaptchaAttemptsText.SetText(string.Format("attempts left: %1", attempts));
+    if (m_CaptchaAttemptsText)
+      m_CaptchaAttemptsText.SetText(string.Format("attempts left: %1", attempts));
   }
 
   private bool CheckAnswer(int answer) { return m_CorrectAnswer == answer; }
