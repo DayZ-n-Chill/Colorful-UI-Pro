@@ -304,19 +304,9 @@ modded class MissionMainMenu
 //
 // This class is also modded in Plugins/AntiNvidia/missionbase.c for a
 // different purpose; keep the two separate.
-modded class MissionBase` in this same module
-// (Colorful-UI\Scripts\5_Mission\Plugins\AntiNvidia\missionbase.c, which
-// overrides CreateScriptedMenu). Multiple modded bodies for one class inside
-// a single script module are chained by the compiler — this mod already does
-// exactly that for DayZGame in 3_Game (Plugins\AntiNvidia\dayzgame.c and
-// Systems\Loading.c). Do not merge them; they touch unrelated members.
 modded class MissionBase
 {
-	// NOT `override`: nothing declares CuiFlushPendingError() further up the
-	// chain. The base would have had to be Mission (3_Game), and Mission is
-	// engine-owned - `modded class Mission` is rejected outright with "engine
-	// class Mission cannot be modded". This is a brand-new method introduced
-	// on MissionBase, so `override` here would fail to compile too.
+	// New method, so no `override` keyword.
 	void CuiFlushPendingError()
 	{
 		if (!CuiPendingError.s_Pending) return;
@@ -328,20 +318,14 @@ modded class MissionBase
 
 		Print(string.Format("[CUI ErrorDialog] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
 
-		// Info-only presentation: CuiDialog.Show's Confirm/Cancel default to
-		// null callback target with empty method names, which CuiDialog
-		// itself treats as "skip that callback" (Dialogs.c:200-216) — both
-		// buttons just close the dialog. Not redesigning CuiDialog for a
-		// single-button case; showing both is acceptable here.
+		// Message only: both buttons simply close it.
 		CuiDialog dlg = CuiDialog.Show(caption, message);
 		if (!dlg)
 		{
-			// CuiDialog's own widget tree failed to build (Dialogs.c:168-176
-			// returns null in that case). Fall back to the native dialog so
-			// the player still sees something instead of nothing.
+			// Fall back to the plain game dialog so the player still sees
+			// the message.
 			Print("[CUI ErrorDialog] CuiDialog.Show returned null - falling back to native ShowDialog");
-			// This runs on a GUI-queue tick during post-kick teardown, where
-			// the UIManager is not guaranteed to still be around.
+
 			UIManager ui = g_Game.GetUIManager();
 			if (ui)
 				ui.ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
