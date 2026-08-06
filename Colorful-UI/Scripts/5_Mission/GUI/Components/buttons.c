@@ -233,7 +233,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            // No CloseAll() here — vanilla Connect() needs the current menu still open
+            // Do not close menus here; the join needs this one still open.
             DayZGame game = DayZGame.Cast(GetGame());
             if (game) {
                 game.ConnectFromJoin(m_ServerIP, m_ServerPort);

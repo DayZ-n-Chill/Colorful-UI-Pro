@@ -32,8 +32,8 @@ modded class LoadingScreen
         ProgressAsync.SetUserData(m_Background);
     }
 
-    // Override vanilla LoadingScreen.Show to avoid the NPE on m_ProgressText
-    // (vanilla expects widgets our layout doesn't have). Routes background
+    // Rewritten because the original expects widgets this layout does not
+    // have and would crash. Sets the background
     // through GetMainMenuBackground() so the UseImagesets toggle keeps working.
     override void Show()
     {
@@ -68,7 +68,7 @@ modded class LoadingScreen
 }
 
 // Phase 2: Logging In ------------------------------------------------------------
-// NOTE: modded class declarations MUST NOT have an `extends` clause — vanilla's
+// NOTE: modded class declarations must not use an `extends` clause — the
 // parent is implicit, and adding `extends X` silently breaks the modded chain
 // (the override never runs, vanilla's body runs and crashes on null widget refs).
 modded class LoginTimeBase
@@ -86,8 +86,8 @@ modded class LoginTimeBase
         m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        // Point vanilla's m_txtLabel field at our LoadingMsg widget too — any
-        // vanilla code path that still touches m_txtLabel won't NPE.
+        // Point the original's text field at our widget so any code that
+        // still uses it keeps working.
         m_txtLabel = m_LoadingMsg;
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 

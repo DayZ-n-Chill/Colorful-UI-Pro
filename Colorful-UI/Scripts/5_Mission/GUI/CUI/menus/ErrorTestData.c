@@ -1,39 +1,10 @@
-// CUI_ErrorTestData
-// -----------------------------------------------------------------------------
-// Data table backing the error/dialog test harness (ErrorTestScreen.c). One
-// entry per error code the vanilla ErrorModuleHandler system can throw for a
-// registered category, sourced from:
-//   P:\scripts\3_game\global\errormodulehandler\errormodulehandler.c   (ErrorCategory, ThrowError)
-//   P:\scripts\3_game\global\errormodulehandler\connecterrorclientmodule.c
-//   P:\scripts\3_game\global\errormodulehandler\connecterrorservermodule.c
-//   P:\scripts\3_game\global\errormodulehandler\connecterrorscriptmodule.c
-//   P:\scripts\3_game\global\errormodulehandler\clientkickedmodule.c
-//   P:\scripts\3_game\global\errormodulehandler\bioserrormodule.c
+// The list of errors shown on the debug screen (ErrorTestScreen.c): one
+// entry per error code DayZ can raise, grouped by category.
 //
-// Codes/categories are passed as the real vanilla enum members (not magic
-// numbers) so a rename upstream fails this file at compile time instead of
-// silently throwing the wrong code.
-//
-// ErrorCategory.Generic has no module registered in ErrorModuleHandler.Init()
-// (P:\scripts\...\errormodulehandler.c:240-250 only adds ConnectErrorClient/
-// Server/Script, ClientKicked, BIOSError) so it is intentionally omitted here
-// - throwing it would hit no handler at all.
-//
-// Every code=0 ("OK") value is intentionally omitted - it means "not an
-// error" in every one of these enums and none of the modules register a
-// message for it.
-//
-// Two categories of "no visible dialog" are expected here, not bugs:
-//   - Entries tagged "(silent)" are registered via InsertErrorProperties (no
-//     Dialogue handling) - ErrorProperties.HandleError() is a no-op, so vanilla
-//     itself shows nothing for these codes (e.g. PASSWORD/BE_LICENCE are
-//     consumed elsewhere in the connect flow; LOGOUT/QUIT/LEAVE are just
-//     registered so GetProperties() doesn't warn).
-//   - BIOSError codes other than -1 are wrapped in InsertBIOSError(), which is
-//     `#ifdef PLATFORM_CONSOLE` gated to Dialogue - on PC they're also
-//     InsertErrorProperties (silent). Only BIOSError -1 (the generic fallback
-//     inserted by ErrorHandlerModuleScript.FillErrorDataMap itself) always
-//     shows a dialog regardless of platform.
+// Codes are written as the game's own named values rather than numbers, so
+// if a name changes the mod fails to build instead of raising the wrong
+// error. Codes meaning "no error" are left out, as is the Generic category,
+// which the game never registers a message for.
 class CUI_ErrorTestEntry
 {
 	ErrorCategory m_Category;
@@ -55,7 +26,6 @@ class CUI_ErrorTestData
 		entries = new array<ref CUI_ErrorTestEntry>();
 
 		// --- ErrorCategory.ConnectErrorClient (16) ---
-		// P:\scripts\3_game\global\errormodulehandler\connecterrorclientmodule.c
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.UNKNOWN, "CEC -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.SERVER_UNREACHABLE, "CEC 1  SERVER_UNREACHABLE"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.ALREADY_CONNECTING, "CEC 2  ALREADY_CONNECTING"));
@@ -74,7 +44,6 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.ALREADY_ON_SERVER, "CEC 15  ALREADY_ON_SERVER"));
 
 		// --- ErrorCategory.ConnectErrorServer (26) ---
-		// P:\scripts\3_game\global\errormodulehandler\connecterrorservermodule.c
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.UNKNOWN, "CES -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.WRONG_PASSWORD, "CES 1  WRONG_PASSWORD"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.WRONG_VERSION, "CES 2  WRONG_VERSION"));
@@ -103,20 +72,13 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.NO_DEVICE_ID, "CES 25  NO_DEVICE_ID"));
 
 		// --- ErrorCategory.ConnectErrorScript (3) ---
-		// P:\scripts\3_game\global\errormodulehandler\connecterrorscriptmodule.c
-		// ALREADY_CONNECTING carries a custom UIScriptedMenu handler
-		// (ConnectErrorScriptModuleUI) with Yes/No/Cancel modal results - this
-		// button exercises that path, not just a plain OK dialog.
+		// ALREADY_CONNECTING shows a three-button prompt, not a plain OK box.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.UNKNOWN, "CSC -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.ALREADY_CONNECTING, "CSC 1  ALREADY_CONNECTING (Yes/No/Cancel)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.ALREADY_CONNECTING_THIS, "CSC 2  ALREADY_CONNECTING_THIS"));
 
 		// --- ErrorCategory.ClientKicked (116) ---
-		// P:\scripts\3_game\global\errormodulehandler\clientkickedmodule.c
-		// Throws in this category funnel through ErrorDialog.c's modded
-		// DialogueErrorProperties override (CuiPendingError) instead of the
-		// native ShowDialog - the handler in ErrorTestScreen.c flushes that
-		// immediately after each throw so the CUI dialog shows right away.
+		// These are the kick messages, shown in the Colorful-UI dialog.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.UNKNOWN, "CK -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.SERVER_EXIT, "CK 2  SERVER_EXIT"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.KICK_ALL_ADMIN, "CK 3  KICK_ALL_ADMIN"));
@@ -247,11 +209,8 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.UNM6, "CK 261  UNM6"));
 
 		// --- ErrorCategory.BIOSError (24) ---
-		// P:\scripts\3_game\global\errormodulehandler\bioserrormodule.c
-		// Only -1 (base-class fallback) is a Dialogue on PC; every code below
-		// is InsertBIOSError()'d, which is Dialogue only under
-		// PLATFORM_CONSOLE - on PC these are registered silent (no-op
-		// HandleError). Clicking them and seeing nothing happen is correct.
+		// Console-only: on PC all but the first show nothing when clicked.
+		// That is expected, not a fault.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, -1, "BIOS -1  UNKNOWN (fallback, always dialog)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, EBiosError.CANCEL, "BIOS 1  CANCEL (console-only dialog)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, EBiosError.BAD_PARAMETER, "BIOS 2  BAD_PARAMETER (console-only dialog)"));
