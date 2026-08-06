@@ -43,11 +43,24 @@ modded class InviteMenu extends UIScriptedMenu
 		// Update() (invitemenu.c:78-85) — but the countdown CallLater is
 		// armed in vanilla Init(), which we replaced, so m_iTime stays at 15
 		// forever and that branch never fires. Perform the same join here.
+		//
+		// Vanilla deliberately does NOT close InviteMenu at this point —
+		// ConnectFromJoin (dayzgame.c:2775) calls Connect(), which reads
+		// Connect(GetUIManager().GetMenu(), ...) (dayzgame.c:2685) to hand
+		// the still-open menu to the native connect/loading transition.
+		// GetCallQueue(...).Call() only enqueues the call for the queue's
+		// next Tick (P:\scripts\2_gamelib\tools.c:57, ticked every frame
+		// from OnUpdate at dayzgame.c:2982) — it does not run synchronously.
+		// Closing the menu here, before that Tick fires, would make
+		// GetUIManager().GetMenu() return the wrong (or no) menu once
+		// ConnectFromJoin actually executes. Queue Close() on the same
+		// queue, after ConnectFromJoin, so it only runs once the native
+		// call has already captured the menu.
 		string ip;
 		int port;
 		OnlineServices.GetInviteServerInfo(ip, port);
 		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(g_Game.ConnectFromJoin, ip, port);
-		Close();
+		g_Game.GetCallQueue(CALL_CATEGORY_SYSTEM).Call(this.Close);
 	}
 
 	void DoCancel()
