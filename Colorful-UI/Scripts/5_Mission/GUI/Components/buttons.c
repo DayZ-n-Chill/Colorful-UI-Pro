@@ -1,5 +1,9 @@
+// NOTE TO ALL:  THE CUI ELEMENETS AND WRAPPER CONCEPTS ARE OBSOLETE. THIS CODE IS HERE FOR REFERENCE ONLY.
+//  I have begun to think my concept for this wrapper was a bad idea. 4.0 has removed it as it just causes issues here and there and I dont want to keep fixing it.  
+// However, I have a much better and more stable solution already in place for 4.0. 
 class CUIButtonHandler : ScriptedWidgetEventHandler
 {
+    Class                m_Owner;          // Menu instance that registered this handler; used by cuiElmnt.CleanupForOwner()
     private ButtonWidget m_Button;
     private TextWidget   m_TextWidget;
     private ImageWidget  m_ImageWidget;
@@ -14,19 +18,9 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     private bool         m_IconOnly = false;
     private int          m_IconImageIndex = -1;
     private bool         m_SolidBg = false;
+    private bool         m_Disposed = false;
 
-    void CUIButtonHandler(
-        ButtonWidget button,
-        TextWidget textWidget,
-        ImageWidget imageWidget,
-        int textColor,
-        int hoverColor,
-        string clickAction,
-        Class targetClass,
-        string callbackMethod,
-        string serverIP,
-        int serverPort,
-    )
+    void CUIButtonHandler(ButtonWidget button, TextWidget textWidget, ImageWidget imageWidget, int textColor, int hoverColor, string clickAction, Class targetClass, string callbackMethod, string serverIP, int serverPort)
     {
         m_Button         = button;
         m_TextWidget     = textWidget;
@@ -49,6 +43,18 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
         m_Button = null;
         m_TextWidget = null;
         m_ImageWidget = null;
+        if (GetGame())
+        {
+            ScriptCallQueue queue = GetGame().GetCallQueue(CALL_CATEGORY_GUI);
+            queue.Remove(this.InvokeCallback);
+            queue.Remove(this.DoDirectConnect);
+        }
+        m_Disposed = true;
+    }
+
+    bool IsDisposed()
+    {
+        return m_Disposed;
     }
 
     void SetIconOnly(bool isIconOnly, int imageIdx)
@@ -88,13 +94,13 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
 
         if (m_SolidBg)
         {
-            if (m_TextWidget) m_TextWidget.SetColor(UIColor.White());
-            else m_Button.SetTextColor(UIColor.White());
+            if (m_TextWidget) m_TextWidget.SetColor(colorScheme.BtnText());
+            else m_Button.SetTextColor(colorScheme.BtnText());
 
             if (m_ImageWidget)
             {
                 if (m_IconImageIndex >= 0) m_ImageWidget.SetImage(m_IconImageIndex);
-                m_ImageWidget.SetColor(UIColor.White());
+                m_ImageWidget.SetColor(colorScheme.BtnText());
             }
 
             m_Button.SetColor(m_TextColor);
@@ -182,30 +188,40 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (w != m_Button) return false;
 
-        CuiLogger.Log("[CuiButton] Clicked: " + w.GetName());
-
         if (m_ClickAction != "")
         {
-            CuiLogger.Log("   >> Opening URL: " + m_ClickAction);
             GetGame().OpenURL(m_ClickAction);
             return true;
         }
 
+        // Defer the callback to the next GUI tick. Calling m_CallbackMethod
+        // synchronously here is a use-after-free hazard: methods like
+        // MainMenu.OpenSettings or OptionsMenu.Back destroy the current
+        // menu, which fires CleanupForOwner, which deletes THIS handler
+        // mid-OnClick. When OnClick returns, the engine's event dispatcher
+        // does a vtable touch on the freed handler -> ACCESS_VIOLATION at
+        // call qword [rax+0x88]. Posting via CallLater(0) lets the engine
+        // finish its event loop on a still-live handler before menu
+        // teardown begins.
         if (m_TargetClass && m_CallbackMethod != "")
         {
-            CuiLogger.Log("   >> Calling Method: " + m_CallbackMethod);
-            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.InvokeCallback, 0, false);
             return true;
         }
 
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            CuiLogger.Log("   >> Connecting to: " + m_ServerIP + ":" + m_ServerPort);
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.DoDirectConnect, 100, false);
             return true;
         }
 
         return true;
+    }
+
+    void InvokeCallback()
+    {
+        if (m_TargetClass && m_CallbackMethod != "")
+            GetGame().GameScript.CallFunction(m_TargetClass, m_CallbackMethod, null, 0);
     }
 
     override bool OnMouseButtonUp(Widget w, int x, int y, int button)
@@ -217,7 +233,7 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            GetGame().GetUIManager().CloseAll();
+            // No CloseAll() here — vanilla Connect() needs the current menu still open
             DayZGame game = DayZGame.Cast(GetGame());
             if (game) {
                 game.ConnectFromJoin(m_ServerIP, m_ServerPort);
@@ -231,6 +247,7 @@ class cuiElmnt
 {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
+    // Cleanup ALL handlers. Last-resort full purge — prefer CleanupForOwner.
     static void Cleanup()
     {
         for (int i = 0; i < s_Handlers.Count(); i++)
@@ -239,6 +256,31 @@ class cuiElmnt
             delete s_Handlers[i];
         }
         s_Handlers.Clear();
+    }
+
+    // Dispose every handler tagged with `owner`. Call from each menu's destructor:
+    //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
+    // Removal from s_Handlers is deferred to PurgeDisposed() — removing
+    // synchronously frees the handler mid-dispatch and crashes (UAF).
+    static void CleanupForOwner(Class owner)
+    {
+        if (!owner) return;
+        for (int i = 0; i < s_Handlers.Count(); i++)
+        {
+            if (s_Handlers[i] && s_Handlers[i].m_Owner == owner)
+                s_Handlers[i].Dispose();
+        }
+        if (GetGame())
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(PurgeDisposed, 1000, false);
+    }
+
+    static void PurgeDisposed()
+    {
+        for (int i = s_Handlers.Count() - 1; i >= 0; i--)
+        {
+            if (!s_Handlers[i] || s_Handlers[i].IsDisposed())
+                s_Handlers.RemoveOrdered(i);
+        }
     }
 
     protected static void GetParts(ButtonWidget button, out TextWidget label, out ImageWidget icon)
@@ -250,7 +292,7 @@ class cuiElmnt
         if (!icon) icon = ImageWidget.Cast(button.FindAnyWidget(button.GetName() + "_image"));
     }
 
-    static void proSolidBtn(ButtonWidget button, string text, int bgColor, int hoverBgColor, string clickAction)
+    static void proSolidBtn(Class owner, ButtonWidget button, string text, int bgColor, int hoverBgColor, string clickAction)
     {
         if (!button) return;
 
@@ -258,23 +300,13 @@ class cuiElmnt
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) { label.SetText(text); button.SetText(""); }
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            icon,
-            bgColor,
-            hoverBgColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, icon, bgColor, hoverBgColor, clickAction, null, "", "", 0);
         h.SetSolidBg(true);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnURL(ButtonWidget button, string text, int textColor, int hoverColor, string clickAction)
+    static void proBtnURL(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, string clickAction)
     {
         if (!button) return;
 
@@ -283,22 +315,12 @@ class cuiElmnt
         if (label) { label.SetText(text); button.SetText(""); }
         if (icon) icon.SetColor(hoverColor);
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            NULL,
-            textColor,
-            hoverColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, NULL, textColor, hoverColor, clickAction, null, "", "", 0);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnDC(ButtonWidget button, string text, int textColor, int hoverColor, string serverIP, int serverPort)
+    static void proBtnDC(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, string serverIP, int serverPort)
     {
         if (!button) return;
 
@@ -307,22 +329,12 @@ class cuiElmnt
         if (label) { label.SetText(text); button.SetText(""); }
         if (icon) icon.SetColor(colorScheme.Icons());
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            NULL,
-            textColor,
-            hoverColor,
-            "",
-            null,
-            "",
-            serverIP,
-            serverPort,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, label, NULL, textColor, hoverColor, "", null, "", serverIP, serverPort);
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proIconBtn(ButtonWidget button, int iconImageIndex, int iconColor, int hoverColor, string clickAction)
+    static void proIconBtn(Class owner, ButtonWidget button, int iconImageIndex, int iconColor, int hoverColor, string clickAction)
     {
         if (!button) return;
 
@@ -330,57 +342,37 @@ class cuiElmnt
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) label.Show(false);
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            NULL,
-            icon,
-            iconColor,
-            hoverColor,
-            clickAction,
-            null,
-            "",
-            "",
-            0,
-        );
+        CUIButtonHandler h = new CUIButtonHandler(button, NULL, icon, iconColor, hoverColor, clickAction, null, "", "", 0);
         h.SetIconOnly(true, iconImageIndex);
         if (icon) icon.SetColor(iconColor);
 
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 
-    static void proBtnCB(ButtonWidget button, string text, int textColor, int hoverColor, Class targetClass, string callbackMethod)
+    static void proBtnCB(Class owner, ButtonWidget button, string text, int textColor, int hoverColor, Class targetClass, string callbackMethod)
     {
         if (!button) return;
 
         button.SetText(text);
         TextWidget label; ImageWidget icon; GetParts(button, label, icon);
         if (label) { label.SetText(text); button.SetText(""); }
-        
+
         ImageWidget handlerIcon = icon;
-        if (icon && text != "") 
+        if (icon && text != "")
         {
             icon.SetColor(hoverColor);
             handlerIcon = NULL; // Match proBtnURL: Handler handles text, script handles icon color
         }
 
-        CUIButtonHandler h = new CUIButtonHandler(
-            button,
-            label,
-            handlerIcon,
-            textColor,
-            hoverColor,
-            "",
-            targetClass,
-            callbackMethod,
-            "",
-            0,
-        );
-        
+        CUIButtonHandler h = new CUIButtonHandler(button, label, handlerIcon, textColor, hoverColor, "", targetClass, callbackMethod, "", 0);
+
         if (text == "" && icon)
         {
             h.SetIconOnly(true, -1);
         }
-        
+
+        h.m_Owner = owner;
         s_Handlers.Insert(h);
     }
 }

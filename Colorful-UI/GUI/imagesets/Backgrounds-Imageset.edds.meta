@@ -1,0 +1,16 @@
+MetaFileClass {
+ Name "{BCA2A6E121673F00}Colorful-UI/GUI/imagesets/Backgrounds-Imageset.edds"
+ Author "coruscant"
+ ChangeDate -1824262998
+ Configurations {
+  TGAResourceClass PC {
+   SourceFile "Backgrounds-Imageset.tga"
+  }
+  TGAResourceClass XBOX_ONE : PC {
+  }
+  TGAResourceClass PS4 : PC {
+  }
+  TGAResourceClass LINUX : PC {
+  }
+ }
+}

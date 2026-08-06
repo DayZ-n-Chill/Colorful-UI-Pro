@@ -30,7 +30,7 @@ WrapSpacerWidgetClass closable_header_root {
    priority 8
    scriptclass ""
    image0 ""
-   imageTexture "{1EBDEB3BCB073C08}Colorful-UI/gui/textures/Inventory/Inv.Hdr.Background.edds"
+   imageTexture "{1EBDEB3BCB073C08}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Background.edds"
    mode opaque
    "src alpha" 0
    "no wrap" 0
@@ -151,7 +151,7 @@ WrapSpacerWidgetClass closable_header_root {
      vexactsize 1
      style DayZNormal
      text "CLOSABLE HEADER"
-     font "Colorful-UI/gui/fonts/SquareFont22"
+     font "Colorful-UI/GUI/fonts/GB-Regular"
      "exact text" 0
      "exact text size" 24
      "size to text h" 0

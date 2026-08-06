@@ -12,7 +12,7 @@ GridSpacerWidgetClass rootFrame {
  {
   ImageWidgetClass HeadlinePanel {
    ignorepointer 1
-   color 0 0 0 0.7843
+   color 0 0 0 0.784
    position 0 0
    size 1 40
    hexactpos 1
@@ -47,7 +47,7 @@ GridSpacerWidgetClass rootFrame {
        vexactsize 0
        {
         ButtonWidgetClass LeftButton {
-         color 0.3922 0.3922 0.3922 0.3922
+         color 0 0 0 0
          position 0 0
          size 16 18
          halign center_ref
@@ -56,12 +56,12 @@ GridSpacerWidgetClass rootFrame {
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style EmptyHighlight
+         style Empty
          "no focus" 1
          {
           ImageWidgetClass LeftImage {
            ignorepointer 1
-           color 1 1 1 0.3922
+           color 1 1 1 0.392
            size 1 1
            halign center_ref
            valign center_ref
@@ -103,7 +103,7 @@ GridSpacerWidgetClass rootFrame {
          hexactsize 0
          vexactsize 0
          text "HINT HEADLINE"
-         font "colorful-ui/gui/fonts/GB-Regular.fnt"
+         font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
          "exact text" 1
          "exact text size" 20
          "size to text h" 0
@@ -124,7 +124,7 @@ GridSpacerWidgetClass rootFrame {
        {
         ButtonWidgetClass RightButton {
          clipchildren 1
-         color 0.3922 0.3922 0.3922 0.3922
+         color 0 0 0 0
          position 0 0
          size 16 18
          halign center_ref
@@ -133,13 +133,13 @@ GridSpacerWidgetClass rootFrame {
          vexactpos 1
          hexactsize 1
          vexactsize 1
-         style EmptyHighlight
+         style Empty
          "no focus" 1
          {
           ImageWidgetClass RightImage {
            clipchildren 1
            ignorepointer 1
-           color 1 1 1 0.3922
+           color 1 1 1 0.392
            position 0 0
            size 1 1
            halign center_ref
@@ -166,7 +166,7 @@ GridSpacerWidgetClass rootFrame {
   GridSpacerWidgetClass GridSpacerWidget1 {
    visible 1
    ignorepointer 1
-   color 0 0 0 0.7059
+   color 0 0 0 0.706
    size 1 1
    halign center_ref
    hexactpos 1
@@ -184,7 +184,7 @@ GridSpacerWidgetClass rootFrame {
      visible 1
      ignorepointer 1
      position 10 10
-     size 384 216
+     size 432 216
      hexactpos 1
      vexactpos 1
      hexactsize 1
@@ -206,7 +206,7 @@ GridSpacerWidgetClass rootFrame {
      hexactsize 0
      vexactsize 1
      text "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-     font "colorful-ui/gui/fonts/GB-ClearnRegular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
      "text spacing" 0 5
      "italic text" 0
      "exact text" 1
@@ -215,19 +215,80 @@ GridSpacerWidgetClass rootFrame {
      "size to text v" 1
      wrap 1
     }
-    TextWidgetClass PageInfoLabel {
+    GridSpacerWidgetClass FooterGSW {
      ignorepointer 1
-     size 1 16
-     halign right_ref
-     valign bottom_ref
+     position 10 10
+     size 48 48
      hexactpos 1
      vexactpos 1
-     hexactsize 0
+     hexactsize 1
      vexactsize 1
-     text "13 / 54"
-     font "colorful-ui/gui/fonts/GB-ClearnRegular.fnt"
-     "size to text v" 0
-     "text halign" right
+     "Size To Content H" 1
+     "Size To Content V" 1
+     Columns 2
+     Rows 1
+     {
+      FrameWidgetClass HideImageBtnFrame {
+       ignorepointer 1
+       position 10 10
+       size 120 1
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 0
+       {
+        ButtonWidgetClass HideImageBtn {
+         color 0 0 0 0
+         size 76 18
+         valign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style Empty
+         "no focus" 1
+         clipchildren 0
+         {
+          TextWidgetClass HideImageBtn_label {
+           ignorepointer 1
+           size 120 16
+           valign center_ref
+           hexactpos 1
+           vexactpos 1
+           hexactsize 1
+           vexactsize 1
+           text "Hide Image"
+           font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
+           "exact text" 1
+           "exact text size" 16
+           "size to text h" 1
+           "size to text v" 1
+           "text halign" left
+           "text valign" center
+          }
+         }
+        }
+       }
+      }
+      TextWidgetClass PageInfoLabel {
+       ignorepointer 1
+       size 1 16
+       halign right_ref
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 1
+       text "13 / 54"
+       font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
+       "exact text" 1
+       "exact text size" 16
+       "size to text h" 0
+       "size to text v" 1
+       "text halign" right
+       "text valign" center
+      }
+     }
     }
    }
   }

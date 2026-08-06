@@ -10,12 +10,8 @@ modded class LoadingScreen
 
     void LoadingScreen(DayZGame game)
     {
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Initializing loading layout");
-
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
-
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Widget root created");
 
         Class.CastTo(m_Background, m_WidgetRoot.FindAnyWidget("ImageBackground"));
         Class.CastTo(m_Logo, m_WidgetRoot.FindAnyWidget("Logo"));
@@ -34,14 +30,14 @@ modded class LoadingScreen
         Branding.ApplyLogo(m_Logo);
         ProgressAsync.SetProgressData(m_ProgressLoading);
         ProgressAsync.SetUserData(m_Background);
-
-        CuiLogger.Log("LoadingScreen.LoadingScreen() - Layout initialized");
     }
 
+    // Override vanilla LoadingScreen.Show to avoid the NPE on m_ProgressText
+    // (vanilla expects widgets our layout doesn't have). Routes background
+    // through GetMainMenuBackground() so the UseImagesets toggle keeps working.
     override void Show()
     {
-        CuiLogger.Log("LoadingScreen.Show() - Showing loading screen");
-        if (m_Background) m_Background.LoadImageFile(0, loadscreens.GetRandomElement());
+        if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
     }
 
     override void SetTitle(string title)
@@ -49,22 +45,33 @@ modded class LoadingScreen
         if (!m_Title)
         {
             m_Title = TextWidget.Cast(m_WidgetRoot.FindAnyWidget("Title"));
-            CuiLogger.Log("LoadingScreen.SetTitle() - Rebinding m_Title");
         }
 
         if (m_Title)
         {
             m_Title.SetText(title);
         }
-        else
-        {
-            CuiLogger.Log("LoadingScreen.SetTitle() - m_Title is null");
-        }
+    }
+
+    // Vanilla SetStatus(string) writes to its m_TextWidgetStatus, which on our
+    // layout is m_LoadingMsg. Engine calls SetStatus("") moments after the
+    // constructor runs, wiping our "GAME IS LOADING!" default and exposing the
+    // layout's baked placeholder ("Load screen message"). Override to ignore
+    // empty strings — keep the constructor default visible until a real
+    // engine status (e.g. "Connecting...") replaces it.
+    override void SetStatus(string status)
+    {
+        if (!m_LoadingMsg) return;
+        if (status == "") m_LoadingMsg.SetText("GAME IS LOADING!");
+        else              m_LoadingMsg.SetText(status);
     }
 }
 
 // Phase 2: Logging In ------------------------------------------------------------
-modded class LoginTimeBase extends LoginScreenBase
+// NOTE: modded class declarations MUST NOT have an `extends` clause — vanilla's
+// parent is implicit, and adding `extends X` silently breaks the modded chain
+// (the override never runs, vanilla's body runs and crashes on null widget refs).
+modded class LoginTimeBase
 {
     protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_ExitIcon, m_Logo;
     protected TextWidget m_LoadingMsg, m_ExitText;
@@ -72,17 +79,16 @@ modded class LoginTimeBase extends LoginScreenBase
 
     override Widget Init()
     {
-        CuiLogger.Log("LoginTimeBase.Init() - Creating logging in layout");
-
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
-
-        CuiLogger.Log("LoginTimeBase.Init() - Layout created");
 
         m_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
         m_Logo = ImageWidget.Cast(layoutRoot.FindAnyWidget("Logo"));
         m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        // Point vanilla's m_txtLabel field at our LoadingMsg widget too — any
+        // vanilla code path that still touches m_txtLabel won't NPE.
+        m_txtLabel = m_LoadingMsg;
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 
         m_btnLeave = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnLeave"));
@@ -90,11 +96,7 @@ modded class LoginTimeBase extends LoginScreenBase
         m_ExitIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("Exit"));
 
         if (m_Background)
-        {
-            string bg = loadscreens.GetRandomElement();
-            CuiLogger.Log("LoginTimeBase.Init() - Background selected: " + bg);
-            m_Background.LoadImageFile(0, bg);
-        }
+            m_Background.LoadImageFile(0, GetMainMenuBackground());
 
         if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
         if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
@@ -111,7 +113,6 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginTimeBase.OnMouseEnter() - Hovered Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
             if (m_btnLeave) m_btnLeave.SetColor(UIColor.Transparent());
             return true;
@@ -123,16 +124,32 @@ modded class LoginTimeBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginTimeBase.OnMouseLeave() - Left Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         return false;
     }
+
+    // Override here on LoginTimeBase (not LoginTimeStatic) — vanilla's SetTime
+    // body lives on LoginTimeBase and dereferences m_txtLabel (a widget our
+    // layout doesn't have). LoginTimeStatic inherits, so engine dispatch
+    // resolves to whichever class defines SetTime closest to the instance.
+    override void SetTime(int time)
+    {
+        if (!layoutRoot) return;
+        if (!m_LoadingMsg)
+            m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
+        if (m_LoadingMsg)
+            m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
+
+        // Vanilla tail — without it respawn hangs on a black screen until kicked
+        if (m_IsRespawn && time <= 1)
+            GetGame().SetLoginTimerFinished();
+    }
 }
 
 // Phase 3: Prio Queue  -------------------------------------------------------------
-modded class LoginQueueBase extends LoginScreenBase
+modded class LoginQueueBase
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_ExitIcon, m_ShopIcon;
     protected TextWidget m_ExitText, m_PrioText;
@@ -141,10 +158,7 @@ modded class LoginQueueBase extends LoginScreenBase
 
     override Widget Init()
     {
-        CuiLogger.Log("LoginQueueBase.Init() - Setting up Priority Queue UI");
-
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
-        CuiLogger.Log("LoginQueueBase.Init() - Layout created");
 
         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         m_txtPosition = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
@@ -174,7 +188,6 @@ modded class LoginQueueBase extends LoginScreenBase
         }
         else
         {
-            CuiLogger.Log("LoginQueueBase.Init() - Showing Priority Queue button");
             m_PrioQBtn.Show(true);
         }
 
@@ -183,11 +196,13 @@ modded class LoginQueueBase extends LoginScreenBase
 
     override void Show()
     {
-        CuiLogger.Log("LoginQueueBase.Show() - Displaying queue screen");
         if (!NoHints)
         {
             layoutRoot.Show(true);
-            m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
+            // Only allocate the hint panel once. Show() may fire multiple times
+            // (reconnects, etc.); recreating leaks the previous panel + its video.
+            if (!m_HintPanel)
+                m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         }
     }
 
@@ -201,10 +216,6 @@ modded class LoginQueueBase extends LoginScreenBase
                 m_txtPosition.SetText("Position in Queue " + position.ToString());
                 m_txtPosition.SetColor(colorScheme.LoadingMsg());
             }
-            else
-            {
-                CuiLogger.Log("LoginQueueBase.SetPosition() - ERROR: m_txtPosition is null!");
-            }
         }
     }
 
@@ -212,14 +223,12 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseEnter() - Hovered Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
             if (m_btnLeave) m_btnLeave.SetColor(UIColor.Transparent());
             return true;
         }
         if (w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseEnter() - Hovered Prio Queue Button");
             if (m_PrioText) m_PrioText.SetColor(colorScheme.ButtonHover());
             if (m_PrioQBtn) m_PrioQBtn.SetColor(UIColor.Transparent());
             return true;
@@ -231,13 +240,11 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (w == m_btnLeave)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseLeave() - Left Leave Button");
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());
             return true;
         }
         if (w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnMouseLeave() - Left Prio Queue Button");
             if (m_PrioText) m_PrioText.SetColor(colorScheme.PrimaryText());
             return true;
         }
@@ -248,41 +255,10 @@ modded class LoginQueueBase extends LoginScreenBase
     {
         if (button == MouseState.LEFT && w == m_PrioQBtn)
         {
-            CuiLogger.Log("LoginQueueBase.OnClick() - Opening Prio Queue URL: " + CustomURL.PriorityQ);
             GetGame().OpenURL(CustomURL.PriorityQ);
             return false;
         }
         return super.OnClick(w, x, y, button);
-    }
-}
-
-// Final Crash Fix — Executed by DayZ Engine
-modded class LoginTimeStatic extends LoginTimeBase
-{
-    override void SetTime(int time)
-    {
-        if (!layoutRoot)
-        {
-            CuiLogger.Log("LoginTimeStatic.SetTime() - layoutRoot is null, skipping call");
-            return;
-        }
-
-        if (!m_LoadingMsg)
-        {
-            m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-            CuiLogger.Log("LoginTimeStatic.SetTime() - Rebinding m_LoadingMsg");
-        }
-
-        if (m_LoadingMsg)
-        {
-            m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
-        }
-        else
-        {
-            CuiLogger.Log("LoginTimeStatic.SetTime() - m_LoadingMsg is still null");
-        }
-
-        CuiLogger.Log("LoginTimeStatic.SetTime() - Countdown: " + time.ToString());
     }
 }
 
@@ -291,7 +267,6 @@ modded class DayZGame
 {
     override void ConnectLaunch()
     {
-        CuiLogger.Log("DayZGame.ConnectLaunch() - Launching game from CLI or menu");
         if (StartMainMenu) { MainMenuLaunch(); }
         else { ConnectFromCLI(); };
     };

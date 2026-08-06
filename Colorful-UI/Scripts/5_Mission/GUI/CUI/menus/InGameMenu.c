@@ -15,19 +15,19 @@ modded class InGameMenu extends UIScriptedMenu
         m_GameOverScreenImage   = ImageWidget.Cast(m_GameOverScreen.FindAnyWidget("GameOverScreenImage"));
         m_HintPanel             = new UiHintPanel(layoutRoot.FindAnyWidget("hint_frame"));
 
-        m_ExitButton        = layoutRoot.FindAnyWidget("ExitBtn");
-        m_ContinueButton    = layoutRoot.FindAnyWidget("ContinueBtn");
-        m_OptionsButton     = layoutRoot.FindAnyWidget("OptionsBtn");
-        m_RestartButton     = layoutRoot.FindAnyWidget("RestartBtn");
-        m_RespawnButton     = layoutRoot.FindAnyWidget("respawn_button");
+        m_ExitButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ExitBtn"));
+        m_ContinueButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ContinueBtn"));
+        m_OptionsButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget("OptionsBtn"));
+        m_RestartButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget("RestartBtn"));
+        m_RespawnButton = ButtonWidget.Cast(layoutRoot.FindAnyWidget("respawn_button"));
                 
-		m_PrioQ             = layoutRoot.FindAnyWidget("QueueBtn");
-        m_Website           = layoutRoot.FindAnyWidget("WebsiteBtn");
-        m_Discord           = layoutRoot.FindAnyWidget("DiscordBtn");
-        m_Twitter           = layoutRoot.FindAnyWidget("TwitterBtn");
-        m_Youtube           = layoutRoot.FindAnyWidget("YoutubeBtn");
-        m_Reddit            = layoutRoot.FindAnyWidget("RedditBtn");
-        m_Facebook          = layoutRoot.FindAnyWidget("FacebookBtn");
+		m_PrioQ = ButtonWidget.Cast(layoutRoot.FindAnyWidget("QueueBtn"));
+        m_Website = ButtonWidget.Cast(layoutRoot.FindAnyWidget("WebsiteBtn"));
+        m_Discord = ButtonWidget.Cast(layoutRoot.FindAnyWidget("DiscordBtn"));
+        m_Twitter = ButtonWidget.Cast(layoutRoot.FindAnyWidget("TwitterBtn"));
+        m_Youtube = ButtonWidget.Cast(layoutRoot.FindAnyWidget("YoutubeBtn"));
+        m_Reddit = ButtonWidget.Cast(layoutRoot.FindAnyWidget("RedditBtn"));
+        m_Facebook = ButtonWidget.Cast(layoutRoot.FindAnyWidget("FacebookBtn"));
 
         m_TopShader         = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader      = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
@@ -37,29 +37,30 @@ modded class InGameMenu extends UIScriptedMenu
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 
         // Set the colors of Shader, Divider
-        m_TopShader.SetColor(colorScheme.TopShader());
-        m_BottomShader.SetColor(colorScheme.BottomShader());
-        m_MenuDivider.SetColor(colorScheme.Separator());
+        if (m_TopShader)    m_TopShader.SetColor(colorScheme.TopShader());
+        if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
+        if (m_MenuDivider)  m_MenuDivider.SetColor(colorScheme.Separator());
 
         // Example of a button with a callbacks
-        cuiElmnt.proBtnCB(m_ExitButton,"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Exit");
-        cuiElmnt.proBtnCB(m_ContinueButton,"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Continue");
-        cuiElmnt.proBtnCB(m_OptionsButton,"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Options");
-        cuiElmnt.proBtnCB(m_RestartButton,"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Restart");
-        cuiElmnt.proBtnCB(m_RespawnButton,"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Respawn");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_ExitButton),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Exit");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_ContinueButton),"#main_menu_continue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Continue");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_OptionsButton),"#layout_xbox_ingame_menu_options",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Options");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RestartButton),"#main_menu_restart",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Restart");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RespawnButton),"#main_menu_respawn",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"OnClick_Respawn");
 
 		// Custom Links
-        cuiElmnt.proBtnURL(m_PrioQ,"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
-        cuiElmnt.proBtnURL(m_Website,"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
 
 		// Social Links
-        cuiElmnt.proBtnURL(m_Discord,"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
-        cuiElmnt.proBtnURL(m_Twitter,"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
-        cuiElmnt.proBtnURL(m_Youtube,"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
-        cuiElmnt.proBtnURL(m_Reddit,"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
-        cuiElmnt.proBtnURL(m_Facebook,"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
 
 		// These checks show/hide what buttons that are invalid or null
+        allInvalid = true; // reset shared state before this menu's checks
         CheckURL(m_PrioQ,    	 CustomURL.PriorityQ);
         CheckURL(m_Website,  	 CustomURL.Website);
         CheckSocials(m_Discord,  SocialURL.Discord);
@@ -87,7 +88,7 @@ modded class InGameMenu extends UIScriptedMenu
 
    	override void Update(float timeslice)
 	{
-		if (ShowDeadScreen)
+		if (ShowGameOverOverlay)
 		{
 			m_TimerSlice += timeslice;
 			if (m_TimerSlice >= 0.01)
@@ -113,5 +114,10 @@ modded class InGameMenu extends UIScriptedMenu
 				m_GameOverScreenImage.SetAlpha(Math.Min(m_GameOverScreenImage.GetAlpha() + (1.25 * timeslice), 1));
 			}
 		}
+	}
+
+	void ~InGameMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
 	}
 }

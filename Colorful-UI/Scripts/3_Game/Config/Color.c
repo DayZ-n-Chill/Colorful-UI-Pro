@@ -20,7 +20,7 @@ class UIColor
 	
 	// Social Network Colors 
 	static int Discord()          { return ARGB(255, 88, 101, 242); };
-	static int Twitter()          { return ARGB(255, 88, 101, 242); };
+	static int Twitter()          { return ARGB(255, 29, 161, 242); };
 	static int Facebook()         { return ARGB(255, 59, 89, 152); };
 	static int YouTube()          { return ARGB(255, 205, 32, 31); };
 	static int Instagram()        { return ARGB(255, 193, 42, 163); };

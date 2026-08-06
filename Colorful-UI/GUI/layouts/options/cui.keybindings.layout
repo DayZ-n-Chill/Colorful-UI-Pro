@@ -104,7 +104,7 @@ FrameWidgetClass keybindings_root {
      vexactsize 0
      priority 2
      text "#main_menu_version"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "exact text" 0
      "text valign" center
     }
@@ -120,7 +120,7 @@ FrameWidgetClass keybindings_root {
      vexactsize 0
      priority 2
      text "#copyright_disclamer"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "exact text" 0
      "text valign" center
     }
@@ -162,7 +162,7 @@ FrameWidgetClass keybindings_root {
      priority 1
      style Normal
      text "#layout_pc_keybinding_desc"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "text color" 0.8157 0.1255 0.7843 1
      "exact text" 0
      "text halign" right
@@ -311,7 +311,7 @@ FrameWidgetClass keybindings_root {
        hexactsize 1
        vexactsize 1
        text "#keybinding_profile"
-       font "colorful-ui/gui/fonts/GB-Regular.fnt"
+       font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "text halign" center
        "text valign" center
       }
@@ -415,7 +415,7 @@ FrameWidgetClass keybindings_root {
            vexactsize 0
            scaled 1
            text "Back"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 45
@@ -511,7 +511,7 @@ FrameWidgetClass keybindings_root {
            vexactsize 0
            scaled 1
            text "Apply"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 24
@@ -553,7 +553,7 @@ FrameWidgetClass keybindings_root {
            vexactsize 0
            scaled 1
            text "Undo"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 24
@@ -596,7 +596,7 @@ FrameWidgetClass keybindings_root {
            vexactsize 0
            scaled 1
            text "Reset"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 24
@@ -639,7 +639,7 @@ FrameWidgetClass keybindings_root {
            vexactsize 0
            scaled 1
            text "Reset All"
-           font "Colorful-UI/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
            "exact text size" 24
@@ -672,7 +672,7 @@ FrameWidgetClass keybindings_root {
          text "#options_reset_all"
          text_proportion 0.55
          text_halign right
-         font "colorful-ui/gui/fonts/GB-Regular.fnt"
+         font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
          switch normal
         }
        }

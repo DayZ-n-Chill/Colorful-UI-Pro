@@ -6,15 +6,17 @@ modded class TutorialsMenu extends UIScriptedMenu
 
 	override Widget Init()
 	{
-		layoutRoot	= GetGame().GetWorkspace().CreateWidgets("Colorful-UI/gui/layouts/options/cui.tutorials.layout");
+		layoutRoot	= GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/options/cui.tutorials.layout");
 	
 		m_InfoTextLeft	= layoutRoot.FindAnyWidget("InfoTextLeft");
 		m_InfoTextRight	= layoutRoot.FindAnyWidget("InfoTextRight");
 		
 		m_Back			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("BackBtn"));
-        cuiElmnt.proBtnCB(ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
 		
 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_TabScript);
+		// Remove first so reopening the menu doesn't accumulate duplicate callbacks.
+		m_TabScript.m_OnTabSwitch.Remove(DrawConnectingLines);
 		m_TabScript.m_OnTabSwitch.Insert(DrawConnectingLines);
 			
 		m_tab_images[0] = ImageWidget.Cast(layoutRoot.FindAnyWidget("MovementTabBackdropImageWidget"));
@@ -38,5 +40,10 @@ modded class TutorialsMenu extends UIScriptedMenu
 		Class.CastTo(m_shader, layoutRoot.FindAnyWidget("Colorful_Shader"));
 
 		return layoutRoot;
+	}
+
+	void ~TutorialsMenu()
+	{
+		cuiElmnt.CleanupForOwner(this);
 	}
 }

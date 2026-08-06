@@ -196,7 +196,7 @@ FrameWidgetClass settings_menu_root {
              vexactsize 0
              priority 250
              text "#STR_settings_menu_root_Tabber_TabControls_TabBar_Tab_Control_Container_Tab_Control_0_Tab_Control_0_Title0"
-             font "colorful-ui/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "size to text h" 1
              "size to text v" 0
              "text halign" center
@@ -255,7 +255,7 @@ FrameWidgetClass settings_menu_root {
              vexactsize 0
              priority 250
              text "#STR_settings_menu_root_Tabber_TabControls_TabBar_Tab_Control_Container_Tab_Control_1_Tab_Control_1_Title0"
-             font "colorful-ui/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "size to text h" 1
              "size to text v" 0
              "text halign" center
@@ -314,7 +314,7 @@ FrameWidgetClass settings_menu_root {
              vexactsize 0
              priority 250
              text "#STR_settings_menu_root_Tabber_TabControls_TabBar_Tab_Control_Container_Tab_Control_2_Tab_Control_2_Title0"
-             font "colorful-ui/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "size to text h" 1
              "size to text v" 0
              "text halign" center
@@ -373,7 +373,7 @@ FrameWidgetClass settings_menu_root {
              vexactsize 0
              priority 250
              text "#STR_settings_menu_root_Tabber_TabControls_TabBar_Tab_Control_Container_Tab_Control_3_Tab_Control_3_Title0"
-             font "colorful-ui/gui/fonts/GB-Regular.fnt"
+             font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "size to text h" 1
              "text halign" center
              "text valign" center
@@ -573,7 +573,7 @@ FrameWidgetClass settings_menu_root {
            hexactsize 0
            vexactsize 0
            text "#STR_settings_menu_root_play_panel_root_top_back0"
-           font "colorful-ui/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 45
            "size to text h" 1
@@ -666,7 +666,7 @@ FrameWidgetClass settings_menu_root {
            hexactsize 0
            vexactsize 0
            text "#STR_settings_menu_root_play_panel_root_bottom_apply0"
-           font "colorful-ui/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "text halign" right
@@ -706,7 +706,7 @@ FrameWidgetClass settings_menu_root {
            hexactsize 0
            vexactsize 0
            text "#menu_undo_cap"
-           font "colorful-ui/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "text halign" right
@@ -745,7 +745,7 @@ FrameWidgetClass settings_menu_root {
            hexactsize 0
            vexactsize 0
            text "#menu_default_cap"
-           font "colorful-ui/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
            "text halign" right
@@ -776,7 +776,7 @@ FrameWidgetClass settings_menu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           font "colorful-ui/gui/fonts/GB-Regular.fnt"
+           font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 0
            "text halign" center
            "text valign" center
@@ -798,7 +798,7 @@ FrameWidgetClass settings_menu_root {
      priority 1
      style Normal
      text "#STR_settings_menu_root_SettingsTextWidget0"
-     font "colorful-ui/gui/fonts/GB-Regular.fnt"
+     font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
      "text color" 0.8157 0.1255 0.7843 1
      "exact text" 0
      "text halign" right
