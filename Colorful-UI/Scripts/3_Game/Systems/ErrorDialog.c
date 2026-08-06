@@ -1,56 +1,91 @@
-// DialogueErrorProperties override — DIAGNOSTIC / DISABLED MODE
+// DialogueErrorProperties override — capture only, no 3_Game widgets
 // -----------------------------------------------------------------------------
-// Status: the custom CUI panel is temporarily DISABLED. On the last in-game
-// test, a kick produced NO dialog at all (neither the CUI panel nor the
-// native one) — worse than doing nothing. Per explicit instruction: native
-// dialog beats no dialog, so HandleError now ALWAYS falls through to
-// super.HandleError() (the original vanilla body, which calls the native
-// g_Game.GetUIManager().ShowDialog(...)) regardless of category or handler.
-// The interception/decision logic below still runs and still Prints what it
-// WOULD have done, purely for diagnosis — it does not change behavior.
+// Vanilla DialogueErrorProperties.HandleError (errorproperties.c:55-74) is the
+// generic handler behind every dialog-shown error in the game, rendering via
+// g_Game.GetUIManager().ShowDialog(...), a `proto native` call with no
+// .layout file behind it.
 //
-// What the RPT from that test actually showed
-// (G:\DayZ n Chill\Servers\The-Vale\.server\!ClientDiagLogs\
-//  DayZDiag_x64_2026-08-05_23-03-21.RPT:529,546,575,699):
-//   [ErrorModuleHandler] :: Error thrown: 0x00040033 ()
-// Decoding against ErrorModuleHandler.CreateError's own documented example
-// (errormodulehandler.c:36-41: CreateError(ConnectErrorClient, -1) ==
-// 0x0002FFFF, i.e. upper 16 bits == the ErrorCategory enum's raw int value)
-// pins the ErrorCategory enum's implicit numbering as Unknown=0, Generic=1,
-// ConnectErrorClient=2, ConnectErrorServer=3, ConnectErrorScript=4,
-// ClientKicked=5, BIOSError=6. 0x0004 == ConnectErrorScript, NOT
-// ClientKicked. ConnectErrorScriptModule unconditionally sets a real
-// UI handler (connecterrorscriptmodule.c:23: m_UIHandler = new
-// ConnectErrorScriptModuleUI()), which this override's own GetHandler()
-// check was already built to skip. So the specific failure captured in that
-// test almost certainly never reached ShowCui() at all — category alone
-// should have sent it straight to super.HandleError() — and the "no dialog"
-// symptom needs to be explained some other way (rapid-repeat suppression
-// from the sub-10-second reconnect loop under the TimeLogin=3 test setting,
-// dialog replacement by the next connect attempt before it could render,
-// etc). That's a hypothesis, not a conclusion — hence leaving the panel
-// disabled and instrumenting instead of re-guessing at a second fix blind.
+// History of this file, briefly: an earlier version created a custom
+// inline-chrome widget panel directly from HandleError (deferred one
+// CallLater tick), fully suppressing the native ShowDialog call for kicks.
+// It worked functionally (diagnostics confirmed the panel rendered) but a
+// native access-violation crash followed shortly after, during a rapid
+// double-kick (duplicate-UID) test. Research into the crash found:
+//   - DisconnectSessionEx explicitly closes the NATIVE dialog when tearing
+//     a session down (dayzgame.c:2721-2729: CloseAllSubmenus() + CloseDialog()
+//     if IsDialogVisible()) — a script-owned widget tree is invisible to that
+//     cleanup and has no equivalent teardown path.
+//   - Vanilla's dialog system has its own built-in queue/safety mechanism
+//     (UIManager.IsDialogQueued()/ShowQueuedDialog(), uimanager.c:49-50) that
+//     the engine drives via a native DialogQueuedEventTypeID event
+//     (dayzgame.c:1573-1577) into DayZGame.CheckDialogs()
+//     (dayzgame.c:3386-3396): only actually shows a queued dialog once
+//     `!m_loading.IsLoading()`. Fully suppressing the native ShowDialog call
+//     meant we never got any of that engine-side "is it actually safe right
+//     now" gating — we were creating widgets on our own guess (one deferred
+//     tick) instead of on the engine's own signal.
+//   - The AV's actual crash stack was in the native session/connection layer
+//     (CDPCreateServer), not conclusively pinned to widget creation itself —
+//     but suppressing the native dialog path removes engine-level coupling
+//     between dialog state and connection state that we don't have full
+//     visibility into from script source alone. Given that, the design
+//     changed: this file no longer creates ANY widgets and calls nothing
+//     UI-related at HandleError() time. It only captures data.
 //
-// Original background (still accurate): vanilla DialogueErrorProperties.
-// HandleError (errorproperties.c:55-74) is the generic handler behind every
-// dialog-shown error in the game, rendering via a `proto native` ShowDialog
-// call with no .layout file behind it — genuinely unreachable for reskinning
-// except by intercepting HandleError() itself, which is a plain script
-// method (not proto). The interception below is scoped to
-// ErrorCategory.ClientKicked with no UI handler, since every kick/BattlEye/
-// DB/auth error in ClientKickedModule.c leaves m_UIHandler at its default of
-// null (only ConnectErrorScriptModule ever sets a real one) — meaning no
-// OnModalResult contract to replicate for those specifically. That scoping
-// reasoning stands; what's disabled is ACTING on it until a test run proves
-// out the CreateWidgets-during-transition hypothesis one way or the other.
+// Current design: for the case this is scoped to (ErrorCategory.ClientKicked
+// with no UI handler — see below for why that scoping is safe), the resolved
+// caption/message are translated and stored in the CuiPendingError static
+// holder, and HandleError() returns WITHOUT calling super.HandleError() —
+// the native dialog never fires for these. Display happens later, from
+// 5_Mission, once the main menu is reliably back up after the kick (see
+// Colorful-UI\Scripts\5_Mission\GUI\CUI\menus\MainMenu.c, CheckPendingCuiError,
+// hooked at the end of Init()). That is provably a safe, stable point: it's
+// the same call path vanilla itself already uses every time the player
+// returns to the main menu after ANY disconnect/kick (confirmed via repeated
+// "Creating Mission: ...intro.ChernarusPlus\mission.c" log lines across the
+// rapid-reconnect test session), so widget creation there carries no more
+// risk than the main menu's own widget construction already does on every
+// single kick, successfully, today.
+//
+// Scoping (unchanged from before): every kick/BattlEye/DB/auth error in
+// ClientKickedModule.c (P:\scripts\3_game\global\errormodulehandler\
+// clientkickedmodule.c) is inserted with m_UIHandler left at its default of
+// null (only ConnectErrorScriptModule ever assigns a real one,
+// connecterrorscriptmodule.c:23) — so intercepting only ClientKicked-with-
+// no-handler never swallows a callback contract we'd need to replicate.
+// Live diagnostic data (client script_2026-08-05_23-10-58.log) confirmed a
+// real kick (duplicate-UID) takes exactly this path: category matched
+// ErrorCategory.ClientKicked and hasHandler was false. Everything outside
+// that — Generic, ConnectErrorClient/Server/Script, BIOSError, or any
+// ClientKicked error that somehow does carry a handler — still calls
+// super.HandleError() untouched, i.e. the native dialog, exactly as before
+// this mod ever touched this class.
+class CuiPendingError
+{
+    static bool   s_Pending;
+    static string s_Caption;
+    static string s_Message;
+    static int    s_ErrorCode;
+
+    static void Set(string caption, string message, int errorCode)
+    {
+        s_Caption   = caption;
+        s_Message   = message;
+        s_ErrorCode = errorCode;
+        s_Pending   = true;
+    }
+
+    static void Clear()
+    {
+        s_Pending   = false;
+        s_Caption   = "";
+        s_Message   = "";
+        s_ErrorCode = 0;
+    }
+}
+
 modded class DialogueErrorProperties
 {
-    protected Widget       m_CuiRoot;
-    protected Widget       m_CuiPanel;
-    protected TextWidget   m_CuiCaption;
-    protected TextWidget   m_CuiMessage;
-    protected ButtonWidget m_CuiOk;
-
     override void HandleError(int errorCode, string additionalInfo = "")
     {
         ErrorCategory category = ErrorModuleHandler.GetCategoryFromError(errorCode);
@@ -61,97 +96,56 @@ modded class DialogueErrorProperties
             errorCode, ErrorModuleHandler.GetErrorHex(errorCode), category, handler != null, additionalInfo));
 
         bool wouldUseCui = (category == ErrorCategory.ClientKicked) && !handler;
-        Print(string.Format("[CUI ErrorDialog] wouldUseCui=%1 (panel currently DISABLED - always falling through to super.HandleError)", wouldUseCui));
+        Print(string.Format("[CUI ErrorDialog] wouldUseCui=%1", wouldUseCui));
 
-        // DISABLED: always defer to vanilla's real body (the native dialog).
-        // See file header for why. Re-enabling means restoring the guarded
-        // branch this used to have: skip straight to super.HandleError()
-        // under NO_GUI or SERVER builds, and whenever !wouldUseCui; only
-        // when wouldUseCui is true, build `message` from m_DisplayAdditionalInfo
-        // / m_Message / additionalInfo (via EP_MESSAGE_FORMAT_STRING, same as
-        // vanilla's own body) and call
-        // ShowCui(string.Format(EP_HEADER_FORMAT_STRING, m_Header,
-        // ErrorModuleHandler.GetErrorHex(errorCode)), message) instead of
-        // falling through — pending a test run that actually confirms a
-        // ClientKicked/no-handler case reaches here.
-        Print("[CUI ErrorDialog] calling super.HandleError (native ShowDialog path)");
+#ifdef NO_GUI
+        Print("[CUI ErrorDialog] NO_GUI build - calling super.HandleError");
         super.HandleError(errorCode, additionalInfo);
-    }
+        return;
+#endif
 
-    protected void ShowCui(string caption, string message)
-    {
-        Print(string.Format("[CUI ErrorDialog] ShowCui caption='%1' message='%2'", caption, message));
-
-        if (!m_CuiRoot)
+#ifdef SERVER
+        Print("[CUI ErrorDialog] SERVER build - calling super.HandleError");
+        super.HandleError(errorCode, additionalInfo);
+        return;
+#else
+        if (!wouldUseCui)
         {
-            m_CuiRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.errordialog.layout");
-            Print(string.Format("[CUI ErrorDialog] CreateWidgets returned %1", m_CuiRoot != null));
-            if (!m_CuiRoot) return;
-
-            m_CuiPanel   = m_CuiRoot.FindAnyWidget("DialogBox");
-            m_CuiCaption = TextWidget.Cast(m_CuiRoot.FindAnyWidget("Caption"));
-            m_CuiMessage = TextWidget.Cast(m_CuiRoot.FindAnyWidget("MessageText"));
-            m_CuiOk      = ButtonWidget.Cast(m_CuiRoot.FindAnyWidget("OkButton"));
-
-            Print(string.Format("[CUI ErrorDialog] widgets found panel=%1 caption=%2 message=%3 ok=%4",
-                m_CuiPanel != null, m_CuiCaption != null, m_CuiMessage != null, m_CuiOk != null));
-
-            // Same "layout color drops alpha on DayZDefaultPanel" workaround
-            // as CuiDialog.CuiDialog (Dialogs.c:110).
-            if (m_CuiPanel) m_CuiPanel.SetColor(ARGB(220, 62, 62, 62));
-
-            if (m_CuiOk)
-            {
-                m_CuiOk.SetTextColor(colorScheme.PrimaryText());
-                m_CuiOk.SetColor(UIColor.Transparent());
-                m_CuiOk.SetHandler(new CuiErrorDialogOkHandler(this));
-            }
+            Print("[CUI ErrorDialog] wouldUseCui=false - calling super.HandleError (native ShowDialog path)");
+            super.HandleError(errorCode, additionalInfo);
+            return;
         }
 
-        if (g_Game.GetUIManager().IsDialogVisible())
-        {
-            g_Game.GetUIManager().HideDialog();
-        }
+        string message;
+        if (m_DisplayAdditionalInfo && additionalInfo != "")
+            message = string.Format(EP_MESSAGE_FORMAT_STRING, m_Message, additionalInfo);
+        else
+            message = m_Message;
 
-        if (m_CuiCaption) m_CuiCaption.SetText(caption);
-        if (m_CuiMessage) m_CuiMessage.SetText(message);
+        string caption = string.Format(EP_HEADER_FORMAT_STRING, m_Header, ErrorModuleHandler.GetErrorHex(errorCode));
 
-        if (m_CuiMessage && m_CuiPanel)
-        {
-            int sx, sy;
-            m_CuiMessage.GetTextSize(sx, sy);
-            if (sy < 24) sy = 24;
+        // Translate "#"-prefixed stringtable keys now, same pattern vanilla
+        // itself uses before putting this kind of text into a widget (e.g.
+        // P:\scripts\5_mission\gui\itemdropwarningmenu.c:38, logoutmenu.c:151,
+        // invitemenu.c:117 all call Widget.TranslateString() before display).
+        // caption/message here are the same composite "#key\n#key2" shape
+        // those call sites translate — the native ShowDialog we're bypassing
+        // would otherwise have relied on the engine's own text pipeline to
+        // resolve them.
+        string translatedCaption = Widget.TranslateString(caption);
+        string translatedMessage = Widget.TranslateString(message);
 
-            float panelW, panelH;
-            m_CuiPanel.GetSize(panelW, panelH);
-            m_CuiPanel.SetSize(panelW, 74.0 + sy + 80.0);
-        }
+        Print(string.Format("[CUI ErrorDialog] wouldUseCui=true - storing pending CUI error. caption='%1' message='%2'", translatedCaption, translatedMessage));
 
-        if (m_CuiRoot)
-        {
-            m_CuiRoot.Show(true);
-            Print(string.Format("[CUI ErrorDialog] Show(true) called, IsVisible=%1", m_CuiRoot.IsVisible()));
-        }
-    }
+        // Double-kicks (two HandleError calls back to back, observed live)
+        // simply overwrite: CuiPendingError.Set() has no accumulation, so
+        // the second call's data replaces the first's. Only one dialog shows
+        // at the menu, and it's the latest one.
+        CuiPendingError.Set(translatedCaption, translatedMessage, errorCode);
 
-    void CloseCui()
-    {
-        if (m_CuiRoot) m_CuiRoot.Show(false);
-    }
-}
-
-class CuiErrorDialogOkHandler : ScriptedWidgetEventHandler
-{
-    protected DialogueErrorProperties m_Owner;
-
-    void CuiErrorDialogOkHandler(DialogueErrorProperties owner)
-    {
-        m_Owner = owner;
-    }
-
-    override bool OnClick(Widget w, int x, int y, int button)
-    {
-        if (m_Owner) m_Owner.CloseCui();
-        return true;
+        // Deliberately NOT calling super.HandleError() here. This category/
+        // no-handler case is fully owned by the CUI display path in
+        // MainMenu.c now — the native dialog never fires for it.
+#endif
     }
 }

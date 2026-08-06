@@ -129,8 +129,49 @@ modded class MainMenu extends UIScriptedMenu
 				CopyFile("Colorful-UI/GUI/video/" + m_MainMenuVideo, "$saves:" + m_MainMenuVideo);
 			CuiBackgroundVideo.Ensure("$saves:" + m_MainMenuVideo, true);
 		}
-		#endif		
+		#endif
+
+		// Pick up a kick/error dialog captured by DialogueErrorProperties
+		// (Colorful-UI/Scripts/3_Game/Systems/ErrorDialog.c, CuiPendingError
+		// holder) while we were mid-disconnect. Deferred one CallLater tick
+		// past this menu's own widget construction, same "let the engine
+		// finish this frame first" technique already used elsewhere in this
+		// mod (buttons.c's CUIButtonHandler.OnClick) — this menu's Init()
+		// running to completion is itself proof the main menu is safely up
+		// (it's the same construction that already happens, successfully,
+		// after every kick), so this carries no more risk than the rest of
+		// this method already does.
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.CheckPendingCuiError, 0, false);
+
 		return layoutRoot;
+	}
+
+	// See CuiPendingError (ErrorDialog.c). Never touches the native dialog
+	// path directly except as a last-resort fallback if CuiDialog itself
+	// fails to build its widget tree — the player should never end up with
+	// neither dialog after a kick.
+	protected void CheckPendingCuiError()
+	{
+		if (!CuiPendingError.s_Pending) return;
+
+		string caption   = CuiPendingError.s_Caption;
+		string message   = CuiPendingError.s_Message;
+		int    errorCode = CuiPendingError.s_ErrorCode;
+		CuiPendingError.Clear();
+
+		// Info-only presentation: CuiDialog.Show's Confirm/Cancel default to
+		// null callback target with empty method names, which CuiDialog
+		// itself treats as "skip that callback" (Dialogs.c:200-216) — both
+		// buttons just close the dialog. Not redesigning CuiDialog for a
+		// single-button case; showing both is acceptable here.
+		CuiDialog dlg = CuiDialog.Show(caption, message);
+		if (!dlg)
+		{
+			// CuiDialog's own widget tree failed to build (Dialogs.c:168-176
+			// returns null in that case). Fall back to the native dialog so
+			// the player still sees something instead of nothing.
+			g_Game.GetUIManager().ShowDialog(caption, message, errorCode, DBT_OK, DBB_OK, DMT_EXCLAMATION, null);
+		}
 	}
 	
 	override void OnShow()
