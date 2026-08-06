@@ -177,10 +177,15 @@ modded class DialogueErrorProperties
         // stored data. Only one dialog shows, and it's the latest one.
         CuiPendingError.Set(translatedCaption, translatedMessage, errorCode);
 
-        // Immediate-deferred flush attempt — one GUI tick later, try to show
-        // it right now if the game is in a stable state. See file header for
-        // the exact vanilla-sourced state check.
-        GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.TryImmediateFlush, 0, false);
+        // NO immediate flush. The old TryImmediateFlush() ran one GUI tick
+        // after capture and its "stable" gate (mission present, not loading)
+        // read TRUE during the post-kick teardown — so it consumed the
+        // pending error into a dialog that could never render, leaving
+        // nothing for MainMenu.Init() to show. That is why kicks stopped
+        // producing a dialog on the main menu. The pending error now
+        // survives until a display site that is provably safe flushes it:
+        //   - MainMenu.Init()               (real kicks: back at the menu)
+        //   - CUI_ErrorTest_FlushPendingError() (test screen: instant)
 
         // Deliberately NOT calling super.HandleError() here. This no-handler
         // case is fully owned by the CUI display path now — the native
@@ -188,24 +193,4 @@ modded class DialogueErrorProperties
 #endif
     }
 
-    protected void TryImmediateFlush()
-    {
-        if (!CuiPendingError.s_Pending) return;
-
-        DayZGame game = DayZGame.Cast(GetGame());
-        bool hasMission = game && game.GetMission() != null;
-        bool isLoading  = game && game.IsLoading();
-        bool stable     = game && hasMission && !isLoading;
-
-        Print(string.Format("[CUI ErrorDialog] TryImmediateFlush stable=%1 (hasMission=%2 isLoading=%3)", stable, hasMission, isLoading));
-
-        if (!stable) return;
-
-        // Dispatch by name: CuiFlushPendingError() is declared on MissionBase,
-        // a missionScriptModule type this gameScriptModule file cannot name at
-        // compile time, and Mission itself cannot be modded to hold a stub
-        // (engine-owned class). See the file header for the full reasoning and
-        // the vanilla references for this CallFunction shape.
-        GetGame().GameScript.CallFunction(game.GetMission(), "CuiFlushPendingError", null, 0);
-    }
 }
