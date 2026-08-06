@@ -47,7 +47,9 @@ subst P: "C:\Program Files (x86)\Steam\steamapps\common\DayZ Tools\Bin\Work"
 
 ## Step 5 — Create the project junction
 
-Replace `<repo-path>` with the path you cloned to in Step 3:
+Double-click `Start.bat` in the repo root. It finds this repo wherever you cloned it, mounts `P:\` if needed, and links `P:\Colorful-UI` to the repo's `Colorful-UI` folder. Safe to re-run any time — it only ever replaces links, never real folders.
+
+Or do it manually (replace `<repo-path>` with the path you cloned to in Step 3):
 
 ```powershell
 New-Item -ItemType Junction -Path "P:\Colorful-UI" -Target "<repo-path>\Colorful-UI"
