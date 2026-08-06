@@ -19,6 +19,7 @@ modded class WarningMenuBase extends UIScriptedMenu
 		// Hidden 1x1 placeholder so the engine has a layoutRoot to attach.
 		// The visible UI is owned by CuiDialog below.
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.dialog_stub.layout");
+		if (!layoutRoot) return null;
 
 		string body = GetText();
 		if (body == "") body = "An action will drop items from your character.";

@@ -225,13 +225,8 @@ modded class MainMenu extends UIScriptedMenu
 	// top dialog instead of stacking another one.
 	override void Exit()
 	{
-		int n = CuiDialog.s_OpenDialogs.Count();
-		if (n > 0)
-		{
-			CuiDialog top = CuiDialog.s_OpenDialogs.Get(n - 1);
-			if (top) top.OnCancel();
+		if (CuiDialog.CancelTop())
 			return;
-		}
 		OpenExitDialog();
 	}
 
