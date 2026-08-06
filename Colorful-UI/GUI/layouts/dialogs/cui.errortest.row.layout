@@ -1,0 +1,16 @@
+ButtonWidgetClass ErrorTestRowBtn {
+ visible 1
+ color 0.2 0.4 0.8 1
+ position 0 0
+ size 500 28
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ style EmptyHighlight
+ "no focus" 0
+ text ""
+ font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
+ "exact text" 1
+ "exact text size" 14
+}

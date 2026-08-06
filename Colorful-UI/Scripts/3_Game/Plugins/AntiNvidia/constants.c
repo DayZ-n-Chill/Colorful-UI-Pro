@@ -1,0 +1,1 @@
+const int MENU_ANVI_CAPTCHA = 88;

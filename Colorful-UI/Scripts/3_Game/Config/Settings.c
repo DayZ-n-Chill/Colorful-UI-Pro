@@ -1,9 +1,12 @@
 // Constants.c v3.0.0
 static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
+static bool ErrorTestScreen    = true; // If set to true, MainMenu boots into the error/dialog test harness (cui.errortest.layout) instead of the normal main menu. Debug/QA only.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool UseImagesets       = false;   // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used.
 static bool LoadVideo          = false;  // If set to true, a video will be shown during load screens along with tips.
 static bool ShowGameOverOverlay = false;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
+
+static bool AntiNvidia         = false;  // If set to true, the Anti-NVIDIA Inspector captcha will be shown before connecting.
 
 // The below tend to break right now. Fix with 4.0.0 Update.
 static bool EnableMenuVideo    = false;  // Background video on main menu (via workspace-rooted CuiBackgroundVideo).
@@ -72,4 +75,3 @@ class SocialURL {
 	static string Reddit     = "#";
 	static string Youtube    = "#";
 }
-
