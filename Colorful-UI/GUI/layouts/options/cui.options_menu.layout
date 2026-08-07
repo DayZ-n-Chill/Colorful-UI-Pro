@@ -101,9 +101,7 @@ FrameWidgetClass settings_menu_root {
   FrameWidgetClass Tabber {
    ignorepointer 1
    position 0 0
-   size 0.9 0.9
-   halign center_ref
-   valign center_ref
+   size 1 1
    hexactpos 1
    vexactpos 1
    hexactsize 0
@@ -111,14 +109,14 @@ FrameWidgetClass settings_menu_root {
    priority 1
    scriptclass "TabberUI"
    {
-    GridSpacerWidgetClass TabControls {
+    SpacerWidgetClass TabControls {
      visible 1
      clipchildren 0
      ignorepointer 1
-     position 0 0
-     size 710 55
-     hexactpos 0
-     vexactpos 0
+     position 80 80
+     size 710 60
+     hexactpos 1
+     vexactpos 1
      hexactsize 1
      vexactsize 1
      "no focus" 1
@@ -126,8 +124,6 @@ FrameWidgetClass settings_menu_root {
      Margin 0
      "Size To Content H" 1
      "Size To Content V" 1
-     Columns 4
-     Rows 1
      {
       SpacerWidgetClass TabBar {
        clipchildren 1
@@ -470,41 +466,41 @@ FrameWidgetClass settings_menu_root {
     FrameWidgetClass Tab_0 {
      visible 1
      ignorepointer 1
-     size 0.8 900
-     valign bottom_ref
+     position 80 160
+     size 1760 800
      hexactpos 1
      vexactpos 1
-     hexactsize 0
+     hexactsize 1
      vexactsize 1
     }
     FrameWidgetClass Tab_1 {
      visible 0
      ignorepointer 1
-     size 0.8 900
-     valign bottom_ref
+     position 80 160
+     size 1760 800
      hexactpos 1
      vexactpos 1
-     hexactsize 0
+     hexactsize 1
      vexactsize 1
     }
     FrameWidgetClass Tab_2 {
      visible 0
      ignorepointer 1
-     size 0.8 900
-     valign bottom_ref
+     position 80 160
+     size 1760 800
      hexactpos 1
      vexactpos 1
-     hexactsize 0
+     hexactsize 1
      vexactsize 1
     }
     FrameWidgetClass Tab_3 {
      visible 0
      ignorepointer 1
-     size 0.8 900
-     valign bottom_ref
+     position 80 160
+     size 1760 800
      hexactpos 1
      vexactpos 1
-     hexactsize 0
+     hexactsize 1
      vexactsize 1
     }
    }
