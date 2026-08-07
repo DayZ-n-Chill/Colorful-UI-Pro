@@ -37,6 +37,7 @@ modded class KeybindingsMenu extends UIScriptedMenu
 
 		InitInputSortingMap();
 		CreateTabs();
+		CuiReskinTabs();
 		CreateGroupContainer();
 
 		InitPresets(-1, layoutRoot.FindAnyWidget("group_header"), input);
@@ -53,6 +54,30 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		m_Undo.SetFlags(WidgetFlags.IGNOREPOINTER);
 
 		return layoutRoot;
+	}
+
+	// CreateTabs may resolve to another mod's AddTab (see TabberUI.c), which
+	// builds the tab controls from that mod's layout with the wrong font. The
+	// names are deterministic — same inputs vanilla CreateTabs reads — so
+	// rebuild every control from our layout with the same titles.
+	protected void CuiReskinTabs()
+	{
+		int tab_index = 0;
+		int sort_count = InputUtils.GetInputActionSortingMap().Count();
+		for (int i = 0; i < sort_count; i++)
+		{
+			if (InputUtils.GetInputActionSortingMap().GetElement(i) && InputUtils.GetInputActionSortingMap().GetElement(i).Count() > 0)
+			{
+				string group_name = GetUApi().SortingLocalization(InputUtils.GetInputActionSortingMap().GetKey(i));
+				m_Tabber.CuiReskinTabControl(tab_index, Widget.TranslateString("#" + group_name));
+				tab_index++;
+			}
+		}
+
+		if (InputUtils.GetUnsortedInputActions() && InputUtils.GetUnsortedInputActions().Count() > 0)
+		{
+			m_Tabber.CuiReskinTabControl(tab_index, Widget.TranslateString("#layout_pc_keybinding_unsorted"));
+		}
 	}
 
 	// The visible button text lives on a child widget, so colour that too.

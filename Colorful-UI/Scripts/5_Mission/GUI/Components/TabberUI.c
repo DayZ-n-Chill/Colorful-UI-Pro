@@ -1,4 +1,4 @@
-modded class TabberUI extends ScriptedWidgetEventHandler
+modded class TabberUI
 {
 	override void AlignTabbers()
 	{
@@ -49,6 +49,12 @@ modded class TabberUI extends ScriptedWidgetEventHandler
 			tab_child = tab_child.GetSibling();
 		}
 
+		// Vanilla ends by resizing the tab-bar root to fit every tab. Without
+		// it, layouts whose bar has no scroller (options) clip tabs added past
+		// the static ones — mod-injected tabs exist but render out of view.
+		m_TabControlsRoot.GetSize( x, y );
+		m_TabControlsRoot.SetSize( total_size, y );
+
 		tab_controls_container.Update();
 		if ( tab_controls_scroller )
 			tab_controls_scroller.Update();
@@ -89,6 +95,41 @@ modded class TabberUI extends ScriptedWidgetEventHandler
 		return false;
 	}
 
+	// Rebuild an existing tab control from our layout. Other mods (DayZ
+	// Expansion among them) replace AddTab with their own tab control layout
+	// and can compile after us, so their control wins at creation time. Menus
+	// we own call this afterwards to reclaim each control. TextWidget has no
+	// GetText, so the caller supplies the title.
+	void CuiReskinTabControl( int index, string name )
+	{
+		Widget old_control = m_TabControls.Get( index );
+		if ( !old_control )
+			return;
+
+		Widget container = m_TabControlsRoot.FindAnyWidget( "Tab_Control_Container" );
+		if ( !container )
+			return;
+
+		string cname = old_control.GetName();
+
+		Widget control = GetGame().GetWorkspace().CreateWidgets( "Colorful-UI/GUI/layouts/components/tabber_prefab/cui.tab_control.layout", container );
+		TextWidget control_text = TextWidget.Cast( control.FindAnyWidget( "Tab_Control_x_Title" ) );
+
+		control.SetName( cname );
+		control_text.SetName( cname + "_Title" );
+		control.FindAnyWidget( "Tab_Control_x_Background" ).SetName( cname + "_Background" );
+		control_text.SetText( name );
+		control.SetHandler( this );
+
+		m_TabControls.Set( index, control );
+		old_control.Unlink();
+
+		if ( index == m_SelectedIndex )
+			SelectTabControl( index );
+
+		AlignTabbers();
+	}
+
 	override int AddTab( string name )
 	{
 		int new_index = m_Tabs.Count();
@@ -106,9 +147,9 @@ modded class TabberUI extends ScriptedWidgetEventHandler
 		control.SetHandler( this );
 		m_TabControls.Insert( new_index, control );
 		m_Tabs.Insert( new_index, tab );
-		
+
 		AlignTabbers();
-		
+
 		return new_index;
 	}
 }

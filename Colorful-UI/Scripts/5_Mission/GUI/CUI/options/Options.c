@@ -2,6 +2,19 @@ modded class OptionsMenu extends UIScriptedMenu
 {
 	private Widget m_Separator, m_shader, m_TopShader, m_BottomShader, m_MenuDivider, m_LoadingBar;
 
+	// Colorful-UI compiles last (see Scripts/config.cpp requiredAddons), so
+	// our Init is outermost and other mods' options-tab injections never run.
+	// Each known tab-injecting mod is recreated here, guarded by the compile
+	// flag that mod ships so standalone builds are unaffected. Their modded-
+	// class fields aren't visible across mods; we track our own.
+	#ifdef EXPANSIONMODCORE
+	protected ref OptionsMenuExpansion m_CuiExpansionTab;
+	#endif
+	#ifdef ADM_NVG_Mod
+	protected ref OptionsNVGMenu m_CuiNVGMenu;
+	protected int m_CuiNVGTabIndex = -1;
+	#endif
+
 	private bool IsMainMenuContext()
 	{
 		Mission m = GetGame().GetMission();
@@ -86,8 +99,41 @@ modded class OptionsMenu extends UIScriptedMenu
 		}
 		#endif
 
+		#ifdef EXPANSIONMODCORE
+		// Mirrors DayZ Expansion Core's own OptionsMenu.Init injection.
+		int cuiExpTabIndex = m_Tabber.AddTab("EXPANSION");
+		m_CuiExpansionTab = new OptionsMenuExpansion(layoutRoot.FindAnyWidget("Tab_" + cuiExpTabIndex), m_Details, m_Options, this);
+		#endif
+
+		#ifdef ADM_NVG_Mod
+		// Mirrors Admirals NVG Mod's injection — tab exists only while wearing
+		// powered-on NVGs, the same condition the mod itself uses.
+		PlayerBase nvgPlayer = PlayerBase.Cast(g_Game.GetPlayer());
+		if (nvgPlayer && nvgPlayer.IsNVGWorking())
+		{
+			m_CuiNVGTabIndex = m_Tabber.AddTab("NVG MENU");
+			m_CuiNVGMenu = new OptionsNVGMenu(layoutRoot.FindAnyWidget("Tab_" + m_CuiNVGTabIndex), m_Details, m_Options, this);
+		}
+		#endif
+
 		return layoutRoot;
 	}
+
+	#ifdef EXPANSIONMODCORE
+	// Expansion's own OnChanged/Apply forwarding checks its private tab field,
+	// which stays null because its Init never runs — forward to our recreated
+	// tab so Expansion settings enable Apply and actually apply.
+	override void OnChanged()
+	{
+		super.OnChanged();
+
+		if (m_CuiExpansionTab && m_CuiExpansionTab.IsChanged())
+		{
+			m_Apply.ClearFlags(WidgetFlags.IGNOREPOINTER);
+			ColorNormal(m_Apply);
+		}
+	}
+	#endif
 
 	// Row hover and disabled colouring.
 	override void ColorDisable(Widget w)
@@ -179,6 +225,11 @@ modded class OptionsMenu extends UIScriptedMenu
 		if (m_ControlsTab.IsChanged()) m_ControlsTab.Apply();
 		if (m_SoundsTab.IsChanged())   m_SoundsTab.Apply();
 		if (m_GameTab.IsChanged())     m_GameTab.Apply();
+
+		#ifdef EXPANSIONMODCORE
+		if (m_CuiExpansionTab && m_CuiExpansionTab.IsChanged())
+			m_CuiExpansionTab.Apply();
+		#endif
 
 		if (m_Options.IsChanged() || m_GameTab.IsChanged())
 		{
