@@ -68,16 +68,8 @@ modded class OptionsMenu extends UIScriptedMenu
 		Widget tabBarBg = layoutRoot.FindAnyWidget("Tab_Control_Container");
 		if (tabBarBg) tabBarBg.SetColor(ARGB(140, 0, 0, 0));
 
-		// Game-tab section headers — color via OptionHeaders so they follow
-		// brand. All four tabs are constructed up-front so widgets exist here.
-		TextWidget genHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("general_text"));
-		TextWidget camHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("camera_text"));
-		TextWidget hudHeader  = TextWidget.Cast(layoutRoot.FindAnyWidget("hud_text"));
-		TextWidget chatHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("chat_text"));
-		if (genHeader)  genHeader.SetColor(colorScheme.OptionHeaders());
-		if (camHeader)  camHeader.SetColor(colorScheme.OptionHeaders());
-		if (hudHeader)  hudHeader.SetColor(colorScheme.OptionHeaders());
-		if (chatHeader) chatHeader.SetColor(colorScheme.OptionHeaders());
+		// Section headers inside tabs stay uncolored (white, like every other
+		// tab's) — one consistent look, nothing to restyle per foreign mod.
 
 		m_ModalLock = false;
 		m_CanApplyOrReset = false;
@@ -103,6 +95,12 @@ modded class OptionsMenu extends UIScriptedMenu
 		// Mirrors DayZ Expansion Core's own OptionsMenu.Init injection.
 		int cuiExpTabIndex = m_Tabber.AddTab("EXPANSION");
 		m_CuiExpansionTab = new OptionsMenuExpansion(layoutRoot.FindAnyWidget("Tab_" + cuiExpTabIndex), m_Details, m_Options, this);
+
+		// Their settings column is a hard 600px-wide scroll; our tabs use 650.
+		// Match it so every tab's content reads the same width.
+		Widget expScroll = layoutRoot.FindAnyWidget("expansion_settings_scroll");
+		if (expScroll)
+			expScroll.SetSize(650, 1);
 		#endif
 
 		#ifdef ADM_NVG_Mod
