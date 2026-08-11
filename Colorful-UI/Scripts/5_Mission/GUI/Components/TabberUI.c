@@ -1,5 +1,61 @@
 modded class TabberUI
 {
+	// Universal mod-tab adoption (see Options.c). While s_CuiRecordForeignTabs
+	// is true, every AddTab(name) call — including ones made by other mods'
+	// chained OptionsMenu.Init() overrides, e.g. DayZ Expansion's
+	// `m_Tabber.AddTab("EXPANSION")` — gets its (index, name) recorded here.
+	// Options.c flips the flag on immediately before calling super.Init() and
+	// off immediately after, so only foreign tabs added during that window
+	// are captured; vanilla's own four tabs never pass through AddTab (they're
+	// discovered by scanning existing layout children in Init(), see vanilla
+	// tabberui.c OnWidgetScriptInit -> Init()).
+	static bool s_CuiRecordForeignTabs = false;
+	static ref array<int>    s_CuiForeignTabIndices = new array<int>();
+	static ref array<string> s_CuiForeignTabNames    = new array<string>();
+
+	// Vanilla Init() ends with `m_InitTimer.Run(0.01, this, "AlignTabbers")`,
+	// which fires a frame later. If this tabber's widget tree has since been
+	// Unlink()'d (our phase-1 -> phase-2 swap in Options.c), that callback
+	// dereferences dead widgets. Call this on the phase-1 tabber right before
+	// destroying its tree.
+	void CuiCancelInitTimer()
+	{
+		if (m_InitTimer)
+			m_InitTimer.Stop();
+	}
+
+	// Adopts an already-built tab content pane from another (soon to be
+	// destroyed) tabber's tree, instead of AddTab()'s normal "create an empty
+	// pane" behaviour. The pane keeps its identity — Widget.AddChild moves it
+	// in the tree without recreating it — so any handler object a foreign mod
+	// stored a reference to (e.g. Expansion's OptionsMenuExpansion.m_Root)
+	// stays valid. Only the tab control (the clickable header) is created
+	// fresh here, using our own styled prefab, same as AddTab().
+	int CuiAdoptTab(string name, Widget pane)
+	{
+		int new_index = m_Tabs.Count();
+
+		Widget control = GetGame().GetWorkspace().CreateWidgets( "Colorful-UI/GUI/layouts/components/tabber_prefab/cui.tab_control.layout", m_Root.FindAnyWidget( "Tab_Control_Container" ) );
+		TextWidget control_text = TextWidget.Cast( control.FindAnyWidget( "Tab_Control_x_Title" ) );
+
+		pane.SetName( "Tab_" + new_index );
+		m_Root.AddChild( pane ); // reparents; auto-detaches from its old parent
+
+		control.SetName( "Tab_Control_" + new_index );
+		control_text.SetName( "Tab_Control_" + new_index + "_Title" );
+		control.FindAnyWidget( "Tab_Control_x_Background" ).SetName( "Tab_Control_" + new_index + "_Background" );
+
+		control_text.SetText( name );
+
+		control.SetHandler( this );
+		m_TabControls.Insert( new_index, control );
+		m_Tabs.Insert( new_index, pane );
+
+		AlignTabbers();
+
+		return new_index;
+	}
+
 	override void AlignTabbers()
 	{
 		float total_size;
@@ -149,6 +205,12 @@ modded class TabberUI
 		m_Tabs.Insert( new_index, tab );
 
 		AlignTabbers();
+
+		if ( s_CuiRecordForeignTabs )
+		{
+			s_CuiForeignTabIndices.Insert( new_index );
+			s_CuiForeignTabNames.Insert( name );
+		}
 
 		return new_index;
 	}
