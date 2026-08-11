@@ -2,19 +2,6 @@ modded class OptionsMenu extends UIScriptedMenu
 {
 	private Widget m_Separator, m_shader, m_TopShader, m_BottomShader, m_MenuDivider, m_LoadingBar;
 
-	// Colorful-UI compiles last (see Scripts/config.cpp requiredAddons), so
-	// our Init is outermost and other mods' options-tab injections never run.
-	// Each known tab-injecting mod is recreated here, guarded by the compile
-	// flag that mod ships so standalone builds are unaffected. Their modded-
-	// class fields aren't visible across mods; we track our own.
-	#ifdef EXPANSIONMODCORE
-	protected ref OptionsMenuExpansion m_CuiExpansionTab;
-	#endif
-	#ifdef ADM_NVG_Mod
-	protected ref OptionsNVGMenu m_CuiNVGMenu;
-	protected int m_CuiNVGTabIndex = -1;
-	#endif
-
 	private bool IsMainMenuContext()
 	{
 		Mission m = GetGame().GetMission();
@@ -23,19 +10,51 @@ modded class OptionsMenu extends UIScriptedMenu
 		
 	override Widget Init()
 	{
-		m_Options = new GameOptions();
-		
+		// ---- Phase 1: let the real chain build the vanilla menu -----------
+		// super.Init() walks the WHOLE modded-class chain below us (any other
+		// mod's modded OptionsMenu.Init(), e.g. DayZ Expansion's, then vanilla
+		// itself). That's what constructs vanilla's layout/tabs AND lets every
+		// foreign mod add its own tab and build its own tab content — none of
+		// that runs if we skip straight to our own layout the way this method
+		// used to. TabberUI.AddTab records (index, name) for every tab added
+		// while s_CuiRecordForeignTabs is set, which is how we find out what
+		// to adopt below without knowing any mod's name up front.
+		// Vanilla source verified: P Drive\scripts\5_Mission\gui\newui\options\optionsmenu.c:37-111
+		// (Tab_0..Tab_3 are static layout children; foreign tabs only ever
+		// arrive via AddTab, so the registry is foreign-only by construction.)
+		TabberUI.s_CuiForeignTabIndices.Clear();
+		TabberUI.s_CuiForeignTabNames.Clear();
+		TabberUI.s_CuiRecordForeignTabs = true;
+
+		Widget oldRoot = super.Init();
+
+		TabberUI.s_CuiRecordForeignTabs = false;
+
+		TabberUI oldTabber;
+		oldRoot.FindAnyWidget("Tabber").GetScript(oldTabber);
+
+		// ---- Phase 2: swap to the CUI shell (unchanged from before) -------
+		// m_Options is NOT recreated here — super.Init() already built it,
+		// and any foreign tab handler (e.g. Expansion's OptionsMenuExpansion)
+		// captured that exact instance in its own constructor during phase 1.
+		// Recreating it would leave foreign tabs pointed at an orphaned copy.
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/options/cui.options_menu.layout", null);
-		
+
 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_Tabber);
-		
+
 		m_Details  = layoutRoot.FindAnyWidget("settings_details");
 		m_Version  = TextWidget.Cast(layoutRoot.FindAnyWidget("version"));
-		
+
 		m_GameTab     = new OptionsMenuGame(layoutRoot.FindAnyWidget("Tab_0"), m_Details, m_Options, this);
 		m_SoundsTab   = new OptionsMenuSounds(layoutRoot.FindAnyWidget("Tab_1"), m_Details, m_Options, this);
 		m_VideoTab    = new OptionsMenuVideo(layoutRoot.FindAnyWidget("Tab_2"), m_Details, m_Options, this);
 		m_ControlsTab = new OptionsMenuControls(layoutRoot.FindAnyWidget("Tab_3"), m_Details, m_Options, this);
+
+		// Vanilla registers these on the phase-1 tabber inside super.Init()
+		// (optionsmenu.c:103-104); that instance is about to be destroyed, so
+		// re-register on the tabber we're actually keeping.
+		m_Tabber.m_OnTabSwitch.Insert(OnTabSwitch);
+		m_Tabber.m_OnAttemptTabSwitch.Insert(OnAttemptTabSwitch);
 
 		m_Apply    = ButtonWidget.Cast(layoutRoot.FindAnyWidget("apply"));
 		m_Back     = ButtonWidget.Cast(layoutRoot.FindAnyWidget("back"));
@@ -91,47 +110,35 @@ modded class OptionsMenu extends UIScriptedMenu
 		}
 		#endif
 
-		#ifdef EXPANSIONMODCORE
-		// Mirrors DayZ Expansion Core's own OptionsMenu.Init injection.
-		int cuiExpTabIndex = m_Tabber.AddTab("EXPANSION");
-		m_CuiExpansionTab = new OptionsMenuExpansion(layoutRoot.FindAnyWidget("Tab_" + cuiExpTabIndex), m_Details, m_Options, this);
-
-		// Their settings column is a hard 600px-wide scroll; our tabs use 650.
-		// Match it so every tab's content reads the same width.
-		Widget expScroll = layoutRoot.FindAnyWidget("expansion_settings_scroll");
-		if (expScroll)
-			expScroll.SetSize(650, 1);
-		#endif
-
-		#ifdef ADM_NVG_Mod
-		// Mirrors Admirals NVG Mod's injection — tab exists only while wearing
-		// powered-on NVGs, the same condition the mod itself uses.
-		PlayerBase nvgPlayer = PlayerBase.Cast(g_Game.GetPlayer());
-		if (nvgPlayer && nvgPlayer.IsNVGWorking())
+		// ---- Adopt every tab a foreign mod's chained Init() added ---------
+		// (index 4+; the vanilla four never go through AddTab). The pane
+		// widget already holds that mod's fully-built tab content — adoption
+		// moves it, it doesn't rebuild it, so a foreign mod's own handler
+		// object (e.g. Expansion's OptionsMenuExpansion, which stores a Widget
+		// reference to this exact pane) keeps working untouched. No mod name
+		// appears anywhere in this loop.
+		for (int i = 0; i < TabberUI.s_CuiForeignTabIndices.Count(); i++)
 		{
-			m_CuiNVGTabIndex = m_Tabber.AddTab("NVG MENU");
-			m_CuiNVGMenu = new OptionsNVGMenu(layoutRoot.FindAnyWidget("Tab_" + m_CuiNVGTabIndex), m_Details, m_Options, this);
+			int oldIndex = TabberUI.s_CuiForeignTabIndices.Get(i);
+			string tabName = TabberUI.s_CuiForeignTabNames.Get(i);
+
+			Widget pane = oldRoot.FindAnyWidget("Tab_" + oldIndex);
+			if (!pane)
+				continue; // recorded index didn't resolve to a real pane; skip rather than crash
+
+			m_Tabber.CuiAdoptTab(tabName, pane);
 		}
-		#endif
+
+		// Destroy the phase-1 vanilla tree now that every foreign pane has
+		// been reparented out of it. Cancel its tabber's pending realign
+		// timer first (vanilla tabberui.c fires it a frame later; by then
+		// this tree would be gone).
+		if (oldTabber)
+			oldTabber.CuiCancelInitTimer();
+		oldRoot.Unlink();
 
 		return layoutRoot;
 	}
-
-	#ifdef EXPANSIONMODCORE
-	// Expansion's own OnChanged/Apply forwarding checks its private tab field,
-	// which stays null because its Init never runs — forward to our recreated
-	// tab so Expansion settings enable Apply and actually apply.
-	override void OnChanged()
-	{
-		super.OnChanged();
-
-		if (m_CuiExpansionTab && m_CuiExpansionTab.IsChanged())
-		{
-			m_Apply.ClearFlags(WidgetFlags.IGNOREPOINTER);
-			ColorNormal(m_Apply);
-		}
-	}
-	#endif
 
 	// Row hover and disabled colouring.
 	override void ColorDisable(Widget w)
@@ -211,55 +218,37 @@ modded class OptionsMenu extends UIScriptedMenu
 	// ---- ShowDialog -> CuiDialog wiring ---------------------------------------
 	// Vanilla optionsmenu.c uses g_Game.GetUIManager().ShowDialog(...) in
 	// Apply() (restart-needed), Back() (discard changes), and OnAttemptTabSwitch
-	// (discard changes on tab switch). Each method body is replicated verbatim
-	// from vanilla, with the ShowDialog call replaced by CuiDialog.Show and
-	// the OnModalResult Yes-branch logic moved into a Confirm callback.
-	// Vanilla source: P:\scripts\5_mission\gui\newui\options\optionsmenu.c
+	// (discard changes on tab switch). Back() and OnAttemptTabSwitch() bodies
+	// are replicated verbatim from vanilla, with the ShowDialog call replaced
+	// by CuiDialog.Show and the OnModalResult Yes-branch logic moved into a
+	// Confirm callback — vanilla doesn't expose a narrower hook for just the
+	// dialog call, so a full copy is the only way to swap it.
+	// Apply() is different (see below): it calls super.Apply() instead of
+	// copying vanilla's body, so foreign mods' own chained Apply() overrides
+	// (e.g. DayZ Expansion's, which applies its tab via a field only *it*
+	// knows about) run for free with no per-mod code here.
+	// Vanilla source: P Drive\scripts\5_Mission\gui\newui\options\optionsmenu.c
 
 	protected int m_PendingTabTarget;
 
+	// Chains to super.Apply() so every mod's own Apply() override in between
+	// (vanilla tabs, plus any foreign mod's, e.g. Expansion's
+	// `if (m_ExpansionTab && m_ExpansionTab.IsChanged()) m_ExpansionTab.Apply();`)
+	// runs — that's the only way to reach a foreign mod's tab-apply logic
+	// generically, since it's stored behind a field only that mod's own code
+	// can name. Vanilla's Apply() (optionsmenu.c:232-274) ends by calling the
+	// native g_Game.GetUIManager().ShowDialog(...) when a restart is needed;
+	// nothing renders between that call and the two lines below (everything
+	// here is synchronous within one Init/Apply call), so closing dialog id
+	// 117 (vanilla's hardcoded restart-prompt id, optionsmenu.c:273) and
+	// showing CuiDialog in its place produces no visible native-dialog flash.
 	override void Apply()
 	{
-		if (m_ControlsTab.IsChanged()) m_ControlsTab.Apply();
-		if (m_SoundsTab.IsChanged())   m_SoundsTab.Apply();
-		if (m_GameTab.IsChanged())     m_GameTab.Apply();
-
-		#ifdef EXPANSIONMODCORE
-		if (m_CuiExpansionTab && m_CuiExpansionTab.IsChanged())
-			m_CuiExpansionTab.Apply();
-		#endif
-
-		if (m_Options.IsChanged() || m_GameTab.IsChanged())
-		{
-			m_Options.Test();
-			m_Options.Apply();
-		}
-
-		GetUApi().Export();
-
-		if (g_Game.GetInput().IsEnabledMouseAndKeyboard())
-		{
-			m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
-			ColorDisable(m_Apply);
-			m_Reset.SetFlags(WidgetFlags.IGNOREPOINTER);
-			ColorDisable(m_Reset);
-		}
-
-		m_CanApplyOrReset = false;
-
-		#ifdef PLATFORM_CONSOLE
-		UpdateControlsElements();
-		UpdateControlsElementVisibility();
-
-		IngameHud hud;
-		if (g_Game.GetMission() && Class.CastTo(hud, g_Game.GetMission().GetHud()))
-		{
-			hud.ShowQuickBar(g_Game.GetInput().IsEnabledMouseAndKeyboardEvenOnServer());
-		}
-		#endif
+		super.Apply();
 
 		if (m_Options.NeedRestart())
 		{
+			g_Game.GetUIManager().CloseSpecificDialog(117);
 			CuiDialog.Show(
 				"#main_menu_configure", "#menu_restart_needed",
 				true, this, "DoRequestRestart", "");
@@ -341,6 +330,12 @@ modded class OptionsMenu extends UIScriptedMenu
 	// so m_Version stays null after Init's FindAnyWidget — and vanilla's
 	// Refresh NPEs the next time it fires (OnShow → Refresh, triggered by
 	// MainMenu OpenSettings or by Cancel returning to OptionsMenu).
+	// Deliberately does NOT call super.Refresh(): Expansion's own Refresh
+	// override (`super.Refresh(); GetDayZGame().Expansion_SetGameVersionText(m_Version);`)
+	// doesn't null-check m_Version either, so chaining into it here would
+	// reintroduce the exact NPE this override exists to avoid. Net effect:
+	// Expansion's version-text suffix on the options screen is lost — a
+	// known, accepted gap, not a bug.
 	override void Refresh()
 	{
 		if (m_Version)
