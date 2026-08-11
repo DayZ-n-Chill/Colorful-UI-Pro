@@ -49,11 +49,11 @@ modded class TabberUI
 			tab_child = tab_child.GetSibling();
 		}
 
-		// Vanilla ends by resizing the tab-bar root to fit every tab. Without
-		// it, layouts whose bar has no scroller (options) clip tabs added past
-		// the static ones — mod-injected tabs exist but render out of view.
-		m_TabControlsRoot.GetSize( x, y );
-		m_TabControlsRoot.SetSize( total_size, y );
+		// The root keeps its layout width on purpose: both the options and
+		// keybindings layouts wrap Tab_Control_Container in Tab_Control_Scroller,
+		// so an over-wide container overflows INSIDE the scroller and scrolls.
+		// Growing the root to total_size (vanilla's tail) would let the bar
+		// stretch past the screen and the scroller would never engage.
 
 		tab_controls_container.Update();
 		if ( tab_controls_scroller )
