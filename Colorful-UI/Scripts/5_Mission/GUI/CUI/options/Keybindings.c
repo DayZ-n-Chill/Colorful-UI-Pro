@@ -1,3 +1,6 @@
+// KeybindingsMenu — CUI keybindings screen.
+// Vanilla source: P:\scripts\5_mission\gui\newui\keybindings\keybindingsmenu.c
+
 modded class KeybindingsMenu extends UIScriptedMenu
 {
 	private Widget m_TopShader, m_BottomShader, m_MenuDivider;
@@ -25,7 +28,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		m_BottomShader = layoutRoot.FindAnyWidget( "BottomShader" );
 		m_MenuDivider  = layoutRoot.FindAnyWidget( "MenuDivider" );
 
-		// Note that this is just used as a visual trim, not a real loading bar.
 		m_LoadingBar      = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
@@ -47,7 +49,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		g_Game.SetKeyboardHandle(this);
 		m_Tabber.RefreshTab(true);
 
-		// Apply and Undo start disabled until a binding is changed.
 		ColorDisabled(m_Apply);
 		m_Apply.SetFlags(WidgetFlags.IGNOREPOINTER);
 		ColorDisabled(m_Undo);
@@ -56,10 +57,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		return layoutRoot;
 	}
 
-	// CreateTabs may resolve to another mod's AddTab (see TabberUI.c), which
-	// builds the tab controls from that mod's layout with the wrong font. The
-	// names are deterministic — same inputs vanilla CreateTabs reads — so
-	// rebuild every control from our layout with the same titles.
 	protected void CuiReskinTabs()
 	{
 		int tab_index = 0;
@@ -80,8 +77,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		}
 	}
 
-	// The visible button text lives on a child widget, so colour that too.
-
 	override void ColorDisabled(Widget w)
 	{
 		if (!w) return;
@@ -92,12 +87,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		TextWidget label = TextWidget.Cast(w.FindAnyWidget(w.GetName() + "_label"));
 		if (label) label.SetColor(colorScheme.DisabledText());
 	}
-
-	// Vanilla SetToDefaults() and HardReset() open the engine's yes/no dialog
-	// via g_Game.GetUIManager().ShowDialog(...). Override to use our CuiDialog
-	// and skip straight to PerformSetToDefaultsExt() with the right parameter
-	// on confirm — same call vanilla's OnModalResult would make.
-	// Vanilla source: keybindingsmenu.c:284-292.
 
 	override void SetToDefaults()
 	{
@@ -144,12 +133,8 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		}
 	}
 
-	// Vanilla Back() shows ShowDialog when there are unsaved bind changes.
-	// Replicated verbatim, ShowDialog -> CuiDialog. Vanilla source: line 247-271.
 	override void Back()
 	{
-		// Escape with a CuiDialog open cancels the dialog instead of running
-		// the back flow again (which would stack another confirm dialog).
 		if (CuiDialog.CancelTop())
 			return;
 
@@ -185,10 +170,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		g_Game.GetUIManager().Back();
 	}
 
-	// Vanilla OnAttemptSelectPreset shows ShowDialog when changing presets
-	// would discard unsaved bind changes. Replicated verbatim, ShowDialog ->
-	// CuiDialog. m_TargetPresetIndex is set unconditionally so the confirm
-	// callback knows which preset to switch to. Vanilla source: line 508-519.
 	override void OnAttemptSelectPreset(int index)
 	{
 		bool changed = m_GroupsContainer.IsChanged() && m_OriginalPresetIndex != index;
@@ -215,12 +196,6 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		cuiElmnt.CleanupForOwner(this);
 	}
 }
-
-// Vanilla KeybindingElementNew.OnMouseEnter / OnMouseLeave paint the bind
-// buttons red ARGBF(1,1,0,0) on hover. We mirror vanilla's structure
-// (clear-X show/hide is preserved) and swap red for our scheme color.
-//
-// Vanilla source: P:\scripts\5_mission\gui\newui\keybindings\keybindingelementnew.c:263-310
 
 modded class KeybindingElementNew
 {
@@ -254,4 +229,3 @@ modded class KeybindingElementNew
 		return false;
 	}
 }
-

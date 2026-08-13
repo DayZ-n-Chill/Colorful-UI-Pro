@@ -1,15 +1,10 @@
-// Game-invite popup, shown in the Colorful-UI dialog.
-//
-// The original counted down and joined automatically after 15 seconds. Here
-// the player decides instead: Connect joins the friend's server, Cancel
-// stays on the current one.
+// InviteMenu — game-invite prompt shown in CuiDialog.
+// Vanilla source: P:\scripts\5_mission\gui\invitemenu.c
 
 modded class InviteMenu extends UIScriptedMenu
 {
 	override Widget Init()
 	{
-		// Invisible placeholder: the engine requires a layout here, but the
-		// visible popup is the CuiDialog created below.
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.dialog_stub.layout");
 		if (!layoutRoot) return null;
 
@@ -18,7 +13,6 @@ modded class InviteMenu extends UIScriptedMenu
 			"You have been invited to a session. Connect now or cancel.",
 			true, this, "DoConnect", "DoCancel");
 
-		// Sit the character down while the invite is on screen, if they can.
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
 		if (player && player.GetEmoteManager() && !player.IsRestrained() && !player.IsUnconscious())
 		{
@@ -31,9 +25,6 @@ modded class InviteMenu extends UIScriptedMenu
 
 	void DoConnect()
 	{
-		// Close is queued after the join, never before it: the engine hands
-		// the still-open menu to the connect sequence, so closing early
-		// breaks the join.
 		string ip;
 		int port;
 		OnlineServices.GetInviteServerInfo(ip, port);
@@ -43,7 +34,7 @@ modded class InviteMenu extends UIScriptedMenu
 
 	void DoCancel()
 	{
-		Cancel();   // stay on the current server
+		Cancel();
 	}
 
 	void ~InviteMenu()

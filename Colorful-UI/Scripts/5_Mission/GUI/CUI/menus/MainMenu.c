@@ -1,3 +1,6 @@
+// MainMenu, stats and credits — CUI main menu.
+// Vanilla source: P:\scripts\5_mission\gui\newui\mainmenu\mainmenu.c
+
 modded class MainMenu extends UIScriptedMenu
 {
 	protected ref MainMenuStats m_Stats;
@@ -5,19 +8,16 @@ modded class MainMenu extends UIScriptedMenu
 	protected TextWidget m_WelcomeBack;
 	protected ButtonWidget m_PrevCharacter, m_NextCharacter;
 	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
-	// Plain Widget because the divider is a panel, not a text widget.
 	protected Widget m_MenuDivider0;
 	protected ButtonWidget m_Play, m_Exit, m_SettingsBtn, m_TutorialBtn, m_MessageBtn, m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook, m_CharacterBtn;
 	protected ButtonWidget m_TestBtn0, m_TestBtn1, m_TestBtn2, m_TestBtn3, m_TestBtn4, m_TestBtn5;
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	protected ProgressBarWidget m_LoadingBar;
 
-	// --- Error/dialog test screen (see ErrorTestScreen.c) ---
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
 
 	override Widget Init()
 	{
-		// Debug option: show the error test screen instead of the main menu.
 		if (ErrorTestScreen)
 		{
 			m_ErrorTestScreen = new CUI_ErrorTestScreen();
@@ -45,8 +45,6 @@ modded class MainMenu extends UIScriptedMenu
 		m_Background        = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
 		if (m_Background)
 		{
-			// Only show the still image when the background video is off,
-			// otherwise it would cover the video.
 			if (EnableMenuVideo) m_Background.Show(false);
 			else                 m_Background.LoadImageFile(0, GetMainMenuBackground());
 		}
@@ -110,7 +108,7 @@ modded class MainMenu extends UIScriptedMenu
 		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit), "Reddit", colorScheme.PrimaryText(), UIColor.Reddit(), SocialURL.Reddit);
 		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook), "Facebook", colorScheme.PrimaryText(), UIColor.Facebook(), SocialURL.Facebook);
 
-		allInvalid = true; // reset shared state before this menu's checks
+		allInvalid = true;
 		CheckURL(m_PrioQ, CustomURL.PriorityQ);
 		CheckURL(m_Website, CustomURL.Website);
 		CheckSocials(m_Discord, SocialURL.Discord);
@@ -129,7 +127,6 @@ modded class MainMenu extends UIScriptedMenu
 		Branding.ApplyLogo(m_Logo);	
 
 		#ifndef WORKBENCH
-		// Safe to call every time; the video keeps playing between menus.
 		if (EnableMenuVideo)
 		{
 			if (!FileExist("$saves:" + m_MainMenuVideo))
@@ -138,14 +135,11 @@ modded class MainMenu extends UIScriptedMenu
 		}
 		#endif
 
-		// Show any error message saved while the player was being kicked,
-		// once this menu has finished building.
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.CheckPendingCuiError, 0, false);
 
 		return layoutRoot;
 	}
 
-	// Shows an error saved by ErrorDialog.c, if there is one waiting.
 	protected void CheckPendingCuiError()
 	{
 		MissionBase mission = MissionBase.Cast(GetGame().GetMission());
@@ -154,7 +148,6 @@ modded class MainMenu extends UIScriptedMenu
 	
 	override void OnShow()
 	{
-		// The layout may have failed to load, so check before using it.
 		if (layoutRoot)
 		{
 			if (!m_LoadingBar) m_LoadingBar = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
@@ -167,8 +160,6 @@ modded class MainMenu extends UIScriptedMenu
 		OnChangeCharacter(false);
 	}
 	
-	// Rewritten rather than calling the original, which expects a version
-	// label this layout does not have and would crash without it.
 	override void Refresh()
 	{
 		OnChangeCharacter(false);
@@ -232,14 +223,11 @@ modded class MainMenu extends UIScriptedMenu
 		}
 	}
 
-	// "Are you sure you want to quit?" confirmation.
 	void OpenExitDialog()
 	{
 		CuiDialog.Show("#main_menu_exit", "#main_menu_exit_desc", true, this, "DoExit", "");
 	}
 
-	// Escape and the Exit button behave the same. If a dialog is already
-	// open, Escape closes that instead of opening another.
 	override void Exit()
 	{
 		if (CuiDialog.CancelTop())
@@ -249,19 +237,14 @@ modded class MainMenu extends UIScriptedMenu
 
 	void DoExit()
 	{
-		// Quitting straight from a button press crashes the game, so ask the
-		// mission to quit on its next update instead.
 		MissionMainMenu.s_CuiQuitRequested = true;
 	}
 
-	// Lets the error test screen show a thrown error straight away.
 	void CUI_ErrorTest_FlushPendingError()
 	{
 		CheckPendingCuiError();
 	}
 
-	// Back button on the error test screen: turns it off and reopens the
-	// normal main menu.
 	void CUI_BackToMainMenu()
 	{
 		ErrorTestScreen = false;
@@ -271,18 +254,14 @@ modded class MainMenu extends UIScriptedMenu
 
 	void ~MainMenu()
 	{
-		// Drop the queued error check; the message stays saved for next time.
 		if (GetGame())
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
 
-		// Leave the background video running; it outlives this menu.
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
 	}
 }
 
-// Quitting is requested here and carried out on the next mission update,
-// which is the only safe moment to shut the game down.
 modded class MissionMainMenu
 {
 	static bool s_CuiQuitRequested;
@@ -298,15 +277,8 @@ modded class MissionMainMenu
 	}
 }
 
-// Shows an error message that was saved earlier by ErrorDialog.c. This is
-// the only place that displays it, and it clears the saved message first so
-// it can never appear twice.
-//
-// This class is also modded in Plugins/AntiNvidia/missionbase.c for a
-// different purpose; keep the two separate.
 modded class MissionBase
 {
-	// New method, so no `override` keyword.
 	void CuiFlushPendingError()
 	{
 		if (!CuiPendingError.s_Pending) return;
@@ -316,15 +288,12 @@ modded class MissionBase
 		int    errorCode = CuiPendingError.s_ErrorCode;
 		CuiPendingError.Clear();
 
-		Print(string.Format("[CUI ErrorDialog] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
+		Print(string.Format("[CUI ErrorRouter] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
 
-		// Message only: both buttons simply close it.
 		CuiDialog dlg = CuiDialog.Show(caption, message);
 		if (!dlg)
 		{
-			// Fall back to the plain game dialog so the player still sees
-			// the message.
-			Print("[CUI ErrorDialog] CuiDialog.Show returned null - falling back to native ShowDialog");
+			Print("[CUI ErrorRouter] CuiDialog.Show returned null - falling back to native ShowDialog");
 
 			UIManager ui = g_Game.GetUIManager();
 			if (ui)
@@ -333,19 +302,12 @@ modded class MissionBase
 	}
 }
 
-// Brand-color the unit suffixes (h/m/s/d in time, m/km in distance + long-range hit).
-// The 3 value widgets are RichTextWidgetClass in the layout so SetText parses
-// the <color rgba="R, G, B, A"> markup. rgba MUST be comma-separated decimal —
-// hex like #FFCC66FF is not recognized by the rich-text parser. Cast as
-// RichTextWidget explicitly (don't rely on TextWidget polymorphism).
 modded class MainMenuStats
 {
 	protected RichTextWidget m_RichTime;
 	protected RichTextWidget m_RichDistance;
 	protected RichTextWidget m_RichLongRange;
 
-	// Build "R, G, B, A" string from colorScheme.BrandColor() at call time so
-	// rich-text markup follows theme swaps instead of a baked literal.
 	protected string BrandRgba()
 	{
 		int c = colorScheme.BrandColor();
@@ -410,10 +372,6 @@ modded class MainMenuStats
 	}
 }
 
-// Vanilla's department_element.layout and department_section.layout bake
-// SeparatorPanel as DayZ red (color 0.7569 0.0941 0.0941 0.7843). Modded
-// constructors chain after the original, so by the time these run m_Root
-// is built and SeparatorPanel exists.
 modded class CreditsDepartmentElement
 {
 	void CreditsDepartmentElement(int index, Widget parent, JsonDataCreditsDepartment department_data)
@@ -423,9 +381,6 @@ modded class CreditsDepartmentElement
 			Widget sep = m_Root.FindAnyWidget("SeparatorPanel");
 			if (sep) sep.SetColor(colorScheme.Separator());
 
-			// Keep our own credits at the top of the list. Every department
-			// gets a draw order starting at 1, so 0 always wins — whatever
-			// other mods are loaded and in whatever order.
 			if (department_data && department_data.DepartmentName == CUI_CREDITS_DEPARTMENT)
 				m_Root.SetSort(0);
 		}
@@ -444,12 +399,6 @@ modded class CreditsDepartmentSection
 	}
 }
 
-// Vanilla credits_menu.layout has a fully transparent root, so the main
-// menu's character preview rendered behind it leaks through. Inject our
-// fullscreen background panel (ImageBackground + Top/BottomShader,
-// mirroring the main-menu structure) with priority -1 so credits content
-// stays on top. The injected panel is a child of layoutRoot so vanilla's
-// SetAlpha-driven fade in Update() cascades to it for free.
 modded class CreditsMenu
 {
 	protected ImageWidget m_CuiBackground;
@@ -468,8 +417,6 @@ modded class CreditsMenu
 			m_CuiTopShader    = ImageWidget.Cast(panel.FindAnyWidget("TopShader"));
 			m_CuiBottomShader = ImageWidget.Cast(panel.FindAnyWidget("BottomShader"));
 
-			// Static bg only when video is off — otherwise the injected
-			// ImageBackground covers the workspace-rooted video below.
 			if (m_CuiBackground)
 			{
 				if (EnableMenuVideo) m_CuiBackground.Show(false);
@@ -480,9 +427,6 @@ modded class CreditsMenu
 		}
 
 		#ifndef WORKBENCH
-		// Same singleton CuiBackgroundVideo MainMenu uses; just Ensure() it
-		// (no-op if already running). Persists across MainMenu→Credits so
-		// there's no black flash during the transition.
 		if (EnableMenuVideo)
 		{
 			if (!FileExist("$saves:" + m_MainMenuVideo))
@@ -496,6 +440,5 @@ modded class CreditsMenu
 
 	void ~CreditsMenu()
 	{
-		// Singleton bg video persists — do nothing here.
 	}
 }

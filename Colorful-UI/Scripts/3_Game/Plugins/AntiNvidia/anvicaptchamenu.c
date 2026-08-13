@@ -1,15 +1,7 @@
-// The Anti-NVIDIA captcha the player solves before connecting, styled to
-// match the rest of the Colorful-UI dialogs.
-//
-// Enable it with the AntiNvidia switch in Scripts/3_Game/Config/Settings.c.
-//
-// The player gets three attempts at a two-digit code. A correct answer
-// connects to the server, running out of attempts or confirming Quit closes
-// the game.
-//
-// The dialog frame and animation are written out here rather than reusing
-// CuiDialog, because this screen loads earlier in the game than the shared
-// dialog components are available.
+// ANVICaptchaMenu — pre-connect captcha screen.
+
+const int MENU_ANVI_CAPTCHA = 88;
+
 class ANVICaptchaMenu extends UIScriptedMenu
 {
   private int m_CorrectAnswer;
@@ -22,7 +14,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
   protected ButtonWidget m_QuitButton;
   protected ButtonWidget m_QuitConfirmButton;
 
-  // ----- Dialog frame widgets -----
   protected ImageWidget m_Backdrop;
   protected float       m_BackdropMaxAlpha;
   protected Widget      m_DialogBox;
@@ -32,13 +23,11 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   protected bool m_Closing;
 
-  // What to do once the closing animation finishes.
   protected static const int ACTION_NONE    = 0;
   protected static const int ACTION_CONNECT = 1;
   protected static const int ACTION_LEAVE   = 2;
   protected int m_PendingAction;
 
-  // Where the layout puts each element, so animations can offset from it.
   protected float m_DlgBaseY;
   protected float m_CapBaseY;
   protected float m_BodyBaseY;
@@ -47,7 +36,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
   protected float m_SepBaseW;
   protected float m_SepBaseH;
 
-  // +1 entering, -1 exiting, 0 idle.
   protected static const float ANIM_IN_TOTAL_MS  = 360.0;
   protected static const float ANIM_OUT_TOTAL_MS = 600.0;
   protected static const int   ANIM_TICK_MS      = 16;
@@ -58,7 +46,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   void ~ANVICaptchaMenu()
   {
-    // At game shutdown the engine may already be gone.
     if (GetGame())
       GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
   }
@@ -115,16 +102,11 @@ class ANVICaptchaMenu extends UIScriptedMenu
     return layoutRoot;
   }
 
-  // ----- Appearance -----
-
   protected void SetupChrome()
   {
-    // Layouts cannot express a see-through panel colour, so set it here.
     if (m_DialogBox) m_DialogBox.SetColor(ARGB(220, 62, 62, 62));
     if (m_Separator) m_Separator.SetColor(colorScheme.Separator());
 
-    // Take the layout's dim opacity as the maximum, then make the colour
-    // opaque so the fade can run cleanly from 0 to it.
     if (m_Backdrop)
     {
       int layoutColor = m_Backdrop.GetColor();
@@ -136,7 +118,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
     if (m_TextAnswerInput) m_TextAnswerInput.SetColor(colorScheme.OptionInputColors());
 
-    // Buttons are styled to match the rest of the mod's dialogs.
     ApplyButtonBaseStyle(m_QuitButton);
     ApplyButtonBaseStyle(m_QuitConfirmButton);
     ApplyButtonBaseStyle(m_AnswerSubmit);
@@ -159,8 +140,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     if (m_AnswerSubmit)    m_AnswerSubmit.GetPos(xtmp, m_SubmitBaseY);
     if (m_Separator)       m_Separator.GetSize(m_SepBaseW, m_SepBaseH);
   }
-
-  // ----- Hover styling -----
 
   override bool OnMouseEnter(Widget w, int x, int y)
   {
@@ -185,13 +164,10 @@ class ANVICaptchaMenu extends UIScriptedMenu
   override bool OnClick(Widget w, int x, int y, int button) {
     super.OnClick(w, x, y, button);
 
-    // Ignore clicks while the dialog is closing.
     if (m_Closing) return true;
 
-    // Guard against a missing widget matching a null click target.
     if (!w) return false;
 
-    // Clicking elsewhere cancels a pending quit confirmation.
     if (w != m_QuitButton && w != m_QuitConfirmButton) {
       if (m_QuitButton)        m_QuitButton.Show(true);
       if (m_QuitConfirmButton) m_QuitConfirmButton.Show(false);
@@ -267,9 +243,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     }
   }
 
-  // Connect() cannot be scheduled directly because it has several forms, so
-  // this wrapper calls it. The server chosen before the captcha appeared is
-  // still remembered, so this reconnects to the right one.
   private void DoConnect() {
     DayZGame game = DayZGame.Cast(GetGame());
     if (game)
@@ -294,9 +267,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     StartExitAnim();
   }
 
-  // Reset() and SetAttempts() are called from outside this class (DayZGame.
-  // CreateCaptchaMenu, right after EnterScriptedMenu), so they can run with
-  // every widget member still null if Init()'s CreateWidgets failed.
   void Reset() {
     if (m_TextAnswerInput) m_TextAnswerInput.SetText("");
     m_CorrectAnswer = DrawNumber(100);
@@ -322,8 +292,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
   private bool CheckAnswer(int answer) { return m_CorrectAnswer == answer; }
 
   private int DrawNumber(int range = 100) { return Math.RandomInt(0, 100); }
-
-  // ----- Animation driver (ported from CuiDialog.AnimTick, Dialogs.c:237-260) -----
 
   protected void StartAnim(int dir) {
     m_AnimDir = dir;
@@ -362,23 +330,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.AnimTick, ANIM_TICK_MS, false);
   }
 
-  // Dispatches whatever action triggered the exit animation, once the
-  // animation has actually finished playing. DoConnect keeps going through
-  // a queued CallLater on the same category as before the restyle — only
-  // the trigger point moved (from immediately-on-correct-answer to
-  // after-the-exit-animation).
-  //
-  // Do NOT call Close() here. UIMenuPanel.Close() on a submenu entered via
-  // EnterScriptedMenu(id, parentMenu) hands control back to that PARENT
-  // menu (the screen you were on before you hit Play) — it does not just
-  // tear down this menu's widgets. Calling it on the connect path was a
-  // regression: it sent the player back to the parent menu instead of
-  // letting game.Connect() proceed to the loading screen. The original
-  // (pre-restyle) code never closed the menu explicitly on a correct
-  // answer either — it relies on the real connect's own scene transition
-  // to tear down the whole menu stack, captcha included. That must stay
-  // untouched; any leftover-widget cleanup has to happen without touching
-  // the menu's Close()/parent-navigation path.
   protected void DoFinishExit() {
     int action = m_PendingAction;
     m_PendingAction = ACTION_NONE;
@@ -391,8 +342,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
       GetGame().RequestExit(0);
     }
   }
-
-  // ----- Easing + interpolation (ported from Dialogs.c:264-291) -----
 
   protected static float Track(float elapsed, float delay, float duration) {
     if (duration <= 0) return 1.0;
@@ -419,8 +368,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
 
   protected static float Lerp(float a, float b, float t) { return a + (b - a) * t; }
 
-  // ----- Per-element setters (null-safe, ported from Dialogs.c:295-312) -----
-
   protected static void SetA(Widget w, float a) {
     if (w) w.SetAlpha(a);
   }
@@ -440,13 +387,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
   protected void SetBackdropAlpha(float a) {
     if (m_Backdrop) m_Backdrop.SetAlpha(a * m_BackdropMaxAlpha);
   }
-
-  // ----- Choreography (ported from Dialogs.c:316-388) -----
-  //
-  // Groups map to CuiDialog's six tracks: backdrop, dialogbox, caption,
-  // separator (draws in by width), body (here: question + digit box +
-  // attempts + input row + quit warning, as one panel), buttons (quit-slot
-  // button + submit, rising together from below).
 
   protected void ApplyEntrance(float elapsed) {
     float p = EaseOutCubic(Track(elapsed, 0, 200));
@@ -468,8 +408,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     SetA(m_Body, p);
     SetY(m_Body, m_BodyBaseY, Lerp(9, 0, p));
 
-    // Buttons rise from below (valign bottom_ref: lower Y = lower on
-    // screen, so start with Y - 15 and animate to base).
     p = EaseOutCubic(Track(elapsed, 180, 180));
     SetA(m_QuitButton, p);
     SetA(m_QuitConfirmButton, p);
@@ -504,8 +442,6 @@ class ANVICaptchaMenu extends UIScriptedMenu
     SetA(m_DialogBox, 1.0 - p);
     SetY(m_DialogBox, m_DlgBaseY, Lerp(0, 18, p));
 
-    // Backdrop: linear fade across the full exit window — dialog elements
-    // are all gone by ~220ms, so the second half is a backdrop-only fade.
     p = Track(elapsed, 0, 600);
     SetBackdropAlpha(1.0 - p);
   }

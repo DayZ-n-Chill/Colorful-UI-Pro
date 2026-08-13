@@ -1,6 +1,6 @@
-// Extend the vanilla hint-page data model with optional imageset coordinates.
-// Both fields are populated by JsonFileLoader when present in hints.json; if
-// absent (or UseImagesets is off), the engine falls back to m_ImagePath.
+// UiHintPanel / UiHintPanelLoading — CUI hint panels.
+// Vanilla source: P:\scripts\3_game\gui\hints\uihintpanel.c
+
 modded class HintPage
 {
 	private string m_ImageSet;
@@ -15,12 +15,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 	protected const string m_DataPath = "Colorful-UI/Scripts/Data/hints.json";
 	protected string m_RootPath       = "Colorful-UI/GUI/layouts/loading/hints/cui.ingamehints.layout";
 
-	// Show/hide the hint image. State held in a static so it survives the
-	// menu being closed and reopened — once the user hides the image it
-	// stays hidden across subsequent in-game menu opens until toggled back.
-	//
-	// Click + hover are handled inline (no cuiElmnt) because this class
-	// lives in 3_Game and cuiElmnt is in 5_Mission.
 	protected static bool s_HintImageHidden;
 
 	protected ButtonWidget m_HideImageBtn;
@@ -31,9 +25,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		super.BuildLayout(parent_widget);
 		if (!m_RootFrame) return;
 
-		// Seed the Left/Right chevron icons to the same idle color we apply
-		// on mouse leave — keeps the layout's faded-white default from
-		// showing on first display.
 		ImageWidget leftIcon  = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LeftImage"));
 		ImageWidget rightIcon = ImageWidget.Cast(m_RootFrame.FindAnyWidget("RightImage"));
 		if (leftIcon)  leftIcon.SetColor(colorScheme.PrimaryText());
@@ -43,7 +34,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		m_HideImageBtnLabel = TextWidget.Cast(m_RootFrame.FindAnyWidget("HideImageBtn_label"));
 		if (m_HideImageBtnLabel) m_HideImageBtnLabel.SetColor(colorScheme.PrimaryText());
 
-		// Apply the persisted state on every fresh build of the layout.
 		ApplyHintImageState();
 	}
 
@@ -64,15 +54,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		}
 	}
 
-	// Replaces vanilla SetHintImage (uihintpanel.c:140-157) so we can:
-	//   1. Optionally route image loading through a registered imageset
-	//      ("set:<set> image:<name>") when UseImagesets is on and the page
-	//      provides m_ImageSet/m_ImageName. Falls back to m_ImagePath if
-	//      either field is missing or the toggle is off.
-	//   2. Honor the persistent s_HintImageHidden toggle. Vanilla calls
-	//      m_UiHintImage.Show(true) unconditionally on every page change,
-	//      slideshow tick, and menu reopen — without this override our hide
-	//      state would get clobbered moments after the user clicks it.
 	override protected void SetHintImage()
 	{
 		if (!m_UiHintImage)
@@ -115,14 +96,6 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		return super.OnClick(w, x, y, button);
 	}
 
-	// Icon-only hover for the Left/Right chevrons + label hover for the
-	// hide-image toggle. Layout has style=Empty and a transparent button bg;
-	// we color the icon / label ourselves.
-	//
-	// HideImageBtn returns true to bypass vanilla's UiHintPanel hover paint
-	// (which repaints child text red, clobbering our SetColor). Mirrors the
-	// Keybindings.c pattern. Left/Right still call super so vanilla's
-	// slideshow pause/resume on hover keeps working.
 	override bool OnMouseEnter(Widget w, int x, int y)
 	{
 		if (w == m_HideImageBtn && m_HideImageBtnLabel)
@@ -203,10 +176,6 @@ modded class UiHintPanelLoading extends UiHintPanel
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
 		#ifndef WORKBENCH
-			// Original pattern: copy from the addon folder into $saves: and
-			// Load from there. Launcher pre-copies the source .mov too so
-			// $saves: always has a valid file even if the in-engine CopyFile
-			// no-ops. GetState() guard prevents re-Load on reopen.
 			if (LoadVideo) {
 				Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
 				if (m_Video && m_Video.GetState() == VideoState.NONE)

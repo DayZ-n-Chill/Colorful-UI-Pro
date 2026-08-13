@@ -1,3 +1,6 @@
+// DayZGame — captcha gate in front of Connect().
+// Vanilla source: P:\scripts\3_game\dayzgame.c
+
 modded class DayZGame
 {
     bool m_CaptchaCompleted;
@@ -23,7 +26,6 @@ modded class DayZGame
         if (m_ANVICaptcha)
         {
             m_ANVICaptcha.Close();
-            // Must be cleared here, or the captcha can never open again.
             m_ANVICaptcha = null;
         }
         super.DisconnectSessionScript(displayJoinError);
