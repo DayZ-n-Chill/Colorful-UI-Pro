@@ -16,7 +16,25 @@ modded class MainMenu extends UIScriptedMenu
 
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
 
+	static const float ICON_TEXT_GAP = 8;
+
 	protected int m_FitRetries;
+
+	protected void SetNavLabel(ButtonWidget btn, string key)
+	{
+		if (!btn) return;
+
+		TextWidget label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
+		if (label) label.SetText(key);
+	}
+
+	protected void RefreshNavLabels()
+	{
+		SetNavLabel(ButtonWidget.Cast(m_MessageBtn),  "Credits");
+		SetNavLabel(ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials");
+		SetNavLabel(ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options");
+		SetNavLabel(ButtonWidget.Cast(m_Exit),        "#main_menu_exit");
+	}
 
 	protected bool FitIconButton(ButtonWidget btn)
 	{
@@ -31,13 +49,15 @@ modded class MainMenu extends UIScriptedMenu
 		label.GetTextSize(textW, textH);
 		if (textW <= 0) return false;
 
-		float labelX, labelY;
-		label.GetPos(labelX, labelY);
-		if (labelX <= 0) return false;
+		ImageWidget icon = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_img"));
+		if (!icon) icon = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_image"));
+
+		float iconW, iconH;
+		if (icon) icon.GetSize(iconW, iconH);
 
 		float btnW, btnH;
 		btn.GetSize(btnW, btnH);
-		btn.SetSize(textW + labelX, btnH);
+		btn.SetSize(textW + ICON_TEXT_GAP + iconW, btnH);
 
 		Widget container = btn.GetParent();
 		if (container) container.Update();
@@ -215,6 +235,9 @@ modded class MainMenu extends UIScriptedMenu
 
 		if (m_Stats) m_Stats.UpdateStats();
 		OnChangeCharacter(false);
+
+		RefreshNavLabels();
+		ScheduleTopNavFit();
 	}
 	
 	override void Refresh()
