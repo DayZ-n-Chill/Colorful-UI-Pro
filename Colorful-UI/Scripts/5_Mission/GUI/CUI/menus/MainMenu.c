@@ -16,28 +16,60 @@ modded class MainMenu extends UIScriptedMenu
 
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
 
-	static const float ICON_TEXT_GAP = 8;
+	protected int m_FitRetries;
 
-	protected void FitIconButton(ButtonWidget btn)
+	protected bool FitIconButton(ButtonWidget btn)
 	{
-		if (!btn) return;
+		if (!btn) return true;
 
-		TextWidget  label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
-		ImageWidget icon  = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_img"));
-		if (!label) return;
+		TextWidget label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
+		if (!label) return true;
 
 		label.Update();
 
 		int textW, textH;
 		label.GetTextSize(textW, textH);
-		if (textW <= 0) return;
+		if (textW <= 0) return false;
 
-		float iconW, iconH;
-		if (icon) icon.GetSize(iconW, iconH);
+		float labelX, labelY;
+		label.GetPos(labelX, labelY);
+		if (labelX <= 0) return false;
 
 		float btnW, btnH;
 		btn.GetSize(btnW, btnH);
-		btn.SetSize(textW + ICON_TEXT_GAP + iconW, btnH);
+		btn.SetSize(textW + labelX, btnH);
+
+		Widget container = btn.GetParent();
+		if (container) container.Update();
+
+		return true;
+	}
+
+	protected void FitTopNav()
+	{
+		if (!layoutRoot) return;
+
+		bool ok = true;
+		ok = FitIconButton(ButtonWidget.Cast(m_MessageBtn))  && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_TutorialBtn)) && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_SettingsBtn)) && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_Exit))        && ok;
+
+		Widget topNav = layoutRoot.FindAnyWidget("TopNavigation");
+		if (topNav) topNav.Update();
+
+		if (!ok && m_FitRetries < 20)
+		{
+			m_FitRetries++;
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.FitTopNav, 50, false);
+		}
+	}
+
+	protected void ScheduleTopNavFit()
+	{
+		m_FitRetries = 0;
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.FitTopNav);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.FitTopNav, 0, false);
 	}
 
 	override Widget Init()
@@ -120,14 +152,6 @@ modded class MainMenu extends UIScriptedMenu
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CharacterBtn), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenMenuCustomizeCharacter");
 
-		FitIconButton(ButtonWidget.Cast(m_MessageBtn));
-		FitIconButton(ButtonWidget.Cast(m_TutorialBtn));
-		FitIconButton(ButtonWidget.Cast(m_SettingsBtn));
-		FitIconButton(ButtonWidget.Cast(m_Exit));
-
-		Widget topNav = layoutRoot.FindAnyWidget("TopNavigation");
-		if (topNav) topNav.Update();
-
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_PrevCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PreviousCharacter");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_NextCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "NextCharacter");
 
@@ -168,6 +192,7 @@ modded class MainMenu extends UIScriptedMenu
 		#endif
 
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.CheckPendingCuiError, 0, false);
+		ScheduleTopNavFit();
 
 		return layoutRoot;
 	}
@@ -288,6 +313,7 @@ modded class MainMenu extends UIScriptedMenu
 	{
 		if (GetGame())
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.FitTopNav);
 
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
