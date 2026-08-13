@@ -288,12 +288,12 @@ modded class MissionBase
 		int    errorCode = CuiPendingError.s_ErrorCode;
 		CuiPendingError.Clear();
 
-		Print(string.Format("[CUI ErrorDialog] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
+		Print(string.Format("[CUI ErrorRouter] MissionBase.CuiFlushPendingError showing caption='%1' message='%2'", caption, message));
 
 		CuiDialog dlg = CuiDialog.Show(caption, message);
 		if (!dlg)
 		{
-			Print("[CUI ErrorDialog] CuiDialog.Show returned null - falling back to native ShowDialog");
+			Print("[CUI ErrorRouter] CuiDialog.Show returned null - falling back to native ShowDialog");
 
 			UIManager ui = g_Game.GetUIManager();
 			if (ui)

@@ -1,4 +1,4 @@
-// DialogueErrorProperties — routes engine error popups into CuiDialog.
+// DialogueErrorProperties — captures engine error popups and stores them.
 // Vanilla source: P:\scripts\3_game\global\errormodulehandler\errorproperties.c
 
 class CuiPendingError
@@ -38,26 +38,26 @@ modded class DialogueErrorProperties
         UIScriptedMenu handler = GetHandler();
 
         Print(string.Format(
-            "[CUI ErrorDialog] HandleError errorCode=%1 hex=%2 category=%3 hasHandler=%4 additionalInfo='%5'",
+            "[CUI ErrorRouter] HandleError errorCode=%1 hex=%2 category=%3 hasHandler=%4 additionalInfo='%5'",
             errorCode, ErrorModuleHandler.GetErrorHex(errorCode), category, handler != null, additionalInfo));
 
         bool wouldUseCui = !handler;
-        Print(string.Format("[CUI ErrorDialog] wouldUseCui=%1", wouldUseCui));
+        Print(string.Format("[CUI ErrorRouter] wouldUseCui=%1", wouldUseCui));
 
 #ifdef NO_GUI
-        Print("[CUI ErrorDialog] NO_GUI build - calling super.HandleError");
+        Print("[CUI ErrorRouter] NO_GUI build - calling super.HandleError");
         super.HandleError(errorCode, additionalInfo);
         return;
 #endif
 
 #ifdef SERVER
-        Print("[CUI ErrorDialog] SERVER build - calling super.HandleError");
+        Print("[CUI ErrorRouter] SERVER build - calling super.HandleError");
         super.HandleError(errorCode, additionalInfo);
         return;
 #else
         if (!wouldUseCui)
         {
-            Print("[CUI ErrorDialog] wouldUseCui=false (has UI handler) - calling super.HandleError (native ShowDialog path)");
+            Print("[CUI ErrorRouter] wouldUseCui=false (has UI handler) - calling super.HandleError (native ShowDialog path)");
             super.HandleError(errorCode, additionalInfo);
             return;
         }
@@ -73,7 +73,7 @@ modded class DialogueErrorProperties
         string translatedCaption = Widget.TranslateString(caption);
         string translatedMessage = Widget.TranslateString(message);
 
-        Print(string.Format("[CUI ErrorDialog] wouldUseCui=true - storing pending CUI error. caption='%1' message='%2'", translatedCaption, translatedMessage));
+        Print(string.Format("[CUI ErrorRouter] wouldUseCui=true - storing pending CUI error. caption='%1' message='%2'", translatedCaption, translatedMessage));
 
         CuiPendingError.Set(translatedCaption, translatedMessage, errorCode);
 #endif
