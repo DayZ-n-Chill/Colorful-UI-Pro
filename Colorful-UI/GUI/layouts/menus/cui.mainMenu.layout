@@ -1342,7 +1342,7 @@ FrameWidgetClass mainmenu_root {
        vexactpos 1
        hexactsize 1
        vexactsize 1
-       text "#main_menu_statistics"
+       text "SURVIVOR STATISTICS"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "italic text" 0
        "bold text" 0
@@ -1525,7 +1525,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#main_menu_time"
+           text "Time Alive"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
