@@ -16,6 +16,30 @@ modded class MainMenu extends UIScriptedMenu
 
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
 
+	static const float ICON_TEXT_GAP = 8;
+
+	protected void FitIconButton(ButtonWidget btn)
+	{
+		if (!btn) return;
+
+		TextWidget  label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
+		ImageWidget icon  = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_img"));
+		if (!label) return;
+
+		label.Update();
+
+		int textW, textH;
+		label.GetTextSize(textW, textH);
+		if (textW <= 0) return;
+
+		float iconW, iconH;
+		if (icon) icon.GetSize(iconW, iconH);
+
+		float btnW, btnH;
+		btn.GetSize(btnW, btnH);
+		btn.SetSize(textW + ICON_TEXT_GAP + iconW, btnH);
+	}
+
 	override Widget Init()
 	{
 		if (ErrorTestScreen)
@@ -95,7 +119,15 @@ modded class MainMenu extends UIScriptedMenu
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CharacterBtn), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenMenuCustomizeCharacter");
-		
+
+		FitIconButton(ButtonWidget.Cast(m_MessageBtn));
+		FitIconButton(ButtonWidget.Cast(m_TutorialBtn));
+		FitIconButton(ButtonWidget.Cast(m_SettingsBtn));
+		FitIconButton(ButtonWidget.Cast(m_Exit));
+
+		Widget topNav = layoutRoot.FindAnyWidget("TopNavigation");
+		if (topNav) topNav.Update();
+
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_PrevCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PreviousCharacter");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_NextCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "NextCharacter");
 
