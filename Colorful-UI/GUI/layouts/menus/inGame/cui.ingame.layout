@@ -365,7 +365,7 @@ FrameWidgetClass InGameMenuRoot {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#CUI_priority_queue"
+           text "Priority Queue"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1

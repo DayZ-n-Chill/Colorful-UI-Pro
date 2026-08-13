@@ -257,7 +257,7 @@ GridSpacerWidgetClass rootFrame {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#CUI_hide_image"
+           text "Hide Image"
            font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
            "exact text" 1
            "exact text size" 16

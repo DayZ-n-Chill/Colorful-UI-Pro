@@ -542,7 +542,7 @@ FrameWidgetClass mainmenu_root {
              vexactpos 0
              hexactsize 0
              vexactsize 0
-             text "#CUI_priority_queue"
+             text "Priority Queue"
              font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
              "text sharpness" 1.5
              "exact text" 1
@@ -1113,7 +1113,7 @@ FrameWidgetClass mainmenu_root {
        vexactpos 1
        hexactsize 0
        vexactsize 1
-       text "#CUI_welcome_back"
+       text "Welcome Back"
        font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
        "text sharpness" 1.5
        "exact text" 1
@@ -1342,7 +1342,7 @@ FrameWidgetClass mainmenu_root {
        vexactpos 1
        hexactsize 1
        vexactsize 1
-       text "#CUI_survivor_statistics"
+       text "SURVIVOR STATISTICS"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "italic text" 0
        "bold text" 0
@@ -1525,7 +1525,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#CUI_time_alive"
+           text "Time Alive"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
@@ -1570,7 +1570,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#CUI_best_long_range_hit"
+           text "Best Long Range Hit"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24

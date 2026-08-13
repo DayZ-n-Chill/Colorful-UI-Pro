@@ -261,7 +261,7 @@ PanelWidgetClass LoadingFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       text "#CUI_get_priority_queue"
+       text "GET PRIORITY QUEUE"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "shadow size" 3
        "shadow offset" 3 3

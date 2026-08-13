@@ -48,7 +48,7 @@ modded class RespawnDialogue extends UIScriptedMenu
         cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RandomRespawnBtn), "#main_menu_respawn_random",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnRandomRespawnClick");
         cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CustomRespawnBtn), "#main_menu_respawn_custom",   colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCustomRespawnClick");
 
-        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),   "#CUI_priority_queue", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),   "Priority Queue", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website), "#mod_detail_info_website",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.Website);
 
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),  "Discord",  colorScheme.PrimaryText(), UIColor.Discord(),  SocialURL.Discord);
