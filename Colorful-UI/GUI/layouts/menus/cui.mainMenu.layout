@@ -1570,7 +1570,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "#main_menu_long_range_hit_player"
+           text "Best Long Range Hit"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
