@@ -362,7 +362,7 @@ WindowWidgetClass WindowWidget {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "Priority Queue"
+           text "#CUI_priority_queue"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1

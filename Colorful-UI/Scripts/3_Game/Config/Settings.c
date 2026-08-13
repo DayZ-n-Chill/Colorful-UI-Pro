@@ -61,6 +61,8 @@ class Branding
 // This must match "DepartmentName" in Colorful-UI/Scripts/Credits.json.
 // The matching department is always drawn first, above every other mod's
 // credits, no matter which order mods load in. Rename it in both places.
+//
+// Basically if you want to put your teams creidts always at the top, just swap this out. 
 static const string CUI_CREDITS_DEPARTMENT = "Colorful-UI";
 
 // Link URLs (Add your own links here)
