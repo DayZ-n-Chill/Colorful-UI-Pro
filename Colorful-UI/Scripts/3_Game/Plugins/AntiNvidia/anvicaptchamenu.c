@@ -1,5 +1,7 @@
 // ANVICaptchaMenu — pre-connect captcha screen.
 
+const int MENU_ANVI_CAPTCHA = 88;
+
 class ANVICaptchaMenu extends UIScriptedMenu
 {
   private int m_CorrectAnswer;
