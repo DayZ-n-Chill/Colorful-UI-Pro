@@ -1,7 +1,6 @@
-// NOTE: You cannot use CUI Elements in this file, as it is loaded before the CUI is initialized.
-//       To control elements of this file, edit the at the Colorful-UI/Scripts/3_Game/UIConfig/Settings.c
+// Loading, login and queue screens.
+// Vanilla source: P:\scripts\3_game\dayzgame.c
 
-// Phase 1: Loading  -------------------------------------------------------------
 modded class LoadingScreen
 {
     protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_Mask, m_Logo;
@@ -32,9 +31,6 @@ modded class LoadingScreen
         ProgressAsync.SetUserData(m_Background);
     }
 
-    // Rewritten because the original expects widgets this layout does not
-    // have and would crash. Sets the background
-    // through GetMainMenuBackground() so the UseImagesets toggle keeps working.
     override void Show()
     {
         if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
@@ -53,12 +49,6 @@ modded class LoadingScreen
         }
     }
 
-    // Vanilla SetStatus(string) writes to its m_TextWidgetStatus, which on our
-    // layout is m_LoadingMsg. Engine calls SetStatus("") moments after the
-    // constructor runs, wiping our "GAME IS LOADING!" default and exposing the
-    // layout's baked placeholder ("Load screen message"). Override to ignore
-    // empty strings — keep the constructor default visible until a real
-    // engine status (e.g. "Connecting...") replaces it.
     override void SetStatus(string status)
     {
         if (!m_LoadingMsg) return;
@@ -67,10 +57,6 @@ modded class LoadingScreen
     }
 }
 
-// Phase 2: Logging In ------------------------------------------------------------
-// NOTE: modded class declarations must not use an `extends` clause — the
-// parent is implicit, and adding `extends X` silently breaks the modded chain
-// (the override never runs, vanilla's body runs and crashes on null widget refs).
 modded class LoginTimeBase
 {
     protected ImageWidget m_Background, m_TopShader, m_BottomShader, m_ExitIcon, m_Logo;
@@ -86,8 +72,6 @@ modded class LoginTimeBase
         m_TopShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
         m_BottomShader = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
         m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
-        // Point the original's text field at our widget so any code that
-        // still uses it keeps working.
         m_txtLabel = m_LoadingMsg;
         m_ProgressLoading = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 
@@ -130,10 +114,6 @@ modded class LoginTimeBase
         return false;
     }
 
-    // Override here on LoginTimeBase (not LoginTimeStatic) — vanilla's SetTime
-    // body lives on LoginTimeBase and dereferences m_txtLabel (a widget our
-    // layout doesn't have). LoginTimeStatic inherits, so engine dispatch
-    // resolves to whichever class defines SetTime closest to the instance.
     override void SetTime(int time)
     {
         if (!layoutRoot) return;
@@ -142,13 +122,11 @@ modded class LoginTimeBase
         if (m_LoadingMsg)
             m_LoadingMsg.SetText("CONNECTING TO SERVER IN " + time.ToString());
 
-        // Vanilla tail — without it respawn hangs on a black screen until kicked
         if (m_IsRespawn && time <= 1)
             GetGame().SetLoginTimerFinished();
     }
 }
 
-// Phase 3: Prio Queue  -------------------------------------------------------------
 modded class LoginQueueBase
 {
     protected ImageWidget m_TopShader, m_BottomShader, m_ExitIcon, m_ShopIcon;
@@ -199,8 +177,6 @@ modded class LoginQueueBase
         if (!NoHints)
         {
             layoutRoot.Show(true);
-            // Only allocate the hint panel once. Show() may fire multiple times
-            // (reconnects, etc.); recreating leaks the previous panel + its video.
             if (!m_HintPanel)
                 m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
         }
@@ -262,7 +238,6 @@ modded class LoginQueueBase
     }
 }
 
-// Start at Main Menu  ----------------------------------------------------------
 modded class DayZGame
 {
     override void ConnectLaunch()

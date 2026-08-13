@@ -1,13 +1,5 @@
-// Debug screen listing every error message the game can produce, one button
-// each. Turn it on with the ErrorTestScreen switch in
-// Scripts/3_Game/Config/Settings.c; the Back button turns it off again.
-//
-// Each button raises its error for real, so the popup you see is exactly
-// what a player would get. Use it to check dialog styling without having to
-// provoke a genuine kick or connection failure.
-//
-// The buttons are built from the list in ErrorTestData.c, so adding an entry
-// there adds a button here.
+// CUI_ErrorTestScreen — debug screen that raises every game error on demand.
+
 class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 {
 	protected ButtonWidget m_Button;
@@ -24,7 +16,6 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 		if (m_Button) m_Button.SetHandler(this);
 	}
 
-	// Detach from the button before its widget is destroyed.
 	void Dispose()
 	{
 		if (m_Button) m_Button.SetHandler(null);
@@ -38,8 +29,6 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 
 		ErrorModuleHandler.ThrowError(m_Category, m_Code);
 
-		// Kick errors are normally shown on returning to the main menu; on
-		// this screen show them straight away instead.
 		if (m_Owner)
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(m_Owner.CUI_ErrorTest_FlushPendingError, 0, false);
 
@@ -86,7 +75,6 @@ class CUI_ErrorTestScreen
 				TextWidget header = TextWidget.Cast(headerRoot);
 				if (header)
 				{
-					// Prints the category name; ToString() would print a number.
 					header.SetText(EnumTools.EnumToString(ErrorCategory, entry.m_Category));
 					header.SetColor(colorScheme.BrandColor());
 				}
@@ -109,7 +97,6 @@ class CUI_ErrorTestScreen
 		content.Update();
 	}
 
-	// Detaches every button handler before the screen is destroyed.
 	void Cleanup()
 	{
 		if (!m_Handlers) return;

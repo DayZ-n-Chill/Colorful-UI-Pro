@@ -1,3 +1,5 @@
+// Link helpers — hide social/custom buttons whose URL is unset.
+
 bool allInvalid = true;
 
 void CheckSocials(Widget w, string url)

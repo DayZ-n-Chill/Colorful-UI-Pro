@@ -1,10 +1,5 @@
-// The list of errors shown on the debug screen (ErrorTestScreen.c): one
-// entry per error code DayZ can raise, grouped by category.
-//
-// Codes are written as the game's own named values rather than numbers, so
-// if a name changes the mod fails to build instead of raising the wrong
-// error. Codes meaning "no error" are left out, as is the Generic category,
-// which the game never registers a message for.
+// CUI_ErrorTestData — error codes listed on the debug error screen.
+
 class CUI_ErrorTestEntry
 {
 	ErrorCategory m_Category;
@@ -25,7 +20,6 @@ class CUI_ErrorTestData
 	{
 		entries = new array<ref CUI_ErrorTestEntry>();
 
-		// --- ErrorCategory.ConnectErrorClient (16) ---
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.UNKNOWN, "CEC -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.SERVER_UNREACHABLE, "CEC 1  SERVER_UNREACHABLE"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.ALREADY_CONNECTING, "CEC 2  ALREADY_CONNECTING"));
@@ -43,7 +37,6 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.COMMUNICATION_TIMED_OUT, "CEC 14  COMMUNICATION_TIMED_OUT"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorClient, EConnectErrorClient.ALREADY_ON_SERVER, "CEC 15  ALREADY_ON_SERVER"));
 
-		// --- ErrorCategory.ConnectErrorServer (26) ---
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.UNKNOWN, "CES -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.WRONG_PASSWORD, "CES 1  WRONG_PASSWORD"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.WRONG_VERSION, "CES 2  WRONG_VERSION"));
@@ -71,14 +64,10 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.SERVER_DIAG, "CES 24  SERVER_DIAG"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorServer, EConnectErrorServer.NO_DEVICE_ID, "CES 25  NO_DEVICE_ID"));
 
-		// --- ErrorCategory.ConnectErrorScript (3) ---
-		// ALREADY_CONNECTING shows a three-button prompt, not a plain OK box.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.UNKNOWN, "CSC -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.ALREADY_CONNECTING, "CSC 1  ALREADY_CONNECTING (Yes/No/Cancel)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ConnectErrorScript, EConnectErrorScript.ALREADY_CONNECTING_THIS, "CSC 2  ALREADY_CONNECTING_THIS"));
 
-		// --- ErrorCategory.ClientKicked (116) ---
-		// These are the kick messages, shown in the Colorful-UI dialog.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.UNKNOWN, "CK -1  UNKNOWN (fallback)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.SERVER_EXIT, "CK 2  SERVER_EXIT"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.KICK_ALL_ADMIN, "CK 3  KICK_ALL_ADMIN"));
@@ -208,9 +197,6 @@ class CUI_ErrorTestData
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.UNM5, "CK 260  UNM5"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.ClientKicked, EClientKicked.UNM6, "CK 261  UNM6"));
 
-		// --- ErrorCategory.BIOSError (24) ---
-		// Console-only: on PC all but the first show nothing when clicked.
-		// That is expected, not a fault.
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, -1, "BIOS -1  UNKNOWN (fallback, always dialog)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, EBiosError.CANCEL, "BIOS 1  CANCEL (console-only dialog)"));
 		entries.Insert(new CUI_ErrorTestEntry(ErrorCategory.BIOSError, EBiosError.BAD_PARAMETER, "BIOS 2  BAD_PARAMETER (console-only dialog)"));
