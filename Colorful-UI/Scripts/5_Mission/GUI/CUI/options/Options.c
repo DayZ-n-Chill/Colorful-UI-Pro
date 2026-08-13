@@ -51,10 +51,10 @@ modded class OptionsMenu extends UIScriptedMenu
 		
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 		
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Defaults), "Defaults", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Reset), "Reset", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "#STR_settings_menu_root_play_panel_root_top_back0", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Defaults), "#menu_default_cap", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PerformSetToDefaults");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "#STR_settings_menu_root_play_panel_root_bottom_apply0", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Reset), "#menu_undo_cap", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Reset");
 		
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());

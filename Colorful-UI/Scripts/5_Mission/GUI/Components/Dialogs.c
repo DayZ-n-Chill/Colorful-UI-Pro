@@ -62,8 +62,8 @@ class CuiDialog
 
         ResizeToBody();
 
-        cuiElmnt.proBtnCB(this, m_Confirm, "Confirm", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnConfirm");
-        cuiElmnt.proBtnCB(this, m_Cancel,  "Cancel",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCancel");
+        cuiElmnt.proBtnCB(this, m_Confirm, "#dialog_confirm", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnConfirm");
+        cuiElmnt.proBtnCB(this, m_Cancel,  "#dialog_cancel",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCancel");
 
         if (m_Confirm) m_Confirm.SetColor(UIColor.Transparent());
         if (m_Cancel)  m_Cancel.SetColor(UIColor.Transparent());

@@ -15,7 +15,7 @@ modded class TutorialsMenu extends UIScriptedMenu
 		m_InfoTextRight	= layoutRoot.FindAnyWidget("InfoTextRight");
 		
 		m_Back			= ButtonWidget.Cast(layoutRoot.FindAnyWidget("BackBtn"));
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Back), "#layout_pc_keybinding_play_pannel_back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
 		
 		layoutRoot.FindAnyWidget("Tabber").GetScript(m_TabScript);
 		m_TabScript.m_OnTabSwitch.Remove(DrawConnectingLines);

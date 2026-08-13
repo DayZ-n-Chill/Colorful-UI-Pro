@@ -26,10 +26,10 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 		m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Save), "Save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "#layout_character_creation_apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Save), "#layout_character_creation_save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
         cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RandomizeCharacter), "",     colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "RandomizeCharacter");
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_BackButton), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_BackButton), "#layout_character_creation_back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
         if (m_MenuDivider) m_MenuDivider.SetColor(colorScheme.Separator());
 	
 		if (m_Scene && m_Scene.GetIntroCharacter())
