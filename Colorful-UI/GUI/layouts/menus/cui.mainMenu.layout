@@ -197,7 +197,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Credits"
+           text "#menu_credits"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
@@ -267,7 +267,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Tutorial"
+           text "#menu_tutorials"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
@@ -341,7 +341,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Settings"
+           text "#layout_xbox_ingame_menu_options"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
@@ -412,7 +412,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Exit"
+           text "#main_menu_exit"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 30
@@ -491,7 +491,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "PLAY"
+           text "#main_menu_play"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -1342,7 +1342,7 @@ FrameWidgetClass mainmenu_root {
        vexactpos 1
        hexactsize 1
        vexactsize 1
-       text "SURVIVOR STATISTICS"
+       text "#main_menu_statistics"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "italic text" 0
        "bold text" 0
@@ -1389,7 +1389,7 @@ FrameWidgetClass mainmenu_root {
            hexactsize 1
            vexactsize 1
            scaled 1
-           text "Players Killed"
+           text "#main_menu_players_killed"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
@@ -1432,7 +1432,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Infected Killed"
+           text "#main_menu_infected_killed"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
@@ -1477,7 +1477,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 0
            vexactsize 0
-           text "Distance Traveled"
+           text "#main_menu_distance_foot"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
@@ -1525,7 +1525,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "Time Alive"
+           text "#main_menu_time"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24
@@ -1570,7 +1570,7 @@ FrameWidgetClass mainmenu_root {
            vexactpos 1
            hexactsize 1
            vexactsize 1
-           text "Longest Player Hit"
+           text "#main_menu_long_range_hit_player"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "exact text" 1
            "exact text size" 24

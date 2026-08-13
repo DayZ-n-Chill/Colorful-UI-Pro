@@ -30,7 +30,7 @@ modded class MainMenu extends UIScriptedMenu
 
 	protected void RefreshNavLabels()
 	{
-		SetNavLabel(ButtonWidget.Cast(m_MessageBtn),  "Credits");
+		SetNavLabel(ButtonWidget.Cast(m_MessageBtn),  "#menu_credits");
 		SetNavLabel(ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials");
 		SetNavLabel(ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options");
 		SetNavLabel(ButtonWidget.Cast(m_Exit),        "#main_menu_exit");
@@ -169,7 +169,7 @@ modded class MainMenu extends UIScriptedMenu
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenExitDialog");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "#menu_credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CharacterBtn), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenMenuCustomizeCharacter");
 
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_PrevCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PreviousCharacter");

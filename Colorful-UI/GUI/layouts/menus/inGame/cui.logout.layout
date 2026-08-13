@@ -207,7 +207,7 @@ WindowWidgetClass LogoutDialogRoot {
            vexactpos 0
            hexactsize 0
            vexactsize 0
-           text "Cancel"
+           text "#dialog_cancel"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
