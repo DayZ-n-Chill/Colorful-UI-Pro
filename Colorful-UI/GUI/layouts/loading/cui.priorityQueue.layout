@@ -189,7 +189,7 @@ PanelWidgetClass LoadingFrame {
      vexactpos 1
      hexactsize 1
      vexactsize 1
-     text "Position in Queue"
+     text "#str_position_in_queue"
      font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
      "exact text" 1
      "exact text size" 18
@@ -261,7 +261,7 @@ PanelWidgetClass LoadingFrame {
        vexactpos 1
        hexactsize 0
        vexactsize 0
-       text "GET Priority QUEUE"
+       text "#CUI_get_priority_queue"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "shadow size" 3
        "shadow offset" 3 3

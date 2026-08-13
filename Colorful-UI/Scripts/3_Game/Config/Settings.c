@@ -1,5 +1,5 @@
 // Constants.c v3.0.0
-static bool StartMainMenu      = false;  // If set to true, the main menu will be forced to show on startup.
+static bool StartMainMenu      = true;  // If set to true, the main menu will be forced to show on startup.
 static bool ErrorTestScreen    = false; // If set to true, MainMenu boots into the error/dialog test harness (cui.errortest.layout) instead of the normal main menu. Debug/QA only.
 static bool NoHints			   = false;  // If set to true, the hints will not be shown during load screens.
 static bool UseImagesets       = false;   // If true, hints.json entries with m_ImageSet/m_ImageName load from the registered `backgrounds` imageset; otherwise m_ImagePath is used.

@@ -49,8 +49,8 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 		if (m_HideImageBtnLabel)
 		{
-			if (s_HintImageHidden) m_HideImageBtnLabel.SetText("Show Image");
-			else                   m_HideImageBtnLabel.SetText("Hide Image");
+			if (s_HintImageHidden) m_HideImageBtnLabel.SetText("#CUI_show_image");
+			else                   m_HideImageBtnLabel.SetText("#CUI_hide_image");
 		}
 	}
 
