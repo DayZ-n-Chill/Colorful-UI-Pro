@@ -23,7 +23,7 @@ modded class LoadingScreen
         if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
         if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
         if (m_LoadingMsg) m_LoadingMsg.SetColor(colorScheme.LoadingMsg());
-        if (m_LoadingMsg) m_LoadingMsg.SetText("#CUI_game_is_loading");
+        if (m_LoadingMsg) m_LoadingMsg.SetText(CuiLoc.Get("CUI_game_is_loading"));
         if (m_ProgressLoading) m_ProgressLoading.SetColor(colorScheme.Loadingbar());
 
         Branding.ApplyLogo(m_Logo);
@@ -52,7 +52,7 @@ modded class LoadingScreen
     override void SetStatus(string status)
     {
         if (!m_LoadingMsg) return;
-        if (status == "") m_LoadingMsg.SetText("#CUI_game_is_loading");
+        if (status == "") m_LoadingMsg.SetText(CuiLoc.Get("CUI_game_is_loading"));
         else              m_LoadingMsg.SetText(status);
     }
 }
@@ -120,7 +120,7 @@ modded class LoginTimeBase
         if (!m_LoadingMsg)
             m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
         if (m_LoadingMsg)
-            m_LoadingMsg.SetText(Widget.TranslateString("#CUI_connecting_in") + " " + time.ToString());
+            m_LoadingMsg.SetText(CuiLoc.Get("CUI_connecting_in") + " " + time.ToString());
 
         if (m_IsRespawn && time <= 1)
             GetGame().SetLoginTimerFinished();
@@ -153,6 +153,8 @@ modded class LoginQueueBase
         m_PrioQBtn = ButtonWidget.Cast(layoutRoot.FindAnyWidget("btnPrioQ"));
         m_PrioText = TextWidget.Cast(layoutRoot.FindAnyWidget("PrioText"));
         m_ShopIcon = ImageWidget.Cast(layoutRoot.FindAnyWidget("shopIcon"));
+
+        if (m_PrioText) m_PrioText.SetText(CuiLoc.Get("CUI_get_priority_queue"));
 
         if (m_ExitIcon) m_ExitIcon.SetColor(colorScheme.Icons());
         if (m_ShopIcon) m_ShopIcon.SetColor(colorScheme.Icons());

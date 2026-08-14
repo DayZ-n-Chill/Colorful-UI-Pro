@@ -1113,7 +1113,7 @@ FrameWidgetClass mainmenu_root {
        vexactpos 1
        hexactsize 0
        vexactsize 1
-       text "#CUI_test"
+       text "#CUI_welcome_back"
        font "Colorful-UI/GUI/fonts/GB-ClearnRegular.fnt"
        "text sharpness" 1.5
        "exact text" 1
