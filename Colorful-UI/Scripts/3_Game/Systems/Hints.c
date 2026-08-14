@@ -54,6 +54,23 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 		}
 	}
 
+	// hints.json now stores CUI_ keys (not English text) in m_Headline/m_Description. Resolve
+	// them here — the narrowest vanilla setters (P:\scripts\3_game\gui\hints\uihintpanel.c:127-139)
+	// — so every page flip and freshly built panel picks up the current language. CuiLoc.Get()
+	// already passes through unrecognized strings unchanged, so this is safe even if a future
+	// hint entry ships literal text instead of a key.
+	override protected void SetHintHeadline()
+	{
+		m_UiHeadlineLabel.SetText(CuiLoc.Get(m_ContentList.Get(m_PageIndex).GetHeadlineText()));
+	}
+
+	override protected void SetHintDescription()
+	{
+		m_UiDescLabel.SetText(CuiLoc.Get(m_ContentList.Get(m_PageIndex).GetDescriptionText()));
+		m_UiDescLabel.Update();
+		m_SpacerFrame.Update();
+	}
+
 	override protected void SetHintImage()
 	{
 		if (!m_UiHintImage)

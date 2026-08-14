@@ -71,15 +71,15 @@ static const string CUI_CREDITS_DEPARTMENT = "Colorful-UI";
 //        This way it shows only the buttons you want to use.
 
 class CustomURL {
-	static string Website    = "#"; 
-	static string PriorityQ  = "#";
-	static string Custom     = "#";
+	static string Website    = "www.dayznchill.com"; 
+	static string PriorityQ  = "www.dayznchill.com";
+	static string Custom     = "www.dayznchill.com";
 }
 
 class SocialURL {
-	static string Discord    = "#";
-	static string Facebook   = "#";
-	static string Twitter    = "#";
-	static string Reddit     = "#";
-	static string Youtube    = "#";
+	static string Discord    = "www.dayznchill.com";
+	static string Facebook   = "www.dayznchill.com";
+	static string Twitter    = "www.dayznchill.com";
+	static string Reddit     = "www.dayznchill.com";
+	static string Youtube    = "www.dayznchill.com";
 }
