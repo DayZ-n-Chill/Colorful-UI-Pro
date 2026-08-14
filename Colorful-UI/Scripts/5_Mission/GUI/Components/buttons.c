@@ -1,9 +1,8 @@
-// NOTE TO ALL:  THE CUI ELEMENETS AND WRAPPER CONCEPTS ARE OBSOLETE. THIS CODE IS HERE FOR REFERENCE ONLY.
-//  I have begun to think my concept for this wrapper was a bad idea. 4.0 has removed it as it just causes issues here and there and I dont want to keep fixing it.  
-// However, I have a much better and more stable solution already in place for 4.0. 
+// cuiElmnt / CUIButtonHandler — button styling and click wrapper.
+
 class CUIButtonHandler : ScriptedWidgetEventHandler
 {
-    Class                m_Owner;          // Menu instance that registered this handler; used by cuiElmnt.CleanupForOwner()
+    Class                m_Owner;
     private ButtonWidget m_Button;
     private TextWidget   m_TextWidget;
     private ImageWidget  m_ImageWidget;
@@ -194,15 +193,6 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
             return true;
         }
 
-        // Defer the callback to the next GUI tick. Calling m_CallbackMethod
-        // synchronously here is a use-after-free hazard: methods like
-        // MainMenu.OpenSettings or OptionsMenu.Back destroy the current
-        // menu, which fires CleanupForOwner, which deletes THIS handler
-        // mid-OnClick. When OnClick returns, the engine's event dispatcher
-        // does a vtable touch on the freed handler -> ACCESS_VIOLATION at
-        // call qword [rax+0x88]. Posting via CallLater(0) lets the engine
-        // finish its event loop on a still-live handler before menu
-        // teardown begins.
         if (m_TargetClass && m_CallbackMethod != "")
         {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.InvokeCallback, 0, false);
@@ -233,7 +223,6 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
     {
         if (m_ServerIP != "" && m_ServerPort > 0)
         {
-            // Do not close menus here; the join needs this one still open.
             DayZGame game = DayZGame.Cast(GetGame());
             if (game) {
                 game.ConnectFromJoin(m_ServerIP, m_ServerPort);
@@ -241,21 +230,12 @@ class CUIButtonHandler : ScriptedWidgetEventHandler
         }
     }
 }
-// NOTE: THese are not the final elements.  This was just a quick shit way of getting thing together for a release candadite. 
-// I schlocked it together and will be putting something more appropriate after the release candadite.  
 class cuiElmnt
 {
     static ref array<ref CUIButtonHandler> s_Handlers = new array<ref CUIButtonHandler>();
 
-    // Cleanup ALL handlers. Last-resort full purge — prefer CleanupForOwner.
     static void Cleanup()
     {
-        // s_Handlers is a script-module static. At game shutdown, module
-        // statics can already be torn down by the time some object's
-        // destructor runs and calls back in here (observed: ~CuiDialog ->
-        // CleanupForOwner during "Cleaning up script module globals" ->
-        // VM Exception, NULL pointer to instance on s_Handlers.Count()).
-        // Guard every entry point.
         if (!s_Handlers) return;
 
         for (int i = 0; i < s_Handlers.Count(); i++)
@@ -266,10 +246,6 @@ class cuiElmnt
         s_Handlers.Clear();
     }
 
-    // Dispose every handler tagged with `owner`. Call from each menu's destructor:
-    //   void ~MyMenu() { cuiElmnt.CleanupForOwner(this); }
-    // Removal from s_Handlers is deferred to PurgeDisposed() — removing
-    // synchronously frees the handler mid-dispatch and crashes (UAF).
     static void CleanupForOwner(Class owner)
     {
         if (!owner) return;
@@ -374,7 +350,7 @@ class cuiElmnt
         if (icon && text != "")
         {
             icon.SetColor(hoverColor);
-            handlerIcon = NULL; // Match proBtnURL: Handler handles text, script handles icon color
+            handlerIcon = NULL;
         }
 
         CUIButtonHandler h = new CUIButtonHandler(button, label, handlerIcon, textColor, hoverColor, "", targetClass, callbackMethod, "", 0);

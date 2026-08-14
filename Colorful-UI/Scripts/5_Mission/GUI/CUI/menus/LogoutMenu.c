@@ -1,3 +1,6 @@
+// LogoutMenu — CUI logout screen.
+// Vanilla source: P:\scripts\5_mission\gui\logoutmenu.c
+
 modded class LogoutMenu extends UIScriptedMenu
 {	
 	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_Logo;
@@ -31,34 +34,24 @@ modded class LogoutMenu extends UIScriptedMenu
         m_MenuDivider       = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
         m_BottomSpacer      = layoutRoot.FindAnyWidget("BottomSpacer");
 		
-		// Set the colors of Shader, Divider, and Logout Timer
         m_TopShader.SetColor(colorScheme.TopShader());
         m_BottomShader.SetColor(colorScheme.BottomShader());
         m_MenuDivider.SetColor(colorScheme.Separator());
 		m_LogoutTimeText.SetColor(colorScheme.LogOutTimer());
 
-		// Set Button color, and type. 
-		// COLOR  CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Color.c
-		// GLOBAL CONTROLS:: Colorful-UI-Pro\Colorful-UI\Scripts\3_Game\UIConfig\Scheme.c
-		// You can even be specific and set the color directly. ie. argb(255, 255, 255, 255);
-		
-		// Example of a button with a callback
         cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_LogoutNow),"#main_menu_exit",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"abortMission");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Cancel),"Cancel",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"canelExit");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Cancel),"#dialog_cancel",colorScheme.PrimaryText(),colorScheme.ButtonHover(),this,"canelExit");
 
-		// Custom Links
-        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),"Priority Queue",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);           
-        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website),"Visit Website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ),CuiLoc.Get("CUI_priority_queue"),colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.PriorityQ);
+        cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website),"#mod_detail_info_website",colorScheme.PrimaryText(),colorScheme.ButtonHover(),CustomURL.Website);
 
-		// Social Links
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord),"Discord",colorScheme.PrimaryText(),UIColor.Discord(),SocialURL.Discord);
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter),"Twitter",colorScheme.PrimaryText(),UIColor.Twitter(),SocialURL.Twitter);  
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Youtube),"Youtube",colorScheme.PrimaryText(),UIColor.YouTube(),SocialURL.Youtube);
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Reddit),"Reddit",colorScheme.PrimaryText(),UIColor.Reddit(),SocialURL.Reddit);
         cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Facebook),"Facebook",colorScheme.PrimaryText(),UIColor.Facebook(),SocialURL.Facebook);
 
-		// These checks show/hide what buttons that are invalid or null
-        allInvalid = true; // reset shared state before this menu's checks
+        allInvalid = true;
         CheckURL(m_PrioQ,    	 CustomURL.PriorityQ);
         CheckURL(m_Website,  	 CustomURL.Website);
         CheckSocials(m_Discord,  SocialURL.Discord);
@@ -74,8 +67,6 @@ modded class LogoutMenu extends UIScriptedMenu
             m_BottomSpacer.Show(false);
         }
 
-		// Make the player lay down. Change with what ever emote you want to use. 
-		// Emotes:: scripts\5_mission\gui\gesturesmenu.c
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
 		if (player && player.GetEmoteManager() && !player.IsRestrained() && !player.IsUnconscious())
 		{

@@ -1,3 +1,6 @@
+// Options tabs — points each vanilla tab at its CUI layout.
+// Vanilla source: P:\scripts\5_mission\gui\newui\options\optionsmenu*.c
+
 modded class OptionsMenuSounds extends ScriptedWidgetEventHandler
 {
 	override string GetLayoutName()

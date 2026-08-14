@@ -5141,7 +5141,7 @@ FrameWidgetClass rootFrame {
        hexactsize 0
        vexactsize 0
        scaled 1
-       text "Back"
+       text "#layout_pc_keybinding_play_pannel_back"
        font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
        "text sharpness" 1.5
        "exact text" 1

@@ -1,7 +1,7 @@
 
 class CfgPatches
 {
-	class ColorfulUI_Scripts
+	class ColorfulUI
 	{
         requiredVersion = 0.1;
 		// The breadth of this list is load-bearing: script compile order
@@ -11,7 +11,7 @@ class CfgPatches
 		// are vanilla game addons — no mod dependencies.
 		requiredAddons[] =
 		{
-			"DZ_Data","DZ_Scripts","DZ_Sounds_Effects","ColorfulUI_GUI",
+			"DZ_Data","DZ_Scripts","DZ_Sounds_Effects",
 			"DZ_Characters","DZ_Characters_Headgear","DZ_Characters_Tops","DZ_Characters_Vests",
 			"DZ_Characters_Pants","DZ_Characters_Belts","DZ_Characters_Backpacks","DZ_Characters_Heads",
 			"DZ_Characters_Zombies","DZ_Gear_Optics","DZ_Gear_Tools","DZ_Radio","DZ_Gear_Food",
@@ -33,12 +33,12 @@ class CfgAddons
 	{
 		class DayZ
 		{
-			list[] = {"DZ_Data","DZ_Scripts","DZ_UI","DZ_UIFonts","DZ_Sounds_Effects","ColorfulUI_GUI","ColorfulUI_Scripts"};
+			list[] = {"DZ_Data","DZ_Scripts","DZ_UI","DZ_UIFonts","DZ_Sounds_Effects","ColorfulUI"};
 		};
 	};
 };
 
-class CfgMods 
+class CfgMods
 {
 	class ColorfulUI
 	{
@@ -59,7 +59,7 @@ class CfgMods
 			class worldScriptModule	  {files[]= {"Colorful-UI/Scripts/4_World"};};
 			class missionScriptModule {files[]= {"Colorful-UI/Scripts/5_Mission"};};
 		};
-	};	
+	};
 };
 
 class CfgSoundSets
@@ -71,14 +71,14 @@ class CfgSoundSets
 		frequencyFactor = 1;
 		spatial = 0;
 	};
-};	
+};
 
 class CfgSoundShaders
 {
 	class DZNC_Music_Menu_SoundShader
 	{
 		// To use multiple songs and override the vanilla main menu music,
-		// Just add additional lines following the format above. 
+		// Just add additional lines following the format above.
 		// Providing a single song will override all time-of-day variations.
 		// The music will play in a random order.
 		samples[] =

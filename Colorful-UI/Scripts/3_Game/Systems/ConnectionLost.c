@@ -1,8 +1,6 @@
-// Replaces the plain red "connection lost" text with a Colorful-UI panel.
-//
-// This message can appear during normal play for brief network hiccups, not
-// only for kicks, so it stays instant and does not block clicks — exactly
-// like the original. Only its appearance changes.
+// ConnectionLost — CUI panel in place of the plain red text.
+// Vanilla source: P:\scripts\3_game\dayzgame.c
+
 modded class ConnectionLost
 {
     protected Widget     m_CuiRoot;
@@ -21,9 +19,6 @@ modded class ConnectionLost
         m_CuiPanel = m_CuiRoot.FindAnyWidget("DialogBox");
         m_CuiText  = TextWidget.Cast(m_CuiRoot.FindAnyWidget("MessageText"));
 
-        // Same "layout color drops alpha on DayZDefaultPanel" workaround as
-        // CuiDialog.CuiDialog (Dialogs.c:110) — translucent panel tint is
-        // applied at runtime via ARGB.
         if (m_CuiPanel) m_CuiPanel.SetColor(ARGB(220, 62, 62, 62));
 
         m_CuiRoot.Show(false);

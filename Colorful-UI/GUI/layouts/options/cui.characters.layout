@@ -733,7 +733,7 @@ FrameWidgetClass character_creation_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Apply"
+           text "#layout_character_creation_apply"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -776,7 +776,7 @@ FrameWidgetClass character_creation_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Save"
+           text "#layout_character_creation_save"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -874,7 +874,7 @@ FrameWidgetClass character_creation_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Randomize Character"
+           text "#layout_character_creation_randomize"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -916,7 +916,7 @@ FrameWidgetClass character_creation_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Back"
+           text "#layout_character_creation_back"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1

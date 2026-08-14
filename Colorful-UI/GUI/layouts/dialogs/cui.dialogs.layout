@@ -91,7 +91,7 @@ FrameWidgetClass DialogRoot {
      vexactsize 1
      style EmptyHighlight
      "no focus" 0
-     text "Cancel"
+     text "#dialog_cancel"
      text_proportion 0.5
      font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
     }
@@ -108,7 +108,7 @@ FrameWidgetClass DialogRoot {
      vexactsize 1
      style EmptyHighlight
      "no focus" 0
-     text "Confirm"
+     text "#dialog_confirm"
      text_proportion 0.5
      font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
     }

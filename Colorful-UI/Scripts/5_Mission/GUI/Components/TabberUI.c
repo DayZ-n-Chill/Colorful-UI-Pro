@@ -1,36 +1,18 @@
+// TabberUI — CUI tab controls and foreign-mod tab adoption.
+// Vanilla source: P:\scripts\5_mission\gui\newui\tabberprefab\tabberui.c
+
 modded class TabberUI
 {
-	// Universal mod-tab adoption (see Options.c). While s_CuiRecordForeignTabs
-	// is true, every AddTab(name) call — including ones made by other mods'
-	// chained OptionsMenu.Init() overrides, e.g. DayZ Expansion's
-	// `m_Tabber.AddTab("EXPANSION")` — gets its (index, name) recorded here.
-	// Options.c flips the flag on immediately before calling super.Init() and
-	// off immediately after, so only foreign tabs added during that window
-	// are captured; vanilla's own four tabs never pass through AddTab (they're
-	// discovered by scanning existing layout children in Init(), see vanilla
-	// tabberui.c OnWidgetScriptInit -> Init()).
 	static bool s_CuiRecordForeignTabs = false;
 	static ref array<int>    s_CuiForeignTabIndices = new array<int>();
 	static ref array<string> s_CuiForeignTabNames    = new array<string>();
 
-	// Vanilla Init() ends with `m_InitTimer.Run(0.01, this, "AlignTabbers")`,
-	// which fires a frame later. If this tabber's widget tree has since been
-	// Unlink()'d (our phase-1 -> phase-2 swap in Options.c), that callback
-	// dereferences dead widgets. Call this on the phase-1 tabber right before
-	// destroying its tree.
 	void CuiCancelInitTimer()
 	{
 		if (m_InitTimer)
 			m_InitTimer.Stop();
 	}
 
-	// Adopts an already-built tab content pane from another (soon to be
-	// destroyed) tabber's tree, instead of AddTab()'s normal "create an empty
-	// pane" behaviour. The pane keeps its identity — Widget.AddChild moves it
-	// in the tree without recreating it — so any handler object a foreign mod
-	// stored a reference to (e.g. Expansion's OptionsMenuExpansion.m_Root)
-	// stays valid. Only the tab control (the clickable header) is created
-	// fresh here, using our own styled prefab, same as AddTab().
 	int CuiAdoptTab(string name, Widget pane)
 	{
 		int new_index = m_Tabs.Count();
@@ -39,7 +21,7 @@ modded class TabberUI
 		TextWidget control_text = TextWidget.Cast( control.FindAnyWidget( "Tab_Control_x_Title" ) );
 
 		pane.SetName( "Tab_" + new_index );
-		m_Root.AddChild( pane ); // reparents; auto-detaches from its old parent
+		m_Root.AddChild( pane );
 
 		control.SetName( "Tab_Control_" + new_index );
 		control_text.SetName( "Tab_Control_" + new_index + "_Title" );
@@ -105,12 +87,6 @@ modded class TabberUI
 			tab_child = tab_child.GetSibling();
 		}
 
-		// The root keeps its layout width on purpose: both the options and
-		// keybindings layouts wrap Tab_Control_Container in Tab_Control_Scroller,
-		// so an over-wide container overflows INSIDE the scroller and scrolls.
-		// Growing the root to total_size (vanilla's tail) would let the bar
-		// stretch past the screen and the scroller would never engage.
-
 		tab_controls_container.Update();
 		if ( tab_controls_scroller )
 			tab_controls_scroller.Update();
@@ -151,11 +127,6 @@ modded class TabberUI
 		return false;
 	}
 
-	// Rebuild an existing tab control from our layout. Other mods (DayZ
-	// Expansion among them) replace AddTab with their own tab control layout
-	// and can compile after us, so their control wins at creation time. Menus
-	// we own call this afterwards to reclaim each control. TextWidget has no
-	// GetText, so the caller supplies the title.
 	void CuiReskinTabControl( int index, string name )
 	{
 		Widget old_control = m_TabControls.Get( index );

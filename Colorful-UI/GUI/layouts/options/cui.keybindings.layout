@@ -414,7 +414,7 @@ FrameWidgetClass keybindings_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Back"
+           text "#layout_pc_keybinding_play_pannel_back"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -510,7 +510,7 @@ FrameWidgetClass keybindings_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Apply"
+           text "#layout_pc_keybinding_apply"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -552,7 +552,7 @@ FrameWidgetClass keybindings_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Undo"
+           text "#menu_undo_cap"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -595,7 +595,7 @@ FrameWidgetClass keybindings_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Reset"
+           text "#str_settings_menu_root_play_panel_root_top_reset0"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1
@@ -638,7 +638,7 @@ FrameWidgetClass keybindings_root {
            hexactsize 0
            vexactsize 0
            scaled 1
-           text "Reset All"
+           text "#options_reset_all"
            font "Colorful-UI/GUI/fonts/GB-Regular.fnt"
            "text sharpness" 1.5
            "exact text" 1

@@ -1,3 +1,5 @@
+// CharacterCreationMenu — CUI character screen.
+// Vanilla source: P:\scripts\5_mission\gui\newui\charactercreation\charactercreationmenu.c
 
 modded class CharacterCreationMenu extends UIScriptedMenu
 {
@@ -21,14 +23,13 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 
-		// Note that this is just used as a visual trim, not a real loading bar.
 		m_LoadingBar        = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "Apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Save), "Save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Apply), "#layout_character_creation_apply", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Apply");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Save), "#layout_character_creation_save", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Saveback");
         cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_RandomizeCharacter), "",     colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "RandomizeCharacter");
-        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_BackButton), "Back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
+        cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_BackButton), "#layout_character_creation_back", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Back");
         if (m_MenuDivider) m_MenuDivider.SetColor(colorScheme.Separator());
 	
 		if (m_Scene && m_Scene.GetIntroCharacter())
@@ -113,11 +114,6 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 		cuiElmnt.CleanupForOwner(this);
 	}
 
-	// Vanilla CharacterCreationMenu.ColorHighlight hardcodes red ARGB(255,255,0,0)
-	// across every label/text/option widget on hover (and the input panel). Swap
-	// the red for our scheme's hover/brand colors. ColorNormal already paints
-	// COLOR_NORMAL_TEXT (white) which matches our scheme, so no override there.
-	// Vanilla source: P:\scripts\5_mission\gui\newui\charactercreation\charactercreationmenu.c:623-672
 	override void ColorHighlight(Widget w)
 	{
 		if (!w) return;
