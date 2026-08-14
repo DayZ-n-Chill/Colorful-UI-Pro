@@ -6,6 +6,7 @@ modded class MainMenu extends UIScriptedMenu
 	protected ref MainMenuStats m_Stats;
 	protected TextWidget m_PlayerName;
 	protected TextWidget m_WelcomeBack;
+	protected TextWidget m_StatsHeader;
 	protected ButtonWidget m_PrevCharacter, m_NextCharacter;
 	protected ImageWidget m_TopShader, m_BottomShader, m_MenuDivider, m_StatisticsBoxBG, m_SurvivorBox, m_Logo, m_Background;
 	protected Widget m_MenuDivider0;
@@ -15,6 +16,82 @@ modded class MainMenu extends UIScriptedMenu
 	protected ProgressBarWidget m_LoadingBar;
 
 	protected ref CUI_ErrorTestScreen m_ErrorTestScreen;
+
+	static const float ICON_TEXT_GAP = 8;
+
+	protected int m_FitRetries;
+
+	protected void SetNavLabel(ButtonWidget btn, string key)
+	{
+		if (!btn) return;
+
+		TextWidget label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
+		if (label) label.SetText(key);
+	}
+
+	protected void RefreshNavLabels()
+	{
+		SetNavLabel(ButtonWidget.Cast(m_MessageBtn),  "#menu_credits");
+		SetNavLabel(ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials");
+		SetNavLabel(ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options");
+		SetNavLabel(ButtonWidget.Cast(m_Exit),        "#main_menu_exit");
+	}
+
+	protected bool FitIconButton(ButtonWidget btn)
+	{
+		if (!btn) return true;
+
+		TextWidget label = TextWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_label"));
+		if (!label) return true;
+
+		label.Update();
+
+		int textW, textH;
+		label.GetTextSize(textW, textH);
+		if (textW <= 0) return false;
+
+		ImageWidget icon = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_img"));
+		if (!icon) icon = ImageWidget.Cast(btn.FindAnyWidget(btn.GetName() + "_image"));
+
+		float iconW, iconH;
+		if (icon) icon.GetSize(iconW, iconH);
+
+		float btnW, btnH;
+		btn.GetSize(btnW, btnH);
+		btn.SetSize(textW + ICON_TEXT_GAP + iconW, btnH);
+
+		Widget container = btn.GetParent();
+		if (container) container.Update();
+
+		return true;
+	}
+
+	protected void FitTopNav()
+	{
+		if (!layoutRoot) return;
+
+		bool ok = true;
+		ok = FitIconButton(ButtonWidget.Cast(m_MessageBtn))  && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_TutorialBtn)) && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_SettingsBtn)) && ok;
+		ok = FitIconButton(ButtonWidget.Cast(m_Exit))        && ok;
+
+		Widget topNav = layoutRoot.FindAnyWidget("TopNavigation");
+		if (topNav) topNav.Update();
+
+		if (!ok && m_FitRetries < 20)
+		{
+			m_FitRetries++;
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.FitTopNav, 50, false);
+		}
+	}
+
+	protected void ScheduleTopNavFit()
+	{
+		m_FitRetries = 0;
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.FitTopNav);
+		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.FitTopNav, 0, false);
+	}
 
 	override Widget Init()
 	{
@@ -85,22 +162,22 @@ modded class MainMenu extends UIScriptedMenu
 		if (m_MenuDivider0) m_MenuDivider0.SetColor(colorScheme.Separator());
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
 
-		TextWidget statsHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("character_stats_textImg"));
-		if (statsHeader) statsHeader.SetColor(colorScheme.BrandColor());
+		m_StatsHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("character_stats_textImg"));
+		if (m_StatsHeader) m_StatsHeader.SetColor(colorScheme.BrandColor());
 
 		cuiElmnt.proBtnDC(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), SERVER_IP, SERVER_PORT);
 
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenExitDialog");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "Settings", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "Tutorial", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
-		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "Credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_TutorialBtn), "#menu_tutorials", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenTutorials");
+		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_MessageBtn), "#menu_credits", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenCredits");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_CharacterBtn), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenMenuCustomizeCharacter");
-		
+
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_PrevCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "PreviousCharacter");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_NextCharacter), "", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "NextCharacter");
 
-		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ), "Priority Queue", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
-		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website), "Visit Website", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.Website);
+		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_PrioQ), CuiLoc.Get("CUI_priority_queue"), colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.PriorityQ);
+		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Website), "#mod_detail_info_website", colorScheme.PrimaryText(), colorScheme.ButtonHover(), CustomURL.Website);
 
 		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Discord), "Discord", colorScheme.PrimaryText(), UIColor.Discord(), SocialURL.Discord);
 		cuiElmnt.proBtnURL(this, ButtonWidget.Cast(m_Twitter), "Twitter", colorScheme.PrimaryText(), UIColor.Twitter(), SocialURL.Twitter);
@@ -135,9 +212,22 @@ modded class MainMenu extends UIScriptedMenu
 		}
 		#endif
 
+		RefreshCuiText();
+
 		GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.CheckPendingCuiError, 0, false);
+		ScheduleTopNavFit();
 
 		return layoutRoot;
+	}
+
+	// Re-applies every CUI_-keyed label from CuiLoc instead of relying on the layout's static
+	// "#CUI_..." text or the engine's "#KEY" re-resolve pass, since neither survives a live
+	// in-game language change (see CuiLoc.c for why). Safe to call repeatedly.
+	protected void RefreshCuiText()
+	{
+		if (m_WelcomeBack) m_WelcomeBack.SetText(CuiLoc.Get("CUI_welcome_back"));
+		if (m_StatsHeader) m_StatsHeader.SetText(CuiLoc.Get("CUI_survivor_statistics"));
+		if (m_Stats) m_Stats.RefreshCuiLabels();
 	}
 
 	protected void CheckPendingCuiError()
@@ -158,6 +248,10 @@ modded class MainMenu extends UIScriptedMenu
 
 		if (m_Stats) m_Stats.UpdateStats();
 		OnChangeCharacter(false);
+
+		RefreshCuiText();
+		RefreshNavLabels();
+		ScheduleTopNavFit();
 	}
 	
 	override void Refresh()
@@ -256,6 +350,7 @@ modded class MainMenu extends UIScriptedMenu
 	{
 		if (GetGame())
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
+			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.FitTopNav);
 
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();
@@ -307,6 +402,8 @@ modded class MainMenuStats
 	protected RichTextWidget m_RichTime;
 	protected RichTextWidget m_RichDistance;
 	protected RichTextWidget m_RichLongRange;
+	protected TextWidget m_TimeLabel;
+	protected TextWidget m_LongRangeLabel;
 
 	protected string BrandRgba()
 	{
@@ -323,6 +420,18 @@ modded class MainMenuStats
 		m_RichTime      = RichTextWidget.Cast(root.FindAnyWidget("TimeSurvivedValue"));
 		m_RichDistance  = RichTextWidget.Cast(root.FindAnyWidget("DistanceTraveledValue"));
 		m_RichLongRange = RichTextWidget.Cast(root.FindAnyWidget("LongRangeShotValue"));
+		m_TimeLabel      = TextWidget.Cast(root.FindAnyWidget("TimeSurvivedLabel"));
+		m_LongRangeLabel = TextWidget.Cast(root.FindAnyWidget("LongRangeShotLabel"));
+
+		RefreshCuiLabels();
+	}
+
+	// See MainMenu.RefreshCuiText() — same reasoning, these two labels are otherwise only
+	// ever resolved once from the static "#CUI_..." text baked into cui.mainMenu.layout.
+	void RefreshCuiLabels()
+	{
+		if (m_TimeLabel)      m_TimeLabel.SetText(CuiLoc.Get("CUI_time_alive"));
+		if (m_LongRangeLabel) m_LongRangeLabel.SetText(CuiLoc.Get("CUI_best_long_range_hit"));
 	}
 
 	override void UpdateStats()
