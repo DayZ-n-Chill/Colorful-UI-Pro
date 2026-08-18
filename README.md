@@ -73,38 +73,26 @@ Other edit points:
 
 To edit in Workbench: open `Colorful-UI\Workbench\dayz.gproj`.
 
-## Step 7 — Build the PBOs
+## Step 7 — Build and test (the easy way)
+
+Open the **`tools/`** folder and double-click:
+
+| Double-click this | And it… |
+|---|---|
+| **`Build and Run Server.bat`** | Builds the mod, launches a local test server + the game. **Start here.** |
+| **`Run Server.bat`** | Launches with the last build — skips rebuilding. |
+| **`Build Mods.bat`** | Just packs `Colorful-UI.pbo`, no launch. |
+| **`Stop Server.bat`** | Shuts the local server + game down. |
+
+First launch finds DayZ / DayZ Server / DayZ Tools on any drive, mounts `P:\`, links `P:\Colorful-UI`, and copies the Chernarus mission into `.server\`. Extra Workshop mods to load alongside go in `tools\mods.txt`, one per line.
+
+The build output is a single `P:\Mods\@Colorful-UI\Addons\Colorful-UI.pbo`. **Note:** script edits are NOT picked up live via `-filePatching` here — rebuild (`Build and Run Server.bat`) after changing `.c` or `.layout` files.
+
+## Step 8 — Build by hand (optional)
 
 ```powershell
-$ab  = 'C:\Program Files (x86)\Steam\steamapps\common\DayZ Tools\Bin\AddonBuilder\AddonBuilder.exe'
-$inc = "$env:USERPROFILE\.claude\skills\dayz-build-pbo\include.lst"
-$out = 'P:\Mods\@Colorful-UI\Addons'
-
-Remove-Item -Recurse -Force 'P:\temp\Colorful-UI' -ErrorAction SilentlyContinue
-
-& $ab 'P:\Colorful-UI\GUI'     $out '-prefix=Colorful-UI\GUI'     '-temp=P:\temp\Colorful-UI\GUI'     "-include=$inc" -clear
-& $ab 'P:\Colorful-UI\Scripts' $out '-prefix=Colorful-UI\Scripts' '-temp=P:\temp\Colorful-UI\Scripts' "-include=$inc"
-```
-
-Output:
-
-```
-P:\Mods\@Colorful-UI\Addons\GUI.pbo
-P:\Mods\@Colorful-UI\Addons\Scripts.pbo
-```
-
-## Step 8 — Test on a local server
-
-Server:
-
-```powershell
-& 'C:\Program Files (x86)\Steam\steamapps\common\DayZ Server\DayZDiag_x64.exe' -server -mod=@Colorful-UI -config=serverDZ.cfg
-```
-
-Client:
-
-```powershell
-& 'C:\Program Files (x86)\Steam\steamapps\common\DayZ\DayZDiag_x64.exe' -mod=@Colorful-UI -connect=127.0.0.1 -port=2302
+$ab = 'C:\Program Files (x86)\Steam\steamapps\common\DayZ Tools\Bin\AddonBuilder\AddonBuilder.exe'
+& $ab 'P:\Colorful-UI' 'P:\Mods\@Colorful-UI\Addons' '-prefix=Colorful-UI' '-temp=P:	emp\Colorful-UI'
 ```
 
 ## Step 9 — Deploy to a live server
