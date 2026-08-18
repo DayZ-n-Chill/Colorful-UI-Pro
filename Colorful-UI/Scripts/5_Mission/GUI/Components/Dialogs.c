@@ -60,7 +60,10 @@ class CuiDialog
         if (m_Caption) m_Caption.SetText(title);
         if (m_Body)    m_Body.SetText(body);
 
+        // Measure once now (best effort) and again after the engine's first layout pass —
+        // wrapped line count is not known until the widget has actually been laid out.
         ResizeToBody();
+        GetGame().GetCallQueue(CALL_CATEGORY_GUI).CallLater(this.ResizeToBody, 1, false);
 
         cuiElmnt.proBtnCB(this, m_Confirm, "#dialog_confirm", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnConfirm");
         cuiElmnt.proBtnCB(this, m_Cancel,  "#dialog_cancel",  colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OnCancel");
@@ -84,6 +87,7 @@ class CuiDialog
     {
         if (!m_Body || !m_DialogBox) return;
 
+        m_Body.Update();
         float contentH = m_Body.GetContentHeight();
         if (contentH < BODY_MIN_H) contentH = BODY_MIN_H;
 
@@ -281,7 +285,10 @@ class CuiDialog
     protected void DoClose()
     {
         if (GetGame())
+        {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.ResizeToBody);
+        }
         cuiElmnt.CleanupForOwner(this);
 
         m_Confirm   = null;
@@ -308,7 +315,10 @@ class CuiDialog
     void ~CuiDialog()
     {
         if (GetGame())
+        {
             GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.AnimTick);
+            GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.ResizeToBody);
+        }
         cuiElmnt.CleanupForOwner(this);
     }
 }

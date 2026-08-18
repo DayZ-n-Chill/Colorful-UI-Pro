@@ -27,6 +27,13 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 	{
 		if (w != m_Button) return false;
 
+		if (m_Code == CUI_ErrorTestScreen.WRAP_TEST_CODE)
+		{
+			CuiDialog.Show("Dialog Wrap Test",
+				"Line-wrap test. This body is intentionally long so it wraps to five or six lines inside the dialog: the box below must grow so the last line sits clear of the buttons with the same padding as a one-line dialog. If any text is clipped or overlaps the Confirm/Cancel row, the auto-height is not working.");
+			return true;
+		}
+
 		ErrorModuleHandler.ThrowError(m_Category, m_Code);
 
 		if (m_Owner)
@@ -38,6 +45,8 @@ class CUI_ErrorTestButtonHandler : ScriptedWidgetEventHandler
 
 class CUI_ErrorTestScreen
 {
+	static const int WRAP_TEST_CODE = -999;
+
 	protected Widget m_Root;
 	protected ref array<ref CUI_ErrorTestButtonHandler> m_Handlers = new array<ref CUI_ErrorTestButtonHandler>();
 
@@ -66,6 +75,17 @@ class CUI_ErrorTestScreen
 
 		bool first = true;
 		ErrorCategory lastCategory;
+
+		// Dialog auto-height check: opens a CuiDialog with a 5-6 line body.
+		Widget wrapRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.errortest.row.layout", content);
+		ButtonWidget wrapBtn = ButtonWidget.Cast(wrapRoot);
+		if (wrapBtn)
+		{
+			wrapBtn.SetText(">>> DIALOG WRAP TEST (5+ line body) <<<");
+			wrapBtn.SetColor(colorScheme.BrandColor());
+			wrapBtn.SetTextColor(colorScheme.BtnText());
+			m_Handlers.Insert(new CUI_ErrorTestButtonHandler(wrapBtn, ErrorCategory.ConnectErrorClient, WRAP_TEST_CODE, owner));
+		}
 
 		foreach (CUI_ErrorTestEntry entry : entries)
 		{

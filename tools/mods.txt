@@ -1,0 +1,19 @@
+# ============================================================
+#   COLORFUL UI  -  server mod list
+# ============================================================
+#   ADD a mod:     put its name on its own line below.
+#   REMOVE a mod:  delete its line (or put a # in front of it).
+#
+#   Use the folder name exactly as it appears in P:\Mods,
+#   WITHOUT the leading "@".
+#       P:\Mods\@Death Groan   ->   Death Groan
+#
+#   After editing: save this file, then double-click
+#   "Build and Run Server.bat".
+#
+#   Notes:
+#     - Every mod listed must be subscribed/downloaded in Steam.
+#     - Colorful-UI loads automatically - do NOT list it here.
+#     - Colorful-UI has no dependencies; this list is normally empty.
+#     - Lines starting with # are ignored.
+# ============================================================
