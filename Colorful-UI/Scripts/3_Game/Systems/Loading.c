@@ -125,6 +125,13 @@ modded class LoginTimeBase
         if (m_IsRespawn && time <= 1)
             GetGame().SetLoginTimerFinished();
     }
+
+    // Vanilla writes to m_txtDescription, which cui.loggingIn.layout does not have.
+    override void SetStatus(string status)
+    {
+        if (!m_LoadingMsg) return;
+        if (status != "") m_LoadingMsg.SetText(status);
+    }
 }
 
 modded class LoginQueueBase
@@ -132,7 +139,7 @@ modded class LoginQueueBase
     protected ImageWidget m_TopShader, m_BottomShader, m_ExitIcon, m_ShopIcon;
     protected TextWidget m_ExitText, m_PrioText;
     protected ProgressBarWidget m_ProgressLoading;
-    protected ButtonWidget m_btnLeave, m_PrioQBtn;
+    protected ButtonWidget m_PrioQBtn; // m_btnLeave is vanilla's; redeclaring it hid it from vanilla OnClick
 
     override Widget Init()
     {
@@ -176,12 +183,11 @@ modded class LoginQueueBase
 
     override void Show()
     {
-        if (!NoHints)
-        {
-            layoutRoot.Show(true);
-            if (!m_HintPanel)
-                m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
-        }
+        if (!layoutRoot) return;
+
+        layoutRoot.Show(true);
+        if (!NoHints && !m_HintPanel)
+            m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
     }
 
     override void SetPosition(int position)

@@ -19,7 +19,8 @@ modded class CharacterCreationMenu extends UIScriptedMenu
         m_MenuDivider               = ImageWidget.Cast(layoutRoot.FindAnyWidget("MenuDivider"));
 		m_TopShader                 = ImageWidget.Cast(layoutRoot.FindAnyWidget("TopShader"));
 		m_BottomShader              = ImageWidget.Cast(layoutRoot.FindAnyWidget("BottomShader"));
-		
+		m_PlayedCharacterInfo       = layoutRoot.FindAnyWidget("played_char_info");
+
 		m_TopShader.SetColor(colorScheme.TopShader());
 		m_BottomShader.SetColor(colorScheme.BottomShader());
 
@@ -101,6 +102,26 @@ modded class CharacterCreationMenu extends UIScriptedMenu
 		GetGame().GetMission().GetOnInputDeviceChanged().Insert(OnInputDeviceChanged);
 
 		return layoutRoot;
+	}
+
+	// cui.characters.layout has no version label, header text or tooltip, so the vanilla
+	// Refresh / SetTooltipTexts bodies null-deref (Refresh runs from Init, tooltips on hover).
+	override void Refresh()
+	{
+		if (!m_Scene || !m_Scene.GetIntroCharacter()) return;
+
+		string name = m_Scene.GetIntroCharacter().GetCharacterName();
+		if (name == "") name = GameConstants.DEFAULT_CHARACTER_NAME;
+		if (m_NameSelector) m_NameSelector.SetValue(name);
+
+		bool isDefault = m_Scene.GetIntroCharacter().IsDefaultCharacter();
+		if (m_Apply) m_Apply.Show(!isDefault);
+		if (m_Save)  m_Save.Show(isDefault);
+		if (m_PlayedCharacterInfo) m_PlayedCharacterInfo.Show(!isDefault);
+	}
+
+	override void SetTooltipTexts(Widget w, string header = "", string desc = "")
+	{
 	}
 
     void Saveback()

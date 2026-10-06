@@ -11,7 +11,14 @@ modded class WarningMenuBase extends UIScriptedMenu
 		string body = GetText();
 		if (body == "") body = "An action will drop items from your character.";
 
-		CuiDialog.Show("Warning", body, true, this, "DoClose", "DoClose");
+		// The stub can't be clicked and vanilla blocks ESC, so if the dialog failed to draw
+		// fall back to vanilla's layout, which has a working OK button.
+		CuiDialog dlg = CuiDialog.Show("Warning", body, true, this, "DoClose", "DoClose");
+		if (!dlg)
+		{
+			layoutRoot.Unlink();
+			return super.Init();
+		}
 
 		return layoutRoot;
 	}

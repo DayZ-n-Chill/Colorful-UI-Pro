@@ -193,7 +193,7 @@ modded class UiHintPanelLoading extends UiHintPanel
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
 		#ifndef WORKBENCH
-			if (LoadVideo) {
+			if (LoadVideo && m_RootFrame) {
 				Class.CastTo(m_Video, m_RootFrame.FindAnyWidget("LoadingVid"));
 				if (m_Video && m_Video.GetState() == VideoState.NONE)
 				{

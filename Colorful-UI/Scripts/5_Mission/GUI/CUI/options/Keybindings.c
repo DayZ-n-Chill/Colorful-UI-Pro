@@ -27,6 +27,7 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		m_TopShader    = layoutRoot.FindAnyWidget( "TopShader" );
 		m_BottomShader = layoutRoot.FindAnyWidget( "BottomShader" );
 		m_MenuDivider  = layoutRoot.FindAnyWidget( "MenuDivider" );
+		m_Version      = TextWidget.Cast(layoutRoot.FindAnyWidget( "version" )); // vanilla Refresh writes to it
 
 		m_LoadingBar      = ProgressBarWidget.Cast(layoutRoot.FindAnyWidget("LoadingBar"));
 		if (m_LoadingBar) m_LoadingBar.SetColor(colorScheme.Loadingbar());
@@ -175,7 +176,7 @@ modded class KeybindingsMenu extends UIScriptedMenu
 		bool changed = m_GroupsContainer.IsChanged() && m_OriginalPresetIndex != index;
 		m_TargetPresetIndex = index;
 
-		if (changed)
+		if (changed && !CuiDialog.IsAnyOpen())
 		{
 			CuiDialog.Show(
 				"#main_menu_configure", "#main_menu_configure_desc",

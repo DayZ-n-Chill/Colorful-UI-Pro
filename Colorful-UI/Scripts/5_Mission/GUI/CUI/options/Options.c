@@ -105,15 +105,35 @@ modded class OptionsMenu extends UIScriptedMenu
 	override void ColorDisable(Widget w)
 	{
 		SetFocus(null);
-		w.SetAlpha(0.5);
 		if (w)
 		{
+			w.SetAlpha(0.5);
 			Widget label = w.FindAnyWidget(w.GetName() + "_label");
 			if (label && label.IsInherited(TextWidget))
 			{
 				TextWidget.Cast(label).SetColor(colorScheme.DisabledText());
 			}
 		}
+	}
+
+	// Vanilla OnChanged enables Apply/Undo via ColorNormal, which never undoes our
+	// ColorDisable (alpha 0.5 + disabled label colour), so they kept looking disabled.
+	override void OnChanged()
+	{
+		super.OnChanged();
+
+		CuiRestoreToolbarButton(m_Apply);
+		CuiRestoreToolbarButton(m_Reset);
+	}
+
+	protected void CuiRestoreToolbarButton(Widget w)
+	{
+		if (!w) return;
+		if ((w.GetFlags() & WidgetFlags.IGNOREPOINTER) == WidgetFlags.IGNOREPOINTER) return;
+
+		w.SetAlpha(1);
+		Widget label = w.FindAnyWidget(w.GetName() + "_label");
+		if (label) label.SetColor(colorScheme.PrimaryText());
 	}
 
 	override void ColorHighlight(Widget w)
@@ -170,6 +190,9 @@ modded class OptionsMenu extends UIScriptedMenu
 	void DoSetToDefaults()
 	{
 		super.PerformSetToDefaults();
+
+		CuiRestoreToolbarButton(m_Apply);
+		CuiRestoreToolbarButton(m_Reset);
 	}
 
 	protected int m_PendingTabTarget;
@@ -197,7 +220,7 @@ modded class OptionsMenu extends UIScriptedMenu
 		if (CuiDialog.CancelTop())
 			return;
 
-		if (g_Game.GetUIManager().IsDialogVisible() || g_Game.GetUIManager().IsModalVisible())
+		if (CuiDialog.IsAnyOpen() || g_Game.GetUIManager().IsDialogVisible() || g_Game.GetUIManager().IsModalVisible())
 			return;
 
 		if (IsAnyTabChanged())
@@ -226,7 +249,8 @@ modded class OptionsMenu extends UIScriptedMenu
 		bool changed = IsAnyTabChanged();
 		if (changed)
 		{
-			if (!g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
+			// UIManager cannot see a CuiDialog; without IsAnyOpen a second prompt stacks.
+			if (!CuiDialog.IsAnyOpen() && !g_Game.GetUIManager().IsDialogVisible() && !g_Game.GetUIManager().IsModalVisible())
 			{
 				m_PendingTabTarget = target;
 				CuiDialog.Show(

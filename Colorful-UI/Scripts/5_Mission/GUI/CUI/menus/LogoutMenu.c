@@ -8,6 +8,7 @@ modded class LogoutMenu extends UIScriptedMenu
 	protected Widget m_TopSpacer, m_BottomSpacer;
 	private	Widget m_timerText;
 	protected TextWidget m_LogoutTimeText;
+	protected int m_CuiLogoutTime;
 
         override Widget Init()
         {
@@ -88,6 +89,44 @@ modded class LogoutMenu extends UIScriptedMenu
                 Hide();
                 Cancel();
         }
+
+	// Vanilla's m_LogoutTimeText, m_DescriptionText and m_iTime are private and never set
+	// by this Init, so the vanilla countdown methods null-deref. These drive our widgets.
+	override void SetTime(int time)
+	{
+		m_CuiLogoutTime = time;
+		if (!m_LogoutTimeText) return;
+
+		FullTimeData ft = new FullTimeData();
+		TimeConversions.ConvertSecondsToFullTime(time, ft);
+
+		string text = "#layout_logout_dialog_until_logout_";
+		if (ft.m_Days > 0)         text += "dhms";
+		else if (ft.m_Hours > 0)   text += "hms";
+		else if (ft.m_Minutes > 0) text += "ms";
+		else                       text += "s";
+
+		text = Widget.TranslateString(text);
+		text = string.Format(text, ft.m_Seconds, ft.m_Minutes, ft.m_Hours, ft.m_Days);
+		m_LogoutTimeText.SetText(text);
+	}
+
+	override void UpdateTime()
+	{
+		if (m_CuiLogoutTime > 0)
+			SetTime(--m_CuiLogoutTime);
+		else
+			Exit();
+	}
+
+	override void SetLogoutTime()
+	{
+		if (m_LogoutTimeText) m_LogoutTimeText.SetText(" ");
+	}
+
+	override void UpdateInfo()
+	{
+	}
 
 	void ~LogoutMenu()
 	{
