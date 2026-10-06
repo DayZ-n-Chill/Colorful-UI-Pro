@@ -727,7 +727,7 @@ FrameWidgetClass InGameMenuRoot {
      vexactsize 1
      fixaspect outside
      image0 ""
-     imageTexture "{995A4D44D78F2EC6}Colorful-UI/GUI/textures/Shared/CuiPro_Logo.edds"
+     imageTexture "{42E121BAB69F8229}Colorful-UI/GUI/textures/Shared/Colorful UI Logo.edds"
      mode blend
      "src alpha" 1
      "clamp mode" clamp
