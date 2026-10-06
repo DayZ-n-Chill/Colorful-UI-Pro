@@ -104,6 +104,10 @@ modded class MainMenu extends UIScriptedMenu
 
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/menus/cui.mainMenu.layout");
 
+		// Vanilla Init sets these; OpenCredits() and Play() -> ConnectLastSession() dereference them.
+		m_Mission = MissionMainMenu.Cast(GetGame().GetMission());
+		if (m_Mission) m_ScenePC = m_Mission.GetIntroScenePC();
+
 		m_Play              = ButtonWidget.Cast(layoutRoot.FindAnyWidget("PlayBtn"));
 		m_Exit              = ButtonWidget.Cast(layoutRoot.FindAnyWidget("ExitBtn"));
 		m_SettingsBtn       = ButtonWidget.Cast(layoutRoot.FindAnyWidget("SettingsBtn"));
@@ -165,7 +169,12 @@ modded class MainMenu extends UIScriptedMenu
 		m_StatsHeader = TextWidget.Cast(layoutRoot.FindAnyWidget("character_stats_textImg"));
 		if (m_StatsHeader) m_StatsHeader.SetColor(colorScheme.BrandColor());
 
-		cuiElmnt.proBtnDC(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), SERVER_IP, SERVER_PORT);
+		// Direct-connect only when a real server is configured; the 127.0.0.1 default falls
+		// back to vanilla Play() (last played server, else the server browser).
+		if (SERVER_IP != "" && SERVER_IP != "127.0.0.1" && SERVER_PORT > 0)
+			cuiElmnt.proBtnDC(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), SERVER_IP, SERVER_PORT);
+		else
+			cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Play), "#main_menu_play", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "Play");
 
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_Exit), "#main_menu_exit", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenExitDialog");
 		cuiElmnt.proBtnCB(this, ButtonWidget.Cast(m_SettingsBtn), "#layout_xbox_ingame_menu_options", colorScheme.PrimaryText(), colorScheme.ButtonHover(), this, "OpenSettings");
@@ -317,6 +326,33 @@ modded class MainMenu extends UIScriptedMenu
 		}
 	}
 
+	// Vanilla handlers compare w against vanilla members this Init leaves null (m_Play,
+	// m_CharacterRotationFrame, tooltip widgets), so a null w matches them: OnClick would
+	// fire Play(), the others would reach null tooltip widgets. Our buttons have their own handlers.
+	override bool OnClick(Widget w, int x, int y, int button)
+	{
+		if (!w) return false;
+		return super.OnClick(w, x, y, button);
+	}
+
+	override bool OnMouseEnter(Widget w, int x, int y)
+	{
+		if (!w) return false;
+		return super.OnMouseEnter(w, x, y);
+	}
+
+	override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
+	{
+		if (!w) return false;
+		return super.OnMouseLeave(w, enterW, x, y);
+	}
+
+	override bool OnMouseButtonDown(Widget w, int x, int y, int button)
+	{
+		if (!w) return false;
+		return super.OnMouseButtonDown(w, x, y, button);
+	}
+
 	void OpenExitDialog()
 	{
 		CuiDialog.Show("#main_menu_exit", "#main_menu_exit_desc", true, this, "DoExit", "");
@@ -349,8 +385,10 @@ modded class MainMenu extends UIScriptedMenu
 	void ~MainMenu()
 	{
 		if (GetGame())
+		{
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.CheckPendingCuiError);
 			GetGame().GetCallQueue(CALL_CATEGORY_GUI).Remove(this.FitTopNav);
+		}
 
 		cuiElmnt.CleanupForOwner(this);
 		if (m_ErrorTestScreen) m_ErrorTestScreen.Cleanup();

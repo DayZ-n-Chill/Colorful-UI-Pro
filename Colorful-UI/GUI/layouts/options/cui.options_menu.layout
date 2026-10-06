@@ -485,6 +485,7 @@ FrameWidgetClass settings_menu_root {
   }
   FrameWidgetClass SafeZone {
    ignorepointer 1
+   priority 2
    size 0.9 0.9
    halign center_ref
    valign center_ref
@@ -607,7 +608,7 @@ FrameWidgetClass settings_menu_root {
       WrapSpacerWidgetClass top {
        ignorepointer 1
        color 0 0 0 0.549
-       size 0 0
+       size 1 0
        halign center_ref
        valign bottom_ref
        hexactpos 0
