@@ -8,10 +8,17 @@ modded class InviteMenu extends UIScriptedMenu
 		layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/dialogs/cui.dialog_stub.layout");
 		if (!layoutRoot) return null;
 
-		CuiDialog.Show(
+		// The stub can't be clicked and vanilla blocks ESC, so if the dialog failed to draw
+		// fall back to vanilla's layout, which has a working Cancel button.
+		CuiDialog dlg = CuiDialog.Show(
 			"Game Invite",
 			"You have been invited to a session. Connect now or cancel.",
 			true, this, "DoConnect", "DoCancel");
+		if (!dlg)
+		{
+			layoutRoot.Unlink();
+			return super.Init();
+		}
 
 		PlayerBase player = PlayerBase.Cast(GetGame().GetPlayer());
 		if (player && player.GetEmoteManager() && !player.IsRestrained() && !player.IsUnconscious())

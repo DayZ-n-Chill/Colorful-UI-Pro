@@ -106,14 +106,38 @@ class CuiDialog
         return dlg;
     }
 
+    // UIManager.IsDialogVisible() does not see a CuiDialog; callers use this instead.
+    static bool IsAnyOpen()
+    {
+        if (!s_OpenDialogs) return false;
+
+        foreach (CuiDialog dlg : s_OpenDialogs)
+        {
+            if (dlg && dlg.m_Root && !dlg.m_Closing) return true;
+        }
+        return false;
+    }
+
+    // Cancels the topmost live dialog. Entries whose widgets are gone are dropped, and
+    // dialogs already closing are skipped, so a dead entry can't swallow Back/ESC forever.
     static bool CancelTop()
     {
         if (!s_OpenDialogs) return false;
-        int n = s_OpenDialogs.Count();
-        if (n == 0) return false;
-        CuiDialog top = s_OpenDialogs.Get(n - 1);
-        if (top) top.OnCancel();
-        return true;
+
+        for (int i = s_OpenDialogs.Count() - 1; i >= 0; i--)
+        {
+            CuiDialog top = s_OpenDialogs.Get(i);
+            if (!top || !top.m_Root)
+            {
+                s_OpenDialogs.Remove(i);
+                continue;
+            }
+            if (top.m_Closing) continue;
+
+            top.OnCancel();
+            return true;
+        }
+        return false;
     }
 
     void OnConfirm()
@@ -155,7 +179,14 @@ class CuiDialog
 
     void AnimTick()
     {
-        if (m_AnimDir == 0 || !m_Root) return;
+        // Root gone (widgets destroyed): nothing to animate, but a closing dialog must still
+        // finish, or it stays in s_OpenDialogs holding its backdrop.
+        if (!m_Root)
+        {
+            if (m_Closing) DoClose();
+            return;
+        }
+        if (m_AnimDir == 0) return;
 
         m_Elapsed += ANIM_TICK_MS;
 

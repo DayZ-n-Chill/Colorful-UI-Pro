@@ -7,7 +7,6 @@ modded class InGameMenu extends UIScriptedMenu
     protected ButtonWidget m_PrioQ, m_Website, m_Discord, m_Twitter, m_Youtube, m_Reddit, m_Facebook;
     protected ButtonWidget m_ExitButton, m_ContinueButton, m_OptionsButton, m_RestartButton, m_RespawnButton;
     protected Widget m_TopSpacer, m_BottomSpacer, m_GameOverScreen;
-    protected UiHintPanel m_HintPanel;
     float m_TimerSlice;
 
     override Widget Init()
@@ -83,6 +82,32 @@ modded class InGameMenu extends UIScriptedMenu
 
 		return layoutRoot;
     }
+
+	// Vanilla UpdateGUI drives widgets from day_z_ingamemenu.layout that this Init never
+	// resolves (null deref every frame). Same logic, on our buttons.
+	override protected void UpdateGUI()
+	{
+		Man player = g_Game.GetPlayer();
+		bool playerAlive = player && player.GetPlayerState() == EPlayerStates.ALIVE;
+
+		if (g_Game.IsMultiplayer())
+		{
+			if (m_RestartButton) m_RestartButton.Show(playerAlive && player.IsUnconscious() && !CfgGameplayHandler.GetDisableRespawnInUnconsciousness());
+			if (m_RespawnButton) m_RespawnButton.Show(!playerAlive);
+		}
+		else
+		{
+			if (m_RestartButton) m_RestartButton.Show(true);
+			if (m_RespawnButton) m_RespawnButton.Show(false);
+		}
+
+		if (m_ContinueButton) m_ContinueButton.Show(playerAlive);
+	}
+
+	// cui.ingame.layout has no server info panel; vanilla writes to a null m_ServerInfoPanel.
+	override void SetServerInfoVisibility(bool show)
+	{
+	}
 
    	override void Update(float timeslice)
 	{
