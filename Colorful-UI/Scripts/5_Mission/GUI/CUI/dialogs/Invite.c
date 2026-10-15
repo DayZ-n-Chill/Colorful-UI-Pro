@@ -1,6 +1,7 @@
 // InviteMenu — game-invite prompt shown in CuiDialog.
 // Vanilla source: P:\scripts\5_mission\gui\invitemenu.c
 
+#ifdef DAYZ_1_29
 modded class InviteMenu extends UIScriptedMenu
 {
 	override Widget Init()
@@ -49,3 +50,4 @@ modded class InviteMenu extends UIScriptedMenu
 		cuiElmnt.CleanupForOwner(this);
 	}
 }
+#endif
