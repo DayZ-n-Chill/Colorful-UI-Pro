@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "dayz-n-chill": {
+      "source": {
+        "source": "github",
+        "repo": "DayZ-n-Chill/Agentic-Z"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "agentic-z@dayz-n-chill": true,
+    "agentic-z-panel@dayz-n-chill": true
+  }
+}
