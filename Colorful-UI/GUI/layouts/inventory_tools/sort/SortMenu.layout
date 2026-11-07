@@ -1,0 +1,16 @@
+// The sort button's drop-down (SortMenu): a dark rounded panel the rows are placed in by script.
+// Two of these are made, one for the first level and one for the second.
+PanelWidgetClass SortMenu {
+ visible 0
+ clipchildren 0
+ ignorepointer 0
+ position 0 0
+ size 190 30
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 1000
+ color 0.071 0.071 0.071 0.97
+ style round_fill_sm
+}

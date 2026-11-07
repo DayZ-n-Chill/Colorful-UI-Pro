@@ -1,0 +1,202 @@
+// What a quick slot holds once something is in it, ported from DayZ Deluxe's DD_QuickSlotItem.layout.
+// A re-skin of vanilla's gui/layouts/inventory/inventoryGridItem.layout that keeps every widget name
+// vanilla's InventoryGrid addresses:
+//
+//   GridCell            the root. RemoveItem finds it by this name and deletes it.
+//   GridItem            the slot's item widget: dragged by OnDrag, tinted with the state colour by
+//                       RefreshQuickbarItemVariables. draggable 1 makes the slot draggable at all.
+//   Preview             the ItemPreviewWidget AddItem hands the entity to.
+//   QuantityPanel       shown or hidden depending on whether the item has a quantity.
+//   QuantityBar         the fraction bar (water, fuel, blood).
+//   QuantityStackPanel  the count plate (rounds, pills, nails), holding Quantity.
+//
+// GridGhost / GhostIcon are vanilla's and never shown; kept so this stays a straight swap.
+//
+// The root is exact 60 x 60 at (3, 3) so it lands on the tile's QS_Fill. clipchildren 0 because
+// OnDrag moves GridItem outside the root's rectangle.
+//
+// GridItem is authored fully transparent with the same radius fill as the cell, so it registers
+// pixel for pixel with QS_Fill. It is the only surface the state paint touches (see
+// QuickSlotSlots.c), and it lives here so it is created and deleted with the item. The fill is the
+// only state marker by design; a left-edge bar and a ring were both tried in Deluxe and rejected.
+PanelWidgetClass GridCell {
+ clipchildren 0
+ inheritalpha 0
+ ignorepointer 0
+ position 3 3
+ size 60 60
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ style blank
+ {
+  PanelWidgetClass GridItemBck {
+   clipchildren 0
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   {
+    PanelWidgetClass GridItem {
+     clipchildren 0
+     inheritalpha 0
+     color 0 0 0 0
+     position 0 0
+     size 1 1
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     draggable 1
+     style round_fill
+     {
+      ItemPreviewWidgetClass Preview {
+       visible 1
+       clipchildren 0
+       inheritalpha 0
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       priority 151
+       draggable 0
+       "force flip enable" 1
+      }
+      FrameWidgetClass QuantityPanel {
+       visible 0
+       clipchildren 0
+       inheritalpha 1
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       valign bottom_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       priority 606
+       draggable 0
+       {
+        // 4 px up and 0.82 wide so both ends stay inside the straight part of the cell's bottom
+        // edge. inheritalpha 0 is required: GridItem above is usually fully transparent.
+        ProgressBarWidgetClass QuantityBar {
+         visible 1
+         inheritalpha 0
+         ignorepointer 1
+         position 0 4
+         size 0.82 3
+         halign center_ref
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 1
+         style Quantity
+         current 70
+         vertical 0
+         flipped 0
+        }
+        // 5 px in from the bottom-right, the cell's corner radius, so the plate never pokes past
+        // the curve into the margin between cells.
+        PanelWidgetClass QuantityStackPanel {
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         position 5 5
+         size 34 16
+         halign right_ref
+         valign bottom_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         priority 600
+         draggable 0
+         style blank
+         {
+          // Near-opaque so the count never depends on what is behind the cell.
+          PanelWidgetClass QuantityPlate {
+           inheritalpha 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           color 0 0 0 0.88
+           style round_fill_xs
+          }
+          TextWidgetClass Quantity {
+           inheritalpha 0
+           ignorepointer 1
+           ignoregloballv 1
+           color 0.8627 0.851 0.8118 1
+           position 0 0
+           size 1 1
+           hexactpos 1
+           vexactpos 1
+           hexactsize 0
+           vexactsize 0
+           priority 610
+           text "99"
+           font "Colorful-UI/GUI/fonts/JetBrainsMono-Medium.fnt"
+           "text sharpness" 1.5
+           "exact text" 1
+           "exact text size" 11
+           "outline size" 2
+           "outline color" 0 0 0 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+  PanelWidgetClass GridGhost {
+   visible 0
+   clipchildren 0
+   inheritalpha 0
+   ignorepointer 0
+   color 0.2235 0.2235 0.2235 0
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style blank
+   {
+    ImageWidgetClass GhostIcon {
+     visible 1
+     ignorepointer 1
+     color 1 1 1 1
+     size 1 1
+     halign center_ref
+     valign center_ref
+     hexactpos 0
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     fixaspect inside
+     image0 "set:dayz_inventory image:missing"
+     mode blend
+     "src alpha" 1
+     "no wrap" 1
+     filter 1
+     nocache 0
+    }
+   }
+  }
+ }
+}

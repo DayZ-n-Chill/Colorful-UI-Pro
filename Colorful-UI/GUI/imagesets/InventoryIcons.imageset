@@ -1,0 +1,1226 @@
+ImageSetClass {
+ Name "InventoryIcons"
+ RefSize 954 1268
+ Textures {
+  ImageSetTextureClass {
+   mpix 0
+   path "Colorful-UI/GUI/imagesets/InventoryIcons.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass AirplaneTilt {
+   Name "AirplaneTilt"
+   Pos 10 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass AppleLogo {
+   Name "AppleLogo"
+   Pos 84 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowCircleDown {
+   Name "ArrowCircleDown"
+   Pos 158 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowCircleUp {
+   Name "ArrowCircleUp"
+   Pos 232 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowCounterClockwise {
+   Name "ArrowCounterClockwise"
+   Pos 306 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowLeft {
+   Name "ArrowLeft"
+   Pos 380 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowLineDown {
+   Name "ArrowLineDown"
+   Pos 454 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowLineUp {
+   Name "ArrowLineUp"
+   Pos 528 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowRight {
+   Name "ArrowRight"
+   Pos 602 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowsClockwise {
+   Name "ArrowsClockwise"
+   Pos 676 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowsDownUp {
+   Name "ArrowsDownUp"
+   Pos 750 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowsInLineVertical {
+   Name "ArrowsInLineVertical"
+   Pos 824 10
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowsOut {
+   Name "ArrowsOut"
+   Pos 10 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowsOutLineVertical {
+   Name "ArrowsOutLineVertical"
+   Pos 84 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowSquareOut {
+   Name "ArrowSquareOut"
+   Pos 158 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ArrowUp {
+   Name "ArrowUp"
+   Pos 232 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Baby {
+   Name "Baby"
+   Pos 306 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Backpack {
+   Name "Backpack"
+   Pos 380 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Bank {
+   Name "Bank"
+   Pos 454 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryCharging {
+   Name "BatteryCharging"
+   Pos 528 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryFull {
+   Name "BatteryFull"
+   Pos 602 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryFull_Fill {
+   Name "BatteryFull_Fill"
+   Pos 676 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryHigh_Fill {
+   Name "BatteryHigh_Fill"
+   Pos 750 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryLow_Fill {
+   Name "BatteryLow_Fill"
+   Pos 824 84
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BatteryMedium_Fill {
+   Name "BatteryMedium_Fill"
+   Pos 10 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Bed {
+   Name "Bed"
+   Pos 84 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Bell {
+   Name "Bell"
+   Pos 158 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass BellSlash {
+   Name "BellSlash"
+   Pos 232 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Binoculars {
+   Name "Binoculars"
+   Pos 306 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Broadcast {
+   Name "Broadcast"
+   Pos 380 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Car {
+   Name "Car"
+   Pos 454 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Car_Fill {
+   Name "Car_Fill"
+   Pos 528 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CaretDown {
+   Name "CaretDown"
+   Pos 602 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CaretLeft {
+   Name "CaretLeft"
+   Pos 676 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CaretRight {
+   Name "CaretRight"
+   Pos 750 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CaretUp {
+   Name "CaretUp"
+   Pos 824 158
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ChatCenteredText {
+   Name "ChatCenteredText"
+   Pos 10 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ChatCenteredText_Fill {
+   Name "ChatCenteredText_Fill"
+   Pos 84 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ChatCircle {
+   Name "ChatCircle"
+   Pos 158 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ChatsCircle {
+   Name "ChatsCircle"
+   Pos 232 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ChatTeardropText {
+   Name "ChatTeardropText"
+   Pos 306 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Check {
+   Name "Check"
+   Pos 380 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CheckCircle {
+   Name "CheckCircle"
+   Pos 454 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CheckCircle_Fill {
+   Name "CheckCircle_Fill"
+   Pos 528 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CheckSquare {
+   Name "CheckSquare"
+   Pos 602 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CheckSquare_Fill {
+   Name "CheckSquare_Fill"
+   Pos 676 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Circle {
+   Name "Circle"
+   Pos 750 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CircleDashed {
+   Name "CircleDashed"
+   Pos 824 232
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ClipboardText {
+   Name "ClipboardText"
+   Pos 10 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Clock {
+   Name "Clock"
+   Pos 84 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Clock_Fill {
+   Name "Clock_Fill"
+   Pos 158 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ClockCounterClockwise {
+   Name "ClockCounterClockwise"
+   Pos 232 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Coins {
+   Name "Coins"
+   Pos 306 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Coins_Fill {
+   Name "Coins_Fill"
+   Pos 380 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Compass {
+   Name "Compass"
+   Pos 454 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Copy {
+   Name "Copy"
+   Pos 528 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CreditCard {
+   Name "CreditCard"
+   Pos 602 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Crosshair {
+   Name "Crosshair"
+   Pos 676 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Crown {
+   Name "Crown"
+   Pos 750 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Crown_Fill {
+   Name "Crown_Fill"
+   Pos 824 306
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass CursorClick {
+   Name "CursorClick"
+   Pos 10 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DeviceTablet {
+   Name "DeviceTablet"
+   Pos 84 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DoorOpen {
+   Name "DoorOpen"
+   Pos 158 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DotsThree {
+   Name "DotsThree"
+   Pos 232 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DotsThreeOutline {
+   Name "DotsThreeOutline"
+   Pos 306 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DownloadSimple {
+   Name "DownloadSimple"
+   Pos 380 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Drop {
+   Name "Drop"
+   Pos 454 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass DropHalf {
+   Name "DropHalf"
+   Pos 528 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Engine {
+   Name "Engine"
+   Pos 602 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Eraser {
+   Name "Eraser"
+   Pos 676 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Eye {
+   Name "Eye"
+   Pos 750 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass EyeSlash {
+   Name "EyeSlash"
+   Pos 824 380
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FastForward {
+   Name "FastForward"
+   Pos 10 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FirstAid {
+   Name "FirstAid"
+   Pos 84 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FirstAid_Fill {
+   Name "FirstAid_Fill"
+   Pos 158 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Flag {
+   Name "Flag"
+   Pos 232 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Flag_Fill {
+   Name "Flag_Fill"
+   Pos 306 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FlagBanner {
+   Name "FlagBanner"
+   Pos 380 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FlagBanner_Fill {
+   Name "FlagBanner_Fill"
+   Pos 454 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FlagCheckered {
+   Name "FlagCheckered"
+   Pos 528 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FlowArrow {
+   Name "FlowArrow"
+   Pos 602 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Funnel {
+   Name "Funnel"
+   Pos 676 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass FunnelX {
+   Name "FunnelX"
+   Pos 750 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Garage {
+   Name "Garage"
+   Pos 824 454
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass GasCan {
+   Name "GasCan"
+   Pos 10 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass GasPump {
+   Name "GasPump"
+   Pos 84 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Gauge {
+   Name "Gauge"
+   Pos 158 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Gavel {
+   Name "Gavel"
+   Pos 232 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Gear {
+   Name "Gear"
+   Pos 306 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass GearSix {
+   Name "GearSix"
+   Pos 380 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Gift {
+   Name "Gift"
+   Pos 454 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Globe {
+   Name "Globe"
+   Pos 528 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass GoogleLogo {
+   Name "GoogleLogo"
+   Pos 602 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Hamburger {
+   Name "Hamburger"
+   Pos 676 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Hammer {
+   Name "Hammer"
+   Pos 750 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass HandGrabbing {
+   Name "HandGrabbing"
+   Pos 824 528
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass HandGrabbing_Fill {
+   Name "HandGrabbing_Fill"
+   Pos 10 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Handshake {
+   Name "Handshake"
+   Pos 84 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass HandWaving {
+   Name "HandWaving"
+   Pos 158 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass HardDrives {
+   Name "HardDrives"
+   Pos 232 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Heart {
+   Name "Heart"
+   Pos 306 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Heart_Fill {
+   Name "Heart_Fill"
+   Pos 380 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Hourglass {
+   Name "Hourglass"
+   Pos 454 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass IdentificationBadge {
+   Name "IdentificationBadge"
+   Pos 528 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass IdentificationCard {
+   Name "IdentificationCard"
+   Pos 602 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Infinity {
+   Name "Infinity"
+   Pos 676 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Info {
+   Name "Info"
+   Pos 750 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Jeep {
+   Name "Jeep"
+   Pos 824 602
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Key {
+   Name "Key"
+   Pos 10 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Knife {
+   Name "Knife"
+   Pos 84 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Lightning {
+   Name "Lightning"
+   Pos 158 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Lightning_Fill {
+   Name "Lightning_Fill"
+   Pos 232 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ListDashes {
+   Name "ListDashes"
+   Pos 306 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Lockers {
+   Name "Lockers"
+   Pos 380 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass LockKey {
+   Name "LockKey"
+   Pos 454 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass LockOpen {
+   Name "LockOpen"
+   Pos 528 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass LockSimple {
+   Name "LockSimple"
+   Pos 602 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass MagnifyingGlass {
+   Name "MagnifyingGlass"
+   Pos 676 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass MapPin {
+   Name "MapPin"
+   Pos 750 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass MapPin_Fill {
+   Name "MapPin_Fill"
+   Pos 824 676
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass MapPinPlus {
+   Name "MapPinPlus"
+   Pos 10 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass MapTrifold {
+   Name "MapTrifold"
+   Pos 84 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Medal {
+   Name "Medal"
+   Pos 158 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Medal_Fill {
+   Name "Medal_Fill"
+   Pos 232 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Megaphone {
+   Name "Megaphone"
+   Pos 306 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Minus {
+   Name "Minus"
+   Pos 380 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Money {
+   Name "Money"
+   Pos 454 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Mountains {
+   Name "Mountains"
+   Pos 528 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass NavigationArrow_Fill {
+   Name "NavigationArrow_Fill"
+   Pos 602 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Package {
+   Name "Package"
+   Pos 676 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Package_Fill {
+   Name "Package_Fill"
+   Pos 750 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PaintBrush {
+   Name "PaintBrush"
+   Pos 824 750
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PaintBrush_Fill {
+   Name "PaintBrush_Fill"
+   Pos 10 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Palette {
+   Name "Palette"
+   Pos 84 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PaperPlaneTilt {
+   Name "PaperPlaneTilt"
+   Pos 158 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Parachute_Fill {
+   Name "Parachute_Fill"
+   Pos 232 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PawPrint {
+   Name "PawPrint"
+   Pos 306 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PaypalLogo {
+   Name "PaypalLogo"
+   Pos 380 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PencilSimple {
+   Name "PencilSimple"
+   Pos 454 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Percent {
+   Name "Percent"
+   Pos 528 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PersonSimpleHike {
+   Name "PersonSimpleHike"
+   Pos 602 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Plugs {
+   Name "Plugs"
+   Pos 676 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Plus {
+   Name "Plus"
+   Pos 750 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass PlusSquare {
+   Name "PlusSquare"
+   Pos 824 824
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Prohibit {
+   Name "Prohibit"
+   Pos 10 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Question {
+   Name "Question"
+   Pos 84 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Question_Fill {
+   Name "Question_Fill"
+   Pos 158 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Radio {
+   Name "Radio"
+   Pos 232 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Radioactive {
+   Name "Radioactive"
+   Pos 306 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Receipt {
+   Name "Receipt"
+   Pos 380 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Scales {
+   Name "Scales"
+   Pos 454 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Scroll {
+   Name "Scroll"
+   Pos 528 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Scroll_Fill {
+   Name "Scroll_Fill"
+   Pos 602 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SealCheck {
+   Name "SealCheck"
+   Pos 676 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SealCheck_Fill {
+   Name "SealCheck_Fill"
+   Pos 750 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Shield {
+   Name "Shield"
+   Pos 824 898
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ShieldCheck {
+   Name "ShieldCheck"
+   Pos 10 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ShieldCheck_Fill {
+   Name "ShieldCheck_Fill"
+   Pos 84 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ShieldStar {
+   Name "ShieldStar"
+   Pos 158 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass ShoppingCart {
+   Name "ShoppingCart"
+   Pos 232 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SignOut {
+   Name "SignOut"
+   Pos 306 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Siren_Fill {
+   Name "Siren_Fill"
+   Pos 380 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Skull {
+   Name "Skull"
+   Pos 454 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Skull_Fill {
+   Name "Skull_Fill"
+   Pos 528 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SlidersHorizontal {
+   Name "SlidersHorizontal"
+   Pos 602 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Square {
+   Name "Square"
+   Pos 676 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SquaresFour {
+   Name "SquaresFour"
+   Pos 750 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass SquaresFour_Fill {
+   Name "SquaresFour_Fill"
+   Pos 824 972
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Star {
+   Name "Star"
+   Pos 10 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Star_Fill {
+   Name "Star_Fill"
+   Pos 84 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Storefront {
+   Name "Storefront"
+   Pos 158 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Storefront_Fill {
+   Name "Storefront_Fill"
+   Pos 232 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Sword {
+   Name "Sword"
+   Pos 306 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Syringe {
+   Name "Syringe"
+   Pos 380 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Tag {
+   Name "Tag"
+   Pos 454 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Target {
+   Name "Target"
+   Pos 528 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass TerminalWindow {
+   Name "TerminalWindow"
+   Pos 602 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass TextAa {
+   Name "TextAa"
+   Pos 676 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Thermometer {
+   Name "Thermometer"
+   Pos 750 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Ticket {
+   Name "Ticket"
+   Pos 824 1046
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Ticket_Fill {
+   Name "Ticket_Fill"
+   Pos 10 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Tire {
+   Name "Tire"
+   Pos 84 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Trash {
+   Name "Trash"
+   Pos 158 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass TreasureChest_Fill {
+   Name "TreasureChest_Fill"
+   Pos 232 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Tree {
+   Name "Tree"
+   Pos 306 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Truck {
+   Name "Truck"
+   Pos 380 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass TShirt {
+   Name "TShirt"
+   Pos 454 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UploadSimple {
+   Name "UploadSimple"
+   Pos 528 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass User {
+   Name "User"
+   Pos 602 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass User_Fill {
+   Name "User_Fill"
+   Pos 676 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UserMinus {
+   Name "UserMinus"
+   Pos 750 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UserMinus_Fill {
+   Name "UserMinus_Fill"
+   Pos 824 1120
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UserPlus {
+   Name "UserPlus"
+   Pos 10 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Users {
+   Name "Users"
+   Pos 84 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UsersThree {
+   Name "UsersThree"
+   Pos 158 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass UsersThree_Fill {
+   Name "UsersThree_Fill"
+   Pos 232 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Wall {
+   Name "Wall"
+   Pos 306 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Warehouse {
+   Name "Warehouse"
+   Pos 380 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Warning {
+   Name "Warning"
+   Pos 454 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Warning_Fill {
+   Name "Warning_Fill"
+   Pos 528 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass Wrench {
+   Name "Wrench"
+   Pos 602 1194
+   Size 64 64
+   Flags 0
+  }
+  ImageSetDefClass X {
+   Name "X"
+   Pos 676 1194
+   Size 64 64
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}

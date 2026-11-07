@@ -1,0 +1,465 @@
+// The item tooltip: the panel beside the item under the cursor with its name, condition, weight,
+// insulation, a small render and the description. Ported from DayZ Deluxe; a re-skin of vanilla's
+// gui/layouts/inventory_new/day_z_inventory_new_tooltip.layout with rounded corners (Rounded.styles).
+//
+// Built by the modded ItemManager constructor in Scripts/5_Mission/InventoryTools/Tooltip/
+// TooltipLayouts.c, not by SetLayoutName. Every widget name is load-bearing:
+// InspectMenuNew.UpdateItemInfo fills the tree by name and colours/shows "<name>Background" for each
+// chip, and the root must stay BackPanelWidget (UpdateItemInfoWeight branches on it).
+PanelWidgetClass BackPanelWidget {
+ visible 1
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 550 195
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 952
+ style blank
+ {
+  PanelWidgetClass HeaderWidget {
+   clipchildren 0
+   ignorepointer 1
+   color 0 0 0 0.97
+   size 1 40
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 1
+   style round_fill_top
+   {
+    ImageWidgetClass ItemDamageWidgetBackground {
+     visible 1
+     clipchildren 0
+     inheritalpha 0
+     ignorepointer 1
+     color 0 1 0 1
+     position 11 0
+     size 16 16
+     valign center_ref
+     hexactpos 1
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     image0 "set:dayz_gui image:circle"
+     mode additive
+     "src alpha" 1
+     "clamp mode" clamp
+     "stretch mode" stretch_w_h
+     filter 1
+    }
+    TextWidgetClass ItemNameWidget {
+     clipchildren 0
+     ignorepointer 1
+     position 36 3
+     size 258 16
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     priority 1
+     style Normal
+     text " "
+     "text color" 1 1 1 1
+     font "gui/fonts/sdf_MetronBook24"
+     "exact text" 1
+     "exact text size" 16
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass ItemDamageWidget {
+     clipchildren 0
+     ignorepointer 1
+     position 36 3
+     size 258 16
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Normal
+     text "#layout_tooltip_damage"
+     font "gui/fonts/sdf_MetronLight24"
+     "text color" 1 1 1 1
+     "text spacing" 2 0
+     "exact text" 1
+     "exact text size" 16
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+    TextWidgetClass ItemQuantityWidget {
+     clipchildren 0
+     ignorepointer 1
+     position 16 3
+     size 240 16
+     halign right_ref
+     valign bottom_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Normal
+     text "#layout_tooltip_quantity"
+     font "gui/fonts/sdf_MetronLight24"
+     "text color" 1 1 1 1
+     "exact text" 1
+     "exact text size" 16
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+    TextWidgetClass ItemWeightWidget {
+     clipchildren 0
+     ignorepointer 1
+     position 16 3
+     size 240 16
+     halign right_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     style Normal
+     text "#layout_tooltip_weight"
+     font "gui/fonts/sdf_MetronLight24"
+     "text color" 1 1 1 1
+     "exact text" 1
+     "exact text size" 16
+     "size to text h" 0
+     "size to text v" 0
+     "text halign" right
+     "text valign" center
+    }
+   }
+  }
+  GridSpacerWidgetClass Content {
+   clipchildren 1
+   ignorepointer 1
+   color 0 0 0 0.96
+   position 0 40
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style round_fill_bottom
+   Padding 0
+   Margin 0
+   "Size To Content H" 1
+   "Size To Content V" 1
+   Columns 2
+   Rows 1
+   {
+    ItemPreviewWidgetClass ItemFrameWidget {
+     clipchildren 1
+     ignorepointer 1
+     position 0 0
+     size 156 156
+     hexactpos 0
+     vexactpos 0
+     hexactsize 1
+     vexactsize 1
+     fixaspect fixwidth
+     priority 201
+     "force flip enable" 1
+    }
+    GridSpacerWidgetClass GridSpacerWidget1 {
+     ignorepointer 1
+     position 0 0
+     size 1 0
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     priority 202
+     style Colorable
+     Padding 10
+     Margin 0
+     "Size To Content V" 1
+     Columns 1
+     Rows 2
+     {
+      GridSpacerWidgetClass GridSpacerWidget0 {
+       visible 1
+       ignorepointer 1
+       position 0 0
+       size 324 0
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       style Colorable
+       Padding 4
+       Margin 0
+       "Size To Content V" 1
+       Columns 2
+       Rows 2
+       {
+        PanelWidgetClass ItemWetnessWidgetBackground {
+         visible 1
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         halign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemWetnessWidget {
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           style Normal
+           text "#layout_tooltip_wetness"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "text spacing" 2 0
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        PanelWidgetClass ItemTemperatureWidgetBackground {
+         visible 1
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         halign center_ref
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemTemperatureWidget {
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           priority 1
+           style Normal
+           text "#layout_tooltip_temperature"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        PanelWidgetClass ItemLiquidTypeWidgetBackground {
+         visible 1
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemLiquidTypeWidget {
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           priority 1
+           style Normal
+           text "#layout_tooltip_liquid_type"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        PanelWidgetClass ItemFoodStageWidgetBackground {
+         visible 1
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemFoodStageWidget {
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           style Normal
+           text "#layout_tooltip_food_stage"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "text spacing" 2 0
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        PanelWidgetClass ItemCleannessWidgetBackground {
+         visible 1
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemCleannessWidget {
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           style Normal
+           text "#inv_inspect_cleaned"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "text spacing" 2 0
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+        PanelWidgetClass ItemFrozenWidgetBackground {
+         visible 0
+         clipchildren 0
+         inheritalpha 0
+         ignorepointer 1
+         color 1 1 1 0
+         position 0 0
+         size 160 20
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         style round_fill_xs
+         {
+          TextWidgetClass ItemFrozenWidget {
+           visible 1
+           clipchildren 0
+           ignorepointer 1
+           position 0 0
+           size 1 1
+           halign center_ref
+           valign center_ref
+           hexactpos 0
+           vexactpos 0
+           hexactsize 0
+           vexactsize 0
+           style Normal
+           text "FROZEN"
+           font "gui/fonts/sdf_MetronLight24"
+           "text color" 1 1 1 1
+           "text spacing" 2 0
+           "exact text" 0
+           text_proportion 0.75
+           "size to text h" 0
+           "size to text v" 1
+           "text halign" center
+           "text valign" center
+          }
+         }
+        }
+       }
+      }
+      RichTextWidgetClass ItemDescWidget {
+       clipchildren 0
+       ignorepointer 1
+       position 0 0
+       size 324 0
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       style DayZNormal
+       text "Relatively heavy stone, can be used for enclosure fireplace, or broken into smaller parts."
+       "text color" 1 1 1 1
+       font "gui/fonts/sdf_MetronLight24"
+       "exact text" 1
+       "exact text size" 16
+       "size to text h" 0
+       "size to text v" 1
+       wrap 1
+      }
+     }
+    }
+   }
+  }
+ }
+}
