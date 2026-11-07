@@ -1,0 +1,119 @@
+// Rounded top corners only (round_fill_top): an open card reads as one rounded shape with its body,
+// which is rounded on the bottom corners only. The flat colour is Deluxe's header colour
+// (Deluxe's header black at 80%), because a round_* style needs a PanelWidget.
+ImageWidgetClass height_wrapper {
+ clipchildren 0
+ ignorepointer 1
+ size 1 60
+ halign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 1
+ fixaspect inside
+ color 0 0 0 0.8
+ image0 "set:dayz_gui image:inv_header_2"
+ mode blend
+ "src alpha" 1
+ stretch 1
+ {
+  PanelWidgetClass collapse_button {
+   visible 0
+   clipchildren 0
+   position 10 0
+   size 29 29
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 0
+   hexactsize 1
+   vexactsize 1
+   fixaspect fixwidth
+   priority 500
+   style blank
+   {
+    ImageWidgetClass opened {
+     visible 1
+     clipchildren 0
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign right_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 500
+     image0 "set:dayz_gui image:icon_minus"
+     mode blend
+     "src alpha" 1
+    }
+    ImageWidgetClass closed {
+     visible 0
+     clipchildren 0
+     ignorepointer 1
+     color 0 0 0 1
+     position 0 0
+     size 1 1
+     halign right_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 0
+     hexactsize 0
+     vexactsize 0
+     priority 500
+     image0 "set:dayz_gui image:icon_plus"
+     mode blend
+     "src alpha" 1
+    }
+   }
+  }
+  TextWidgetClass TextWidget0 {
+   ignorepointer 1
+   position 0 -4.5
+   size 1 0.7
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style Normal
+   text "#layout_collapsible_header"
+   font "Colorful-UI/GUI/fonts/GB-Regular"
+   "text offset" 10 0
+   "bold text" 0
+   "text sharpness" 0.5
+   "exact text" 1
+   "exact text size" 24
+   "size to text h" 0
+   "size to text v" 0
+   "text valign" center
+  }
+  PanelWidgetClass HeaderRule {
+   ignorepointer 1
+   color 0.8431 0.6 0.0745 1
+   position 0 0
+   size 1 2
+   halign center_ref
+   valign bottom_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   style rover_sim_colorable
+  }
+  PanelWidgetClass Dropzone {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   style blank
+  }
+ }
+}

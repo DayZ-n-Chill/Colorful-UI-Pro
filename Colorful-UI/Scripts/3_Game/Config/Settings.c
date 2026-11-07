@@ -7,6 +7,8 @@ static bool LoadVideo          = false;  // If set to true, a video will be show
 static bool ShowGameOverOverlay = true;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
 static bool AntiNvidia         = false;  // If set to true, the Anti-NVIDIA Inspector captcha will be shown before connecting.
+static bool RoundedInventory   = false;  // If set to true, inventory cards get rounded corners; off, they keep the original game style. Tool buttons are always rounded; quick slots follow RoundedQuickSlots.
+static bool RoundedQuickSlots  = true;   // If set to true, the quick slots use the rounded tile style. If false, they keep the vanilla quick bar look.
 
 // The below tend to break right now. Fix with 4.0.0 Update.
 static bool EnableMenuVideo    = false;  // Background video on main menu (via workspace-rooted CuiBackgroundVideo).

@@ -1,0 +1,59 @@
+FrameWidgetClass SrchRoot {
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 29 29
+ halign right_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 600
+ {
+  ButtonWidgetClass SrchBtn {
+   ignorepointer 0
+   position 0 0
+   size 29 29
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   style Empty
+   "no focus" 1
+   {
+    PanelWidgetClass SrchBg {
+     ignorepointer 1
+     position 0 0
+     size 1 1
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 0
+     color 0 0 0 0
+     style round_fill_sm
+    }
+    ImageWidgetClass SrchIcon {
+     ignorepointer 1
+     position 0 0
+     size 20 20
+     halign center_ref
+     valign center_ref
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     priority 2
+     image0 "set:InventoryIcons image:MagnifyingGlass"
+     color 0.863 0.851 0.812 1
+     mode blend
+     "src alpha" 1
+     stretch 1
+    }
+   }
+  }
+ }
+}

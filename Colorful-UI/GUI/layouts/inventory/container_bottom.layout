@@ -1,0 +1,18 @@
+// Rounded bottom corners only (round_fill_bottom): this band is the bottom of its card, under a
+// header rounded on the top corners only. Otherwise a copy of the layout named below, colours unchanged.
+// Source: vanilla gui/layouts/inventory_new/container.layout.
+WrapSpacerWidgetClass ContainerRoot {
+ ignorepointer 1
+ color 0.3137 0.3137 0.3137 0.651
+ size 1 0
+ halign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 1
+ Padding 0
+ Margin 0
+ "Size To Content H" 1
+ "Size To Content V" 1
+ style round_fill_bottom
+}

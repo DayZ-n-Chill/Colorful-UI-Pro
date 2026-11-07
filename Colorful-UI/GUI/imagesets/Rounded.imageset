@@ -1,0 +1,2390 @@
+ImageSetClass {
+ Name "Rounded"
+ RefSize 403 258
+ Textures {
+  ImageSetTextureClass {
+   mpix 0
+   path "Colorful-UI/GUI/imagesets/Rounded.edds"
+  }
+ }
+ Images {
+  ImageSetDefClass Fill5Grad_LT {
+   Name "Fill5Grad_LT"
+   Pos 10 10
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_T {
+   Name "Fill5Grad_T"
+   Pos 15 10
+   Size 54 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_RT {
+   Name "Fill5Grad_RT"
+   Pos 69 10
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_L {
+   Name "Fill5Grad_L"
+   Pos 10 15
+   Size 5 54
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_C {
+   Name "Fill5Grad_C"
+   Pos 15 15
+   Size 54 54
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_R {
+   Name "Fill5Grad_R"
+   Pos 69 15
+   Size 5 54
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_LB {
+   Name "Fill5Grad_LB"
+   Pos 10 69
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_B {
+   Name "Fill5Grad_B"
+   Pos 15 69
+   Size 54 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Grad_RB {
+   Name "Fill5Grad_RB"
+   Pos 69 69
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_LT {
+   Name "EdgeDash_LT"
+   Pos 10 84
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_T {
+   Name "EdgeDash_T"
+   Pos 15 84
+   Size 373 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_RT {
+   Name "EdgeDash_RT"
+   Pos 388 84
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_L {
+   Name "EdgeDash_L"
+   Pos 10 89
+   Size 5 52
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_C {
+   Name "EdgeDash_C"
+   Pos 15 89
+   Size 373 52
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_R {
+   Name "EdgeDash_R"
+   Pos 388 89
+   Size 5 52
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_LB {
+   Name "EdgeDash_LB"
+   Pos 10 141
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_B {
+   Name "EdgeDash_B"
+   Pos 15 141
+   Size 373 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDash_RB {
+   Name "EdgeDash_RB"
+   Pos 388 141
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_LT {
+   Name "EdgeDashBox_LT"
+   Pos 10 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_T {
+   Name "EdgeDashBox_T"
+   Pos 15 156
+   Size 46 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_RT {
+   Name "EdgeDashBox_RT"
+   Pos 61 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_L {
+   Name "EdgeDashBox_L"
+   Pos 10 161
+   Size 5 46
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_C {
+   Name "EdgeDashBox_C"
+   Pos 15 161
+   Size 46 46
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_R {
+   Name "EdgeDashBox_R"
+   Pos 61 161
+   Size 5 46
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_LB {
+   Name "EdgeDashBox_LB"
+   Pos 10 207
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_B {
+   Name "EdgeDashBox_B"
+   Pos 15 207
+   Size 46 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeDashBox_RB {
+   Name "EdgeDashBox_RB"
+   Pos 61 207
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_LT {
+   Name "BtnAccHi_LT"
+   Pos 76 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_T {
+   Name "BtnAccHi_T"
+   Pos 81 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_RT {
+   Name "BtnAccHi_RT"
+   Pos 82 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_L {
+   Name "BtnAccHi_L"
+   Pos 76 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_C {
+   Name "BtnAccHi_C"
+   Pos 81 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_R {
+   Name "BtnAccHi_R"
+   Pos 82 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_LB {
+   Name "BtnAccHi_LB"
+   Pos 76 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_B {
+   Name "BtnAccHi_B"
+   Pos 81 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccHi_RB {
+   Name "BtnAccHi_RB"
+   Pos 82 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_LT {
+   Name "BtnAccPush_LT"
+   Pos 97 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_T {
+   Name "BtnAccPush_T"
+   Pos 102 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_RT {
+   Name "BtnAccPush_RT"
+   Pos 103 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_L {
+   Name "BtnAccPush_L"
+   Pos 97 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_C {
+   Name "BtnAccPush_C"
+   Pos 102 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_R {
+   Name "BtnAccPush_R"
+   Pos 103 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_LB {
+   Name "BtnAccPush_LB"
+   Pos 97 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_B {
+   Name "BtnAccPush_B"
+   Pos 102 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnAccPush_RB {
+   Name "BtnAccPush_RB"
+   Pos 103 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_LT {
+   Name "BtnDangHi_LT"
+   Pos 118 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_T {
+   Name "BtnDangHi_T"
+   Pos 123 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_RT {
+   Name "BtnDangHi_RT"
+   Pos 124 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_L {
+   Name "BtnDangHi_L"
+   Pos 118 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_C {
+   Name "BtnDangHi_C"
+   Pos 123 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_R {
+   Name "BtnDangHi_R"
+   Pos 124 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_LB {
+   Name "BtnDangHi_LB"
+   Pos 118 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_B {
+   Name "BtnDangHi_B"
+   Pos 123 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangHi_RB {
+   Name "BtnDangHi_RB"
+   Pos 124 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_LT {
+   Name "BtnDangPush_LT"
+   Pos 139 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_T {
+   Name "BtnDangPush_T"
+   Pos 144 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_RT {
+   Name "BtnDangPush_RT"
+   Pos 145 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_L {
+   Name "BtnDangPush_L"
+   Pos 139 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_C {
+   Name "BtnDangPush_C"
+   Pos 144 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_R {
+   Name "BtnDangPush_R"
+   Pos 145 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_LB {
+   Name "BtnDangPush_LB"
+   Pos 139 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_B {
+   Name "BtnDangPush_B"
+   Pos 144 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDangPush_RB {
+   Name "BtnDangPush_RB"
+   Pos 145 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_LT {
+   Name "BtnDis5_LT"
+   Pos 160 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_T {
+   Name "BtnDis5_T"
+   Pos 165 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_RT {
+   Name "BtnDis5_RT"
+   Pos 166 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_L {
+   Name "BtnDis5_L"
+   Pos 160 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_C {
+   Name "BtnDis5_C"
+   Pos 165 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_R {
+   Name "BtnDis5_R"
+   Pos 166 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_LB {
+   Name "BtnDis5_LB"
+   Pos 160 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_B {
+   Name "BtnDis5_B"
+   Pos 165 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis5_RB {
+   Name "BtnDis5_RB"
+   Pos 166 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_LT {
+   Name "BtnPrimHi_LT"
+   Pos 181 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_T {
+   Name "BtnPrimHi_T"
+   Pos 186 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_RT {
+   Name "BtnPrimHi_RT"
+   Pos 187 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_L {
+   Name "BtnPrimHi_L"
+   Pos 181 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_C {
+   Name "BtnPrimHi_C"
+   Pos 186 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_R {
+   Name "BtnPrimHi_R"
+   Pos 187 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_LB {
+   Name "BtnPrimHi_LB"
+   Pos 181 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_B {
+   Name "BtnPrimHi_B"
+   Pos 186 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimHi_RB {
+   Name "BtnPrimHi_RB"
+   Pos 187 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_LT {
+   Name "BtnPrimPush_LT"
+   Pos 202 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_T {
+   Name "BtnPrimPush_T"
+   Pos 207 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_RT {
+   Name "BtnPrimPush_RT"
+   Pos 208 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_L {
+   Name "BtnPrimPush_L"
+   Pos 202 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_C {
+   Name "BtnPrimPush_C"
+   Pos 207 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_R {
+   Name "BtnPrimPush_R"
+   Pos 208 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_LB {
+   Name "BtnPrimPush_LB"
+   Pos 202 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_B {
+   Name "BtnPrimPush_B"
+   Pos 207 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnPrimPush_RB {
+   Name "BtnPrimPush_RB"
+   Pos 208 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_LT {
+   Name "BtnSoftHi5_LT"
+   Pos 223 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_T {
+   Name "BtnSoftHi5_T"
+   Pos 228 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_RT {
+   Name "BtnSoftHi5_RT"
+   Pos 229 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_L {
+   Name "BtnSoftHi5_L"
+   Pos 223 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_C {
+   Name "BtnSoftHi5_C"
+   Pos 228 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_R {
+   Name "BtnSoftHi5_R"
+   Pos 229 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_LB {
+   Name "BtnSoftHi5_LB"
+   Pos 223 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_B {
+   Name "BtnSoftHi5_B"
+   Pos 228 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi5_RB {
+   Name "BtnSoftHi5_RB"
+   Pos 229 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_LT {
+   Name "BtnSoftPush5_LT"
+   Pos 244 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_T {
+   Name "BtnSoftPush5_T"
+   Pos 249 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_RT {
+   Name "BtnSoftPush5_RT"
+   Pos 250 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_L {
+   Name "BtnSoftPush5_L"
+   Pos 244 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_C {
+   Name "BtnSoftPush5_C"
+   Pos 249 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_R {
+   Name "BtnSoftPush5_R"
+   Pos 250 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_LB {
+   Name "BtnSoftPush5_LB"
+   Pos 244 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_B {
+   Name "BtnSoftPush5_B"
+   Pos 249 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush5_RB {
+   Name "BtnSoftPush5_RB"
+   Pos 250 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_LT {
+   Name "Edge2W5_LT"
+   Pos 265 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_T {
+   Name "Edge2W5_T"
+   Pos 270 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_RT {
+   Name "Edge2W5_RT"
+   Pos 271 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_L {
+   Name "Edge2W5_L"
+   Pos 265 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_C {
+   Name "Edge2W5_C"
+   Pos 270 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_R {
+   Name "Edge2W5_R"
+   Pos 271 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_LB {
+   Name "Edge2W5_LB"
+   Pos 265 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_B {
+   Name "Edge2W5_B"
+   Pos 270 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Edge2W5_RB {
+   Name "Edge2W5_RB"
+   Pos 271 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_LT {
+   Name "Edge5_LT"
+   Pos 286 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_T {
+   Name "Edge5_T"
+   Pos 291 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_RT {
+   Name "Edge5_RT"
+   Pos 292 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_L {
+   Name "Edge5_L"
+   Pos 286 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Edge5_C {
+   Name "Edge5_C"
+   Pos 291 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Edge5_R {
+   Name "Edge5_R"
+   Pos 292 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Edge5_LB {
+   Name "Edge5_LB"
+   Pos 286 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_B {
+   Name "Edge5_B"
+   Pos 291 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Edge5_RB {
+   Name "Edge5_RB"
+   Pos 292 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_LT {
+   Name "EdgeCB5_LT"
+   Pos 307 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_T {
+   Name "EdgeCB5_T"
+   Pos 312 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_RT {
+   Name "EdgeCB5_RT"
+   Pos 313 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_L {
+   Name "EdgeCB5_L"
+   Pos 307 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_C {
+   Name "EdgeCB5_C"
+   Pos 312 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_R {
+   Name "EdgeCB5_R"
+   Pos 313 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_LB {
+   Name "EdgeCB5_LB"
+   Pos 307 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_B {
+   Name "EdgeCB5_B"
+   Pos 312 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCB5_RB {
+   Name "EdgeCB5_RB"
+   Pos 313 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_LT {
+   Name "EdgeCBL5_LT"
+   Pos 328 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_T {
+   Name "EdgeCBL5_T"
+   Pos 333 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_RT {
+   Name "EdgeCBL5_RT"
+   Pos 334 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_L {
+   Name "EdgeCBL5_L"
+   Pos 328 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_C {
+   Name "EdgeCBL5_C"
+   Pos 333 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_R {
+   Name "EdgeCBL5_R"
+   Pos 334 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_LB {
+   Name "EdgeCBL5_LB"
+   Pos 328 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_B {
+   Name "EdgeCBL5_B"
+   Pos 333 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBL5_RB {
+   Name "EdgeCBL5_RB"
+   Pos 334 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_LT {
+   Name "EdgeCBR5_LT"
+   Pos 349 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_T {
+   Name "EdgeCBR5_T"
+   Pos 354 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_RT {
+   Name "EdgeCBR5_RT"
+   Pos 355 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_L {
+   Name "EdgeCBR5_L"
+   Pos 349 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_C {
+   Name "EdgeCBR5_C"
+   Pos 354 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_R {
+   Name "EdgeCBR5_R"
+   Pos 355 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_LB {
+   Name "EdgeCBR5_LB"
+   Pos 349 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_B {
+   Name "EdgeCBR5_B"
+   Pos 354 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass EdgeCBR5_RB {
+   Name "EdgeCBR5_RB"
+   Pos 355 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_LT {
+   Name "Fill5_LT"
+   Pos 370 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_T {
+   Name "Fill5_T"
+   Pos 375 156
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_RT {
+   Name "Fill5_RT"
+   Pos 376 156
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_L {
+   Name "Fill5_L"
+   Pos 370 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5_C {
+   Name "Fill5_C"
+   Pos 375 161
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5_R {
+   Name "Fill5_R"
+   Pos 376 161
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5_LB {
+   Name "Fill5_LB"
+   Pos 370 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_B {
+   Name "Fill5_B"
+   Pos 375 162
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5_RB {
+   Name "Fill5_RB"
+   Pos 376 162
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_LT {
+   Name "Fill5Bottom_LT"
+   Pos 10 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_T {
+   Name "Fill5Bottom_T"
+   Pos 15 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_RT {
+   Name "Fill5Bottom_RT"
+   Pos 16 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_L {
+   Name "Fill5Bottom_L"
+   Pos 10 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_C {
+   Name "Fill5Bottom_C"
+   Pos 15 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_R {
+   Name "Fill5Bottom_R"
+   Pos 16 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_LB {
+   Name "Fill5Bottom_LB"
+   Pos 10 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_B {
+   Name "Fill5Bottom_B"
+   Pos 15 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Bottom_RB {
+   Name "Fill5Bottom_RB"
+   Pos 16 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_LT {
+   Name "Fill5Top_LT"
+   Pos 31 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_T {
+   Name "Fill5Top_T"
+   Pos 36 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_RT {
+   Name "Fill5Top_RT"
+   Pos 37 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_L {
+   Name "Fill5Top_L"
+   Pos 31 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_C {
+   Name "Fill5Top_C"
+   Pos 36 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_R {
+   Name "Fill5Top_R"
+   Pos 37 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_LB {
+   Name "Fill5Top_LB"
+   Pos 31 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_B {
+   Name "Fill5Top_B"
+   Pos 36 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass Fill5Top_RB {
+   Name "Fill5Top_RB"
+   Pos 37 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_LT {
+   Name "FillCB5_LT"
+   Pos 52 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_T {
+   Name "FillCB5_T"
+   Pos 57 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_RT {
+   Name "FillCB5_RT"
+   Pos 58 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_L {
+   Name "FillCB5_L"
+   Pos 52 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_C {
+   Name "FillCB5_C"
+   Pos 57 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_R {
+   Name "FillCB5_R"
+   Pos 58 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_LB {
+   Name "FillCB5_LB"
+   Pos 52 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_B {
+   Name "FillCB5_B"
+   Pos 57 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCB5_RB {
+   Name "FillCB5_RB"
+   Pos 58 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_LT {
+   Name "FillCBL5_LT"
+   Pos 73 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_T {
+   Name "FillCBL5_T"
+   Pos 78 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_RT {
+   Name "FillCBL5_RT"
+   Pos 79 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_L {
+   Name "FillCBL5_L"
+   Pos 73 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_C {
+   Name "FillCBL5_C"
+   Pos 78 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_R {
+   Name "FillCBL5_R"
+   Pos 79 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_LB {
+   Name "FillCBL5_LB"
+   Pos 73 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_B {
+   Name "FillCBL5_B"
+   Pos 78 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBL5_RB {
+   Name "FillCBL5_RB"
+   Pos 79 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_LT {
+   Name "FillCBR5_LT"
+   Pos 94 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_T {
+   Name "FillCBR5_T"
+   Pos 99 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_RT {
+   Name "FillCBR5_RT"
+   Pos 100 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_L {
+   Name "FillCBR5_L"
+   Pos 94 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_C {
+   Name "FillCBR5_C"
+   Pos 99 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_R {
+   Name "FillCBR5_R"
+   Pos 100 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_LB {
+   Name "FillCBR5_LB"
+   Pos 94 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_B {
+   Name "FillCBR5_B"
+   Pos 99 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass FillCBR5_RB {
+   Name "FillCBR5_RB"
+   Pos 100 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_LT {
+   Name "RowHi5_LT"
+   Pos 115 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_T {
+   Name "RowHi5_T"
+   Pos 120 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_RT {
+   Name "RowHi5_RT"
+   Pos 121 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_L {
+   Name "RowHi5_L"
+   Pos 115 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_C {
+   Name "RowHi5_C"
+   Pos 120 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_R {
+   Name "RowHi5_R"
+   Pos 121 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_LB {
+   Name "RowHi5_LB"
+   Pos 115 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_B {
+   Name "RowHi5_B"
+   Pos 120 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass RowHi5_RB {
+   Name "RowHi5_RB"
+   Pos 121 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_LT {
+   Name "RowPush5_LT"
+   Pos 136 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_T {
+   Name "RowPush5_T"
+   Pos 141 222
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_RT {
+   Name "RowPush5_RT"
+   Pos 142 222
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_L {
+   Name "RowPush5_L"
+   Pos 136 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_C {
+   Name "RowPush5_C"
+   Pos 141 227
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_R {
+   Name "RowPush5_R"
+   Pos 142 227
+   Size 5 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_LB {
+   Name "RowPush5_LB"
+   Pos 136 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_B {
+   Name "RowPush5_B"
+   Pos 141 228
+   Size 1 5
+   Flags 0
+  }
+  ImageSetDefClass RowPush5_RB {
+   Name "RowPush5_RB"
+   Pos 142 228
+   Size 5 5
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_LT {
+   Name "BtnDis4_LT"
+   Pos 157 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_T {
+   Name "BtnDis4_T"
+   Pos 161 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_RT {
+   Name "BtnDis4_RT"
+   Pos 162 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_L {
+   Name "BtnDis4_L"
+   Pos 157 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_C {
+   Name "BtnDis4_C"
+   Pos 161 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_R {
+   Name "BtnDis4_R"
+   Pos 162 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_LB {
+   Name "BtnDis4_LB"
+   Pos 157 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_B {
+   Name "BtnDis4_B"
+   Pos 161 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis4_RB {
+   Name "BtnDis4_RB"
+   Pos 162 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_LT {
+   Name "BtnSoftHi4_LT"
+   Pos 176 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_T {
+   Name "BtnSoftHi4_T"
+   Pos 180 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_RT {
+   Name "BtnSoftHi4_RT"
+   Pos 181 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_L {
+   Name "BtnSoftHi4_L"
+   Pos 176 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_C {
+   Name "BtnSoftHi4_C"
+   Pos 180 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_R {
+   Name "BtnSoftHi4_R"
+   Pos 181 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_LB {
+   Name "BtnSoftHi4_LB"
+   Pos 176 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_B {
+   Name "BtnSoftHi4_B"
+   Pos 180 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi4_RB {
+   Name "BtnSoftHi4_RB"
+   Pos 181 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_LT {
+   Name "BtnSoftPush4_LT"
+   Pos 195 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_T {
+   Name "BtnSoftPush4_T"
+   Pos 199 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_RT {
+   Name "BtnSoftPush4_RT"
+   Pos 200 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_L {
+   Name "BtnSoftPush4_L"
+   Pos 195 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_C {
+   Name "BtnSoftPush4_C"
+   Pos 199 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_R {
+   Name "BtnSoftPush4_R"
+   Pos 200 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_LB {
+   Name "BtnSoftPush4_LB"
+   Pos 195 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_B {
+   Name "BtnSoftPush4_B"
+   Pos 199 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush4_RB {
+   Name "BtnSoftPush4_RB"
+   Pos 200 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_LT {
+   Name "Edge4_LT"
+   Pos 214 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_T {
+   Name "Edge4_T"
+   Pos 218 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_RT {
+   Name "Edge4_RT"
+   Pos 219 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_L {
+   Name "Edge4_L"
+   Pos 214 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Edge4_C {
+   Name "Edge4_C"
+   Pos 218 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Edge4_R {
+   Name "Edge4_R"
+   Pos 219 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Edge4_LB {
+   Name "Edge4_LB"
+   Pos 214 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_B {
+   Name "Edge4_B"
+   Pos 218 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Edge4_RB {
+   Name "Edge4_RB"
+   Pos 219 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_LT {
+   Name "Fill4_LT"
+   Pos 233 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_T {
+   Name "Fill4_T"
+   Pos 237 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_RT {
+   Name "Fill4_RT"
+   Pos 238 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_L {
+   Name "Fill4_L"
+   Pos 233 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4_C {
+   Name "Fill4_C"
+   Pos 237 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4_R {
+   Name "Fill4_R"
+   Pos 238 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4_LB {
+   Name "Fill4_LB"
+   Pos 233 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_B {
+   Name "Fill4_B"
+   Pos 237 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4_RB {
+   Name "Fill4_RB"
+   Pos 238 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_LT {
+   Name "Fill4Bottom_LT"
+   Pos 252 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_T {
+   Name "Fill4Bottom_T"
+   Pos 256 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_RT {
+   Name "Fill4Bottom_RT"
+   Pos 257 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_L {
+   Name "Fill4Bottom_L"
+   Pos 252 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_C {
+   Name "Fill4Bottom_C"
+   Pos 256 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_R {
+   Name "Fill4Bottom_R"
+   Pos 257 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_LB {
+   Name "Fill4Bottom_LB"
+   Pos 252 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_B {
+   Name "Fill4Bottom_B"
+   Pos 256 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Bottom_RB {
+   Name "Fill4Bottom_RB"
+   Pos 257 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_LT {
+   Name "Fill4Top_LT"
+   Pos 271 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_T {
+   Name "Fill4Top_T"
+   Pos 275 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_RT {
+   Name "Fill4Top_RT"
+   Pos 276 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_L {
+   Name "Fill4Top_L"
+   Pos 271 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_C {
+   Name "Fill4Top_C"
+   Pos 275 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_R {
+   Name "Fill4Top_R"
+   Pos 276 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_LB {
+   Name "Fill4Top_LB"
+   Pos 271 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_B {
+   Name "Fill4Top_B"
+   Pos 275 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass Fill4Top_RB {
+   Name "Fill4Top_RB"
+   Pos 276 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_LT {
+   Name "RowHi4_LT"
+   Pos 290 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_T {
+   Name "RowHi4_T"
+   Pos 294 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_RT {
+   Name "RowHi4_RT"
+   Pos 295 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_L {
+   Name "RowHi4_L"
+   Pos 290 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_C {
+   Name "RowHi4_C"
+   Pos 294 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_R {
+   Name "RowHi4_R"
+   Pos 295 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_LB {
+   Name "RowHi4_LB"
+   Pos 290 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_B {
+   Name "RowHi4_B"
+   Pos 294 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass RowHi4_RB {
+   Name "RowHi4_RB"
+   Pos 295 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_LT {
+   Name "RowPush4_LT"
+   Pos 309 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_T {
+   Name "RowPush4_T"
+   Pos 313 222
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_RT {
+   Name "RowPush4_RT"
+   Pos 314 222
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_L {
+   Name "RowPush4_L"
+   Pos 309 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_C {
+   Name "RowPush4_C"
+   Pos 313 226
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_R {
+   Name "RowPush4_R"
+   Pos 314 226
+   Size 4 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_LB {
+   Name "RowPush4_LB"
+   Pos 309 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_B {
+   Name "RowPush4_B"
+   Pos 313 227
+   Size 1 4
+   Flags 0
+  }
+  ImageSetDefClass RowPush4_RB {
+   Name "RowPush4_RB"
+   Pos 314 227
+   Size 4 4
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_LT {
+   Name "BtnDis3_LT"
+   Pos 328 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_T {
+   Name "BtnDis3_T"
+   Pos 331 222
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_RT {
+   Name "BtnDis3_RT"
+   Pos 332 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_L {
+   Name "BtnDis3_L"
+   Pos 328 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_C {
+   Name "BtnDis3_C"
+   Pos 331 225
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_R {
+   Name "BtnDis3_R"
+   Pos 332 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_LB {
+   Name "BtnDis3_LB"
+   Pos 328 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_B {
+   Name "BtnDis3_B"
+   Pos 331 226
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnDis3_RB {
+   Name "BtnDis3_RB"
+   Pos 332 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_LT {
+   Name "BtnSoftHi3_LT"
+   Pos 345 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_T {
+   Name "BtnSoftHi3_T"
+   Pos 348 222
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_RT {
+   Name "BtnSoftHi3_RT"
+   Pos 349 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_L {
+   Name "BtnSoftHi3_L"
+   Pos 345 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_C {
+   Name "BtnSoftHi3_C"
+   Pos 348 225
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_R {
+   Name "BtnSoftHi3_R"
+   Pos 349 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_LB {
+   Name "BtnSoftHi3_LB"
+   Pos 345 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_B {
+   Name "BtnSoftHi3_B"
+   Pos 348 226
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftHi3_RB {
+   Name "BtnSoftHi3_RB"
+   Pos 349 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_LT {
+   Name "BtnSoftPush3_LT"
+   Pos 362 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_T {
+   Name "BtnSoftPush3_T"
+   Pos 365 222
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_RT {
+   Name "BtnSoftPush3_RT"
+   Pos 366 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_L {
+   Name "BtnSoftPush3_L"
+   Pos 362 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_C {
+   Name "BtnSoftPush3_C"
+   Pos 365 225
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_R {
+   Name "BtnSoftPush3_R"
+   Pos 366 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_LB {
+   Name "BtnSoftPush3_LB"
+   Pos 362 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_B {
+   Name "BtnSoftPush3_B"
+   Pos 365 226
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass BtnSoftPush3_RB {
+   Name "BtnSoftPush3_RB"
+   Pos 366 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_LT {
+   Name "Fill3_LT"
+   Pos 379 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_T {
+   Name "Fill3_T"
+   Pos 382 222
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_RT {
+   Name "Fill3_RT"
+   Pos 383 222
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_L {
+   Name "Fill3_L"
+   Pos 379 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass Fill3_C {
+   Name "Fill3_C"
+   Pos 382 225
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill3_R {
+   Name "Fill3_R"
+   Pos 383 225
+   Size 3 1
+   Flags 0
+  }
+  ImageSetDefClass Fill3_LB {
+   Name "Fill3_LB"
+   Pos 379 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_B {
+   Name "Fill3_B"
+   Pos 382 226
+   Size 1 3
+   Flags 0
+  }
+  ImageSetDefClass Fill3_RB {
+   Name "Fill3_RB"
+   Pos 383 226
+   Size 3 3
+   Flags 0
+  }
+  ImageSetDefClass Fill2_LT {
+   Name "Fill2_LT"
+   Pos 10 243
+   Size 2 2
+   Flags 0
+  }
+  ImageSetDefClass Fill2_T {
+   Name "Fill2_T"
+   Pos 12 243
+   Size 1 2
+   Flags 0
+  }
+  ImageSetDefClass Fill2_RT {
+   Name "Fill2_RT"
+   Pos 13 243
+   Size 2 2
+   Flags 0
+  }
+  ImageSetDefClass Fill2_L {
+   Name "Fill2_L"
+   Pos 10 245
+   Size 2 1
+   Flags 0
+  }
+  ImageSetDefClass Fill2_C {
+   Name "Fill2_C"
+   Pos 12 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass Fill2_R {
+   Name "Fill2_R"
+   Pos 13 245
+   Size 2 1
+   Flags 0
+  }
+  ImageSetDefClass Fill2_LB {
+   Name "Fill2_LB"
+   Pos 10 246
+   Size 2 2
+   Flags 0
+  }
+  ImageSetDefClass Fill2_B {
+   Name "Fill2_B"
+   Pos 12 246
+   Size 1 2
+   Flags 0
+  }
+  ImageSetDefClass Fill2_RB {
+   Name "Fill2_RB"
+   Pos 13 246
+   Size 2 2
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_LT {
+   Name "BtnDis1_LT"
+   Pos 25 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_T {
+   Name "BtnDis1_T"
+   Pos 26 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_RT {
+   Name "BtnDis1_RT"
+   Pos 27 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_L {
+   Name "BtnDis1_L"
+   Pos 25 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_C {
+   Name "BtnDis1_C"
+   Pos 26 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_R {
+   Name "BtnDis1_R"
+   Pos 27 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_LB {
+   Name "BtnDis1_LB"
+   Pos 25 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_B {
+   Name "BtnDis1_B"
+   Pos 26 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass BtnDis1_RB {
+   Name "BtnDis1_RB"
+   Pos 27 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_LT {
+   Name "EdgeSq1_LT"
+   Pos 38 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_T {
+   Name "EdgeSq1_T"
+   Pos 39 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_RT {
+   Name "EdgeSq1_RT"
+   Pos 40 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_L {
+   Name "EdgeSq1_L"
+   Pos 38 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_C {
+   Name "EdgeSq1_C"
+   Pos 39 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_R {
+   Name "EdgeSq1_R"
+   Pos 40 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_LB {
+   Name "EdgeSq1_LB"
+   Pos 38 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_B {
+   Name "EdgeSq1_B"
+   Pos 39 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass EdgeSq1_RB {
+   Name "EdgeSq1_RB"
+   Pos 40 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_LT {
+   Name "RowHi1_LT"
+   Pos 51 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_T {
+   Name "RowHi1_T"
+   Pos 52 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_RT {
+   Name "RowHi1_RT"
+   Pos 53 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_L {
+   Name "RowHi1_L"
+   Pos 51 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_C {
+   Name "RowHi1_C"
+   Pos 52 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_R {
+   Name "RowHi1_R"
+   Pos 53 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_LB {
+   Name "RowHi1_LB"
+   Pos 51 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_B {
+   Name "RowHi1_B"
+   Pos 52 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowHi1_RB {
+   Name "RowHi1_RB"
+   Pos 53 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_LT {
+   Name "RowPush1_LT"
+   Pos 64 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_T {
+   Name "RowPush1_T"
+   Pos 65 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_RT {
+   Name "RowPush1_RT"
+   Pos 66 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_L {
+   Name "RowPush1_L"
+   Pos 64 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_C {
+   Name "RowPush1_C"
+   Pos 65 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_R {
+   Name "RowPush1_R"
+   Pos 66 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_LB {
+   Name "RowPush1_LB"
+   Pos 64 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_B {
+   Name "RowPush1_B"
+   Pos 65 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass RowPush1_RB {
+   Name "RowPush1_RB"
+   Pos 66 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_LT {
+   Name "SqFill1_LT"
+   Pos 77 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_T {
+   Name "SqFill1_T"
+   Pos 78 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_RT {
+   Name "SqFill1_RT"
+   Pos 79 243
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_L {
+   Name "SqFill1_L"
+   Pos 77 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_C {
+   Name "SqFill1_C"
+   Pos 78 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_R {
+   Name "SqFill1_R"
+   Pos 79 244
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_LB {
+   Name "SqFill1_LB"
+   Pos 77 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_B {
+   Name "SqFill1_B"
+   Pos 78 245
+   Size 1 1
+   Flags 0
+  }
+  ImageSetDefClass SqFill1_RB {
+   Name "SqFill1_RB"
+   Pos 79 245
+   Size 1 1
+   Flags 0
+  }
+ }
+ Groups {
+ }
+}

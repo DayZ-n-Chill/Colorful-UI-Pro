@@ -1,0 +1,48 @@
+FrameWidgetClass HoverHint {
+ visible 0
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 400 20
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 900
+ {
+  TextWidgetClass HoverHintKey {
+   ignorepointer 1
+   clipchildren 0
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   color 0.863 0.851 0.812 0.55
+   text ""
+   font "Colorful-UI/GUI/fonts/BarlowCondensed-SemiBold.fnt"
+   "text sharpness" 1.5
+   "exact text" 1
+   "exact text size" 14
+   "text valign" center
+  }
+  TextWidgetClass HoverHintLabel {
+   ignorepointer 1
+   clipchildren 0
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   color 0.863 0.851 0.812 0.55
+   text ""
+   font "Colorful-UI/GUI/fonts/BarlowCondensed-SemiBold.fnt"
+   "text sharpness" 1.5
+   "exact text" 1
+   "exact text size" 14
+   "text valign" center
+  }
+ }
+}
