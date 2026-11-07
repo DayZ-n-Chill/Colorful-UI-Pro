@@ -1,0 +1,194 @@
+FrameWidgetClass SearchCard {
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 526 124
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ {
+  PanelWidgetClass CardBody {
+   clipchildren 0
+   ignorepointer 1
+   color 0.3137 0.3137 0.3137 0.651
+   position 0 0
+   size 1 124
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 1
+   style round_fill_bottom
+   {
+    FrameWidgetClass SearchRoot {
+     clipchildren 0
+     ignorepointer 0
+     position 10 10
+     size 506 40
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     {
+      PanelWidgetClass SearchFill {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       color 0.071 0.071 0.071 0.92
+       style round_fill
+      }
+      PanelWidgetClass SearchEdge {
+       ignorepointer 1
+       position 0 0
+       size 1 1
+       hexactpos 1
+       vexactpos 1
+       hexactsize 0
+       vexactsize 0
+       priority 1
+       color 0.227 0.227 0.227 1
+       style round_edge
+      }
+      ImageWidgetClass SearchIcon {
+       ignorepointer 1
+       position 14 11
+       size 18 18
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 2
+       image0 "set:InventoryIcons image:MagnifyingGlass"
+       color 0.663 0.659 0.627 1
+       mode blend
+       "src alpha" 1
+       stretch 1
+      }
+      TextWidgetClass SearchPlaceholder {
+       ignorepointer 1
+       clipchildren 1
+       position 42 0
+       size 324 40
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 2
+       color 0.616 0.612 0.584 1
+       text ""
+       font "gui/fonts/sdf_MetronLight24"
+       "exact text" 1
+       "exact text size" 15
+       "text halign" left
+       "text valign" center
+      }
+      EditBoxWidgetClass SearchInput {
+       position 42 12
+       size 324 15
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 3
+       color 0.863 0.851 0.812 1
+       style ServerBrowser
+       "no focus" 0
+       text ""
+       font "gui/fonts/sdf_MetronLight24"
+       "exact text" 1
+       "exact text size" 15
+       "text halign" left
+       "text valign" center
+      }
+      TextWidgetClass SearchCount {
+       visible 0
+       ignorepointer 1
+       clipchildren 1
+       position 84 0
+       size 130 40
+       halign right_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 2
+       color 0.663 0.659 0.627 1
+       text ""
+       font "Colorful-UI/GUI/fonts/BarlowCondensed-SemiBold.fnt"
+       "text sharpness" 1.5
+       "exact text" 1
+       "exact text size" 15
+       "text halign" right
+       "text valign" center
+      }
+      ButtonWidgetClass SearchReset {
+       visible 0
+       position 38 9
+       size 40 22
+       halign right_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 4
+       style Empty
+       "no focus" 1
+       {
+        TextWidgetClass SearchResetText {
+         ignorepointer 1
+         position 0 0
+         size 1 1
+         hexactpos 1
+         vexactpos 1
+         hexactsize 0
+         vexactsize 0
+         color 0.8627 0.851 0.8118 0.6
+         text "Reset"
+         font "Colorful-UI/GUI/fonts/BarlowCondensed-SemiBold.fnt"
+         "text sharpness" 1.5
+         "exact text" 1
+         "exact text size" 14
+         "text halign" center
+         "text valign" center
+        }
+       }
+      }
+      ButtonWidgetClass SearchClear {
+       visible 0
+       position 12 9
+       size 22 22
+       halign right_ref
+       hexactpos 1
+       vexactpos 1
+       hexactsize 1
+       vexactsize 1
+       priority 4
+       style Empty
+       "no focus" 1
+       {
+        ImageWidgetClass ClearIcon {
+         ignorepointer 1
+         position 5 5
+         size 12 12
+         hexactpos 1
+         vexactpos 1
+         hexactsize 1
+         vexactsize 1
+         image0 "set:InventoryIcons image:X"
+         color 0.663 0.659 0.627 1
+         mode blend
+         "src alpha" 1
+         stretch 1
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,135 @@
+// One quick-slot cell, ported from DayZ Deluxe's DD_QuickSlot.layout. A re-skin of vanilla's
+// gui/layouts/inventory/inventoryGridBackground.layout that keeps every widget name vanilla's
+// InventoryGrid addresses: GenerateQuickBarBackgroundTiles writes the slot number into Label1 and
+// Label2, AddItem and RemoveItem show and hide LabelTR and LabelCC as the slot fills and empties,
+// and the tile root is what the grid stores as the slot background and Show()s when the player's
+// quickbar size changes. Rename any of those and the bar loses its numbers. Only the look is ours.
+//
+// Geometry: the root stays vanilla's 66 x 66 because QuickbarGrid is authored 66 tall in
+// day_z_hud.layout and in all three inventory widths, and the WrapSpacer lays tiles edge to edge.
+// The root paints nothing; the visible cell is the 60 x 60 QS_Fill centred in it, so neighbouring
+// cells read 6 px apart. The drop target stays the full 66 x 66.
+//
+// The fill is black at 0.67 over live gameplay: the corner number reads 5.4:1 over pure white and
+// 14.9:1 over dark forest. Treat a further alpha drop as a contrast change, not a cosmetic one.
+// inheritalpha 0 on every painted widget keeps that figure from being multiplied by a parent.
+//
+// Numbers: an empty slot shows its number big and centred, a filled slot moves it to the top-right
+// corner (InventoryGrid swaps LabelTR / LabelCC). Priorities 606 / 610 against the preview's 151 are
+// vanilla's and keep the corner number over the item icon. Outline and shadow keep digits legible
+// over bright sky; ignoregloballv keeps the bar from dimming at night.
+PanelWidgetClass QS_Tile {
+ visible 0
+ clipchildren 0
+ inheritalpha 0
+ ignorepointer 0
+ position 0 0
+ size 66 66
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ style blank
+ {
+  PanelWidgetClass QS_Fill {
+   inheritalpha 0
+   ignorepointer 1
+   clipchildren 0
+   color 0 0 0 0.67
+   position 0 0
+   size 60 60
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   style round_fill
+  }
+  // Shown by InventoryGrid.AddItem, hidden again by RemoveItem.
+  PanelWidgetClass LabelTR {
+   visible 0
+   ignorepointer 1
+   clipchildren 0
+   position 6 6
+   size 24 14
+   halign right_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 606
+   style blank
+   {
+    TextWidgetClass Label1 {
+     inheritalpha 0
+     ignorepointer 1
+     ignoregloballv 1
+     color 0.8627 0.851 0.8118 1
+     position 0 0
+     size 24 14
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     priority 610
+     text "9"
+     font "Colorful-UI/GUI/fonts/JetBrainsMono-Medium.fnt"
+     "text sharpness" 1.5
+     "exact text" 1
+     "exact text size" 12
+     "outline size" 2
+     "outline color" 0 0 0 1
+     "shadow size" 3
+     "shadow color" 0 0 0 1
+     "shadow offset" 2 2
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+  // The empty slot's number, one step more muted than the corner number.
+  PanelWidgetClass LabelCC {
+   visible 1
+   ignorepointer 1
+   clipchildren 0
+   position 0 0
+   size 60 60
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 606
+   style blank
+   {
+    TextWidgetClass Label2 {
+     inheritalpha 0
+     ignorepointer 1
+     ignoregloballv 1
+     color 0.7686 0.7569 0.7176 1
+     position 0 0
+     size 60 60
+     hexactpos 1
+     vexactpos 1
+     hexactsize 1
+     vexactsize 1
+     priority 610
+     text "9"
+     font "Colorful-UI/GUI/fonts/JetBrainsMono-Medium.fnt"
+     "text sharpness" 1.5
+     "exact text" 1
+     "exact text size" 16
+     "outline size" 2
+     "outline color" 0 0 0 1
+     "shadow size" 3
+     "shadow color" 0 0 0 1
+     "shadow offset" 2 2
+     "text halign" center
+     "text valign" center
+    }
+   }
+  }
+ }
+}

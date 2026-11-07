@@ -1,0 +1,42 @@
+// Laid over a container's cargo grid while it is being sorted: the card colour at near full
+// strength, so the moves happen out of sight, and a spinning arrow in the middle. SortCover.
+FrameWidgetClass SortCover {
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ priority 1000
+ {
+  PanelWidgetClass SortCoverFill {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   color 0.039 0.039 0.039 0.94
+   style sq_fill
+  }
+  ImageWidgetClass SortCoverSpin {
+   ignorepointer 1
+   position 0 0
+   size 28 28
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   image0 "set:InventoryIcons image:ArrowsClockwise"
+   color 0.8627 0.851 0.8118 1
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+ }
+}

@@ -1,0 +1,56 @@
+FrameWidgetClass TargetMark {
+ visible 0
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ priority 1
+ {
+  PanelWidgetClass TargetEdge {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   priority 1
+   style round_fill_top
+  }
+  PanelWidgetClass TargetEdgeFolded {
+   visible 0
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   priority 1
+   style round_fill
+  }
+  TextWidgetClass TargetTag {
+   ignorepointer 1
+   clipchildren 1
+   position 0 0
+   size 90 24
+   halign left_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   text ""
+   font "Colorful-UI/GUI/fonts/BarlowCondensed-SemiBold.fnt"
+   "text sharpness" 1.5
+   "exact text" 1
+   "exact text size" 15
+   "text halign" left
+   "text valign" center
+  }
+ }
+}

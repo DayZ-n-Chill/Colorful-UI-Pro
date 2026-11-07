@@ -1,3 +1,6 @@
+// Rounded top corners only (round_fill_top): an open card reads as one rounded shape with its body,
+// which is rounded on the bottom corners only. The flat colour is Deluxe's header colour
+// (Deluxe's header black at 80%), because a round_* style needs a PanelWidget.
 GridSpacerWidgetClass closable_header_root {
  clipchildren 1
  ignorepointer 1
@@ -14,24 +17,18 @@ GridSpacerWidgetClass closable_header_root {
  Columns 1
  Rows 2
  {
-  ImageWidgetClass height_wrapper {
+  PanelWidgetClass height_wrapper {
    clipchildren 1
    ignorepointer 1
-   color 0.502 0.502 0.502 0.8
    size 1 65
    halign center_ref
    hexactpos 1
    vexactpos 1
    hexactsize 0
    vexactsize 1
-   scaled 1
    fixaspect inside
-   image0 ""
-   imageTexture "{1EBDEB3BCB073C08}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Background.edds"
-   mode opaque
-   "src alpha" 0
-   "no wrap" 0
-   stretch 1
+   color 0 0 0 0.8
+   style round_fill_top
    {
     TextWidgetClass hands_title {
      ignorepointer 1
@@ -48,26 +45,26 @@ GridSpacerWidgetClass closable_header_root {
      font "Colorful-UI/GUI/fonts/GB-Regular"
      "text offset" 25 0
      "text spacing" 50 0
-     "bold text" 1
+     "bold text" 0
      "text sharpness" 0.5
-     "exact text" 0
+     "exact text" 1
      "exact text size" 24
      "size to text h" 0
      "size to text v" 0
      "text valign" center
     }
-    ImageWidgetClass Border {
+    PanelWidgetClass HeaderRule {
      ignorepointer 1
-     size 1 5
+     color 0.8431 0.6 0.0745 1
+     position 0 0
+     size 1 2
      halign center_ref
      valign bottom_ref
      hexactpos 1
      vexactpos 1
      hexactsize 0
      vexactsize 1
-     imageTexture "{C439858A6B95BCA0}Colorful-UI/GUI/textures/Inventory/Inv.Hdr.Border.edds"
-     "no wrap" 1
-     stretch 1
+     style rover_sim_colorable
     }
     PanelWidgetClass collapse_button {
      visible 0
@@ -221,8 +218,8 @@ GridSpacerWidgetClass closable_header_root {
          image0 "set:dayz_gui image:battery"
          mode additive
          "src alpha" 1
-         "no wrap" 1
-         stretch 1
+         "clamp mode" clamp
+         "stretch mode" stretch_w_h
          {
           ImageWidgetClass electricity_can_work {
            visible 0
@@ -240,8 +237,8 @@ GridSpacerWidgetClass closable_header_root {
            image0 "set:dayz_gui image:battery"
            mode blend
            "src alpha" 1
-           "no wrap" 1
-           stretch 1
+           "clamp mode" clamp
+           "stretch mode" stretch_w_h
           }
          }
         }

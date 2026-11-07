@@ -1,0 +1,54 @@
+// The slot name tooltip: the small dark box naming an empty equipment slot ("Back", "Vest"). Ported
+// from DayZ Deluxe; a re-skin of vanilla's day_z_inventory_new_tooltip_slot.layout with all four
+// corners rounded. Built by the modded ItemManager constructor in TooltipLayouts.c.
+// InspectMenuNew.UpdateSlotInfo writes into "ItemNameWidget", so that name is load-bearing.
+// The name starts 12 px in; TooltipFollow.c sizes the box to the name plus 12 px each side, so the
+// 224.8 width below is only the size before the first fit.
+PanelWidgetClass BackPanelWidget {
+ visible 1
+ clipchildren 0
+ ignorepointer 1
+ position 0 0
+ size 224.8 38.4201
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 952
+ style blank
+ {
+  PanelWidgetClass HeaderWidget {
+   clipchildren 0
+   ignorepointer 1
+   color 0 0 0 0.9412
+   position 0 0
+   size 1 40
+   hexactpos 0
+   vexactpos 0
+   hexactsize 0
+   vexactsize 1
+   style round_fill
+   {
+    TextWidgetClass ItemNameWidget {
+     clipchildren 0
+     ignorepointer 1
+     position 12 3
+     size 1 34.3333
+     hexactpos 1
+     vexactpos 1
+     hexactsize 0
+     vexactsize 1
+     style Normal
+     text " "
+     "text color" 1 1 1 1
+     font "gui/fonts/sdf_MetronBook24"
+     "exact text" 1
+     "exact text size" 16
+     "size to text h" 0
+     "size to text v" 0
+     "text valign" center
+    }
+   }
+  }
+ }
+}

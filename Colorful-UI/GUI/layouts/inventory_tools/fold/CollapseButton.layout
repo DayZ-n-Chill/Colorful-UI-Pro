@@ -1,0 +1,52 @@
+ButtonWidgetClass CollapseBtn {
+ ignorepointer 0
+ position 0 0
+ size 29 29
+ halign right_ref
+ valign center_ref
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ priority 600
+ style Empty
+ "no focus" 1
+ {
+  ImageWidgetClass CollapseOpened {
+   visible 1
+   ignorepointer 1
+   color 0.8627 0.851 0.8118 1
+   position 0 0
+   size 16 16
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   image0 "set:InventoryIcons image:CaretUp"
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+  ImageWidgetClass CollapseClosed {
+   visible 0
+   ignorepointer 1
+   color 0.8627 0.851 0.8118 1
+   position 0 0
+   size 16 16
+   halign center_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 2
+   image0 "set:InventoryIcons image:CaretDown"
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+ }
+}

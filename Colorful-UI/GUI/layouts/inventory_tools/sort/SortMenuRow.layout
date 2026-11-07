@@ -1,0 +1,77 @@
+// One row of the sort menu. The wash is the hover; the caret marks a row that opens the second
+// level; the check marks the order in use. A row with no handler on it is the "SORT BY" heading.
+ButtonWidgetClass SmRow {
+ clipchildren 0
+ position 0 0
+ size 190 26
+ hexactpos 1
+ vexactpos 1
+ hexactsize 1
+ vexactsize 1
+ style Empty
+ {
+  PanelWidgetClass SmWash {
+   visible 0
+   ignorepointer 1
+   position 4 0
+   size 182 26
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   color 0.8627 0.851 0.8118 0.12
+   style round_fill_xs
+  }
+  TextWidgetClass SmText {
+   ignorepointer 1
+   position 14 0
+   size 140 26
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   color 0.8627 0.851 0.8118 1
+   text ""
+   font "Colorful-UI/GUI/fonts/Barlow-Medium.fnt"
+   "text sharpness" 1.5
+   "exact text" 1
+   "exact text size" 15
+   "text halign" left
+   "text valign" center
+  }
+  ImageWidgetClass SmCaret {
+   visible 0
+   ignorepointer 1
+   position 12 0
+   size 12 12
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   image0 "set:InventoryIcons image:CaretRight"
+   color 0.663 0.659 0.627 1
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+  ImageWidgetClass SmCheck {
+   visible 0
+   ignorepointer 1
+   position 12 0
+   size 13 13
+   halign right_ref
+   valign center_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   image0 "set:InventoryIcons image:Check"
+   color 0.8627 0.851 0.8118 1
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+ }
+}

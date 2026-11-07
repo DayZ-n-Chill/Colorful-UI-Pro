@@ -1,0 +1,55 @@
+// A picked item in Transfer mode (ItemTransfer.c): a light brass wash over the cell and a tick in
+// its top-left corner, under the item picture (priority 149; the picture is 150 in a slot, 151 in a grid cell) so the item keeps its
+// own brightness. Square over a grid cell; the rounded wash is for slot cells, which are rounded.
+FrameWidgetClass XferPickBadge {
+ ignorepointer 1
+ position 0 0
+ size 1 1
+ hexactpos 1
+ vexactpos 1
+ hexactsize 0
+ vexactsize 0
+ priority 149
+ {
+  PanelWidgetClass XferPickTint {
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   color 0.7216 0.5725 0.3529 0.22
+   style sq_fill
+  }
+  PanelWidgetClass XferPickTintRound {
+   visible 0
+   ignorepointer 1
+   position 0 0
+   size 1 1
+   hexactpos 1
+   vexactpos 1
+   hexactsize 0
+   vexactsize 0
+   color 0.7216 0.5725 0.3529 0.22
+   style round_fill_xs
+  }
+  ImageWidgetClass XferPickIcon {
+   ignorepointer 1
+   position 2 2
+   size 14 14
+   halign left_ref
+   valign top_ref
+   hexactpos 1
+   vexactpos 1
+   hexactsize 1
+   vexactsize 1
+   priority 1
+   image0 "set:InventoryIcons image:CheckSquare_Fill"
+   color 0.7216 0.5725 0.3529 1
+   mode blend
+   "src alpha" 1
+   stretch 1
+  }
+ }
+}
