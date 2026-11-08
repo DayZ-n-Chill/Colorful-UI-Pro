@@ -24,8 +24,9 @@ modded class PlayerBase
 
 	protected void QuickSlotQueueRepaint()
 	{
-		// Only the rounded cells need it: vanilla's own look (RoundedQuickSlots off) keeps vanilla's timing.
-		if ( !RoundedQuickSlots || !g_Game.IsClient() || GetInstanceType() != DayZPlayerInstanceType.INSTANCETYPE_CLIENT )
+		// Only the rounded cells need it: vanilla's own look (InventoryQuickSlots or RoundedQuickSlots off)
+		// keeps vanilla's timing.
+		if ( !QuickSlotSlots.Styled() || !g_Game.IsClient() || GetInstanceType() != DayZPlayerInstanceType.INSTANCETYPE_CLIENT )
 			return;
 
 		g_Game.GetCallQueue( CALL_CATEGORY_GUI ).Remove( QuickSlotRepaint );

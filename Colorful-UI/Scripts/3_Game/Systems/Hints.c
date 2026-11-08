@@ -20,9 +20,29 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 	protected ButtonWidget m_HideImageBtn;
 	protected TextWidget   m_HideImageBtnLabel;
 
+	// False leaves the panel exactly vanilla: vanilla layout, data, text, images and hover.
+	protected bool IsStyled()
+	{
+		return true;
+	}
+
+	override protected void LoadContentList()
+	{
+		if (IsStyled())
+		{
+			super.LoadContentList();
+			return;
+		}
+
+		string errorMessage;
+		if (!JsonFileLoader<array<ref HintPage>>.LoadFile("scripts/data/hints.json", m_ContentList, errorMessage))
+			ErrorEx(errorMessage);
+	}
+
 	override protected void BuildLayout(Widget parent_widget)
 	{
 		super.BuildLayout(parent_widget);
+		if (!IsStyled()) return;
 		if (!m_RootFrame) return;
 
 		ImageWidget leftIcon  = ImageWidget.Cast(m_RootFrame.FindAnyWidget("LeftImage"));
@@ -61,11 +81,23 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 	// hint entry ships literal text instead of a key.
 	override protected void SetHintHeadline()
 	{
+		if (!IsStyled())
+		{
+			super.SetHintHeadline();
+			return;
+		}
+
 		m_UiHeadlineLabel.SetText(CuiLoc.Get(m_ContentList.Get(m_PageIndex).GetHeadlineText()));
 	}
 
 	override protected void SetHintDescription()
 	{
+		if (!IsStyled())
+		{
+			super.SetHintDescription();
+			return;
+		}
+
 		m_UiDescLabel.SetText(CuiLoc.Get(m_ContentList.Get(m_PageIndex).GetDescriptionText()));
 		m_UiDescLabel.Update();
 		m_SpacerFrame.Update();
@@ -73,6 +105,12 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 	override protected void SetHintImage()
 	{
+		if (!IsStyled())
+		{
+			super.SetHintImage();
+			return;
+		}
+
 		if (!m_UiHintImage)
 			return;
 
@@ -105,6 +143,8 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 	override bool OnClick(Widget w, int x, int y, int button)
 	{
+		if (!IsStyled()) return super.OnClick(w, x, y, button);
+
 		if (button == MouseState.LEFT && m_HideImageBtn && w == m_HideImageBtn)
 		{
 			ToggleHintImage();
@@ -115,6 +155,8 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 	override bool OnMouseEnter(Widget w, int x, int y)
 	{
+		if (!IsStyled()) return super.OnMouseEnter(w, x, y);
+
 		if (w == m_HideImageBtn && m_HideImageBtnLabel)
 		{
 			m_HideImageBtnLabel.SetColor(colorScheme.ButtonHover());
@@ -133,6 +175,8 @@ modded class UiHintPanel extends ScriptedWidgetEventHandler
 
 	override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
 	{
+		if (!IsStyled()) return super.OnMouseLeave(w, enterW, x, y);
+
 		if (w == m_HideImageBtn && m_HideImageBtnLabel)
 		{
 			m_HideImageBtnLabel.SetColor(colorScheme.PrimaryText());
@@ -168,8 +212,19 @@ modded class UiHintPanelLoading extends UiHintPanel
 		}
 	}
 
+	override protected bool IsStyled()
+	{
+		return CustomLoadingScreens;
+	}
+
 	override void Init(DayZGame game)
 	{
+		if (!CustomLoadingScreens)
+		{
+			super.Init(game);
+			return;
+		}
+
 		m_RootPath = "Colorful-UI/GUI/layouts/loading/hints/cui.loadinghints.layout";
 
 		if (!game)
@@ -190,6 +245,12 @@ modded class UiHintPanelLoading extends UiHintPanel
 
 	override protected void BuildLayout(Widget parent_widget)
 	{
+		if (!CustomLoadingScreens)
+		{
+			super.BuildLayout(parent_widget);
+			return;
+		}
+
 		m_RootFrame = m_Game.GetWorkspace().CreateWidgets(m_RootPath, parent_widget);
 
 		#ifndef WORKBENCH

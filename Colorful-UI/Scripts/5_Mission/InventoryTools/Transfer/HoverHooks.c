@@ -10,7 +10,8 @@ modded class Icon
 	override bool MouseEnter(Widget w, int x, int y)
 	{
 		bool v_Result = super.MouseEnter(w, x, y);
-		HoverMove.EnterIcon(this);
+		if (HoverMove.Enabled())
+			HoverMove.EnterIcon(this);
 		return v_Result;
 	}
 
@@ -62,6 +63,8 @@ modded class SlotsIcon
 	override bool MouseEnter(Widget w, int x, int y)
 	{
 		bool v_Result = super.MouseEnter(w, x, y);
+		if (!HoverMove.Enabled())
+			return v_Result;
 		VicinitySlotsContainer v_List = TransferHoverList();
 		if (v_List)
 			HoverMove.EnterSlot(this, v_List);

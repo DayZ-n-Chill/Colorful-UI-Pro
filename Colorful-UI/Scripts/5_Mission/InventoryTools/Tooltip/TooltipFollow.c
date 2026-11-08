@@ -5,7 +5,8 @@
 // Vanilla's flow is kept up to the point the panel would show: PrepareTooltip fills and places it and
 // its timer calls ShowTooltip. ShowTooltip lets vanilla show the panel, takes it straight back down in
 // the same frame (so nothing is drawn), waits the extra pause, then shows it by the cursor and starts
-// the follow. HideTooltip (mouse leave, drag, close) stops it.
+// the follow. HideTooltip (mouse leave, drag, close) stops it. With InventoryTooltips (Settings.c) off,
+// every override is vanilla's alone.
 modded class ItemManager
 {
 	// Vanilla waits TOOLTIP_DELAY (0.25 s) before ShowTooltip; this is added on top, so the tooltip
@@ -23,6 +24,8 @@ modded class ItemManager
 	override void ShowTooltip()
 	{
 		super.ShowTooltip();
+		if (!InventoryTooltips)
+			return;
 		TooltipStop();
 		if (m_TooltipWidget)
 			m_TooltipWidget.Show(false);
@@ -33,13 +36,16 @@ modded class ItemManager
 
 	override void HideTooltip()
 	{
-		TooltipStop();
+		if (InventoryTooltips)
+			TooltipStop();
 		super.HideTooltip();
 	}
 
 	override void ShowTooltipSlot()
 	{
 		super.ShowTooltipSlot();
+		if (!InventoryTooltips)
+			return;
 		TooltipSlotStop();
 		if (m_TooltipSlotWidget)
 			m_TooltipSlotWidget.Show(false);
@@ -48,7 +54,8 @@ modded class ItemManager
 
 	override void HideTooltipSlot()
 	{
-		TooltipSlotStop();
+		if (InventoryTooltips)
+			TooltipSlotStop();
 		super.HideTooltipSlot();
 	}
 

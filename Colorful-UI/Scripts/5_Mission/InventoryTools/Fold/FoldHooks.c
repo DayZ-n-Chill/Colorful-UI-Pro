@@ -152,15 +152,19 @@ modded class ClosableHeader
 	protected ref HeaderHover m_FoldCloseHover;
 
 	// The chevron takes the slot next to the X, so it is in the same place on every card. Its click is
-	// registered against the owning card, which does the folding.
+	// registered against the owning card, which does the folding. The X's hover belongs to the card
+	// look rather than to folding, so it stays when folding is switched off.
 	void FoldAttach(Container v_Owner)
 	{
 		if (m_FoldCollapse || !m_PanelWidget || !v_Owner)
 			return;
 
-		m_FoldCollapse = new CollapseButton(m_PanelWidget);
-		if (m_FoldCollapse.GetButton())
-			WidgetEventHandler.GetInstance().RegisterOnClick(m_FoldCollapse.GetButton(), v_Owner, "FoldOnCollapseClick");
+		if (InventoryFold)
+		{
+			m_FoldCollapse = new CollapseButton(m_PanelWidget);
+			if (m_FoldCollapse.GetButton())
+				WidgetEventHandler.GetInstance().RegisterOnClick(m_FoldCollapse.GetButton(), v_Owner, "FoldOnCollapseClick");
+		}
 
 		if (m_CollapseButton && !m_FoldCloseHover)
 			m_FoldCloseHover = new HeaderHover(m_CollapseButton, m_PanelWidget, FoldStrings.CLOSE_TIP);
@@ -235,7 +239,8 @@ modded class ClosableContainer
 	{
 		if (m_ClosableHeader)
 			m_ClosableHeader.FoldAttach(this);
-		FoldCards.Register(this);
+		if (InventoryFold)
+			FoldCards.Register(this);
 	}
 
 	EntityAI FoldGetEntity()
@@ -301,7 +306,7 @@ modded class ClosableContainer
 	// the player cannot see the inside of.
 	override void Toggle()
 	{
-		if (IsOpened() && m_FoldCollapsed)
+		if (InventoryFold && IsOpened() && m_FoldCollapsed)
 		{
 			FoldSetCollapsed(false);
 			if (m_Parent)
@@ -314,7 +319,7 @@ modded class ClosableContainer
 	override void UpdateRadialIcon()
 	{
 		super.UpdateRadialIcon();
-		if (m_SlotIcon && IsOpened() && m_FoldCollapsed)
+		if (InventoryFold && m_SlotIcon && IsOpened() && m_FoldCollapsed)
 			SetOpenForSlotIcon(false);
 	}
 
@@ -329,9 +334,13 @@ modded class ClosableContainer
 			m_Parent.m_Parent.Refresh();
 	}
 
+	// With folding switched off nothing is read from CollapseStore, so a card folded while it was on
+	// comes back open.
 	override void UpdateInterval()
 	{
 		super.UpdateInterval();
+		if (!InventoryFold)
+			return;
 
 		if (m_Entity != m_FoldFor)
 		{
@@ -370,8 +379,7 @@ modded class AttachmentCategoriesRow
 
 // ---- the bars' toggles -----------------------------------------------------------------------------------
 // Deluxe's header buttons (SortButton), placed by slot from the bar's right edge in Deluxe's order;
-// the full slot map is in TransferHooks.c. EQUIPMENT: show/close all in slot 2, collapse/expand all in
-// slot 3. VICINITY: show/close all in slot 0, collapse/expand all in slot 1.
+// the slot map, which closes up around switched-off features, is BarSlots.
 class FoldBarToggles : Managed
 {
 	protected ref SortButton	m_FoldEye;
@@ -441,21 +449,20 @@ class FoldBarToggles : Managed
 
 modded class PlayerContainer
 {
-	static const int FOLD_EQ_EYE_SLOT = 2;
-	static const int FOLD_EQ_ALL_SLOT = 3;
-
 	protected ref FoldBarToggles m_FoldBar;
 
 	// Vanilla hands the EQUIPMENT bar to the slot group and clears its own header, so the bar is found
 	// through the group (the same way TransferHooks.c finds it).
 	void PlayerContainer(LayoutHolder parent, int sort = -1)
 	{
-		if (!m_PlayerAttachmentsContainer)
+		if (!InventoryFold || !m_PlayerAttachmentsContainer)
 			return;
 		Header v_Header = m_PlayerAttachmentsContainer.GetHeader();
 		if (!v_Header || !v_Header.GetMainWidget())
 			return;
-		m_FoldBar = new FoldBarToggles(v_Header.GetMainWidget(), FoldCards.SIDE_PLAYER, FOLD_EQ_EYE_SLOT, FOLD_EQ_ALL_SLOT);
+		int v_Eye = BarSlots.Equipment(BarSlots.EQ_FOLD_EYE);
+		int v_All = BarSlots.Equipment(BarSlots.EQ_FOLD_ALL);
+		m_FoldBar = new FoldBarToggles(v_Header.GetMainWidget(), FoldCards.SIDE_PLAYER, v_Eye, v_All);
 	}
 
 	override void UpdateInterval()
@@ -469,16 +476,15 @@ modded class PlayerContainer
 
 modded class VicinityContainer
 {
-	static const int FOLD_VIC_EYE_SLOT = 0;
-	static const int FOLD_VIC_ALL_SLOT = 1;
-
 	protected ref FoldBarToggles m_FoldBar;
 
 	void VicinityContainer(LayoutHolder parent, int sort = -1)
 	{
-		if (!GetHeader() || !GetHeader().GetMainWidget())
+		if (!InventoryFold || !GetHeader() || !GetHeader().GetMainWidget())
 			return;
-		m_FoldBar = new FoldBarToggles(GetHeader().GetMainWidget(), FoldCards.SIDE_VICINITY, FOLD_VIC_EYE_SLOT, FOLD_VIC_ALL_SLOT);
+		int v_Eye = BarSlots.Vicinity(BarSlots.VIC_FOLD_EYE);
+		int v_All = BarSlots.Vicinity(BarSlots.VIC_FOLD_ALL);
+		m_FoldBar = new FoldBarToggles(GetHeader().GetMainWidget(), FoldCards.SIDE_VICINITY, v_Eye, v_All);
 	}
 
 	override void UpdateInterval()

@@ -11,7 +11,8 @@ modded class InventoryMenu
 	override Widget Init()
 	{
 		Widget v_Root = super.Init();
-		m_SearchBar = new SearchBar(v_Root);
+		if (InventorySearch)
+			m_SearchBar = new SearchBar(v_Root);
 		return v_Root;
 	}
 
@@ -36,6 +37,12 @@ modded class InventoryMenu
 	// before it and closed after it; the bar then reads the finished count.
 	override void Update(float timeslice)
 	{
+		if (!InventorySearch)
+		{
+			super.Update(timeslice);
+			return;
+		}
+
 		SearchFilter.BeginFrame();
 		super.Update(timeslice);
 		SearchFilter.EndFrame();
