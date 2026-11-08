@@ -325,6 +325,11 @@ modded class VicinitySlotsContainer
 {
 	override void MouseButtonDown(Widget w, int x, int y, int button)
 	{
+		if (!InventoryTransfer)
+		{
+			super.MouseButtonDown(w, x, y, button);
+			return;
+		}
 		if (TransferMode.TakeClick(w, button, TransferMode.ItemOf(w)))
 			return;
 		super.MouseButtonDown(w, x, y, button);
@@ -332,6 +337,11 @@ modded class VicinitySlotsContainer
 
 	override void DoubleClick(Widget w, int x, int y, int button)
 	{
+		if (!InventoryTransfer)
+		{
+			super.DoubleClick(w, x, y, button);
+			return;
+		}
 		if (TransferMode.Eats(button))
 			return;
 		if (button == MouseState.LEFT && !TransferMode.CtrlDown() && QuickMove.OnItemDoubleClick(TransferMode.ItemOf(w)))
@@ -344,6 +354,11 @@ modded class VicinitySlotsContainer
 
 	override void MouseClick(Widget w, int x, int y, int button)
 	{
+		if (!InventoryTransfer)
+		{
+			super.MouseClick(w, x, y, button);
+			return;
+		}
 		if (TransferMode.Eats(button))
 			return;
 		if (button == MouseState.LEFT && TransferMode.CtrlDown() && w)
@@ -371,6 +386,11 @@ modded class Icon
 
 	override void MouseClick(Widget w, int x, int y, int button)
 	{
+		if (!InventoryTransfer)
+		{
+			super.MouseClick(w, x, y, button);
+			return;
+		}
 		// A reserved placeholder is swallowed but not picked.
 		EntityAI v_PickItem = m_Item;
 		if (m_Lock)
@@ -394,6 +414,11 @@ modded class Icon
 	// into the player-side TARGET card when one is set, and to vanilla when none is.
 	override void DoubleClick(Widget w, int x, int y, int button)
 	{
+		if (!InventoryTransfer)
+		{
+			super.DoubleClick(w, x, y, button);
+			return;
+		}
 		if (TransferMode.Eats(button))
 			return;
 		if (button == MouseState.LEFT && !TransferMode.CtrlDown() && QuickMove.OnItemDoubleClick(m_Obj))
@@ -404,6 +429,8 @@ modded class Icon
 	override void UpdateInterval()
 	{
 		super.UpdateInterval();
+		if (!InventoryTransfer)
+			return;
 
 		EntityAI v_E = EntityAI.Cast(GetObject());
 		bool v_Pick = !m_Lock && !IsDragged() && ItemTransfer.IsPicked(v_E);

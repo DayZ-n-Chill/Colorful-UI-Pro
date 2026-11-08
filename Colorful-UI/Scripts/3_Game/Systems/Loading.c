@@ -7,8 +7,11 @@ modded class LoadingScreen
     protected TextWidget m_LoadingMsg, m_Title;
     protected ProgressBarWidget m_ProgressLoading;
 
+    // The vanilla constructor has already built gui/layouts/loading.layout by the time this runs.
     void LoadingScreen(DayZGame game)
     {
+        if (!CustomLoadingScreens) return;
+
         m_DayZGame = game;
         m_WidgetRoot = game.GetLoadingWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loading.layout");
 
@@ -33,11 +36,23 @@ modded class LoadingScreen
 
     override void Show()
     {
+        if (!CustomLoadingScreens)
+        {
+            super.Show();
+            return;
+        }
+
         if (m_Background) m_Background.LoadImageFile(0, GetMainMenuBackground());
     }
 
     override void SetTitle(string title)
     {
+        if (!CustomLoadingScreens)
+        {
+            super.SetTitle(title);
+            return;
+        }
+
         if (!m_Title)
         {
             m_Title = TextWidget.Cast(m_WidgetRoot.FindAnyWidget("Title"));
@@ -51,6 +66,12 @@ modded class LoadingScreen
 
     override void SetStatus(string status)
     {
+        if (!CustomLoadingScreens)
+        {
+            super.SetStatus(status);
+            return;
+        }
+
         if (!m_LoadingMsg) return;
         if (status == "") m_LoadingMsg.SetText(CuiLoc.Get("CUI_game_is_loading"));
         else              m_LoadingMsg.SetText(status);
@@ -65,6 +86,8 @@ modded class LoginTimeBase
 
     override Widget Init()
     {
+        if (!CustomLoadingScreens) return super.Init();
+
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.loggingIn.layout");
 
         m_Background = ImageWidget.Cast(layoutRoot.FindAnyWidget("ImageBackground"));
@@ -95,6 +118,8 @@ modded class LoginTimeBase
 
     override bool OnMouseEnter(Widget w, int x, int y)
     {
+        if (!CustomLoadingScreens) return super.OnMouseEnter(w, x, y);
+
         if (w == m_btnLeave)
         {
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
@@ -106,6 +131,8 @@ modded class LoginTimeBase
 
     override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
     {
+        if (!CustomLoadingScreens) return super.OnMouseLeave(w, enterW, x, y);
+
         if (w == m_btnLeave)
         {
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());
@@ -116,6 +143,12 @@ modded class LoginTimeBase
 
     override void SetTime(int time)
     {
+        if (!CustomLoadingScreens)
+        {
+            super.SetTime(time);
+            return;
+        }
+
         if (!layoutRoot) return;
         if (!m_LoadingMsg)
             m_LoadingMsg = TextWidget.Cast(layoutRoot.FindAnyWidget("LoadingMsg"));
@@ -129,6 +162,12 @@ modded class LoginTimeBase
     // Vanilla writes to m_txtDescription, which cui.loggingIn.layout does not have.
     override void SetStatus(string status)
     {
+        if (!CustomLoadingScreens)
+        {
+            super.SetStatus(status);
+            return;
+        }
+
         if (!m_LoadingMsg) return;
         if (status != "") m_LoadingMsg.SetText(status);
     }
@@ -143,6 +182,8 @@ modded class LoginQueueBase
 
     override Widget Init()
     {
+        if (!CustomLoadingScreens) return super.Init();
+
         layoutRoot = GetGame().GetWorkspace().CreateWidgets("Colorful-UI/GUI/layouts/loading/cui.priorityQueue.layout");
 
         m_HintPanel = new UiHintPanelLoading(layoutRoot.FindAnyWidget("hint_frame0"));
@@ -183,6 +224,12 @@ modded class LoginQueueBase
 
     override void Show()
     {
+        if (!CustomLoadingScreens)
+        {
+            super.Show();
+            return;
+        }
+
         if (!layoutRoot) return;
 
         layoutRoot.Show(true);
@@ -192,6 +239,12 @@ modded class LoginQueueBase
 
     override void SetPosition(int position)
     {
+        if (!CustomLoadingScreens)
+        {
+            super.SetPosition(position);
+            return;
+        }
+
         if (position != m_iPosition)
         {
             m_iPosition = position;
@@ -205,6 +258,8 @@ modded class LoginQueueBase
 
     override bool OnMouseEnter(Widget w, int x, int y)
     {
+        if (!CustomLoadingScreens) return super.OnMouseEnter(w, x, y);
+
         if (w == m_btnLeave)
         {
             if (m_ExitText) m_ExitText.SetColor(colorScheme.ButtonHover());
@@ -222,6 +277,8 @@ modded class LoginQueueBase
 
     override bool OnMouseLeave(Widget w, Widget enterW, int x, int y)
     {
+        if (!CustomLoadingScreens) return super.OnMouseLeave(w, enterW, x, y);
+
         if (w == m_btnLeave)
         {
             if (m_ExitText) m_ExitText.SetColor(colorScheme.PrimaryText());

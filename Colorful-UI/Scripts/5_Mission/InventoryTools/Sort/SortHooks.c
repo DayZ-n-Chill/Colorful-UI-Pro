@@ -21,18 +21,20 @@ modded class ClosableHeader
 	protected ref SortButton m_SortStackBtn;
 
 	// Created once, left of vanilla's RightSpacer (battery icon + X) and the fold chevron
-	// (CollapseButton, slot 0): sort in slot 1, stack in slot 2, as on Deluxe's cards. The clicks are registered against the owning container, the same mechanism vanilla
-	// uses for the reorder arrows, so the container can hand its own entity and cargo index to the runner.
+	// (CollapseButton): sort, then stack, as on Deluxe's cards. With folding switched off the chevron
+	// takes no slot and both close up to the X (BarSlots.Card). The clicks are registered against the
+	// owning container, the same mechanism vanilla uses for the reorder arrows, so the container can
+	// hand its own entity and cargo index to the runner.
 	void SortAttach(Container v_Owner)
 	{
 		if (m_SortBtn || !m_PanelWidget || !v_Owner)
 			return;
 
-		m_SortBtn = new SortButton(m_PanelWidget, "SquaresFour", SortStrings.SORT_TIP, SortButton.SLOT_W);
+		m_SortBtn = new SortButton(m_PanelWidget, "SquaresFour", SortStrings.SORT_TIP, SortButton.SLOT_W * BarSlots.Card(BarSlots.CARD_SORT));
 		if (m_SortBtn.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_SortBtn.GetButton(), v_Owner, "SortOnSortClick");
 
-		m_SortStackBtn = new SortButton(m_PanelWidget, "ArrowsInLineVertical", SortStrings.STACK_TIP, SortButton.SLOT_W * 2);
+		m_SortStackBtn = new SortButton(m_PanelWidget, "ArrowsInLineVertical", SortStrings.STACK_TIP, SortButton.SLOT_W * BarSlots.Card(BarSlots.CARD_STACK));
 		if (m_SortStackBtn.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_SortStackBtn.GetButton(), v_Owner, "SortOnStackClick");
 	}
@@ -74,7 +76,7 @@ modded class ContainerWithCargo
 
 		// m_CargoIndex, not CargoContainer.GetCargoIndex(): vanilla passes immedUpdate into the grid's
 		// cargo index argument, so the grid's copy is not trustworthy.
-		m_SortCanSort = SortRunner.CanOffer(entity, m_CargoIndex);
+		m_SortCanSort = InventorySort && SortRunner.CanOffer(entity, m_CargoIndex);
 		if (m_SortCanSort && m_ClosableHeader)
 			m_ClosableHeader.SortAttach(this);
 	}
@@ -82,6 +84,8 @@ modded class ContainerWithCargo
 	override void UpdateInterval()
 	{
 		super.UpdateInterval();
+		if (!InventorySort)
+			return;
 
 		SortSyncCover(m_CargoIndex);
 		if (m_ClosableHeader)
@@ -131,7 +135,7 @@ modded class ContainerWithCargoAndAttachments
 		super.SetEntity(entity, immedUpdate);
 
 		// This class only ever shows cargo index 0.
-		m_SortCanSort = m_CargoGrid != null && SortRunner.CanOffer(entity, 0);
+		m_SortCanSort = InventorySort && m_CargoGrid != null && SortRunner.CanOffer(entity, 0);
 		if (m_SortCanSort && m_ClosableHeader)
 			m_ClosableHeader.SortAttach(this);
 	}
@@ -141,6 +145,8 @@ modded class ContainerWithCargoAndAttachments
 	override void UpdateInterval()
 	{
 		super.UpdateInterval();
+		if (!InventorySort)
+			return;
 
 		SortSyncCover(0);
 		if (m_ClosableHeader)
@@ -180,12 +186,10 @@ modded class ContainerWithCargoAndAttachments
 
 // "Sort all" on the EQUIPMENT bar. The bar is PlayerContainer's CollapsibleHeader, moved into the
 // right panel's SlotsHeader; height_wrapper is its root (collapsible_header.layout). The bar has no
-// RightSpacer, so the button is placed at a fixed slot from the right edge: slot 0 is the search
-// magnifier (SearchBar), Sort all takes slot 1 (Deluxe's order; see TransferHooks.c).
+// RightSpacer, so the button is placed at a fixed slot from the right edge, after the search
+// magnifier when search is on (BarSlots).
 class SortAllBar : Managed
 {
-	static const int SLOT = 1;
-
 	protected ref SortButton m_Btn;
 
 	void SortAllBar(Widget v_MenuRoot)
@@ -203,7 +207,7 @@ class SortAllBar : Managed
 			return;
 
 		m_Btn = new SortButton(v_EqHeader, "SquaresFour_Fill", SortStrings.SORT_ALL_TIP, 0);
-		m_Btn.PlaceAt(SortButton.EDGE_PAD + SortButton.SLOT_W * SLOT);
+		m_Btn.PlaceAt(SortButton.EDGE_PAD + SortButton.SLOT_W * BarSlots.Equipment(BarSlots.EQ_SORT_ALL));
 		if (m_Btn.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_Btn.GetButton(), this, "HandleClick");
 	}
@@ -230,17 +234,21 @@ modded class InventoryMenu
 	override Widget Init()
 	{
 		Widget v_Root = super.Init();
-		m_SortAllBar = new SortAllBar(v_Root);
+		if (InventorySort)
+			m_SortAllBar = new SortAllBar(v_Root);
 		return v_Root;
 	}
 
 	// Before super, so a sort in flight stops rather than carrying on with nothing on screen.
 	override void OnHide()
 	{
-		SortAll.Abort();
-		StackRunner.Abort(SortStrings.STACK_STOPPED);
-		SortRunner.Abort(SortStrings.STOPPED);
-		SortMenu.Close();
+		if (InventorySort)
+		{
+			SortAll.Abort();
+			StackRunner.Abort(SortStrings.STACK_STOPPED);
+			SortRunner.Abort(SortStrings.STOPPED);
+			SortMenu.Close();
+		}
 
 		super.OnHide();
 	}
@@ -248,6 +256,8 @@ modded class InventoryMenu
 	override void Update(float timeslice)
 	{
 		super.Update(timeslice);
+		if (!InventorySort)
+			return;
 
 		// Stack first: when it finishes it starts the sort, which then ticks in the same frame.
 		StackRunner.Tick();

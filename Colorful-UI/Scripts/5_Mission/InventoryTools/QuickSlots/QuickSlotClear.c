@@ -8,6 +8,9 @@ modded class InventoryQuickbar
 	{
 		super.OnItemRightClick( grid, w, row, col );
 
+		if ( !InventoryQuickSlots )
+			return;
+
 		PlayerBase v_Player = PlayerBase.Cast( g_Game.GetPlayer() );
 		if ( !v_Player )
 			return;

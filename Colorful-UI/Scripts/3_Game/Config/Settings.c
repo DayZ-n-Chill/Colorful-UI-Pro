@@ -7,6 +7,22 @@ static bool LoadVideo          = false;  // If set to true, a video will be show
 static bool ShowGameOverOverlay = true;  // Internal runtime flag toggled by DayZPlayerImplement.ShowDeadScreen() to drive the custom game-over overlay in InGameMenu/Respawn. NOT a user-facing config (it is reset each death).
 
 static bool AntiNvidia         = false;  // If set to true, the Anti-NVIDIA Inspector captcha will be shown before connecting.
+
+// FEATURES ---------------------------------------------------------------
+// Turn any Colorful UI feature off by setting it to false. Off means that part of the game stays vanilla.
+static bool CustomLoadingScreens = true;   // Colorful UI loading screens (backgrounds, logo, tips). False = vanilla loading screens.
+static bool MenuMusic            = true;   // Colorful UI main menu music. False = vanilla menu music.
+static bool CustomDeathScreens   = true;   // Colorful UI game over screen. False = vanilla death screen.
+
+// Inventory tools
+static bool InventorySort        = true;   // Sort, stack and Sort all buttons and the sort menu.
+static bool InventoryTransfer    = true;   // TARGET cards, Ctrl+click quick move, transfer arrows and Grab all.
+static bool InventoryHoverMove   = true;   // Hold Ctrl and sweep over items to move them, and its hint under the stamina bar.
+static bool InventorySearch      = true;   // The search button and search bar with category chips.
+static bool InventoryFold        = true;   // Fold and show all buttons, and fold buttons on each card.
+static bool InventoryTooltips    = true;   // Colorful UI item and slot tooltips. False = vanilla tooltips.
+static bool InventoryQuickSlots  = true;   // Colorful UI quick slot bar and quick assign (hover an item, press a number). False = vanilla quick bar.
+
 static bool RoundedInventory   = false;  // If set to true, inventory cards get rounded corners; off, they keep the original game style. Tool buttons are always rounded; quick slots follow RoundedQuickSlots.
 static bool RoundedQuickSlots  = true;   // If set to true, the quick slots use the rounded tile style. If false, they keep the vanilla quick bar look.
 

@@ -8,7 +8,8 @@ modded class SlotsIcon
 	override bool MouseEnter(Widget w, int x, int y)
 	{
 		bool v_Result = super.MouseEnter(w, x, y);
-		QuickAssign.SetHovered(GetEntity());
+		if (InventoryQuickSlots)
+			QuickAssign.SetHovered(GetEntity());
 		return v_Result;
 	}
 
@@ -26,7 +27,8 @@ modded class Icon
 	override bool MouseEnter(Widget w, int x, int y)
 	{
 		bool v_Result = super.MouseEnter(w, x, y);
-		QuickAssign.SetHovered(EntityAI.Cast(GetObject()));
+		if (InventoryQuickSlots)
+			QuickAssign.SetHovered(EntityAI.Cast(GetObject()));
 		return v_Result;
 	}
 

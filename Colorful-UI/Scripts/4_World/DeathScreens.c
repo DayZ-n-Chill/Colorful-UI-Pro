@@ -5,6 +5,13 @@ modded class DayZPlayerImplement
 {
     override void ShowDeadScreen(bool show, float duration)
     {
+        if (!CustomDeathScreens)
+        {
+            ShowGameOverOverlay = false;
+            super.ShowDeadScreen(show, duration);
+            return;
+        }
+
         #ifndef NO_GUI
         if (show && IsPlayerSelected())
         {

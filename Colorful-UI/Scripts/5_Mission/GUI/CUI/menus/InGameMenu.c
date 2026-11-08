@@ -111,7 +111,7 @@ modded class InGameMenu extends UIScriptedMenu
 
    	override void Update(float timeslice)
 	{
-		if (ShowGameOverOverlay)
+		if (CustomDeathScreens && ShowGameOverOverlay)
 		{
 			m_TimerSlice += timeslice;
 			if (m_TimerSlice >= 0.01)

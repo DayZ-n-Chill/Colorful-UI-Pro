@@ -5,6 +5,12 @@ modded class DynamicMusicPlayerRegistry
 {
     protected override void RegisterTracksMenu()
 	{
+		if (!MenuMusic)
+		{
+			super.RegisterTracksMenu();
+			return;
+		}
+
 		m_TracksMenu = new array<ref DynamicMusicTrackData>();
 
 		RegisterTrackMenu("CUI_Music_Menu_SoundSet", true);

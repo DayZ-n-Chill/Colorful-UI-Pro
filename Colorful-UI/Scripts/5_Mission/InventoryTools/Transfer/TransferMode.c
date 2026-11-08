@@ -35,7 +35,9 @@ class TransferMode
 	{
 		if (s_TransferOn && !v_On)
 			ItemTransfer.ClearPicks();
-		s_TransferOn = v_On;
+		// Never on while transfer is switched off (Settings.c), so every click override below hands
+		// straight to super.
+		s_TransferOn = v_On && InventoryTransfer;
 	}
 
 	static bool CtrlDown()
@@ -249,6 +251,8 @@ modded class SlotsIcon
 	override void UpdateInterval()
 	{
 		super.UpdateInterval();
+		if (!InventoryTransfer)
+			return;
 
 		bool v_Pick = !m_IsDragged && ItemTransfer.IsPicked(GetEntity());
 		if (v_Pick != m_TransferPickShown)

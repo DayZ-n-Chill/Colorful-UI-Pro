@@ -11,11 +11,17 @@
 // Every override calls super first and then replaces what vanilla built, so another mod's chained
 // override still runs. The tiles are created once per grid, so building them twice costs nothing.
 //
-// With RoundedQuickSlots (Settings.c) off, every override returns right after super, so vanilla's own
-// inventoryGridBackground/inventoryGridItem layouts and colours stay and nothing here looks for the
-// Label1/LabelTR names that only our tiles have.
+// With InventoryQuickSlots or RoundedQuickSlots (Settings.c) off, every override returns right after
+// super, so vanilla's own inventoryGridBackground/inventoryGridItem layouts and colours stay and
+// nothing here looks for the Label1/LabelTR names that only our tiles have.
 class QuickSlotSlots
 {
+	// The rounded tiles are drawn only while the quick slot feature is on at all.
+	static bool Styled()
+	{
+		return InventoryQuickSlots && RoundedQuickSlots;
+	}
+
 	static const string TileLayout = "Colorful-UI/GUI/layouts/inventory_tools/quickslots/QuickSlotTile.layout";
 	static const string ItemLayout = "Colorful-UI/GUI/layouts/inventory_tools/quickslots/QuickSlotItem.layout";
 
@@ -51,7 +57,7 @@ modded class InventoryGrid
 	{
 		super.GenerateQuickBarBackgroundTiles( count );
 
-		if ( !RoundedQuickSlots )
+		if ( !QuickSlotSlots.Styled() )
 			return;
 
 		int			v_I			= 0;
@@ -81,7 +87,7 @@ modded class InventoryGrid
 	{
 		super.AddItem( item, data, rotation );
 
-		if ( !RoundedQuickSlots )
+		if ( !QuickSlotSlots.Styled() )
 			return;
 
 		int		v_Index		= Math.Round( data[ 0 ] );
@@ -134,7 +140,7 @@ modded class InventoryGrid
 	{
 		super.RefreshQuickbarItemVariables( item, data );
 
-		if ( !RoundedQuickSlots )
+		if ( !QuickSlotSlots.Styled() )
 			return;
 
 		int		v_Index	= Math.Round( data[ 0 ] );
@@ -155,7 +161,7 @@ modded class InventoryGrid
 	{
 		super.ResetItemWidget( item_w, width, height );
 
-		if ( RoundedQuickSlots && item_w )
+		if ( QuickSlotSlots.Styled() && item_w )
 			item_w.SetColor( QuickSlotSlots.FILL_RESTING );
 	}
 }
