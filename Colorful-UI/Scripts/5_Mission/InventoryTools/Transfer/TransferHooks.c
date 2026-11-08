@@ -234,7 +234,7 @@ modded class ClosableContainer
 	{
 		super.UpdateInterval();
 
-		if (m_ClosableHeader)
+		if (InventoryTransfer && m_ClosableHeader)
 			m_ClosableHeader.TransferUpdateTarget(QuickMove.IsTarget(this), QuickMove.IsFlashing(this));
 	}
 }
@@ -249,7 +249,7 @@ modded class ContainerWithCargo
 
 		// m_CargoIndex, not the grid's own copy: vanilla passes immedUpdate into the grid's cargo index
 		// argument (containerwithcargo.c:196), so that one is not trustworthy.
-		m_TransferCanTarget = TransferCanOffer(entity, m_CargoIndex);
+		m_TransferCanTarget = InventoryTransfer && TransferCanOffer(entity, m_CargoIndex);
 		if (m_TransferCanTarget && m_ClosableHeader)
 			m_ClosableHeader.TransferAttachTarget(this);
 	}
@@ -271,7 +271,7 @@ modded class ContainerWithCargoAndAttachments
 		super.SetEntity(entity, immedUpdate);
 
 		// This class only ever shows cargo index 0.
-		m_TransferCanTarget = m_CargoGrid != null && TransferCanOffer(entity, 0);
+		m_TransferCanTarget = InventoryTransfer && m_CargoGrid != null && TransferCanOffer(entity, 0);
 		if (m_TransferCanTarget && m_ClosableHeader)
 			m_ClosableHeader.TransferAttachTarget(this);
 	}
@@ -286,14 +286,10 @@ modded class ContainerWithCargoAndAttachments
 
 // ---- the bars' buttons -------------------------------------------------------------------------------
 // Places count from the bar's right edge (TransferButton.SLOT_W apart), in Deluxe's order with its
-// pin and lock slots (not ported) closed up. Vanilla's own +/- is hidden on both bars in Colorful UI
-// (collapsible_header.layout), so it takes no place.
-// EQUIPMENT, right to left: 0 Search, 1 Sort all, 2 Show/close all, 3 Collapse/expand all, 4 Transfer.
-// VICINITY, right to left: 0 Show/close all, 1 Collapse/expand all, 2 Grab all, 3 Transfer.
+// pin and lock slots (not ported) closed up, and with any switched-off feature's buttons closed up
+// too (BarSlots).
 modded class PlayerContainer
 {
-	static const int XFER_EQ_TRANSFER_SLOT = 4;
-
 	// Transfer to vicinity, lit while Transfer mode is on.
 	protected ref TransferButton m_TransferEqTransfer;
 
@@ -302,12 +298,12 @@ modded class PlayerContainer
 	// found through the group.
 	void PlayerContainer(LayoutHolder parent, int sort = -1)
 	{
-		if (!m_PlayerAttachmentsContainer)
+		if (!InventoryTransfer || !m_PlayerAttachmentsContainer)
 			return;
 		Header v_Header = m_PlayerAttachmentsContainer.GetHeader();
 		if (!v_Header || !v_Header.GetMainWidget())
 			return;
-		m_TransferEqTransfer = new TransferButton(v_Header.GetMainWidget(), "ArrowLeft", TransferStrings.TRANSFER_TO_VICINITY_TIP, XFER_EQ_TRANSFER_SLOT);
+		m_TransferEqTransfer = new TransferButton(v_Header.GetMainWidget(), "ArrowLeft", TransferStrings.TRANSFER_TO_VICINITY_TIP, BarSlots.Equipment(BarSlots.EQ_TRANSFER));
 		if (m_TransferEqTransfer.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_TransferEqTransfer.GetButton(), this, "TransferOnEqTransferClick");
 	}
@@ -331,9 +327,6 @@ modded class PlayerContainer
 
 modded class VicinityContainer
 {
-	static const int XFER_VIC_GRAB_SLOT = 2;
-	static const int XFER_VIC_TRANSFER_SLOT = 3;
-
 	// Grab all: every loose item on the ground into the player's gear (GrabAll).
 	protected ref TransferButton m_TransferVicGrab;
 	// Transfer to gear, lit while Transfer mode is on.
@@ -341,15 +334,15 @@ modded class VicinityContainer
 
 	void VicinityContainer(LayoutHolder parent, int sort = -1)
 	{
-		if (!GetHeader() || !GetHeader().GetMainWidget())
+		if (!InventoryTransfer || !GetHeader() || !GetHeader().GetMainWidget())
 			return;
 		Widget v_Bar = GetHeader().GetMainWidget();
 
-		m_TransferVicGrab = new TransferButton(v_Bar, "HandGrabbing", TransferStrings.GRAB_ALL_TIP, XFER_VIC_GRAB_SLOT);
+		m_TransferVicGrab = new TransferButton(v_Bar, "HandGrabbing", TransferStrings.GRAB_ALL_TIP, BarSlots.Vicinity(BarSlots.VIC_GRAB));
 		if (m_TransferVicGrab.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_TransferVicGrab.GetButton(), this, "TransferOnVicGrabClick");
 
-		m_TransferVicTransfer = new TransferButton(v_Bar, "ArrowRight", TransferStrings.TRANSFER_TO_GEAR_TIP, XFER_VIC_TRANSFER_SLOT);
+		m_TransferVicTransfer = new TransferButton(v_Bar, "ArrowRight", TransferStrings.TRANSFER_TO_GEAR_TIP, BarSlots.Vicinity(BarSlots.VIC_TRANSFER));
 		if (m_TransferVicTransfer.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_TransferVicTransfer.GetButton(), this, "TransferOnVicTransferClick");
 	}
@@ -381,13 +374,16 @@ modded class VicinityContainer
 // ---- the menu's lifecycle ------------------------------------------------------------------------------
 modded class InventoryMenu
 {
-	// The "CTRL + HOVER  Quick move" hint, built the first time the menu shows, on its root.
+	// The "CTRL + HOVER  Quick move" hint, built the first time the menu shows, on its root, and only
+	// while hover move is on.
 	protected ref HoverHint m_TransferHoverHint;
 
 	override void OnShow()
 	{
 		super.OnShow();
 
+		if (!HoverMove.Enabled())
+			return;
 		if (!m_TransferHoverHint && layoutRoot)
 			m_TransferHoverHint = new HoverHint(layoutRoot);
 		if (m_TransferHoverHint)
@@ -398,10 +394,13 @@ modded class InventoryMenu
 	// mode and its picks are gone before vanilla tears the screen down.
 	override void OnHide()
 	{
-		GrabAll.Abort();
-		ItemTransfer.Abort();
-		TransferMode.Off();
-		HoverMove.Reset();
+		if (InventoryTransfer)
+		{
+			GrabAll.Abort();
+			ItemTransfer.Abort();
+			TransferMode.Off();
+			HoverMove.Reset();
+		}
 
 		super.OnHide();
 	}
@@ -409,12 +408,14 @@ modded class InventoryMenu
 	override void Update(float timeslice)
 	{
 		super.Update(timeslice);
+		if (!InventoryTransfer)
+			return;
 
 		GrabAll.Tick();
 		ItemTransfer.Tick();
 		// Targets whose card went away clear themselves.
 		QuickMove.Tick();
-		// Ctrl held on an item: the spinner, then the move.
+		// Ctrl held on an item: the spinner, then the move. Nothing is queued while hover move is off.
 		HoverMove.Tick(timeslice);
 		// The hint's look follows Ctrl and the search box.
 		if (m_TransferHoverHint)

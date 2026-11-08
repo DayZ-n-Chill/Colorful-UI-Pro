@@ -17,6 +17,12 @@ class HoverMove
 
 	protected static ref array<ref HoverMoveEntry> s_Queue = new array<ref HoverMoveEntry>;
 
+	// Hover move rides on the transfer code path, so it is off whenever transfer is (Settings.c).
+	static bool Enabled()
+	{
+		return InventoryTransfer && InventoryHoverMove;
+	}
+
 	// A cargo or hands cell was entered (HoverHooks.c).
 	static void EnterIcon(Icon v_Icon)
 	{

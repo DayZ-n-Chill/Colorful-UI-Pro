@@ -82,7 +82,7 @@ modded class RespawnDialogue extends UIScriptedMenu
 
     override void Update(float timeslice)
     {
-        if (ShowGameOverOverlay)
+        if (CustomDeathScreens && ShowGameOverOverlay)
         {
             ShowGameOverScreen();
         }

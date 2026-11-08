@@ -44,9 +44,6 @@ class SearchBar : ScriptedWidgetEventHandler
 	static const float RESET_H = 22;
 	// Breathing room between the top block and the clothing scroller below it.
 	static const float SCROLL_GAP = 4;
-	// Slot 0 on the EQUIPMENT bar: the rightmost button position (vanilla's +/- is hidden on that bar).
-	static const int EQ_SLOT = 0;
-
 	protected ref CategoryRow m_Cats;
 	protected ref TileTip m_Tooltip;
 
@@ -319,7 +316,7 @@ class SearchBar : ScriptedWidgetEventHandler
 		int v_Idle = ARGB(255, 220, 217, 207);
 
 		m_EqSearch = new SearchHeaderButton(v_Header, SEARCH_ICON, SearchStrings.OPEN_SEARCH_TIP, v_Idle);
-		m_EqSearch.PlaceAt(SearchHeaderButton.EDGE_PAD + SearchHeaderButton.SLOT_W * EQ_SLOT);
+		m_EqSearch.PlaceAt(SearchHeaderButton.EDGE_PAD + SearchHeaderButton.SLOT_W * BarSlots.Equipment(BarSlots.EQ_SEARCH));
 		if (m_EqSearch.GetButton())
 			WidgetEventHandler.GetInstance().RegisterOnClick(m_EqSearch.GetButton(), this, "SearchOnEqSearchClick");
 	}

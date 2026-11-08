@@ -65,8 +65,9 @@ modded class PlayerBase
 			return;
 
 		// super is skipped only when the press was consumed by an assignment, so pressing 3 over a
-		// bandage puts it on 3 instead of also using whatever was on 3.
-		if (QuickAssign.TryAssign(this, slotClicked))
+		// bandage puts it on 3 instead of also using whatever was on 3. No assigning while the quick
+		// slot feature is off (Settings.c).
+		if (InventoryQuickSlots && QuickAssign.TryAssign(this, slotClicked))
 			return;
 
 		super.OnQuickBarSingleUse(slotClicked);

@@ -38,7 +38,8 @@ modded class Icon
 	{
 		super.UpdateInterval();
 
-		SearchRefresh();
+		if (InventorySearch)
+			SearchRefresh();
 	}
 
 	protected void SearchRefresh()
@@ -97,7 +98,8 @@ modded class SlotsIcon
 	{
 		super.UpdateInterval();
 
-		SearchRefresh();
+		if (InventorySearch)
+			SearchRefresh();
 	}
 
 	protected void SearchRefresh()
