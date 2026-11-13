@@ -2,7 +2,7 @@
 // words, so "ammo" or "food" finds things whose names never say so. Built once per class name and
 // cached, because every visible cell asks again whenever the filter changes.
 //
-// Also the one place an item's tile category (SearchFilter.CAT_*) is decided, cached the same way.
+// Also the one place an item's tile category (CUISearchFilter.CAT_*) is decided, cached the same way.
 class SearchItemWords
 {
 	protected static ref map<string, string> s_Hay = new map<string, string>;
@@ -25,9 +25,9 @@ class SearchItemWords
 	// categories. Each part passes on its own when it is empty.
 	static bool Matches(EntityAI v_E)
 	{
-		if (!SearchFilter.MatchesCat(CategoryOf(v_E)))
+		if (!CUISearchFilter.MatchesCat(CategoryOf(v_E)))
 			return false;
-		return SearchFilter.MatchesHay(HayOf(v_E));
+		return CUISearchFilter.MatchesHay(HayOf(v_E));
 	}
 
 	static int CategoryOf(EntityAI v_E)
@@ -47,20 +47,20 @@ class SearchItemWords
 	protected static int Classify(EntityAI v_E)
 	{
 		if (Ammunition_Base.Cast(v_E))
-			return SearchFilter.CAT_AMMO;
+			return CUISearchFilter.CAT_AMMO;
 		if (Magazine.Cast(v_E))
-			return SearchFilter.CAT_MAGAZINES;
+			return CUISearchFilter.CAT_MAGAZINES;
 		if (Weapon_Base.Cast(v_E))
-			return SearchFilter.CAT_WEAPONS;
+			return CUISearchFilter.CAT_WEAPONS;
 		if (IsMedical(v_E))
-			return SearchFilter.CAT_MEDICAL;
+			return CUISearchFilter.CAT_MEDICAL;
 		if (Edible_Base.Cast(v_E))
-			return SearchFilter.CAT_FOOD;
+			return CUISearchFilter.CAT_FOOD;
 		if (Clothing.Cast(v_E))
-			return SearchFilter.CAT_CLOTHING;
+			return CUISearchFilter.CAT_CLOTHING;
 		if (ToolBase.Cast(v_E))
-			return SearchFilter.CAT_TOOLS;
-		return SearchFilter.CAT_SUPPLIES;
+			return CUISearchFilter.CAT_TOOLS;
+		return CUISearchFilter.CAT_SUPPLIES;
 	}
 
 	// Vanilla has no medical base class, so the vanilla medical classes are listed one by one.

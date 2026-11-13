@@ -1,8 +1,8 @@
 // The category tiles under the search box: Weapons, Ammo, Magazines, Medical, Food, Clothing,
 // Tools, Supplies. One line of eight square icon-only buttons that together fill the card's inner
-// width. Each toggles one SearchFilter.CAT_* bit; several can be on at once, and they stack with
+// width. Each toggles one CUISearchFilter.CAT_* bit; several can be on at once, and they stack with
 // the typed text (SearchItemWords.Matches). The cells pick the change up through
-// SearchFilter.Gen(), exactly as they do for typing.
+// CUISearchFilter.Gen(), exactly as they do for typing.
 //
 // The name is not on the tile; hovering shows it in the shared tip (TileTip).
 //
@@ -45,14 +45,14 @@ class CategoryRow : ScriptedWidgetEventHandler
 
 		// Deluxe's InventoryIcons sprites, written out in full so each name can be checked against
 		// InventoryIcons.imageset.
-		AddTile(SearchFilter.CAT_WEAPONS, SearchStrings.CAT_WEAPONS, "set:InventoryIcons image:Crosshair");
-		AddTile(SearchFilter.CAT_AMMO, SearchStrings.CAT_AMMO, "set:InventoryIcons image:Coins");
-		AddTile(SearchFilter.CAT_MAGAZINES, SearchStrings.CAT_MAGAZINES, "set:InventoryIcons image:BatteryFull");
-		AddTile(SearchFilter.CAT_MEDICAL, SearchStrings.CAT_MEDICAL, "set:InventoryIcons image:FirstAid");
-		AddTile(SearchFilter.CAT_FOOD, SearchStrings.CAT_FOOD, "set:InventoryIcons image:Hamburger");
-		AddTile(SearchFilter.CAT_CLOTHING, SearchStrings.CAT_CLOTHING, "set:InventoryIcons image:TShirt");
-		AddTile(SearchFilter.CAT_TOOLS, SearchStrings.CAT_TOOLS, "set:InventoryIcons image:Wrench");
-		AddTile(SearchFilter.CAT_SUPPLIES, SearchStrings.CAT_SUPPLIES, "set:InventoryIcons image:Package");
+		AddTile(CUISearchFilter.CAT_WEAPONS, SearchStrings.CAT_WEAPONS, "set:InventoryIcons image:Crosshair");
+		AddTile(CUISearchFilter.CAT_AMMO, SearchStrings.CAT_AMMO, "set:InventoryIcons image:Coins");
+		AddTile(CUISearchFilter.CAT_MAGAZINES, SearchStrings.CAT_MAGAZINES, "set:InventoryIcons image:BatteryFull");
+		AddTile(CUISearchFilter.CAT_MEDICAL, SearchStrings.CAT_MEDICAL, "set:InventoryIcons image:FirstAid");
+		AddTile(CUISearchFilter.CAT_FOOD, SearchStrings.CAT_FOOD, "set:InventoryIcons image:Hamburger");
+		AddTile(CUISearchFilter.CAT_CLOTHING, SearchStrings.CAT_CLOTHING, "set:InventoryIcons image:TShirt");
+		AddTile(CUISearchFilter.CAT_TOOLS, SearchStrings.CAT_TOOLS, "set:InventoryIcons image:Wrench");
+		AddTile(CUISearchFilter.CAT_SUPPLIES, SearchStrings.CAT_SUPPLIES, "set:InventoryIcons image:Package");
 
 		Paint();
 	}
@@ -122,12 +122,12 @@ class CategoryRow : ScriptedWidgetEventHandler
 	}
 
 	// Every frame while the inventory is open. Tiles can change from outside the row (Reset) only
-	// through SearchFilter, so this catches that too.
+	// through CUISearchFilter, so this catches that too.
 	void Update()
 	{
 		if (!m_Root)
 			return;
-		if (SearchFilter.Cats() != m_ShownMask || m_Hover != m_ShownHover)
+		if (CUISearchFilter.Cats() != m_ShownMask || m_Hover != m_ShownHover)
 			Paint();
 	}
 
@@ -141,7 +141,7 @@ class CategoryRow : ScriptedWidgetEventHandler
 	// colour at ~70 % with a full icon.
 	protected void Paint()
 	{
-		int v_Mask = SearchFilter.Cats();
+		int v_Mask = CUISearchFilter.Cats();
 		m_ShownMask = v_Mask;
 		m_ShownHover = m_Hover;
 
@@ -191,7 +191,7 @@ class CategoryRow : ScriptedWidgetEventHandler
 		int v_I = IndexOf(w);
 		if (v_I < 0)
 			return false;
-		SearchFilter.ToggleCat(m_Bits[v_I]);
+		CUISearchFilter.ToggleCat(m_Bits[v_I]);
 		Paint();
 		return true;
 	}

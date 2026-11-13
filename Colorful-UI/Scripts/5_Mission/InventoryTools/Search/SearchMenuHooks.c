@@ -43,9 +43,9 @@ modded class InventoryMenu
 			return;
 		}
 
-		SearchFilter.BeginFrame();
+		CUISearchFilter.BeginFrame();
 		super.Update(timeslice);
-		SearchFilter.EndFrame();
+		CUISearchFilter.EndFrame();
 
 		if (m_SearchBar)
 			m_SearchBar.Update();
