@@ -61,7 +61,7 @@ modded class PlayerBase
 	{
 		// Digits typed into the inventory search box arrive here too; they must neither use nor
 		// assign a slot (Deluxe QuickBarGuard.c).
-		if (SearchFilter.IsTyping())
+		if (CUISearchFilter.IsTyping())
 			return;
 
 		// super is skipped only when the press was consumed by an assignment, so pressing 3 over a

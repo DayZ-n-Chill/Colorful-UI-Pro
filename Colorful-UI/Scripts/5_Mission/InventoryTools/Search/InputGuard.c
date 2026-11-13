@@ -22,7 +22,7 @@ class InputGuard
 			v_Mission.AddActiveInputExcludes({"menu"});
 
 		SetLocked(true);
-		SearchFilter.SetTyping(true);
+		CUISearchFilter.SetTyping(true);
 	}
 
 	static void Release()
@@ -37,7 +37,7 @@ class InputGuard
 		if (v_Mission)
 			v_Mission.RemoveActiveInputExcludes({"menu"}, false);
 
-		SearchFilter.SetTyping(false);
+		CUISearchFilter.SetTyping(false);
 	}
 
 	static bool IsOn()

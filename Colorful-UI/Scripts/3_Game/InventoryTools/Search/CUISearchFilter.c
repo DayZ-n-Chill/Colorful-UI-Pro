@@ -6,7 +6,7 @@
 //
 // Search prefixed (not Filter) because the sort feature has its own category bits; the
 // two copies must never collide.
-class SearchFilter
+class CUISearchFilter
 {
 	protected static string s_Raw;
 	protected static ref array<string> s_Tokens = new array<string>;

@@ -2,7 +2,7 @@
 // of the EQUIPMENT bar swaps the card's body between the equipment slot icons (the EQUIPMENT tab)
 // and the search content (the SEARCH tab: the field, then one row of square category tiles); the
 // bar's title follows the tab. It owns the text and the keyboard; the dimming itself is done by every
-// cell on its own (SearchIconHooks.c) against the shared SearchFilter.
+// cell on its own (SearchIconHooks.c) against the shared CUISearchFilter.
 //
 // Built once per InventoryMenu and kept for the menu's life.
 //
@@ -225,7 +225,7 @@ class SearchBar : ScriptedWidgetEventHandler
 	protected void PlaceTrailing()
 	{
 		bool v_HasText = m_Input != null && m_Input.GetText() != "";
-		bool v_Active = SearchFilter.IsActive();
+		bool v_Active = CUISearchFilter.IsActive();
 
 		float v_R = TRAIL_PAD;
 		if (v_HasText)
@@ -262,17 +262,17 @@ class SearchBar : ScriptedWidgetEventHandler
 	{
 		if (m_Input)
 			m_Input.SetText("");
-		SearchFilter.Set("");
-		SearchFilter.SetCats(0);
+		CUISearchFilter.Set("");
+		CUISearchFilter.SetCats(0);
 		RefreshText();
 	}
 
 	protected static int FilterCount()
 	{
 		int v_N = 0;
-		int v_Cats = SearchFilter.Cats();
+		int v_Cats = CUISearchFilter.Cats();
 		int v_Bit = 1;
-		for (int v_I = 0; v_I < SearchFilter.CAT_COUNT; v_I++)
+		for (int v_I = 0; v_I < CUISearchFilter.CAT_COUNT; v_I++)
 		{
 			if ((v_Cats & v_Bit) != 0)
 				v_N++;
@@ -408,7 +408,7 @@ class SearchBar : ScriptedWidgetEventHandler
 	{
 		if (m_Input)
 			m_Input.SetText("");
-		SearchFilter.Set("");
+		CUISearchFilter.Set("");
 		RefreshText();
 	}
 
@@ -487,8 +487,8 @@ class SearchBar : ScriptedWidgetEventHandler
 			return;
 
 		int v_Value = -1;
-		if (SearchFilter.IsActive())
-			v_Value = SearchFilter.Count();
+		if (CUISearchFilter.IsActive())
+			v_Value = CUISearchFilter.Count();
 		int v_Filters = FilterCount();
 		if (v_Value == m_LastCount && v_Filters == m_LastFilters)
 			return;
@@ -542,7 +542,7 @@ class SearchBar : ScriptedWidgetEventHandler
 	{
 		if (w != m_Input)
 			return false;
-		SearchFilter.Set(m_Input.GetText());
+		CUISearchFilter.Set(m_Input.GetText());
 		RefreshText();
 		return false;
 	}

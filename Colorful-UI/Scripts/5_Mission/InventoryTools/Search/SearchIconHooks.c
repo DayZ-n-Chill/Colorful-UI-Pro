@@ -50,21 +50,21 @@ modded class Icon
 		EntityAI v_E = EntityAI.Cast(GetObject());
 		bool v_Drag = IsDragged();
 
-		if (v_E != m_SearchItem || m_SearchGen != SearchFilter.Gen() || v_Drag != m_SearchDrag)
+		if (v_E != m_SearchItem || m_SearchGen != CUISearchFilter.Gen() || v_Drag != m_SearchDrag)
 		{
 			m_SearchItem = v_E;
-			m_SearchGen = SearchFilter.Gen();
+			m_SearchGen = CUISearchFilter.Gen();
 			m_SearchDrag = v_Drag;
 
 			// Hidden while dragged so the item under the cursor never looks greyed out.
-			bool v_Show = SearchFilter.IsActive() && v_E != null && !m_SearchLock && !v_Drag;
+			bool v_Show = CUISearchFilter.IsActive() && v_E != null && !m_SearchLock && !v_Drag;
 			m_SearchHit = v_Show && SearchItemWords.Matches(v_E);
 			m_SearchMark = CellMark.Paint(v_Main, m_SearchMark, v_Show, m_SearchHit);
 		}
 
 		// A collapsed container still ticks its grid, so only cells actually on screen count.
 		if (m_SearchHit && v_Main.IsVisibleHierarchy())
-			SearchFilter.CountHit(v_E);
+			CUISearchFilter.CountHit(v_E);
 	}
 }
 
@@ -111,18 +111,18 @@ modded class SlotsIcon
 		EntityAI v_E = GetEntity();
 		bool v_Drag = m_IsDragged;
 
-		if (v_E != m_SearchItem || m_SearchGen != SearchFilter.Gen() || v_Drag != m_SearchDrag)
+		if (v_E != m_SearchItem || m_SearchGen != CUISearchFilter.Gen() || v_Drag != m_SearchDrag)
 		{
 			m_SearchItem = v_E;
-			m_SearchGen = SearchFilter.Gen();
+			m_SearchGen = CUISearchFilter.Gen();
 			m_SearchDrag = v_Drag;
 
-			bool v_Show = SearchFilter.IsActive() && v_E != null && !m_SearchLock && !v_Drag;
+			bool v_Show = CUISearchFilter.IsActive() && v_E != null && !m_SearchLock && !v_Drag;
 			m_SearchHit = v_Show && SearchItemWords.Matches(v_E);
 			m_SearchMark = CellMark.Paint(v_Main, m_SearchMark, v_Show, m_SearchHit);
 		}
 
 		if (m_SearchHit && v_Main.IsVisibleHierarchy())
-			SearchFilter.CountHit(v_E);
+			CUISearchFilter.CountHit(v_E);
 	}
 }
