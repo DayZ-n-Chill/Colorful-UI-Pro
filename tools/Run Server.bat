@@ -225,7 +225,7 @@ function BuildMod ($Name) {
     $inc = Join-Path $env:TEMP "cui_inc_$PID.lst"
     Set-Content -Path $inc -Value '*.c;*.h;*.hpp;*.cpp;*.bin;*.xml;*.json;*.layout;*.style;*.styles;*.p3d;*.paa;*.edds;*.rvmat;*.bisurf;*.anm;*.rtm;*.ogg;*.wss;*.wrp;*.txt;*.csv;*.fnt;*.imageset;*.tga;*.png;*.fsm;*.sqf;*.ext;*.material;*.fxy;*.ptc;*.emat;*.mov' -Encoding ascii
     Info "Building $Name ..."
-    $p = Start-Process $ab -ArgumentList "P:\$Name", $target, "-prefix=$Name", "-temp=$temp", "-include=$inc" -Wait -NoNewWindow -PassThru
+    $p = Start-Process $ab -ArgumentList "P:\$Name", $target, "-prefix=$Name", "-temp=$temp", (QuotedArg '-include' $inc) -Wait -NoNewWindow -PassThru
     Remove-Item $inc -Force -ErrorAction SilentlyContinue
     $pbo = Join-Path $target "$Name.pbo"
     if ($p.ExitCode -ne 0) { Die "AddonBuilder failed (code $($p.ExitCode))." }
