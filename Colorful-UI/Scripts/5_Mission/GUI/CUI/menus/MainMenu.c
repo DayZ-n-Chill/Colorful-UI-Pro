@@ -158,8 +158,8 @@ modded class MainMenu extends UIScriptedMenu
 		if (stats_root)
 			m_Stats = new MainMenuStats(stats_root);
 
-		if (m_StatisticsBoxBG) m_StatisticsBoxBG.SetColor(UIColor.cuiDarkBlue());
-		if (m_SurvivorBox) m_SurvivorBox.SetColor(UIColor.cuiDarkBlue());
+		if (m_StatisticsBoxBG) m_StatisticsBoxBG.SetColor(colorScheme.StatsBox());
+		if (m_SurvivorBox) m_SurvivorBox.SetColor(colorScheme.SurvivorBox());
 		if (m_TopShader) m_TopShader.SetColor(colorScheme.TopShader());
 		if (m_BottomShader) m_BottomShader.SetColor(colorScheme.BottomShader());
 		if (m_MenuDivider) m_MenuDivider.SetColor(colorScheme.Separator());

@@ -100,8 +100,8 @@ modded class TabberUI
 		{
 			Widget tab_title = TextWidget.Cast(tab_control.FindAnyWidget( tab_control.GetName() + "_Title" ));
 			
-			int color_title = colorScheme.TabHoverColor();
-			int color_backg = UIColor.Black();
+			int color_title = colorScheme.TabSelectedColor();
+			int color_backg = colorScheme.TabBackground();
 			
 			tab_title.SetColor( color_title );
 			tab_control.SetColor( color_backg );
@@ -121,7 +121,7 @@ modded class TabberUI
 		{			
 			Widget tab_title = TextWidget.Cast(tab_control.FindAnyWidget( tab_control.GetName() + "_Title" ));
 			tab_title.SetColor(colorScheme.TabHoverColor());
-			tab_control.SetColor(UIColor.Black());
+			tab_control.SetColor(colorScheme.TabBackground());
 		}
 		
 		return false;
